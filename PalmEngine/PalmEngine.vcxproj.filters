@@ -15,12 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Main.h">
+    <ClInclude Include="PalmEngineRoot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="PalmEngineRoot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
