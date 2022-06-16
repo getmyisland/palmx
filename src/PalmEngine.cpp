@@ -1,16 +1,18 @@
-#include "PalmEngine.h"
 #include <iostream>
 
-using namespace std;
+// Include all Manager
+#include "SimulationManager.cpp"
 
 int main() {
-	cout << "Hello World" << endl;
+	// Create Singletons
+	SimulationManager gSimulationManager;
 
-	// Startup all Singletons
+	// Startup all Manager
 
 	// Start the game loop
+	gSimulationManager.run();
 
-	// Shutdown all Singletons
+	// Shutdown all Manager
 
 	return 0;
 }

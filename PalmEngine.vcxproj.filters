@@ -20,7 +20,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\PalmEngine.h">
+    <ClInclude Include="src\SimulationManager.cpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SingletonManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
