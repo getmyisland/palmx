@@ -18,15 +18,24 @@
     <ClCompile Include="src\PalmEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AppSystem.cpp">
+    <ClCompile Include="src\InputSystem\InputSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AppSystem\AppSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\InputSystem.cpp">
+    <ClInclude Include="src\SystemManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ISubsystem.h">
+    <ClInclude Include="src\InputSystem\InputSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InputSystem\InputListener.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AppSystem\AppSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

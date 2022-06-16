@@ -1,10 +1,13 @@
+#include "SystemManager.h"
+
 #include <iostream>
-#include "AppSystem.cpp"
 
 int main() {
-	AppSystem gAppSystem;
+	std::clog << "Starting PalmEngine..." << std::endl;
 
-	gAppSystem.initApp();
+	SystemManager::GetInstance().InitSystems();
+
+	SystemManager::GetInstance().UpdateSystems();
 
 	return 0;
 }
