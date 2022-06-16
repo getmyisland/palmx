@@ -19,11 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AppSystem.cpp" />
     <ClCompile Include="src\PalmEngine.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\SingletonManager.h" />
-    <ClInclude Include="src\SimulationManager.cpp" />
+    <ClInclude Include="src\InputSystem.cpp" />
+    <ClInclude Include="src\ISubsystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

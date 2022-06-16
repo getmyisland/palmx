@@ -1,18 +1,10 @@
 #include <iostream>
-
-// Include all Manager
-#include "SimulationManager.cpp"
+#include "AppSystem.cpp"
 
 int main() {
-	// Create Singletons
-	SimulationManager gSimulationManager;
+	AppSystem gAppSystem;
 
-	// Startup all Manager
-
-	// Start the game loop
-	gSimulationManager.run();
-
-	// Shutdown all Manager
+	gAppSystem.initApp();
 
 	return 0;
 }

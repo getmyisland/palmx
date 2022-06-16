@@ -18,12 +18,15 @@
     <ClCompile Include="src\PalmEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\AppSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\SimulationManager.cpp">
+    <ClInclude Include="src\InputSystem.cpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SingletonManager.h">
+    <ClInclude Include="src\ISubsystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
