@@ -19,15 +19,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AppSystem\AppSystem.cpp" />
-    <ClCompile Include="src\InputSystem\InputSystem.cpp" />
-    <ClCompile Include="src\PalmEngine.cpp" />
+    <ClCompile Include="Source\guicon.cpp" />
+    <ClCompile Include="Source\AppSystem\AppSystem.cpp" />
+    <ClCompile Include="Source\InputSystem\InputSystem.cpp" />
+    <ClCompile Include="Source\PalmEngine.cpp" />
+    <ClCompile Include="Source\SystemManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\AppSystem\AppSystem.h" />
-    <ClInclude Include="src\InputSystem\InputListener.h" />
-    <ClInclude Include="src\InputSystem\InputSystem.h" />
-    <ClInclude Include="src\SystemManager.h" />
+    <ClInclude Include="Source\guicon.h" />
+    <ClInclude Include="Source\AppSystem\AppSystem.h" />
+    <ClInclude Include="Source\InputSystem\InputListener.h" />
+    <ClInclude Include="Source\InputSystem\InputSystem.h" />
+    <ClInclude Include="Source\SystemManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -133,7 +136,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>

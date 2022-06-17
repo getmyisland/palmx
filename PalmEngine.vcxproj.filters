@@ -15,27 +15,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\PalmEngine.cpp">
+    <ClCompile Include="Source\PalmEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputSystem\InputSystem.cpp">
+    <ClCompile Include="Source\InputSystem\InputSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\AppSystem\AppSystem.cpp">
+    <ClCompile Include="Source\SystemManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\AppSystem\AppSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\guicon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\SystemManager.h">
+    <ClInclude Include="Source\SystemManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\InputSystem\InputSystem.h">
+    <ClInclude Include="Source\InputSystem\InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\InputSystem\InputListener.h">
+    <ClInclude Include="Source\InputSystem\InputListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\AppSystem\AppSystem.h">
+    <ClInclude Include="Source\AppSystem\AppSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\guicon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

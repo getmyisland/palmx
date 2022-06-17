@@ -1,15 +1,9 @@
 #include "AppSystem.h"
-#include "../InputSystem/InputSystem.h"
+#include "../SystemManager.h"
 #include <iostream>
 
-AppSystem& AppSystem::GetInstance() {
-	static AppSystem instance;
-
-	return instance;
-}
-
 void AppSystem::Init() {
-	InputSystem::GetInstance().AddListener(this);
+	SystemManager::GetInstance().GetInputSystem().AddListener(this);
 }
 
 void AppSystem::Update() {
