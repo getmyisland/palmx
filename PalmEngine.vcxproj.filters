@@ -27,9 +27,6 @@
     <ClCompile Include="Source\AppSystem\AppSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\guicon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SystemManager.h">
@@ -42,9 +39,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\AppSystem\AppSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\guicon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

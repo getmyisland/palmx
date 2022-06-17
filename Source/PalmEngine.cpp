@@ -8,9 +8,9 @@
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
-#include <iostream>
-#include "guicon.h"
 #include <cstdio>
+
+#include "SystemManager.h"
 
 #define MAX_LOADSTRING 100
 
@@ -39,7 +39,7 @@ ATOM RegisterEngineClass(HINSTANCE hInstance)
     windowClass.hIcon = LoadIcon(hInstance, IDI_APPLICATION);
     windowClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
     windowClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-    windowClass.lpszMenuName = NULL;
+    windowClass.lpszMenuName = nullptr;
     windowClass.lpszClassName = szWindowClass;
     windowClass.hIconSm = LoadIcon(windowClass.hInstance, IDI_APPLICATION);
 
@@ -64,28 +64,45 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     return TRUE;
 }
 
-//  WM_COMMAND  - process the application menu
-//  WM_PAINT    - Paint the main window
-//  WM_DESTROY  - post a quit message and return
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-    switch (message)
+    wchar_t msg[32];
+    switch (uMsg)
     {
-    case WM_PAINT:
-    {
-        PAINTSTRUCT ps;
-        HDC hdc = BeginPaint(hWnd, &ps);
-
-        EndPaint(hWnd, &ps);
-    }
-    break;
-    case WM_DESTROY:
-        PostQuitMessage(0);
+    case WM_SYSKEYDOWN:
+        swprintf_s(msg, L"WM_SYSKEYDOWN: 0x%x\n", wParam);
+        OutputDebugString(msg);
         break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
+
+    case WM_SYSCHAR:
+        swprintf_s(msg, L"WM_SYSCHAR: %c\n", (wchar_t)wParam);
+        OutputDebugString(msg);
+        break;
+
+    case WM_SYSKEYUP:
+        swprintf_s(msg, L"WM_SYSKEYUP: 0x%x\n", wParam);
+        OutputDebugString(msg);
+        break;
+
+    case WM_KEYDOWN:
+        swprintf_s(msg, L"WM_KEYDOWN: 0x%x\n", wParam);
+        OutputDebugString(msg);
+        break;
+
+    case WM_KEYUP:
+        swprintf_s(msg, L"WM_KEYUP: 0x%x\n", wParam);
+        OutputDebugString(msg);
+        break;
+
+    case WM_CHAR:
+        swprintf_s(msg, L"WM_CHAR: %c\n", (wchar_t)wParam);
+        OutputDebugString(msg);
+        break;
+
+        /* Handle other messages (not shown) */
+
     }
-    return 0;
+    return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
 
 INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
@@ -115,10 +132,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-#ifdef _DEBUG
-    RedirectIOToConsole();
-#endif
-
     // Initialize global strings
     RegisterEngineClass(hInstance);
 
@@ -129,12 +142,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, IDI_APPLICATION);
-
     MSG msg;
 
-    std::clog << "Hey" << std::endl;
+    // Init all Systems
+    SystemManager::GetInstance().InitSystems();
 
-    // Main message loop:
+    // Main loop
     while (GetMessage(&msg, nullptr, 0, 0))
     {
         if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
@@ -143,8 +156,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
 
-        std::cout << "Hey" << std::endl;
+        // Update Systems
+        //SystemManager::GetInstance().UpdateSystems();
     }
+
+    // Shutdown Systems with SystemManager
+    SystemManager::GetInstance().ShutDownSystems();
 
     return (int)msg.wParam;
 }

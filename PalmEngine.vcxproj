@@ -19,14 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\guicon.cpp" />
     <ClCompile Include="Source\AppSystem\AppSystem.cpp" />
     <ClCompile Include="Source\InputSystem\InputSystem.cpp" />
     <ClCompile Include="Source\PalmEngine.cpp" />
     <ClCompile Include="Source\SystemManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\guicon.h" />
     <ClInclude Include="Source\AppSystem\AppSystem.h" />
     <ClInclude Include="Source\InputSystem\InputListener.h" />
     <ClInclude Include="Source\InputSystem\InputSystem.h" />
