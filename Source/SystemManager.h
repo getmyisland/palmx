@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AppSystem/AppSystem.h"
+#include "MessageSystem/MessageSystem.h"
 #include "InputSystem/InputSystem.h"
 
 class SystemManager {
@@ -20,20 +20,19 @@ public:
 	// Shutdown all subsystems
 	void ShutDownSystems();
 
+	// Sends a Message Event to all registered subsystems
+	void SendMessageEvent(Message message);
+
 private:
 	SystemManager() {};
 
-	bool isGameRunning = true;
-
 	// List of all subsystems
-	AppSystem gAppSystem;
-	InputSystem gInputSystem;
+	MessageSystem gMessageSystem;
+	MessageSystem* gMessageSystemPointer = &gMessageSystem;
+
+	InputSystem gInputSystem = InputSystem(gMessageSystemPointer);
 
 public:
 	SystemManager(SystemManager const&) = delete;
 	void operator=(SystemManager const&) = delete;
-
-	// Getter for all subsystems
-	AppSystem GetAppSystem() { return gAppSystem; }
-	InputSystem GetInputSystem() { return gInputSystem; }
 };

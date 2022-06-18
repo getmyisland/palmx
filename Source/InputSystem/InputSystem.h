@@ -1,20 +1,12 @@
 #pragma once
 
-#include "InputListener.h"
 #include <unordered_set>
+#include "../MessageSystem/MessageSystemNode.h"
 
-class InputSystem
-{
+class InputSystem : public MessageSystemNode {
 public:
-	InputSystem() {};
+	InputSystem(MessageSystem* messageSystem) : MessageSystemNode(messageSystem) {};
 	~InputSystem() {};
 
-	void Update();
-	void AddListener(InputListener* inputListener);
-	void RemoveListener(InputListener* inputListener);
-
-private:
-	std::unordered_set<InputListener*> setListeners;
-	unsigned char keysState[256] = {};
-	unsigned char oldKeysState[256] = {};
+	virtual void onNotify(Message message) override;
 };

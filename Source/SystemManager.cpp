@@ -1,16 +1,18 @@
 #include "SystemManager.h"
 
 void SystemManager::InitSystems() {
-	gAppSystem.Init();
+
 }
 
 void SystemManager::UpdateSystems() {
-	while (isGameRunning) {
-		gAppSystem.Update();
-		gInputSystem.Update();
-	}
+	
 }
 
 void SystemManager::ShutDownSystems() {
 	
+}
+
+void SystemManager::SendMessageEvent(Message message) {
+	gMessageSystem.SendMessageToQueue(message);
+	gMessageSystem.Notify();
 }

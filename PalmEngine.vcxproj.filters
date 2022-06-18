@@ -24,9 +24,6 @@
     <ClCompile Include="Source\SystemManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\AppSystem\AppSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SystemManager.h">
@@ -35,10 +32,10 @@
     <ClInclude Include="Source\InputSystem\InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\InputSystem\InputListener.h">
+    <ClInclude Include="Source\MessageSystem\MessageSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\AppSystem\AppSystem.h">
+    <ClInclude Include="Source\MessageSystem\MessageSystemNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

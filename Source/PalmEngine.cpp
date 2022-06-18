@@ -67,61 +67,52 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     wchar_t msg[32];
-    switch (uMsg)
-    {
+    switch (uMsg) {
     case WM_SYSKEYDOWN:
-        swprintf_s(msg, L"WM_SYSKEYDOWN: 0x%x\n", wParam);
-        OutputDebugString(msg);
+        // swprintf_s(msg, L"WM_SYSKEYDOWN: 0x%x\n", wParam);
+        // OutputDebugString(msg);
         break;
 
     case WM_SYSCHAR:
-        swprintf_s(msg, L"WM_SYSCHAR: %c\n", (wchar_t)wParam);
-        OutputDebugString(msg);
+        // swprintf_s(msg, L"WM_SYSCHAR: %c\n", (wchar_t)wParam);
+        // OutputDebugString(msg);
         break;
 
     case WM_SYSKEYUP:
-        swprintf_s(msg, L"WM_SYSKEYUP: 0x%x\n", wParam);
-        OutputDebugString(msg);
+        // swprintf_s(msg, L"WM_SYSKEYUP: 0x%x\n", wParam);
+        // OutputDebugString(msg);
         break;
 
     case WM_KEYDOWN:
-        swprintf_s(msg, L"WM_KEYDOWN: 0x%x\n", wParam);
-        OutputDebugString(msg);
+        // Output Example: 0x57
+        // swprintf_s(msg, L"WM_KEYDOWN: 0x%x\n", wParam);
+        // OutputDebugString(msg);
         break;
 
     case WM_KEYUP:
-        swprintf_s(msg, L"WM_KEYUP: 0x%x\n", wParam);
-        OutputDebugString(msg);
+        // Output Example: 0x57
+        // swprintf_s(msg, L"WM_KEYUP: 0x%x\n", wParam);
+        // OutputDebugString(msg);
         break;
 
     case WM_CHAR:
+        // Send the event to the system manager
+        SystemManager::GetInstance().SendMessageEvent(Message(Message::MessageEvent::KEY_CHAR, "A"));
+
+        // Output Example: A
         swprintf_s(msg, L"WM_CHAR: %c\n", (wchar_t)wParam);
         OutputDebugString(msg);
+
         break;
 
-        /* Handle other messages (not shown) */
-
+    case WM_DESTROY:
+        PostQuitMessage(0);
+        break;
+    default:
+        return DefWindowProc(hwnd, uMsg, wParam, lParam);
     }
+
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
-}
-
-INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    UNREFERENCED_PARAMETER(lParam);
-    switch (message)
-    {
-    case WM_INITDIALOG:
-        return (INT_PTR)TRUE;
-
-    case WM_COMMAND:
-        if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
-        {
-            EndDialog(hDlg, LOWORD(wParam));
-            return (INT_PTR)TRUE;
-        }
-        break;
-    }
-    return (INT_PTR)FALSE;
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
