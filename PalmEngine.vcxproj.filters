@@ -24,6 +24,9 @@
     <ClCompile Include="Source\SystemManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Source\RenderingSystem\RenderSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\SystemManager.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\MessageSystem\MessageSystemNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\RenderingSystem\RenderSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

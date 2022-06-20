@@ -20,11 +20,13 @@ protected:
         return messageListener;
     }
 
+    // Sends a message to the queue
     void Send(Message message) {
         messageSystem->SendMessageToQueue(message);
     }
 
+    // Virtual void that gets overriden in every class implementing this class
     virtual void onNotify(Message message) {
-        OutputDebugStringW(L"You forgot to implement the onNotifyFunction.\n");
+        OutputDebugStringW(L"You forgot to implement the onNotify().\n");
     }
 };

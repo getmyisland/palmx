@@ -2,6 +2,7 @@
 
 #include "MessageSystem/MessageSystem.h"
 #include "InputSystem/InputSystem.h"
+#include "RenderingSystem/RenderSystem.h"
 
 class SystemManager {
 public:
@@ -21,16 +22,25 @@ public:
 	void ShutDownSystems();
 
 	// Sends a Message Event to all registered subsystems
-	void SendMessageEvent(Message message);
+	void SendMessageEventToQueue(Message message);
+
+	// Calls the Notify() function in the MessageSystem
+	void NotifyMessageSystem();
+
+	// Getters for systems
+	MessageSystem GetMessageSystem() { return g_MessageSystem; }
+	InputSystem GetInputSystem() { return g_InputSystem; }
+	RenderSystem GetRenderSystem() { return g_RenderSystem; }
 
 private:
 	SystemManager() {};
 
 	// List of all subsystems
-	MessageSystem gMessageSystem;
-	MessageSystem* gMessageSystemPointer = &gMessageSystem;
+	MessageSystem g_MessageSystem;
+	MessageSystem* g_MessageSystemPointer = &g_MessageSystem;
 
-	InputSystem gInputSystem = InputSystem(gMessageSystemPointer);
+	InputSystem g_InputSystem = InputSystem(g_MessageSystemPointer);
+	RenderSystem g_RenderSystem = RenderSystem(g_MessageSystemPointer);
 
 public:
 	SystemManager(SystemManager const&) = delete;
