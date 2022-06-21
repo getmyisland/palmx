@@ -5,5 +5,5 @@
 // Gets automatically called by calling MessageSystem::Notify()
 void RenderSystem::onNotify(Message message)
 {
-	OutputDebugStringW(L"It works.\n");
+
 }

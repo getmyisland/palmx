@@ -20,7 +20,7 @@ void SystemManager::ShutDownSystems() {
 
 void SystemManager::SendMessageEventToQueue(Message message) {
 #ifdef _DEBUG
-	std::clog << "Event " << message.GetEventName(message.GetMessageEvent()) << " was called." << std::endl;
+	std::clog << "Event " << message.getEventName(message.getMessageEvent()) << " was called." << std::endl;
 #endif
 
 	g_MessageSystem.SendMessageToQueue(message);

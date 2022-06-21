@@ -1,17 +1,23 @@
 #include "InputSystem.h"
 #include <iostream>
 
-// Map input to an action
-void InputSystem::ProcessKeyboardInput(InputType inputType, char input)
+// Process the keyboard input
+void InputSystem::ProcessKeyboardInput(KeyboardInput keyboardInput)
 {
-	std::clog << input << std::endl;
+	std::string inputString;
+	inputString.push_back(keyboardInput.getInputChar());
+	inputString.pop_back();
+
+#ifdef _DEBUG
+	std::clog << inputString << std::endl;
+#endif
 
 	// If a key down was pressed
-	if (inputType == InputSystem::InputType::INPUT_KEY_DOWN) {
+	if (keyboardInput.getKeyboardInputType() == KeyboardInput::KeyboardInputType::INPUT_KEYBOARD_KEY_DOWN) {
 
 	}
 	// If a key was released
-	else if (inputType == InputSystem::InputType::INPUT_KEY_UP) {
+	else if (keyboardInput.getKeyboardInputType() == KeyboardInput::KeyboardInputType::INPUT_KEYBOARD_KEY_UP) {
 
 	}
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../MessageSystem/MessageSystemNode.h"
+#include "Input.h"
 
 class InputSystem : public MessageSystemNode {
 public:
@@ -9,12 +10,7 @@ public:
 	// Destructor
 	~InputSystem() {};
 
-	enum class InputType {
-		INPUT_KEY_DOWN,
-		INPUT_KEY_UP
-	};
-
-	void ProcessKeyboardInput(InputSystem::InputType inputType, char input);
+	void ProcessKeyboardInput(KeyboardInput keyboardInput);
 
 private:
 	// Override void provided by MessageSystemNode

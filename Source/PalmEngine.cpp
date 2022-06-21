@@ -69,79 +69,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	return TRUE;
 }
 
-LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	switch (uMsg) 
-	{
-	case WM_SYSKEYDOWN: 
-	{
-		// Send an input event to the input manager
-		SystemManager::GetInstance().GetInputSystem().ProcessKeyboardInput(InputSystem::InputType::INPUT_KEY_DOWN, (char)(wchar_t)wParam);
-
-		// swprintf_s(msg, L"WM_SYSKEYDOWN: 0x%x\n", wParam);
-		// OutputDebugString(msg);
-		
-		break;
-	}
-	case WM_SYSKEYUP: 
-	{
-		// Send an input event to the input manager
-		SystemManager::GetInstance().GetInputSystem().ProcessKeyboardInput(InputSystem::InputType::INPUT_KEY_UP, (char)(wchar_t)wParam);
-
-		// swprintf_s(msg, L"WM_SYSKEYUP: 0x%x\n", wParam);
-		// OutputDebugString(msg);
-		
-		break;
-	}
-	case WM_SYSCHAR: 
-	{
-		// swprintf_s(msg, L"WM_SYSCHAR: %c\n", (wchar_t)wParam);
-		// OutputDebugString(msg);
-		
-		break;
-	}
-	case WM_KEYDOWN: 
-	{
-		// Send an input event to the input manager
-		SystemManager::GetInstance().GetInputSystem().ProcessKeyboardInput(InputSystem::InputType::INPUT_KEY_DOWN, (char)(wchar_t)wParam);
-
-		// Output Example: 0x57
-		// swprintf_s(msg, L"WM_KEYDOWN: 0x%x\n", wParam);
-		// OutputDebugString(msg);
-		
-		break;
-	}
-	case WM_KEYUP: 
-	{
-		// Send an input event to the input manager
-		SystemManager::GetInstance().GetInputSystem().ProcessKeyboardInput(InputSystem::InputType::INPUT_KEY_UP, (char)(wchar_t)wParam);
-
-		// Output Example: 0x57
-		// swprintf_s(msg, L"WM_KEYUP: 0x%x\n", wParam);
-		// OutputDebugString(msg);
-		
-		break;
-	}
-	case WM_CHAR: 
-	{
-		// Output Example: A
-		//swprintf_s(msg, L"WM_CHAR: %c\n", (wchar_t)wParam);
-		//OutputDebugString(msg);
-
-		break;
-	}
-	case WM_DESTROY: 
-	{
-		PostQuitMessage(0);
-
-		break;
-	}
-	default:  { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-	}
-
-	return DefWindowProc(hwnd, uMsg, wParam, lParam);
-}
-
 void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr)
 {
 	// Re-initialize the C runtime "FILE" handles with clean handles bound to "nul". We do this because it has been
@@ -285,7 +212,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 #endif
 
 	// Init all Systems
-	SystemManager::GetInstance().InitSystems();
+	SystemManager::getInstance().InitSystems();
 
 	// Main loop
 	while (GetMessage(&msg, nullptr, 0, 0))
@@ -301,7 +228,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	}
 
 	// Shutdown Systems with SystemManager
-	SystemManager::GetInstance().ShutDownSystems();
+	SystemManager::getInstance().ShutDownSystems();
 
 	return (int)msg.wParam;
 }

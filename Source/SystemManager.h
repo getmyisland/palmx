@@ -6,7 +6,7 @@
 
 class SystemManager {
 public:
-	static SystemManager& GetInstance() {
+	static SystemManager& getInstance() {
 		static SystemManager    instance; // Guaranteed to be destroyed.
 							  // Instantiated on first use.
 		return instance;
@@ -28,9 +28,9 @@ public:
 	void NotifyMessageSystem();
 
 	// Getters for systems
-	MessageSystem GetMessageSystem() { return g_MessageSystem; }
-	InputSystem GetInputSystem() { return g_InputSystem; }
-	RenderSystem GetRenderSystem() { return g_RenderSystem; }
+	MessageSystem getMessageSystem() { return g_MessageSystem; }
+	InputSystem getInputSystem() { return g_InputSystem; }
+	RenderSystem getRenderSystem() { return g_RenderSystem; }
 
 private:
 	SystemManager() {};

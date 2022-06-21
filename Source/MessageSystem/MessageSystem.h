@@ -21,9 +21,9 @@ public:
     }
 
     // Getters
-    MessageEvent GetMessageEvent() { return messageEvent; }
-    std::string GetEventValue() { return messageEventValues; }
-    std::string GetEventName(MessageEvent messageEvent) {
+    MessageEvent getMessageEvent() { return messageEvent; }
+    std::string getEventValue() { return messageEventValues; }
+    std::string getEventName(MessageEvent messageEvent) {
         std::string eventName = messageEventMap.find(messageEvent)->second;
 
         if (eventName.empty()) {
