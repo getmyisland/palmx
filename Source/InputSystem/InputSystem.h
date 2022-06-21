@@ -11,6 +11,7 @@ public:
 	~InputSystem() {};
 
 	void ProcessKeyboardInput(KeyboardInput keyboardInput);
+	void UseKeyboardInput(KeyboardInput::KeyboardInputType inputType, KeyboardInput::KeyboardInputKey inputKey);
 
 private:
 	// Override void provided by MessageSystemNode

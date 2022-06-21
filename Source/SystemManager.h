@@ -32,6 +32,8 @@ public:
 	InputSystem getInputSystem() { return g_InputSystem; }
 	RenderSystem getRenderSystem() { return g_RenderSystem; }
 
+	// Getters for variables
+
 private:
 	SystemManager() {};
 
@@ -41,6 +43,8 @@ private:
 
 	InputSystem g_InputSystem = InputSystem(g_MessageSystemPointer);
 	RenderSystem g_RenderSystem = RenderSystem(g_MessageSystemPointer);
+
+	// Variables
 
 public:
 	SystemManager(SystemManager const&) = delete;

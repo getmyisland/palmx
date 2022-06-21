@@ -198,9 +198,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		return FALSE;
 	}
 
-	HACCEL hAccelTable = LoadAccelerators(hInstance, IDI_APPLICATION);
-	MSG msg;
-
 #ifdef _DEBUG
 	// Allocate a console window for this process
 	AllocConsole();
@@ -215,16 +212,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	SystemManager::getInstance().InitSystems();
 
 	// Main loop
+	MSG msg;
 	while (GetMessage(&msg, nullptr, 0, 0))
 	{
-		if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
 
 		// Update Systems
-		//SystemManager::GetInstance().UpdateSystems();
+		SystemManager::getInstance().UpdateSystems();
 	}
 
 	// Shutdown Systems with SystemManager

@@ -7,6 +7,10 @@ public:
 		INPUT_KEYBOARD_KEY_UP
 	};
 
+	enum class KeyboardInputKey {
+		KEYCODE_E
+	};
+
 	KeyboardInput(KeyboardInputType type, char input) {
 		inputType = type;
 		inputChar = input;

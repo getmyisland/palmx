@@ -1,9 +1,8 @@
 #include "InputSystem.h"
 #include <iostream>
 
-// Process the keyboard input
-void InputSystem::ProcessKeyboardInput(KeyboardInput keyboardInput)
-{
+// Process the keyboard input and convert the hex code to a keycode
+void InputSystem::ProcessKeyboardInput(KeyboardInput keyboardInput) {
 	std::string inputString;
 	inputString.push_back(keyboardInput.getInputChar());
 	inputString.pop_back();
@@ -12,12 +11,23 @@ void InputSystem::ProcessKeyboardInput(KeyboardInput keyboardInput)
 	std::clog << inputString << std::endl;
 #endif
 
+	KeyboardInput::KeyboardInputKey keyboardInputKey = KeyboardInput::KeyboardInputKey::KEYCODE_E;
+
+	// Decide which input it is
+	
+
+	UseKeyboardInput(keyboardInput.getKeyboardInputType(), keyboardInputKey);
+}
+
+// Use a function mapped to this key
+void InputSystem::UseKeyboardInput(KeyboardInput::KeyboardInputType inputType, KeyboardInput::KeyboardInputKey inputKey)
+{
 	// If a key down was pressed
-	if (keyboardInput.getKeyboardInputType() == KeyboardInput::KeyboardInputType::INPUT_KEYBOARD_KEY_DOWN) {
+	if (inputType == KeyboardInput::KeyboardInputType::INPUT_KEYBOARD_KEY_DOWN) {
 
 	}
 	// If a key was released
-	else if (keyboardInput.getKeyboardInputType() == KeyboardInput::KeyboardInputType::INPUT_KEYBOARD_KEY_UP) {
+	else if (inputType == KeyboardInput::KeyboardInputType::INPUT_KEYBOARD_KEY_UP) {
 
 	}
 }
