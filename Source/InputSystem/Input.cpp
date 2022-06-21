@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include "../SystemManager.h"
 
-char ConvertKeyboardInput(wchar_t wchar) {
+char ConvertKeyInputToHex(wchar_t wchar) {
 	return printf("0x%x", wchar);
 }
 
@@ -12,14 +12,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_SYSKEYDOWN:
 	{
 		// Send an input event to the input manager
-		SystemManager::getInstance().getInputSystem().ProcessKeyboardInput(KeyboardInput(KeyboardInput::KeyboardInputType::INPUT_KEYBOARD_KEY_DOWN, ConvertKeyboardInput(wParam)));
+		SystemManager::getInstance().getInputSystem().ProcessKeyInput(KeyInput(KeyInput::KeyInputType::INPUT_KEYBOARD_KEY_DOWN, ConvertKeyInputToHex(wParam)));
 
 		break;
 	}
 	case WM_SYSKEYUP:
 	{
 		// Send an input event to the input manager
-		SystemManager::getInstance().getInputSystem().ProcessKeyboardInput(KeyboardInput(KeyboardInput::KeyboardInputType::INPUT_KEYBOARD_KEY_UP, ConvertKeyboardInput(wParam)));
+		SystemManager::getInstance().getInputSystem().ProcessKeyInput(KeyInput(KeyInput::KeyInputType::INPUT_KEYBOARD_KEY_UP, ConvertKeyInputToHex(wParam)));
 
 		break;
 	}
@@ -30,14 +30,14 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_KEYDOWN:
 	{
 		// Send an input event to the input manager
-		SystemManager::getInstance().getInputSystem().ProcessKeyboardInput(KeyboardInput(KeyboardInput::KeyboardInputType::INPUT_KEYBOARD_KEY_DOWN, ConvertKeyboardInput(wParam)));
+		SystemManager::getInstance().getInputSystem().ProcessKeyInput(KeyInput(KeyInput::KeyInputType::INPUT_KEYBOARD_KEY_DOWN, ConvertKeyInputToHex(wParam)));
 
 		break;
 	}
 	case WM_KEYUP:
 	{
 		// Send an input event to the input manager
-		SystemManager::getInstance().getInputSystem().ProcessKeyboardInput(KeyboardInput(KeyboardInput::KeyboardInputType::INPUT_KEYBOARD_KEY_UP, ConvertKeyboardInput(wParam)));
+		SystemManager::getInstance().getInputSystem().ProcessKeyInput(KeyInput(KeyInput::KeyInputType::INPUT_KEYBOARD_KEY_UP, ConvertKeyInputToHex(wParam)));
 
 		break;
 	}

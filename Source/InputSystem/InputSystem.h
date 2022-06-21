@@ -10,8 +10,8 @@ public:
 	// Destructor
 	~InputSystem() {};
 
-	void ProcessKeyboardInput(KeyboardInput keyboardInput);
-	void UseKeyboardInput(KeyboardInput::KeyboardInputType inputType, KeyboardInput::KeyboardInputKey inputKey);
+	void ProcessKeyInput(KeyInput keyboardInput);
+	void UseKeyInput(KeyInput::KeyInputType inputType, KeyInput::KeyInputKey inputKey);
 
 private:
 	// Override void provided by MessageSystemNode
