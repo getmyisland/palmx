@@ -50,6 +50,9 @@
     <ClInclude Include="Source\InputSystem\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Source\InputSystem\InputMapper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

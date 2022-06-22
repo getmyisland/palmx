@@ -27,6 +27,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\InputSystem\Input.h" />
+    <ClInclude Include="Source\InputSystem\InputMapper.h" />
     <ClInclude Include="Source\RenderingSystem\RenderSystem.h" />
     <ClInclude Include="Source\MessageSystem\MessageSystem.h" />
     <ClInclude Include="Source\InputSystem\InputSystem.h" />
@@ -135,6 +136,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>Default</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

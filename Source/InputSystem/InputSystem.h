@@ -2,6 +2,7 @@
 
 #include "../MessageSystem/MessageSystemNode.h"
 #include "Input.h"
+#include "InputMapper.h"
 
 class InputSystem : public MessageSystemNode {
 public:
@@ -11,7 +12,7 @@ public:
 	~InputSystem() {};
 
 	void ProcessKeyInput(KeyInput keyboardInput);
-	void UseKeyInput(KeyInput::KeyInputType inputType, KeyInput::KeyInputKey inputKey);
+	void MapKeyInput(KeyInput::KeyInputType inputType, KeyInput::KeyInputKeycode inputKey);
 
 private:
 	// Override void provided by MessageSystemNode
