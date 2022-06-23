@@ -1,7 +1,12 @@
+// Virtual Key Codes see https://docs.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
+
 #pragma once
 
-class KeyInput {
+#include <map>
+
+class KeyboardInput {
 public:
+	// Different Types of Keyboard Input
 	const enum class KeyInputType {
 		INPUT_KEYBOARD_KEY_DOWN,
 		INPUT_KEYBOARD_KEY_UP
@@ -111,17 +116,20 @@ public:
 		KEYCODE_RIGHT_CONTROL, //0xA3
 	};
 
-	KeyInput(KeyInputType type, char input) {
+	// Constructor taking an input type and an int
+	KeyboardInput(KeyInputType type, int inputInt) {
 		inputType = type;
-		inputChar = input;
+		input = inputInt;
 	}
-	~KeyInput() {};
+	~KeyboardInput() {};
 
+	// Getters for variables
 	KeyInputType getKeyInputType() { return inputType; }
-	char getInputChar() { return inputChar; }
+	int getInput() { return input; }
 
+	// Map with hex codes mapped to each keycode
 	std::map<std::string, KeyInputKeycode> keycodeInputMap = {
-		{"NULL", KeyInputKeycode::KEYCODE_NULL}, // Default null value
+		{"", KeyInputKeycode::KEYCODE_NULL}, // Default null value
 		{"0x01", KeyInputKeycode::KEYCODE_LEFT_MOUSE}, //0x01
 		{"0x02", KeyInputKeycode::KEYCODE_RIGHT_MOUSE}, //0x02
 		{"0x03", KeyInputKeycode::KEYCODE_CONTROL_BREAK_PROCESSING}, //0x03
@@ -225,7 +233,7 @@ public:
 
 private:
 	KeyInputType inputType;
-	char inputChar;
+	int input;
 };
 
 class MouseInput {

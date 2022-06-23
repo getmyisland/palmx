@@ -7,6 +7,8 @@ void SystemManager::InitSystems() {
 #ifdef _DEBUG
 	std::clog << "Initating all Systems" << std::endl;
 #endif
+
+	g_InputSystem.Init();
 }
 
 // Update all Systems
@@ -19,6 +21,8 @@ void SystemManager::ShutDownSystems() {
 #ifdef _DEBUG
 	std::clog << "Shutting Down all Systems" << std::endl;
 #endif
+
+	g_InputSystem.ShutDown();
 }
 
 // Send a Message Event to the Queue of the MessageSystem

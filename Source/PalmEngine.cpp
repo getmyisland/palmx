@@ -1,9 +1,6 @@
+//Source Engine https://developer.valvesoftware.com/wiki/Source
 #include <SDKDDKVer.h>
-
-// Windows Header Files
 #include <windows.h>
-
-// C RunTime Header Files
 #include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
@@ -14,23 +11,34 @@
 #include <iostream>
 #include <io.h>
 #include <fcntl.h>
-
 #include "SystemManager.h"
 
+// Load a maximum of 100 characters
 #define MAX_LOADSTRING 100
 
-// Global Variables:
-HINSTANCE hInst;                                // current instance
-WCHAR szTitle[MAX_LOADSTRING] = L"Palm Engine";                  // The title bar text
+// The instance of the engine
+HINSTANCE hInst;
+
+// The main window handle
+HWND hWnd;
+
+// List of Hooks
+HHOOK hhookKeyboard;
+HHOOK hhokMouse;
+
+// Title of the window
+WCHAR szTitle[MAX_LOADSTRING] = L"Palm Engine";
+
+// Name of the window class
 WCHAR szWindowClass[MAX_LOADSTRING] = L"Palm Engine Window";
 
-// Forward declarations of functions included in this code module:
-ATOM                RegisterEngineClass(HINSTANCE hInstance);
+// Forward declarations of functions included in this code module
+ATOM                RegisterWindowClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-ATOM RegisterEngineClass(HINSTANCE hInstance)
+// Registers the window class
+ATOM RegisterWindowClass(HINSTANCE hInstance)
 {
 	WNDCLASSEXW windowClass;
 
@@ -55,7 +63,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
 	hInst = hInstance; // Store instance handle in our global variable
 
-	HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+	hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
 	if (!hWnd)
@@ -69,6 +77,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 	return TRUE;
 }
 
+// Enables iostream in win32 application
 void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr)
 {
 	// Re-initialize the C runtime "FILE" handles with clean handles bound to "nul". We do this because it has been
@@ -190,9 +199,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	// Initialize global strings
-	RegisterEngineClass(hInstance);
+	RegisterWindowClass(hInstance);
 
-	// Perform application initialization:
+	// Perform application initialization
 	if (!InitInstance(hInstance, nCmdShow))
 	{
 		return FALSE;
@@ -226,4 +235,35 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	SystemManager::getInstance().ShutDownSystems();
 
 	return (int)msg.wParam;
+}
+
+LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	switch (uMsg)
+	{
+	case WM_KEYDOWN:
+	{
+		// Detect Key Down Events
+		SystemManager::getInstance().getInputSystem().CreateKeyboardInputEvent(KeyboardInput(KeyboardInput::KeyInputType::INPUT_KEYBOARD_KEY_DOWN, (int) wParam));
+
+		break;
+	}
+	case WM_KEYUP:
+	{
+		// Detect Key Up Events
+		SystemManager::getInstance().getInputSystem().CreateKeyboardInputEvent(KeyboardInput(KeyboardInput::KeyInputType::INPUT_KEYBOARD_KEY_UP, (int)wParam));
+
+		break;
+	}
+	case WM_DESTROY:
+	{
+		// Exit the program
+		PostQuitMessage(0);
+
+		break;
+	}
+	default: { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
+	}
+
+	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }

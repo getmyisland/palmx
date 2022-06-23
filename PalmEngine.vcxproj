@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\InputSystem\Input.cpp" />
+    <ClCompile Include="Source\InputSystem\InputMapper.cpp" />
     <ClCompile Include="Source\RenderingSystem\RenderSystem.cpp" />
     <ClCompile Include="Source\InputSystem\InputSystem.cpp" />
     <ClCompile Include="Source\PalmEngine.cpp" />

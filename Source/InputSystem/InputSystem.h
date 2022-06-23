@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Windows.h>
 #include "../MessageSystem/MessageSystemNode.h"
 #include "Input.h"
 #include "InputMapper.h"
@@ -11,10 +12,18 @@ public:
 	// Destructor
 	~InputSystem() {};
 
-	void ProcessKeyInput(KeyInput keyboardInput);
-	void MapKeyInput(KeyInput::KeyInputType inputType, KeyInput::KeyInputKeycode inputKey);
+	void Init();
+	void ShutDown();
+
+	// Process the keyboard input and map it
+	void ProcessKeyboardInput(KeyboardInput keyboardInput);
+
+	// Create a input event
+	void CreateKeyboardInputEvent(KeyboardInput keyboardInput) { ProcessKeyboardInput(keyboardInput); }
 
 private:
+	InputMapper inputMapper;
+
 	// Override void provided by MessageSystemNode
 	virtual void onNotify(Message message) override;
 };

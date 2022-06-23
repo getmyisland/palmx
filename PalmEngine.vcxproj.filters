@@ -27,7 +27,7 @@
     <ClCompile Include="Source\RenderingSystem\RenderSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\InputSystem\Input.cpp">
+    <ClCompile Include="Source\InputSystem\InputMapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,10 +47,10 @@
     <ClInclude Include="Source\RenderingSystem\RenderSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\InputSystem\Input.h">
+    <ClInclude Include="Source\InputSystem\InputMapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Source\InputSystem\InputMapper.h">
+    <ClInclude Include="Source\InputSystem\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
