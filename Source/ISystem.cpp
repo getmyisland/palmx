@@ -1,9 +1,9 @@
-#include "SystemManager.h"
+#include "ISystem.h"
 
 #include <iostream>
 
 // Initialize all Systems
-void SystemManager::InitSystems() {
+void ISystem::InitSystems() {
 #ifdef _DEBUG
 	std::clog << "Initating all Systems" << std::endl;
 #endif
@@ -12,12 +12,12 @@ void SystemManager::InitSystems() {
 }
 
 // Update all Systems
-void SystemManager::UpdateSystems() {
-
+void ISystem::UpdateSystems() {
+	// Gets called every frame
 }
 
 // Shutdown all Systems
-void SystemManager::ShutDownSystems() {
+void ISystem::ShutDownSystems() {
 #ifdef _DEBUG
 	std::clog << "Shutting Down all Systems" << std::endl;
 #endif
@@ -26,18 +26,18 @@ void SystemManager::ShutDownSystems() {
 }
 
 // Send a Message Event to the Queue of the MessageSystem
-void SystemManager::SendMessageEventToQueue(Message message) {
+void ISystem::SendMessageEventToQueue(Message message) {
 #ifdef _DEBUG
-	std::clog << "Event " << message.getEventName(message.getMessageEvent()) << " was called." << std::endl;
+	std::clog << "Event " << message.getEventName(message.getMessageEvent()) << " was called" << std::endl;
 #endif
 
 	g_MessageSystem.SendMessageToQueue(message);
 }
 
 // Work trough all Messages in the Message Queue
-void SystemManager::NotifyMessageSystem() {
+void ISystem::NotifyMessageNodes() {
 #ifdef _DEBUG
-	std::clog << "Notify Systems" << std::endl;
+	std::clog << "Notify All Message System Nodes" << std::endl;
 #endif
 
 	g_MessageSystem.Notify();

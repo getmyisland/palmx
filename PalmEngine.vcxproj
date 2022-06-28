@@ -22,17 +22,16 @@
     <ClCompile Include="Source\InputSystem\InputMapper.cpp" />
     <ClCompile Include="Source\RenderingSystem\RenderSystem.cpp" />
     <ClCompile Include="Source\InputSystem\InputSystem.cpp" />
-    <ClCompile Include="Source\PalmEngine.cpp" />
-    <ClCompile Include="Source\SystemManager.cpp" />
+    <ClCompile Include="Source\Palm_Client.cpp" />
+    <ClCompile Include="Source\ISystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\InputSystem\Input.h" />
     <ClInclude Include="Source\InputSystem\InputMapper.h" />
     <ClInclude Include="Source\RenderingSystem\RenderSystem.h" />
     <ClInclude Include="Source\MessageSystem\MessageSystem.h" />
     <ClInclude Include="Source\InputSystem\InputSystem.h" />
     <ClInclude Include="Source\MessageSystem\MessageSystemNode.h" />
-    <ClInclude Include="Source\SystemManager.h" />
+    <ClInclude Include="Source\ISystem.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

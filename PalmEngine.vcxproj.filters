@@ -15,13 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\PalmEngine.cpp">
+    <ClCompile Include="Source\Palm_Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\InputSystem\InputSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SystemManager.cpp">
+    <ClCompile Include="Source\ISystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\RenderingSystem\RenderSystem.cpp">
@@ -32,7 +32,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\SystemManager.h">
+    <ClInclude Include="Source\ISystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\InputSystem\InputSystem.h">
@@ -48,9 +48,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Source\InputSystem\InputMapper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\InputSystem\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

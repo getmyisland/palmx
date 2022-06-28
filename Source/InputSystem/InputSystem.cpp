@@ -1,41 +1,57 @@
 #include "InputSystem.h"
 #include <iostream>
-#include <codecvt>
-#include <string>
+#include <Windows.h>
+
+HHOOK hHookKeyboard{ NULL };
+HHOOK hHookMouse{ NULL };
+
+int shift_active() {
+	return GetKeyState(VK_LSHIFT) < 0 || GetKeyState(VK_RSHIFT) < 0;
+}
+
+int capital_active() {
+	return (GetKeyState(VK_CAPITAL) & 1) == 1;
+}
+
+// See https://docs.microsoft.com/de-de/windows/win32/winmsg/lowlevelkeyboardproc
+LRESULT CALLBACK keyboard_hook(const int nCode, const WPARAM wParam, const LPARAM lParam) {
+	switch (wParam) {
+	case (WM_KEYDOWN): {
+			KBDLLHOOKSTRUCT* kbdStruct = (KBDLLHOOKSTRUCT*)lParam;
+			DWORD wVirtKey = kbdStruct->vkCode;
+			DWORD wScanCode = kbdStruct->scanCode;
+
+			BYTE lpKeyState[256];
+			GetKeyboardState(lpKeyState);
+
+			char result;
+			ToAscii(wVirtKey, wScanCode, lpKeyState, (LPWORD)&result, 0);
+			std::cout << result << std::endl;
+			break;
+		}
+	}
+
+	return CallNextHookEx(hHookKeyboard, nCode, wParam, lParam);
+}
+
+// See https://docs.microsoft.com/de-de/windows/win32/winmsg/lowlevelmouseproc
+LRESULT CALLBACK mouse_hook(const int nCode, const WPARAM wParam, const LPARAM lParam) {
+	switch (wParam) {
+	case (WM_MOUSEMOVE): {
+		std::cout << "Mouse is moving" << std::endl;
+	}
+	}
+	
+	return CallNextHookEx(hHookKeyboard, nCode, wParam, lParam);
+}
 
 void InputSystem::Init() {
-	
+	hHookKeyboard = SetWindowsHookEx(WH_KEYBOARD_LL, keyboard_hook, NULL, 0);
+	hHookMouse = SetWindowsHookEx(WH_MOUSE_LL, mouse_hook, NULL, 0);
 }
 
 void InputSystem::ShutDown() {
 	
-}
-
-// Process the keyboard input and convert it to a keycode
-void InputSystem::ProcessKeyboardInput(KeyboardInput keyboardInput)
-{
-	// Default initialize keyInputKeycode with null in case it doesn't find the key
-	KeyboardInput::KeyInputKeycode keyInputKeycode = KeyboardInput::KeyInputKeycode::KEYCODE_NULL;
-
-	char hexChar[5];
-	
-	// Create hexadecimal char from the input
-	sprintf_s(hexChar, "0x%x", keyboardInput.getInput());
-
-#ifdef _DEBUG
-	//std::clog << hexChar << std::endl;
-#endif
-
-	// Use the char to search inside the keycode map for a keycode
-	auto it = keyboardInput.keycodeInputMap.find(hexChar);
-
-	// If the iterator found a keycode assign it to the keycode variable
-	if (it != keyboardInput.keycodeInputMap.end()) {
-		keyInputKeycode = it->second;
-	}
-
-	// Map the input to a function
-	inputMapper.MapKeyboardInput(keyboardInput.getKeyInputType(), keyInputKeycode);
 }
 
 // Provided by MessageSystemNode

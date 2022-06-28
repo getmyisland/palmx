@@ -11,7 +11,7 @@
 #include <iostream>
 #include <io.h>
 #include <fcntl.h>
-#include "SystemManager.h"
+#include "ISystem.h"
 
 // Load a maximum of 100 characters
 #define MAX_LOADSTRING 100
@@ -218,7 +218,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 #endif
 
 	// Init all Systems
-	SystemManager::getInstance().InitSystems();
+	ISystem::getInstance().InitSystems();
 
 	// Main loop
 	MSG msg;
@@ -228,11 +228,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		DispatchMessage(&msg);
 
 		// Update Systems
-		SystemManager::getInstance().UpdateSystems();
+		ISystem::getInstance().UpdateSystems();
 	}
 
 	// Shutdown Systems with SystemManager
-	SystemManager::getInstance().ShutDownSystems();
+	ISystem::getInstance().ShutDownSystems();
 
 	return (int)msg.wParam;
 }
@@ -241,20 +241,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{
-	case WM_KEYDOWN:
-	{
-		// Detect Key Down Events
-		SystemManager::getInstance().getInputSystem().CreateKeyboardInputEvent(KeyboardInput(KeyboardInput::KeyInputType::INPUT_KEYBOARD_KEY_DOWN, (int) wParam));
-
-		break;
-	}
-	case WM_KEYUP:
-	{
-		// Detect Key Up Events
-		SystemManager::getInstance().getInputSystem().CreateKeyboardInputEvent(KeyboardInput(KeyboardInput::KeyInputType::INPUT_KEYBOARD_KEY_UP, (int)wParam));
-
-		break;
-	}
 	case WM_DESTROY:
 	{
 		// Exit the program

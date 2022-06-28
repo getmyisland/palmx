@@ -5,9 +5,7 @@
 class RenderSystem : public MessageSystemNode
 {
 public:
-	// Constructor with MessageSystemNode
 	RenderSystem(MessageSystem* messageSystem) : MessageSystemNode(messageSystem) {};
-	// Destructor
 	~RenderSystem() {};
 
 private:
