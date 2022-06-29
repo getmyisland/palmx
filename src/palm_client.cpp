@@ -1,17 +1,10 @@
 //Source Engine https://developer.valvesoftware.com/wiki/Source
 #include <SDKDDKVer.h>
 #include <windows.h>
-#include <stdlib.h>
-#include <malloc.h>
-#include <memory.h>
-#include <tchar.h>
-#include <cstdio>
-#include <codecvt>
-#include <locale>
 #include <iostream>
 #include <io.h>
 #include <fcntl.h>
-#include "ISystem.h"
+#include "CSystem.h"
 
 // Load a maximum of 100 characters
 #define MAX_LOADSTRING 100
@@ -218,7 +211,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 #endif
 
 	// Init all Systems
-	ISystem::getInstance().InitSystems();
+	CSystem::getInstance().InitSubsystems();
 
 	// Main loop
 	MSG msg;
@@ -228,11 +221,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		DispatchMessage(&msg);
 
 		// Update Systems
-		ISystem::getInstance().UpdateSystems();
+		CSystem::getInstance().UpdateSubsystems();
 	}
 
 	// Shutdown Systems with SystemManager
-	ISystem::getInstance().ShutDownSystems();
+	CSystem::getInstance().ShutdownSubsystems();
 
 	return (int)msg.wParam;
 }

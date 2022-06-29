@@ -1,4 +1,4 @@
-#include "InputSystem.h"
+#include "CInputSystem.h"
 #include <iostream>
 #include <Windows.h>
 
@@ -45,18 +45,19 @@ LRESULT CALLBACK mouse_hook(const int nCode, const WPARAM wParam, const LPARAM l
 	return CallNextHookEx(hHookKeyboard, nCode, wParam, lParam);
 }
 
-void InputSystem::Init() {
+void CInputSystem::Init() {
 	hHookKeyboard = SetWindowsHookEx(WH_KEYBOARD_LL, keyboard_hook, NULL, 0);
 	hHookMouse = SetWindowsHookEx(WH_MOUSE_LL, mouse_hook, NULL, 0);
 }
 
-void InputSystem::ShutDown() {
+void CInputSystem::Update() {
 	
 }
 
-// Provided by MessageSystemNode
-// Gets automatically called by calling MessageSystem::Notify()
-void InputSystem::onNotify(Message message)
-{
+void CInputSystem::Shutdown() {
 	
+}
+
+void CInputSystem::OnEvent(SystemEvent sysEvent)
+{
 }

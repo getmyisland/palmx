@@ -19,23 +19,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\InputSystem\InputMapper.cpp" />
-    <ClCompile Include="Source\RenderingSystem\RenderSystem.cpp" />
-    <ClCompile Include="Source\InputSystem\InputSystem.cpp" />
-    <ClCompile Include="Source\Palm_Client.cpp" />
-    <ClCompile Include="Source\ISystem.cpp" />
+    <ClCompile Include="src\InputSystem\InputMapper.cpp" />
+    <ClCompile Include="src\InputSystem\CInputSystem.cpp" />
+    <ClCompile Include="src\palm_client.cpp" />
+    <ClCompile Include="src\CSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\InputSystem\InputMapper.h" />
-    <ClInclude Include="Source\RenderingSystem\RenderSystem.h" />
-    <ClInclude Include="Source\MessageSystem\MessageSystem.h" />
-    <ClInclude Include="Source\InputSystem\InputSystem.h" />
-    <ClInclude Include="Source\MessageSystem\MessageSystemNode.h" />
-    <ClInclude Include="Source\ISystem.h" />
+    <ClInclude Include="src\InputSystem\InputMapper.h" />
+    <ClInclude Include="src\InputSystem\CInputSystem.h" />
+    <ClInclude Include="src\ISubSystem.h" />
+    <ClInclude Include="src\CSystem.h" />
+    <ClInclude Include="src\SystemEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="README.md" />
+    <None Include="doc\README.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
