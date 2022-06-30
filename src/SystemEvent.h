@@ -5,20 +5,17 @@
 
 class SystemEvent {
 public:
-    // Enum holding all Events
+    // All Events
     enum class Event {
         TEST
     };
 
-    // Constructor
-    SystemEvent(const Event pEvent, std::string pEventValue) {
+    SystemEvent(const Event pEvent) {
         event = pEvent;
-        eventValue = pEventValue;
     }
 
-    // Getters
-    Event getMessageEvent() { return event; }
-    std::string getEventValue() { return eventValue; }
+    Event getEvent() { return event; }
+
     std::string getEventName(Event pEvent) {
         std::string eventName = eventMap.find(pEvent)->second;
 
@@ -31,13 +28,8 @@ public:
     }
 
 private:
-    // Type of event
     Event event;
 
-    // Content of event
-    std::string eventValue;
-
-    // Debug Map to Output Events as Strings
     std::map<SystemEvent::Event, std::string> eventMap = {
         {SystemEvent::Event::TEST, "TEST"}
     };

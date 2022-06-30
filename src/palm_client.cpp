@@ -1,74 +1,9 @@
-//Source Engine https://developer.valvesoftware.com/wiki/Source
 #include <SDKDDKVer.h>
 #include <windows.h>
 #include <iostream>
 #include <io.h>
 #include <fcntl.h>
-#include "CSystem.h"
-
-// Load a maximum of 100 characters
-#define MAX_LOADSTRING 100
-
-// The instance of the engine
-HINSTANCE hInst;
-
-// The main window handle
-HWND hWnd;
-
-// List of Hooks
-HHOOK hhookKeyboard;
-HHOOK hhokMouse;
-
-// Title of the window
-WCHAR szTitle[MAX_LOADSTRING] = L"Palm Engine";
-
-// Name of the window class
-WCHAR szWindowClass[MAX_LOADSTRING] = L"Palm Engine Window";
-
-// Forward declarations of functions included in this code module
-ATOM                RegisterWindowClass(HINSTANCE hInstance);
-BOOL                InitInstance(HINSTANCE, int);
-LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
-
-// Registers the window class
-ATOM RegisterWindowClass(HINSTANCE hInstance)
-{
-	WNDCLASSEXW windowClass;
-
-	windowClass.cbSize = sizeof(WNDCLASSEX);
-
-	windowClass.style = CS_HREDRAW | CS_VREDRAW;
-	windowClass.lpfnWndProc = WndProc;
-	windowClass.cbClsExtra = 0;
-	windowClass.cbWndExtra = 0;
-	windowClass.hInstance = hInstance;
-	windowClass.hIcon = LoadIcon(hInstance, IDI_APPLICATION);
-	windowClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
-	windowClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	windowClass.lpszMenuName = nullptr;
-	windowClass.lpszClassName = szWindowClass;
-	windowClass.hIconSm = LoadIcon(windowClass.hInstance, IDI_APPLICATION);
-
-	return RegisterClassExW(&windowClass);
-}
-
-BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
-{
-	hInst = hInstance; // Store instance handle in our global variable
-
-	hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
-
-	if (!hWnd)
-	{
-		return FALSE;
-	}
-
-	ShowWindow(hWnd, nCmdShow);
-	UpdateWindow(hWnd);
-
-	return TRUE;
-}
+#include "SystemHandler.h"
 
 // Enables iostream in win32 application
 void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr)
@@ -183,7 +118,7 @@ void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr
 	}
 }
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+int APIENTRY wWinMain(_In_ HINSTANCE p_hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
@@ -191,27 +126,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
-	// Initialize global strings
-	RegisterWindowClass(hInstance);
-
-	// Perform application initialization
-	if (!InitInstance(hInstance, nCmdShow))
-	{
-		return FALSE;
-	}
-
 #ifdef _DEBUG
 	// Allocate a console window for this process
 	AllocConsole();
 
 	// Update the C/C++ runtime standard input, output, and error targets to use the console window
 	BindCrtHandlesToStdHandles(true, true, true);
-
-	std::clog << "Starting Palm Engine" << std::endl;
 #endif
 
+	SystemHandler* const p_SystemHandler = &SystemHandler::Instance();
+
 	// Init all Systems
-	CSystem::getInstance().InitSubsystems();
+	p_SystemHandler->InitSystems(&p_hInstance);
 
 	// Main loop
 	MSG msg;
@@ -221,28 +147,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		DispatchMessage(&msg);
 
 		// Update Systems
-		CSystem::getInstance().UpdateSubsystems();
+		p_SystemHandler->UpdateSystems();
 	}
 
-	// Shutdown Systems with SystemManager
-	CSystem::getInstance().ShutdownSubsystems();
+	// Shutdown Systems
+	p_SystemHandler->ShutdownSystems();
 
 	return (int)msg.wParam;
-}
-
-LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
-{
-	switch (uMsg)
-	{
-	case WM_DESTROY:
-	{
-		// Exit the program
-		PostQuitMessage(0);
-
-		break;
-	}
-	default: { return DefWindowProc(hwnd, uMsg, wParam, lParam); }
-	}
-
-	return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
