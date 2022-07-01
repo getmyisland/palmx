@@ -18,19 +18,19 @@
     <ClCompile Include="src\Palm_Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputSystem\InputMapper.cpp">
+    <ClCompile Include="src\Input\InputMapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SystemHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputSystem\InputSystem.cpp">
+    <ClCompile Include="src\Input\InputSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\InputSystem\InputCollector.cpp">
+    <ClCompile Include="src\Input\InputCollector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GUI\GuiSystem.cpp">
+    <ClCompile Include="src\GUI\GUI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GUI\Panel.cpp">
@@ -38,7 +38,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\InputSystem\InputMapper.h">
+    <ClInclude Include="src\Input\InputMapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SystemEvent.h">
@@ -50,13 +50,13 @@
     <ClInclude Include="src\ISystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\InputSystem\InputSystem.h">
+    <ClInclude Include="src\Input\InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\InputSystem\InputCollector.h">
+    <ClInclude Include="src\Input\InputCollector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GUI\GuiSystem.h">
+    <ClInclude Include="src\GUI\GUI.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\GUI\Panel.h">
@@ -66,5 +66,6 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="doc\README.md" />
+    <None Include="doc\Info.md" />
   </ItemGroup>
 </Project>

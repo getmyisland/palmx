@@ -1,8 +1,8 @@
 #pragma once
 
 #include "SystemEvent.h"
-#include "InputSystem/InputSystem.h"
-#include "GUI/GuiSystem.h"
+#include "Input/InputSystem.h"
+#include "GUI/GUI.h"
 
 class SystemHandler
 {
@@ -14,14 +14,17 @@ public:
 	void ShutdownSystems();
 	void SendEventToSystems(SystemEvent sysEvent);
 
-	HINSTANCE* getInstance() { return p_hInstance; }
+	HINSTANCE* GetInstance() { return p_hInstance; }
+
+	InputSystem* GetInputSystem() { return &g_InputSystem; }
+	GUI* GetGUI() { return &g_GUI; }
 
 private:
 	SystemHandler() {};
 
 	// Systems
 	InputSystem g_InputSystem;
-	GuiSystem g_GuiSystem;
+	GUI g_GUI;
 
 	// The instance of the engine
 	HINSTANCE *p_hInstance = nullptr;

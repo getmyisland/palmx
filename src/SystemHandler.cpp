@@ -12,17 +12,17 @@ void SystemHandler::InitSystems(HINSTANCE *hInst) {
 	p_hInstance = hInst;
 	
 	g_InputSystem.Init();
-	g_GuiSystem.Init();
+	g_GUI.Init();
 }
 
 void SystemHandler::UpdateSystems() {
 	g_InputSystem.Update();
-	g_GuiSystem.Update();
+	g_GUI.Update();
 }
 
 void SystemHandler::ShutdownSystems() {
 	g_InputSystem.Shutdown();
-	g_GuiSystem.Shutdown();
+	g_GUI.Shutdown();
 }
 
 void SystemHandler::SendEventToSystems(SystemEvent sysEvent) {

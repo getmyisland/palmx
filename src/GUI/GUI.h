@@ -3,11 +3,12 @@
 #include "../ISystem.h"
 #include "Panel.h"
 #include <Windows.h>
+#include <vector>
 
-class GuiSystem : public ISystem {
+class GUI : public ISystem {
 public:
-	GuiSystem();
-	~GuiSystem();
+	GUI();
+	~GUI();
 	
 	// Inherited via ISystem
 	virtual void Init() override;
@@ -15,7 +16,12 @@ public:
 	virtual void Shutdown() override;
 	virtual void OnEvent(SystemEvent sysEvent) override;
 
+	void AddPanelToList(Panel* panelToAdd);
+
 private:
 	HINSTANCE* p_hInstance = nullptr;
-	const Panel* p_RootPanel = nullptr;
+
+	Panel* p_RootPanel = nullptr;
+
+	std::vector<Panel*> allPanels;
 };
