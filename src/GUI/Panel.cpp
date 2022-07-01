@@ -86,6 +86,7 @@ LRESULT Panel::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 	if (uMsg == WM_NCCREATE) {
 		LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
 		self = static_cast<Panel*>(lpcs->lpCreateParams);
+		if (self) { self->hwnd = pHwnd; }
 		if (SetWindowLongPtr(pHwnd, GWLP_USERDATA,
 			reinterpret_cast<LONG_PTR>(self)) == 0) {
 			//std::cout << GetLastError() << std::endl;
@@ -109,18 +110,8 @@ LRESULT Panel::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 
 LRESULT Panel::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	std::cout << "WOLOLOLOLOLO" << std::endl;
-
 	switch (uMsg)
 	{
-	case WM_KEYDOWN:
-	{
-		std::cout << "Key Down Pressed" << std::endl;
-	}
-	case WM_PAINT:
-	{
-		break;
-	}
 	case WM_DESTROY:
 	{
 		PostQuitMessage(0);
@@ -135,7 +126,7 @@ LRESULT Panel::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 HWND Panel::CreateWindowHandleWithParent() {
 	return CreateWindowEx(dwExStyle, windowClassName, windowName, dwStyle,
-		posX, posY, width, height, *p_Parent->GetPanel(), nullptr, *p_hInstance, nullptr);
+		posX, posY, width, height, *p_Parent->GetPanel(), nullptr, *p_hInstance, this);
 }
 
 void Panel::ShowWindowHandle() {

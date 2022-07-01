@@ -66,7 +66,7 @@ private:
 	UINT style = CS_HREDRAW | CS_VREDRAW;
 
 	DWORD dwExStyle = 0;
-	DWORD dwStyle = WS_CHILD | WS_CAPTION;
+	DWORD dwStyle = WS_CHILD | WS_BORDER | WS_VISIBLE;
 
 	int posX = 0;
 	int posY = 0;
