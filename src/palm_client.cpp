@@ -3,7 +3,7 @@
 #include <iostream>
 #include <io.h>
 #include <fcntl.h>
-#include "SystemHandler.h"
+#include "SystemHandler.fwd.h"
 
 // Enables iostream in win32 application
 void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr)
@@ -118,7 +118,7 @@ void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr
 	}
 }
 
-int APIENTRY wWinMain(_In_ HINSTANCE p_hInstance,
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
@@ -134,24 +134,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE p_hInstance,
 	BindCrtHandlesToStdHandles(true, true, true);
 #endif
 
-	SystemHandler* const p_SystemHandler = &SystemHandler::Instance();
+	SystemHandler::Instance().StartEngine(hInstance);
 
-	// Init all Systems
-	p_SystemHandler->InitSystems(&p_hInstance);
-
-	// Main loop
-	MSG msg;
-	while (GetMessage(&msg, nullptr, 0, 0))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-
-		// Update Systems
-		p_SystemHandler->UpdateSystems();
-	}
-
-	// Shutdown Systems
-	p_SystemHandler->ShutdownSystems();
-
-	return (int)msg.wParam;
+	return 0;
 }

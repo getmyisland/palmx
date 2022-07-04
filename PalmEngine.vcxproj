@@ -28,13 +28,16 @@
     <ClCompile Include="src\SystemHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\GUI.fwd.h" />
     <ClInclude Include="src\GUI\Panel.h" />
     <ClInclude Include="src\GUI\GUI.h" />
     <ClInclude Include="src\Input\InputCollector.h" />
     <ClInclude Include="src\Input\InputMapper.h" />
+    <ClInclude Include="src\Input\InputSystem.fwd.h" />
     <ClInclude Include="src\Input\InputSystem.h" />
     <ClInclude Include="src\ISystem.h" />
     <ClInclude Include="src\SystemEvent.h" />
+    <ClInclude Include="src\SystemHandler.fwd.h" />
     <ClInclude Include="src\SystemHandler.h" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +144,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>Default</LanguageStandard>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

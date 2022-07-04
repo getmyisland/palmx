@@ -62,6 +62,15 @@
     <ClInclude Include="src\GUI\Panel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\SystemHandler.fwd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Input\InputSystem.fwd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\GUI.fwd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

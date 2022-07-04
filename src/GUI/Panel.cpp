@@ -1,56 +1,66 @@
 #include "Panel.h"
+
+#include "GUI.fwd.h"
 #include <iostream>
 
-Panel::Panel(HINSTANCE* hInst, const wchar_t* pWindowName) {
-	p_hInstance = hInst;
-
-	if (p_hInstance == nullptr) {
-		return;
-	}
-
-	windowName = pWindowName;
-	windowClassName = pWindowName;
-	dwExStyle = WS_EX_APPWINDOW;
-	dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
-
-	RegisterWindowClass();
-
-	hwnd = CreateWindowHandle();
-
-	if (hwnd == nullptr) {
-		std::cout << "Failed to create handle." << std::endl;
-		return;
-	}
-
-	ShowWindowHandle();
-}
-
 Panel::Panel(HINSTANCE* hInst, Panel* parent, const wchar_t* pWindowName) {
-	p_hInstance = hInst;
+	hInstance = hInst;
 
-	if (p_hInstance == nullptr) {
+	if (hInstance == nullptr) {
+		std::cout << "HINSTANCE is a nullptr" << std::endl;
 		return;
 	}
 
 	p_Parent = parent;
 	windowName = pWindowName;
 	windowClassName = pWindowName;
-	width = 600;
-	height = 200;
 
+	ConstructPanel();
+}
+
+Panel::Panel(HINSTANCE* hInst, Panel* parent, const wchar_t* pWindowName, UINT pStyle, DWORD pDwExStyle, DWORD pDwStyle, int pX, int pY, int pWidth, int pHeight)
+{
+	hInstance = hInst;
+
+	if (hInstance == nullptr) {
+		std::cout << "HINSTANCE is a nullptr" << std::endl;
+		return;
+	}
+
+	p_Parent = parent;
+	windowName = pWindowName;
+	windowClassName = pWindowName;
+	style = pStyle;
+	dwExStyle = pDwExStyle;
+	dwStyle = pDwStyle;
+	posX = pX;
+	posY = pY;
+	width = pWidth;
+	height = pHeight;
+
+	ConstructPanel();
+}
+
+Panel::~Panel() {};
+
+void Panel::ConstructPanel() {
 	RegisterWindowClass();
 
-	hwnd = CreateWindowHandleWithParent();
+	hwnd = CreateWindowHandle();
 
 	if (hwnd == nullptr) {
-		std::cout << "Failed to create handle." << std::endl;
+		std::cout << "Failed to create handle" << std::endl;
 		return;
 	}
 
 	ShowWindowHandle();
-}
 
-Panel::~Panel() {};
+	if (p_Parent != nullptr) {
+		p_Parent->AddChild(this);
+	}
+
+	GUI::AddElementToList(this);
+}
 
 void Panel::RegisterWindowClass() {
 	WNDCLASSEXW windowClass = { 0 };;
@@ -61,8 +71,8 @@ void Panel::RegisterWindowClass() {
 	windowClass.lpfnWndProc = StaticWndProc;
 	windowClass.cbClsExtra = 0;
 	windowClass.cbWndExtra = 50;
-	windowClass.hInstance = *p_hInstance;
-	windowClass.hIcon = LoadIcon(*p_hInstance, IDI_APPLICATION);
+	windowClass.hInstance = *hInstance;
+	windowClass.hIcon = LoadIcon(*hInstance, IDI_APPLICATION);
 	windowClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	windowClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 	windowClass.lpszMenuName = nullptr;
@@ -70,14 +80,20 @@ void Panel::RegisterWindowClass() {
 	windowClass.hIconSm = LoadIcon(windowClass.hInstance, IDI_APPLICATION);
 
 	if (!RegisterClassExW(&windowClass)) {
-		std::cout << "Failed to register class." << std::endl;
+		std::cout << "Failed to register window class" << std::endl;
 		std::cout << GetLastError() << std::endl;
 	}
 }
 
 HWND Panel::CreateWindowHandle() {
-	return CreateWindowEx(dwExStyle, windowClassName, windowName, dwStyle,
-		posX, posY, width, height, nullptr, nullptr, *p_hInstance, nullptr);
+	if (p_Parent != nullptr) {
+		return CreateWindowEx(dwExStyle, windowClassName, windowName, dwStyle,
+			posX, posY, width, height, *p_Parent->GetHandle(), nullptr, *hInstance, this);
+	}
+	else {
+		return CreateWindowEx(dwExStyle, windowClassName, windowName, dwStyle,
+			posX, posY, width, height, nullptr, nullptr, *hInstance, nullptr);
+	}
 }
 
 LRESULT Panel::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
@@ -87,16 +103,10 @@ LRESULT Panel::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam
 		LPCREATESTRUCT lpcs = reinterpret_cast<LPCREATESTRUCT>(lParam);
 		self = static_cast<Panel*>(lpcs->lpCreateParams);
 		if (self) { self->hwnd = pHwnd; }
-		if (SetWindowLongPtr(pHwnd, GWLP_USERDATA,
-			reinterpret_cast<LONG_PTR>(self)) == 0) {
-			//std::cout << GetLastError() << std::endl;
-		}
+		SetWindowLongPtr(pHwnd, GWLP_USERDATA,
+			reinterpret_cast<LONG_PTR>(self));
 	}
 	else {
-		if (GetWindowLongPtr(pHwnd, GWLP_USERDATA) == 0) {
-			//std::cout << GetLastError() << std::endl;
-		}
-
 		self = reinterpret_cast<Panel*>(
 			GetWindowLongPtr(pHwnd, GWLP_USERDATA));
 	}
@@ -122,11 +132,6 @@ LRESULT Panel::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	}
 
 	return DefWindowProc(hwnd, uMsg, wParam, lParam);
-}
-
-HWND Panel::CreateWindowHandleWithParent() {
-	return CreateWindowEx(dwExStyle, windowClassName, windowName, dwStyle,
-		posX, posY, width, height, *p_Parent->GetPanel(), nullptr, *p_hInstance, this);
 }
 
 void Panel::ShowWindowHandle() {

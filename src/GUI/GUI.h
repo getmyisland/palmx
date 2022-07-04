@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GUI.fwd.h"
 #include "../ISystem.h"
 #include "Panel.h"
 #include <Windows.h>
@@ -16,12 +17,12 @@ public:
 	virtual void Shutdown() override;
 	virtual void OnEvent(SystemEvent sysEvent) override;
 
-	void AddPanelToList(Panel* panelToAdd);
+	static void AddElementToList(Panel* panelToAdd);
 
 private:
-	HINSTANCE* p_hInstance = nullptr;
+	HINSTANCE* hInstance = nullptr;
 
 	Panel* p_RootPanel = nullptr;
 
-	std::vector<Panel*> allPanels;
+	static std::vector<Panel*> allElements;
 };

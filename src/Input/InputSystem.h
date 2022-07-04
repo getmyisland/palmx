@@ -1,5 +1,6 @@
 #pragma once
 
+#include "InputSystem.fwd.h"
 #include "../ISystem.h"
 #include "InputCollector.h"
 #include "InputMapper.h"
