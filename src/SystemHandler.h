@@ -10,23 +10,23 @@ class SystemHandler
 public:
 	static SystemHandler& Instance();
 
-	void StartEngine(HINSTANCE hInst);
-	void SendEventToSystems(SystemEvent sysEvent);
+	void StartEngine(HINSTANCE p_hInst);
+	void SendEventToSystems(SystemEvent p_SysEvent);
 
-	HINSTANCE* GetInstance() { return &hInstance; }
+	HINSTANCE* GetHInstance() { return &m_hInstance; }
 
-	InputSystem* GetInputSystem() { return &g_InputSystem; }
-	GUI* GetGUI() { return &g_GUI; }
+	InputSystem* GetInputSystem() { return &m_InputSystem; }
+	GUI* GetGUI() { return &m_GUI; }
 
 private:
 	SystemHandler() {};
 
 	// Systems
-	InputSystem g_InputSystem;
-	GUI g_GUI;
+	InputSystem m_InputSystem;
+	GUI m_GUI;
 
 	// The instance of the engine
-	HINSTANCE hInstance = nullptr;
+	HINSTANCE m_hInstance = nullptr;
 
 	void InitSystems();
 	void UpdateSystems();

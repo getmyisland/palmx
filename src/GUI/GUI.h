@@ -15,14 +15,14 @@ public:
 	virtual void Init() override;
 	virtual void Update() override;
 	virtual void Shutdown() override;
-	virtual void OnEvent(SystemEvent sysEvent) override;
+	virtual void OnEvent(SystemEvent i_SysEvent) override;
 
-	static void AddElementToList(Panel* panelToAdd);
+	static void AddElementToList(Panel* p_PanelToAdd);
 
 private:
-	HINSTANCE* hInstance = nullptr;
+	HINSTANCE* m_phInstance = nullptr;
 
-	Panel* p_RootPanel = nullptr;
+	Panel* m_pRootPanel = nullptr;
 
-	static std::vector<Panel*> allElements;
+	static std::vector<Panel*> s_vecPanels;
 };

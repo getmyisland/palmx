@@ -14,9 +14,9 @@ public:
 	virtual void Init() override;
 	virtual void Update() override;
 	virtual void Shutdown() override;
-	virtual void OnEvent(SystemEvent sysEvent) override;
+	virtual void OnEvent(SystemEvent i_SysEvent) override;
 
 private:
-	InputMapper g_InputMapper;
-	InputCollector g_InputCollector = InputCollector(&g_InputMapper);
+	InputMapper m_InputMapper;
+	InputCollector m_InputCollector = InputCollector(&m_InputMapper);
 };

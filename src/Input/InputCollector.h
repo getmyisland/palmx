@@ -5,11 +5,11 @@
 
 class InputCollector {
 public:
-	InputCollector(InputMapper* inputMapper);
+	InputCollector(InputMapper* p_pInputMapper);
 	~InputCollector();
 
 	void EnableLowLevelHooks();
-	void SendKeyboardInputToInputMapper(DWORD wVirtKey);
+	void SendKeyboardInputToInputMapper(DWORD p_dwVirtKey);
 
-	InputMapper* p_InputMapper = nullptr;
+	InputMapper* m_pInputMapper = nullptr;
 };

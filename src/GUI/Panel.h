@@ -7,80 +7,81 @@ class Panel
 {
 public:
 	/* === Constructor === */
-	Panel(HINSTANCE* hInst, Panel* parent, const wchar_t* pWindowName); // Default
-	Panel(HINSTANCE* hInst, Panel* parent, const wchar_t* pWindowName, UINT pStyle, DWORD pDwExStyle, DWORD pDwStyle, int pX, int pY, int pWidth, int pHeight); // Complete Constructor
+	Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText); // Default
+	Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText, int p_nPosX, int p_nPosY, int p_nWidth, int p_nHeight);
+	Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText, UINT p_wStyle, DWORD p_dwExStyle, DWORD p_dwStyle, int p_nPosX, int p_nPosY, int p_nWidth, int p_nHeight); // Complete Constructor
 	~Panel();
 
 	/* === Methods === */
-	void AddChild(Panel* childPanelToAdd) {
-		childPanels.push_back(childPanelToAdd);
+	void AddChild(Panel* p_pChildPanelToAdd) {
+		m_vecChildPanels.push_back(p_pChildPanelToAdd);
 	}
 
 	/* === Getter === */
-	HWND* GetHandle() { return &hwnd; }
+	HWND* GetHandle() { return &m_hWnd; }
 
-	Panel* GetParent() { return p_Parent; }
+	Panel* GetParentPanel() { return m_pParentPanel; }
 
-	Panel* GetChild(int index) {
-		if (index > ((int)childPanels.size() - 1)) {
+	Panel* GetChildPanel(int p_ixChild) {
+		if (p_ixChild > ((int)m_vecChildPanels.size() - 1)) {
 			return nullptr;
 		}
 		else {
-			return childPanels[index];
+			return m_vecChildPanels[p_ixChild];
 		}
 	}
 
-	int GetChildCount() {
-		return (int)childPanels.size();
+	int GetChildPanelCount() {
+		return (int)m_vecChildPanels.size();
 	}
 
-	const wchar_t* GetWindowName() { return windowName; }
-	const wchar_t* GetWindowClassName() { return windowClassName; }
+	const wchar_t* GetWindowName() { return m_wszWindowText; }
+	const wchar_t* GetWindowClassName() { return m_wszWindowClassText; }
 
-	UINT GetStyle() { return style; }
+	UINT GetStyle() { return m_wStyle; }
 
-	DWORD GetDwExStyle() { return dwExStyle; }
-	DWORD GetDwStyle() { return dwStyle; }
+	DWORD GetDwExStyle() { return m_dwExStyle; }
+	DWORD GetDwStyle() { return m_dwStyle; }
 
-	int GetPosX() { return posX; }
-	int GetPosY() { return posY; }
+	int GetPosX() { return m_nPosX; }
+	int GetPosY() { return m_nPosY; }
 
-	int GetWidth() { return width; }
-	int GetHeight() { return height; }
+	int GetWidth() { return m_nWidth; }
+	int GetHeight() { return m_nHeight; }
 
 	/* === Setter === */
-	void SetNewParent(Panel* newParent) {
-		p_Parent = newParent;
-		SetParent(hwnd, *p_Parent->GetHandle());
+	void SetNewParent(Panel* p_pNewParentPanel) {
+		m_pParentPanel = p_pNewParentPanel;
+		SetParent(m_hWnd, *m_pParentPanel->GetHandle());
 	}
 
-	void SetWindowName(const wchar_t* newName) {
-		windowName = newName;
-		SetWindowText(hwnd, windowName);
+	void SetWindowName(const wchar_t* p_wszNewText) {
+		m_wszWindowText = p_wszNewText;
+		SetWindowText(m_hWnd, m_wszWindowText);
 	}
 
-	void SetDwExStyle(DWORD newDwExStyle) {
-		dwExStyle = newDwExStyle;
-		SetWindowLong(hwnd, GWL_EXSTYLE, dwExStyle);
-		SetWindowPos(hwnd, nullptr, posX, posY, width, height, SWP_FRAMECHANGED);
+	void SetDwExStyle(DWORD p_dwNewExStyle) {
+		m_dwExStyle = p_dwNewExStyle;
+		SetWindowLong(m_hWnd, GWL_EXSTYLE, m_dwExStyle);
+		SetWindowPos(m_hWnd, nullptr, m_nPosX, m_nPosY, m_nWidth, m_nHeight, SWP_FRAMECHANGED);
 	}
 
-	void SetDwStyle(DWORD newDwStyle) {
-		dwStyle = newDwStyle;
-		SetWindowLong(hwnd, GWL_STYLE, dwStyle);
-		SetWindowPos(hwnd, nullptr, posX, posY, width, height, SWP_FRAMECHANGED);
+	void SetDwStyle(DWORD p_dwNewStyle) {
+		m_dwStyle = p_dwNewStyle;
+		SetWindowLong(m_hWnd, GWL_STYLE, m_dwStyle);
+		SetWindowPos(m_hWnd, nullptr, m_nPosX, m_nPosY, m_nWidth, m_nHeight, SWP_FRAMECHANGED);
 	}
 
-	void SetPos(int x, int y) {
-		posX = x;
-		posY = y;
-		SetWindowPos(hwnd, nullptr, posX, posY, width, height, SWP_FRAMECHANGED);
+	void SetPos(int p_nPosX, int p_nPosY) {
+		m_nPosX = p_nPosX;
+		m_nPosY = p_nPosY;
+		SetWindowPos(m_hWnd, nullptr, m_nPosX, m_nPosY, m_nWidth, m_nHeight, SWP_FRAMECHANGED);
 	}
 
-	void SetSize(int wide, int tall) {
-		width = wide;
-		height = tall;
-		SetWindowPos(hwnd, nullptr, posX, posY, width, height, SWP_FRAMECHANGED);
+	void SetSize(int p_nWidth, int p_nHeight) {
+		m_nWidth = p_nWidth;
+		m_nHeight = p_nHeight;
+		SetWindowPos(m_hWnd, nullptr, m_nPosX, m_nPosY, m_nWidth, m_nHeight, SWP_FRAMECHANGED);
 	}
 
 	/* === Static WndProc === */
@@ -88,35 +89,35 @@ public:
 
 protected:
 	// The instance of the engine
-	const HINSTANCE* hInstance = nullptr;
+	const HINSTANCE* m_phInstance = nullptr;
 
 	// The handle of the window
-	HWND hwnd = nullptr;
+	HWND m_hWnd = nullptr;
 
 	// Parent element
-	Panel* p_Parent = nullptr;
+	Panel* m_pParentPanel = nullptr;
 
 	// List of child elements
-	std::vector<Panel*> childPanels;
+	std::vector<Panel*> m_vecChildPanels;
 
 	// Name of the window
-	const wchar_t* windowName = L"Default Window";
+	const wchar_t* m_wszWindowText = L"Default Window";
 
 	// Name of the window class !UNIQUE!
-	const wchar_t* windowClassName = L"Default Window Class";
+	const wchar_t* m_wszWindowClassText = L"Default Window Class";
 
 	// Window styles
-	UINT style = CS_HREDRAW | CS_VREDRAW;
-	DWORD dwExStyle = 0;
-	DWORD dwStyle = WS_CHILD | WS_BORDER | WS_VISIBLE;
+	UINT m_wStyle = CS_HREDRAW | CS_VREDRAW;
+	DWORD m_dwExStyle = 0;
+	DWORD m_dwStyle = WS_CHILD | WS_BORDER | WS_VISIBLE;
 
 	// X and Y position
-	int posX = 0;
-	int posY = 0;
+	int m_nPosX = 0;
+	int m_nPosY = 0;
 
 	// Width and height of window
-	int width = 1280;
-	int height = 720;
+	int m_nWidth = 1280;
+	int m_nHeight = 720;
 
 	void ConstructPanel();
 	void RegisterWindowClass();
@@ -124,5 +125,5 @@ protected:
 	void ShowWindowHandle();
 
 	// Custom window procedure
-	LRESULT CALLBACK RealWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+	LRESULT CALLBACK RealWndProc(HWND m_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 };

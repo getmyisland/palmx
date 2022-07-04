@@ -11,26 +11,26 @@ public:
     };
 
     SystemEvent(const Event pEvent) {
-        event = pEvent;
+        m_Event = pEvent;
     }
 
-    Event getEvent() { return event; }
+    Event getEvent() { return m_Event; }
 
-    std::string getEventName(Event pEvent) {
-        std::string eventName = eventMap.find(pEvent)->second;
+    std::string getEventString(Event p_Event) {
+        std::string strEvent = m_EventMap.find(p_Event)->second;
 
-        if (eventName.empty()) {
-            return "EVENT_NOT_FOUND_ERROR";
+        if (strEvent.empty()) {
+            return "ERROR_EVENT_NOT_FOUND";
         }
         else {
-            return eventName;
+            return strEvent;
         }
     }
 
 private:
-    Event event;
+    Event m_Event;
 
-    std::map<SystemEvent::Event, std::string> eventMap = {
+    std::map<SystemEvent::Event, std::string> m_EventMap = {
         {SystemEvent::Event::TEST, "TEST"}
     };
 };

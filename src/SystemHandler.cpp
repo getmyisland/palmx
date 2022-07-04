@@ -9,7 +9,7 @@ SystemHandler& SystemHandler::Instance() {
 };
 
 void SystemHandler::StartEngine(HINSTANCE hInst) {
-	hInstance = hInst;
+	m_hInstance = hInst;
 
 	InitSystems();
 
@@ -19,8 +19,8 @@ void SystemHandler::StartEngine(HINSTANCE hInst) {
 }
 
 void SystemHandler::InitSystems() {
-	g_InputSystem.Init();
-	g_GUI.Init();
+	m_InputSystem.Init();
+	m_GUI.Init();
 }
 
 void SystemHandler::UpdateSystems() {
@@ -32,17 +32,17 @@ void SystemHandler::UpdateSystems() {
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 
-		g_InputSystem.Update();
-		g_GUI.Update();
+		m_InputSystem.Update();
+		m_GUI.Update();
 	}
 }
 
 void SystemHandler::ShutdownSystems() {
-	g_InputSystem.Shutdown();
-	g_GUI.Shutdown();
+	m_InputSystem.Shutdown();
+	m_GUI.Shutdown();
 }
 
-void SystemHandler::SendEventToSystems(SystemEvent sysEvent) {
-	g_InputSystem.OnEvent(sysEvent);
-	g_GUI.OnEvent(sysEvent);
+void SystemHandler::SendEventToSystems(SystemEvent p_SysEvent) {
+	m_InputSystem.OnEvent(p_SysEvent);
+	m_GUI.OnEvent(p_SysEvent);
 }

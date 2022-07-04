@@ -4,7 +4,7 @@
 InputMapper::InputMapper() {};
 InputMapper::~InputMapper() {};
 
-void InputMapper::MapKeyboardInputToAction(DWORD wVirtKey)
+void InputMapper::MapKeyboardInputToAction(DWORD p_dwVirtKey)
 {
-	std::clog << wVirtKey << std::endl;
+	std::clog << p_dwVirtKey << std::endl;
 }

@@ -118,7 +118,7 @@ void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr
 	}
 }
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+int APIENTRY wWinMain(_In_ HINSTANCE m_phInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR    lpCmdLine,
 	_In_ int       nCmdShow)
@@ -134,7 +134,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	BindCrtHandlesToStdHandles(true, true, true);
 #endif
 
-	SystemHandler::Instance().StartEngine(hInstance);
+	SystemHandler::Instance().StartEngine(m_phInstance);
 
 	return 0;
 }

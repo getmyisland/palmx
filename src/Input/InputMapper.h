@@ -8,5 +8,5 @@ public:
 	InputMapper();
 	~InputMapper();
 
-	void MapKeyboardInputToAction(DWORD wVirtKey);
+	void MapKeyboardInputToAction(DWORD p_dwVirtKey);
 };

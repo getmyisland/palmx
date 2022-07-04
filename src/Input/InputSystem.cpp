@@ -5,7 +5,7 @@ InputSystem::~InputSystem() {};
 
 void InputSystem::Init()
 {
-	g_InputCollector.EnableLowLevelHooks();
+	m_InputCollector.EnableLowLevelHooks();
 }
 
 void InputSystem::Update()
@@ -16,6 +16,6 @@ void InputSystem::Shutdown()
 {
 }
 
-void InputSystem::OnEvent(SystemEvent sysEvent)
+void InputSystem::OnEvent(SystemEvent i_SysEvent)
 {
 }
