@@ -21,7 +21,7 @@
     <ClCompile Include="src\input\InputMapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SystemHandler.cpp">
+    <ClCompile Include="src\SystemManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\input\InputSystem.cpp">
@@ -30,10 +30,19 @@
     <ClCompile Include="src\input\InputCollector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gui\GuiSystem.cpp">
+    <ClCompile Include="src\graphics\GraphicSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gui\gui_controls\Panel.cpp">
+    <ClCompile Include="src\graphics\gui_controls\Panel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SystemGlobals.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\gui_controls\Frame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\gui_controls\EditablePanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +53,7 @@
     <ClInclude Include="src\CSystemEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SystemHandler.h">
+    <ClInclude Include="src\SystemManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ISystem.h">
@@ -56,10 +65,19 @@
     <ClInclude Include="src\input\InputCollector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gui\GuiSystem.h">
+    <ClInclude Include="src\graphics\GraphicSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gui\gui_controls\Panel.h">
+    <ClInclude Include="src\graphics\gui_controls\Panel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SystemGlobals.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\gui_controls\Frame.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\gui_controls\EditablePanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

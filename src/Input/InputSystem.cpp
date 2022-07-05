@@ -8,9 +8,7 @@ void InputSystem::Init()
 	m_InputCollector.EnableLowLevelHooks();
 }
 
-void InputSystem::Update()
-{
-}
+void InputSystem::Update() {};
 
 void InputSystem::Shutdown()
 {

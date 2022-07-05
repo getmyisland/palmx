@@ -19,23 +19,29 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\gui\gui_controls\Panel.cpp" />
-    <ClCompile Include="src\gui\GuiSystem.cpp" />
+    <ClCompile Include="src\graphics\gui_controls\EditablePanel.cpp" />
+    <ClCompile Include="src\graphics\gui_controls\Frame.cpp" />
+    <ClCompile Include="src\SystemGlobals.cpp" />
+    <ClCompile Include="src\graphics\gui_controls\Panel.cpp" />
+    <ClCompile Include="src\graphics\GraphicSystem.cpp" />
     <ClCompile Include="src\input\InputCollector.cpp" />
     <ClCompile Include="src\input\InputMapper.cpp" />
     <ClCompile Include="src\input\InputSystem.cpp" />
     <ClCompile Include="src\Palm_Client.cpp" />
-    <ClCompile Include="src\SystemHandler.cpp" />
+    <ClCompile Include="src\SystemManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\gui\gui_controls\Panel.h" />
-    <ClInclude Include="src\gui\GuiSystem.h" />
+    <ClInclude Include="src\graphics\gui_controls\EditablePanel.h" />
+    <ClInclude Include="src\graphics\gui_controls\Frame.h" />
+    <ClInclude Include="src\SystemGlobals.h" />
+    <ClInclude Include="src\graphics\gui_controls\Panel.h" />
+    <ClInclude Include="src\graphics\GraphicSystem.h" />
     <ClInclude Include="src\input\InputCollector.h" />
     <ClInclude Include="src\input\InputMapper.h" />
     <ClInclude Include="src\input\InputSystem.h" />
     <ClInclude Include="src\ISystem.h" />
     <ClInclude Include="src\CSystemEvent.h" />
-    <ClInclude Include="src\SystemHandler.h" />
+    <ClInclude Include="src\SystemManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

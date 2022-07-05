@@ -1,5 +1,5 @@
-#ifndef ISYSTEM_H
-#define ISYSTEM_H
+#ifndef I_SYSTEM_H
+#define I_SYSTEM_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -13,4 +13,4 @@ class ISystem {
 	virtual void OnEvent(CSystemEvent i_CSystemEvent) = 0;
 };
 
-#endif // ISYSTEM_H
+#endif // I_SYSTEM_H

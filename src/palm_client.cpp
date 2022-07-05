@@ -3,7 +3,7 @@
 #include <iostream>
 #include <io.h>
 #include <fcntl.h>
-#include "SystemHandler.h"
+#include "SystemManager.h"
 
 // Enables iostream in win32 application
 void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr)
@@ -134,7 +134,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE m_phInstance,
 	BindCrtHandlesToStdHandles(true, true, true);
 #endif
 
-	SystemHandler::Instance().StartEngine(m_phInstance);
+	SystemManager::Instance().StartEngine(m_phInstance);
 
 	return 0;
 }

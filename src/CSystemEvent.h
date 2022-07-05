@@ -1,5 +1,5 @@
-#ifndef C_SYSTEMEVENT_H
-#define C_SYSTEMEVENT_H
+#ifndef C_SYSTEM_EVENT_H
+#define C_SYSTEM_EVENT_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -39,4 +39,4 @@ private:
     };
 };
 
-#endif // C_SYSTEMEVENT_H
+#endif // C_SYSTEM_EVENT_H
