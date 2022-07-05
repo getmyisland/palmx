@@ -73,45 +73,23 @@ gui_controls::Frame::Frame(HINSTANCE* p_hInstance, gui_controls::Panel* p_Parent
 
 gui_controls::Frame::~Frame() {};
 
-const wchar_t* gui_controls::Frame::GetWindowName() {
-	return m_wszWindowText;
-}
+// TODO WndProc not working in Frame and EditablePanel
+LRESULT gui_controls::Frame::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	std::cout << "Hello World" << std::endl;
 
-void gui_controls::Frame::SetWindowName(const wchar_t* p_wszNewText) {
-	m_wszWindowText = p_wszNewText;
-	SetWindowText(m_hWnd, m_wszWindowText);
-}
+	switch (uMsg)
+	{
+	case WM_DESTROY:
+	{
+		PostQuitMessage(0);
 
-const wchar_t* gui_controls::Frame::GetWindowClassName() {
-	return m_wszWindowClassText;
-}
+		break;
+	}
+	default: { return DefWindowProc(m_hWnd, uMsg, wParam, lParam); }
+	}
 
-int gui_controls::Frame::GetPosX() {
-	return m_nPosX;
-}
-
-int gui_controls::Frame::GetPosY() {
-	return m_nPosY;
-}
-
-void gui_controls::Frame::SetPos(int p_nPosX, int p_nPosY) {
-	m_nPosX = p_nPosX;
-	m_nPosY = p_nPosY;
-	SetWindowPos(m_hWnd, nullptr, m_nPosX, m_nPosY, m_nWidth, m_nHeight, SWP_FRAMECHANGED);
-}
-
-int gui_controls::Frame::GetWidth() {
-	return m_nWidth;
-}
-
-int gui_controls::Frame::GetHeight() {
-	return m_nHeight;
-}
-
-void gui_controls::Frame::SetSize(int p_nWidth, int p_nHeight) {
-	m_nWidth = p_nWidth;
-	m_nHeight = p_nHeight;
-	SetWindowPos(m_hWnd, nullptr, m_nPosX, m_nPosY, m_nWidth, m_nHeight, SWP_FRAMECHANGED);
+	return DefWindowProc(m_hWnd, uMsg, wParam, lParam);
 }
 
 DWORD gui_controls::Frame::GetDwStyle() {
