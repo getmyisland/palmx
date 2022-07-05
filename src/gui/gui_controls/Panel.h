@@ -1,4 +1,8 @@
+#ifndef GUI_CONTROLS_PANEL_H
+#define GUI_CONTROLS_PANEL_H
+#ifdef _WIN32
 #pragma once
+#endif
 
 #include <Windows.h>
 #include <vector>
@@ -127,3 +131,5 @@ protected:
 	// Custom window procedure
 	LRESULT CALLBACK RealWndProc(HWND m_hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 };
+
+#endif // GUI_CONTROLS_PANEL_H

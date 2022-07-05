@@ -1,4 +1,8 @@
+#ifndef INPUT_MAPPER_H
+#define INPUT_MAPPER_H
+#ifdef _WIN32
 #pragma once
+#endif
 
 #include <Windows.h>
 
@@ -10,3 +14,5 @@ public:
 
 	void MapKeyboardInputToAction(DWORD p_dwVirtKey);
 };
+
+#endif // INPUT_MAPPER_H

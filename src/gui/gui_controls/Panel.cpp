@@ -1,6 +1,5 @@
 #include "Panel.h"
-
-#include "GUI.fwd.h"
+#include "../GuiSystem.h"
 #include <iostream>
 
 Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText) {
@@ -79,7 +78,7 @@ void Panel::ConstructPanel() {
 		m_pParentPanel->AddChild(this);
 	}
 
-	GUI::AddElementToList(this);
+	GuiSystem::AddElementToList(this);
 }
 
 void Panel::RegisterWindowClass() {

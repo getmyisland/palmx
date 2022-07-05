@@ -3,7 +3,7 @@
 #include <iostream>
 #include <io.h>
 #include <fcntl.h>
-#include "SystemHandler.fwd.h"
+#include "SystemHandler.h"
 
 // Enables iostream in win32 application
 void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr)

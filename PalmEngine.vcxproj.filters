@@ -18,30 +18,30 @@
     <ClCompile Include="src\Palm_Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Input\InputMapper.cpp">
+    <ClCompile Include="src\input\InputMapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SystemHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Input\InputSystem.cpp">
+    <ClCompile Include="src\input\InputSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Input\InputCollector.cpp">
+    <ClCompile Include="src\input\InputCollector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GUI\GUI.cpp">
+    <ClCompile Include="src\gui\GuiSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\GUI\Panel.cpp">
+    <ClCompile Include="src\gui\gui_controls\Panel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Input\InputMapper.h">
+    <ClInclude Include="src\input\InputMapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SystemEvent.h">
+    <ClInclude Include="src\CSystemEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SystemHandler.h">
@@ -50,25 +50,16 @@
     <ClInclude Include="src\ISystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input\InputSystem.h">
+    <ClInclude Include="src\input\InputSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input\InputCollector.h">
+    <ClInclude Include="src\input\InputCollector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GUI\GUI.h">
+    <ClInclude Include="src\gui\GuiSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\GUI\Panel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SystemHandler.fwd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Input\InputSystem.fwd.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GUI\GUI.fwd.h">
+    <ClInclude Include="src\gui\gui_controls\Panel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

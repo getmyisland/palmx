@@ -42,7 +42,7 @@ void SystemHandler::ShutdownSystems() {
 	m_GUI.Shutdown();
 }
 
-void SystemHandler::SendEventToSystems(SystemEvent p_SysEvent) {
-	m_InputSystem.OnEvent(p_SysEvent);
-	m_GUI.OnEvent(p_SysEvent);
+void SystemHandler::SendEventToSystems(CSystemEvent p_CSystemEvent) {
+	m_InputSystem.OnEvent(p_CSystemEvent);
+	m_GUI.OnEvent(p_CSystemEvent);
 }

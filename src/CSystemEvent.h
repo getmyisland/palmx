@@ -1,22 +1,26 @@
+#ifndef C_SYSTEMEVENT_H
+#define C_SYSTEMEVENT_H
+#ifdef _WIN32
 #pragma once
+#endif
 
 #include <string>
 #include <map>
 
-class SystemEvent {
+class CSystemEvent {
 public:
     // All Events
     enum class Event {
         TEST
     };
 
-    SystemEvent(const Event pEvent) {
+    CSystemEvent(const Event pEvent) {
         m_Event = pEvent;
     }
 
-    Event getEvent() { return m_Event; }
+    Event GetEvent() { return m_Event; }
 
-    std::string getEventString(Event p_Event) {
+    std::string GetEventString(Event p_Event) {
         std::string strEvent = m_EventMap.find(p_Event)->second;
 
         if (strEvent.empty()) {
@@ -30,7 +34,9 @@ public:
 private:
     Event m_Event;
 
-    std::map<SystemEvent::Event, std::string> m_EventMap = {
-        {SystemEvent::Event::TEST, "TEST"}
+    std::map<CSystemEvent::Event, std::string> m_EventMap = {
+        {CSystemEvent::Event::TEST, "TEST"}
     };
 };
+
+#endif // C_SYSTEMEVENT_H

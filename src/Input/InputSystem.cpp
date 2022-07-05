@@ -16,6 +16,6 @@ void InputSystem::Shutdown()
 {
 }
 
-void InputSystem::OnEvent(SystemEvent i_SysEvent)
+void InputSystem::OnEvent(CSystemEvent i_CSystemEvent)
 {
 }
