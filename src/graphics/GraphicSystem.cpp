@@ -11,8 +11,8 @@ void GraphicSystem::Init() {
 	gui_controls::Frame ROOT = gui_controls::Frame(m_phInstance, nullptr, L"PalmEngine");
 	m_pROOT = &ROOT;
 
-	//gui_controls::Frame Viewport = gui_controls::Frame(m_phInstance, m_pROOT, L"BaseViewport", ROOT.GetPosX(), ROOT.GetPosY(), ROOT.GetWidth(), ROOT.GetHeight());
-	//m_pViewport = &Viewport;
+	gui_controls::Panel Viewport = gui_controls::Panel(m_phInstance, m_pROOT, L"BaseViewport", 0, 0, 1920, 1080);
+	m_pViewport = &Viewport;
 }
 
 void GraphicSystem::Update() {};

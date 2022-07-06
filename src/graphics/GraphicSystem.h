@@ -22,6 +22,10 @@ public:
 
 	static void AddElementToList(gui_controls::Panel* p_PanelToAdd);
 	
+	gui_controls::Panel* GetRoot() {
+		return m_pROOT;
+	}
+
 	gui_controls::Panel* GetViewport() {
 		return m_pViewport;
 	}

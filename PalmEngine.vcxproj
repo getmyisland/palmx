@@ -46,7 +46,7 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="doc\Info.md" />
-    <None Include="doc\README.md" />
+    <None Include="src\README.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

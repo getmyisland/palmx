@@ -1,4 +1,4 @@
-# Information
+# [OBSOLETE (Transfer to website)] Information
 
 ## Naming Convention
 

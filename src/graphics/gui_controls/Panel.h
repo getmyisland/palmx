@@ -16,7 +16,7 @@ namespace gui_controls {
 		Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText, UINT p_wStyle, DWORD p_dwExStyle, DWORD p_dwStyle, int p_nPosX, int p_nPosY, int p_nWidth, int p_nHeight); // Complete Constructor
 		~Panel();
 
-		// General
+		// Window methods
 		HWND* GetHandle();
 
 		virtual const wchar_t* GetWindowName();
@@ -30,18 +30,18 @@ namespace gui_controls {
 		void SetEnabled(bool p_bEnabled);
 		bool IsEnabled();
 
-		// Parent
+		// Parent methods
 		Panel* GetParentPanel();
 		bool HasParent(Panel* p_pParentPanel);
 		void SetNewParent(Panel* p_pNewParentPanel);
 
-		// Child
+		// Child methods
 		void OnChildAdded(Panel* p_pAddedChildPanel);
 		Panel* GetChildPanel(int p_ixChild);
 		Panel* FindChildPanelByName(const wchar_t* p_wszChildName);
 		int GetChildPanelCount();
 
-		// Layout
+		// Layout methods
 		virtual int GetPosX();
 		virtual int GetPosY();
 		virtual void SetPos(int p_nPosX, int p_nPosY);
@@ -50,7 +50,7 @@ namespace gui_controls {
 		virtual int GetHeight();
 		virtual void SetSize(int p_nWidth, int p_nHeight);
 
-		// Painting
+		// Style methods
 		virtual UINT GetStyle();
 
 		virtual DWORD GetDwExStyle();
@@ -96,7 +96,7 @@ namespace gui_controls {
 		int m_nWidth = 1280;
 		int m_nHeight = 720;
 
-		virtual void ConstructPanel();
+		void ConstructPanel();
 		virtual void RegisterWindowClass();
 		virtual HWND CreateWindowHandle();
 		virtual void ShowWindowHandle();

@@ -54,7 +54,6 @@ void SystemManager::GameLoop() {
 
 	// Main game loop
 	MSG msg;
-
 	while (GetMessage(&msg, nullptr, 0, 0))
 	{
 		TranslateMessage(&msg);

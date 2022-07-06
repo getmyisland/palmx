@@ -79,15 +79,17 @@ void gui_controls::Panel::ConstructPanel() {
 	}
 
 	GraphicSystem::AddElementToList(this);
+
+	std::wcout << L"Finished constructing " << GetWindowName() << std::endl;
 }
 
 void gui_controls::Panel::RegisterWindowClass() {
-	WNDCLASSEXW windowClass = { 0 };;
+	WNDCLASSEXW windowClass = { 0 };
 
 	windowClass.cbSize = sizeof(WNDCLASSEX);
 
 	windowClass.style = GetStyle();
-	windowClass.lpfnWndProc = StaticWndProc;
+	windowClass.lpfnWndProc = Panel::StaticWndProc;
 	windowClass.cbClsExtra = 0;
 	windowClass.cbWndExtra = 50;
 	windowClass.hInstance = *m_phInstance;
@@ -111,7 +113,7 @@ HWND gui_controls::Panel::CreateWindowHandle() {
 	}
 	else {
 		return CreateWindowEx(GetDwExStyle(), GetWindowClassName(), GetWindowName(), GetDwStyle(),
-			GetPosX(), GetPosY(), GetWidth(), GetHeight(), nullptr, nullptr, *m_phInstance, nullptr);
+			GetPosX(), GetPosY(), GetWidth(), GetHeight(), nullptr, nullptr, *m_phInstance, this);
 	}
 }
 
@@ -139,6 +141,8 @@ LRESULT gui_controls::Panel::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam,
 
 LRESULT gui_controls::Panel::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
+	std::cout << "Panel" << std::endl;
+
 	switch (uMsg)
 	{
 	case WM_DESTROY:
