@@ -1,5 +1,5 @@
-#ifndef C_SYSTEM_EVENT_H
-#define C_SYSTEM_EVENT_H
+#ifndef C_MODULE_EVENT_H
+#define C_MODULE_EVENT_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -7,14 +7,14 @@
 #include <string>
 #include <map>
 
-class CSystemEvent {
+class C_ModuleEvent {
 public:
     // All Events
     enum class Event {
         TEST
     };
 
-    CSystemEvent(const Event pEvent) {
+    C_ModuleEvent(const Event pEvent) {
         m_Event = pEvent;
     }
 
@@ -34,9 +34,9 @@ public:
 private:
     Event m_Event;
 
-    std::map<CSystemEvent::Event, std::string> m_EventMap = {
-        {CSystemEvent::Event::TEST, "TEST"}
+    std::map<C_ModuleEvent::Event, std::string> m_EventMap = {
+        {C_ModuleEvent::Event::TEST, "TEST"}
     };
 };
 
-#endif // C_SYSTEM_EVENT_H
+#endif // C_MODULE_EVENT_H

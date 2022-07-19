@@ -21,27 +21,27 @@
   <ItemGroup>
     <ClCompile Include="src\graphics\gui_controls\EditablePanel.cpp" />
     <ClCompile Include="src\graphics\gui_controls\Frame.cpp" />
-    <ClCompile Include="src\SystemGlobals.cpp" />
+    <ClCompile Include="src\Modules.cpp" />
     <ClCompile Include="src\graphics\gui_controls\Panel.cpp" />
-    <ClCompile Include="src\graphics\GraphicSystem.cpp" />
-    <ClCompile Include="src\input\InputCollector.cpp" />
-    <ClCompile Include="src\input\InputMapper.cpp" />
-    <ClCompile Include="src\input\InputSystem.cpp" />
+    <ClCompile Include="src\graphics\GraphicModule.cpp" />
+    <ClCompile Include="src\input\C_InputCollector.cpp" />
+    <ClCompile Include="src\input\C_InputMapper.cpp" />
+    <ClCompile Include="src\input\InputModule.cpp" />
     <ClCompile Include="src\Palm_Client.cpp" />
-    <ClCompile Include="src\SystemManager.cpp" />
+    <ClCompile Include="src\ModuleManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\graphics\gui_controls\EditablePanel.h" />
     <ClInclude Include="src\graphics\gui_controls\Frame.h" />
-    <ClInclude Include="src\SystemGlobals.h" />
+    <ClInclude Include="src\Modules.h" />
     <ClInclude Include="src\graphics\gui_controls\Panel.h" />
-    <ClInclude Include="src\graphics\GraphicSystem.h" />
-    <ClInclude Include="src\input\InputCollector.h" />
-    <ClInclude Include="src\input\InputMapper.h" />
-    <ClInclude Include="src\input\InputSystem.h" />
-    <ClInclude Include="src\ISystem.h" />
-    <ClInclude Include="src\CSystemEvent.h" />
-    <ClInclude Include="src\SystemManager.h" />
+    <ClInclude Include="src\graphics\GraphicModule.h" />
+    <ClInclude Include="src\input\C_InputCollector.h" />
+    <ClInclude Include="src\input\C_InputMapper.h" />
+    <ClInclude Include="src\input\InputModule.h" />
+    <ClInclude Include="src\IModule.h" />
+    <ClInclude Include="src\C_ModuleEvent.h" />
+    <ClInclude Include="src\ModuleManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

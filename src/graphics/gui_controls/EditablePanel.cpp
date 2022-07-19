@@ -86,7 +86,7 @@ void gui_controls::EditablePanel::RegisterWindowClass() {
 	windowClass.cbWndExtra = 50;
 	windowClass.hInstance = *m_phInstance;
 	windowClass.hIcon = LoadIcon(*m_phInstance, IDI_APPLICATION);
-	windowClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	windowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	windowClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 	windowClass.lpszMenuName = nullptr;
 	windowClass.lpszClassName = GetWindowClassName();

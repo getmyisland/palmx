@@ -84,7 +84,7 @@ void gui_controls::Frame::RegisterWindowClass() {
 	windowClass.cbWndExtra = 50;
 	windowClass.hInstance = *m_phInstance;
 	windowClass.hIcon = LoadIcon(*m_phInstance, IDI_APPLICATION);
-	windowClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	windowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	windowClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 	windowClass.lpszMenuName = nullptr;
 	windowClass.lpszClassName = GetWindowClassName();
@@ -120,12 +120,8 @@ LRESULT gui_controls::Frame::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam,
 
 LRESULT gui_controls::Frame::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	std::cout << "Frame" << std::endl;
-
-	switch (uMsg)
-	{
-	case WM_DESTROY:
-	{
+	switch (uMsg) {
+	case WM_DESTROY: {
 		PostQuitMessage(0);
 
 		break;

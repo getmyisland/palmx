@@ -1,24 +1,24 @@
-#ifndef GRAPHIC_SYSTEM_H
-#define GRAPHIC_SYSTEM_H
+#ifndef GRAPHIC_MODULE_H
+#define GRAPHIC_MODULE_H
 #ifdef _WIN32
 #pragma once
 #endif
 
-#include "../ISystem.h"
+#include "../IModule.h"
 #include "gui_controls/Frame.h"
 #include <Windows.h>
 #include <vector>
 
-class GraphicSystem : public ISystem {
+class GraphicModule : public ISystem {
 public:
-	GraphicSystem();
-	~GraphicSystem();
+	GraphicModule();
+	~GraphicModule();
 	
 	// Inherited via ISystem
 	virtual void Init() override;
 	virtual void Update() override;
 	virtual void Shutdown() override;
-	virtual void OnEvent(CSystemEvent i_CSystemEvent) override;
+	virtual void OnEvent(C_ModuleEvent* i_CSystemEvent) override;
 
 	static void AddElementToList(gui_controls::Panel* p_PanelToAdd);
 	
@@ -39,4 +39,4 @@ private:
 	static std::vector<gui_controls::Panel*> s_vecPanels;
 };
 
-#endif // GRAPHIC_SYSTEM_H
+#endif // GRAPHIC_MODULE_H

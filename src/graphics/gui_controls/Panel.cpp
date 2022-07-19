@@ -1,5 +1,5 @@
 #include "Panel.h"
-#include "../GraphicSystem.h"
+#include "../GraphicModule.h"
 #include <iostream>
 
 gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText) {
@@ -63,12 +63,14 @@ gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const w
 gui_controls::Panel::~Panel() {};
 
 void gui_controls::Panel::ConstructPanel() {
+	std::wcout << L"Creating " << GetWindowName() << std::endl;
+
 	RegisterWindowClass();
 
 	m_hWnd = CreateWindowHandle();
 
 	if (m_hWnd == nullptr) {
-		std::cout << "Failed to create handle" << std::endl;
+		std::wcout << L"Failed to create handle" << std::endl;
 		return;
 	}
 
@@ -77,10 +79,13 @@ void gui_controls::Panel::ConstructPanel() {
 	if (m_pParentPanel != nullptr) {
 		m_pParentPanel->OnChildAdded(this);
 	}
+	else {
+		std::wcout << L"No parent panel provided" << std::endl;
+	}
 
-	GraphicSystem::AddElementToList(this);
+	GraphicModule::AddElementToList(this);
 
-	std::wcout << L"Finished constructing " << GetWindowName() << std::endl;
+	std::wcout << L"Finished creating " << GetWindowName() << std::endl;
 }
 
 void gui_controls::Panel::RegisterWindowClass() {
@@ -94,7 +99,7 @@ void gui_controls::Panel::RegisterWindowClass() {
 	windowClass.cbWndExtra = 50;
 	windowClass.hInstance = *m_phInstance;
 	windowClass.hIcon = LoadIcon(*m_phInstance, IDI_APPLICATION);
-	windowClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
+	windowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 	windowClass.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
 	windowClass.lpszMenuName = nullptr;
 	windowClass.lpszClassName = GetWindowClassName();
@@ -141,8 +146,6 @@ LRESULT gui_controls::Panel::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam,
 
 LRESULT gui_controls::Panel::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	std::cout << "Panel" << std::endl;
-
 	switch (uMsg)
 	{
 	case WM_DESTROY:

@@ -1,10 +1,10 @@
-#include "InputCollector.h"
+#include "C_InputCollector.h"
 #include <iostream>
 
-InputCollector::InputCollector(InputMapper* inputMapper) { inputMapper = m_pInputMapper; };
-InputCollector::~InputCollector() {};
+C_InputCollector::C_InputCollector(C_InputMapper* inputMapper) { inputMapper = m_pInputMapper; };
+C_InputCollector::~C_InputCollector() {};
 
-InputCollector* g_pInputCollector = nullptr;
+C_InputCollector* g_pInputCollector = nullptr;
 
 HHOOK g_hHookKeyboard{ NULL };
 HHOOK g_hHookMouse{ NULL };
@@ -62,7 +62,7 @@ LRESULT mouse_hook(const int nCode, const WPARAM wParam, const LPARAM lParam)
 	return CallNextHookEx(g_hHookMouse, nCode, wParam, lParam);
 }
 
-void InputCollector::EnableLowLevelHooks()
+void C_InputCollector::EnableLowLevelHooks()
 {
 	g_pInputCollector = this;
 
@@ -70,6 +70,6 @@ void InputCollector::EnableLowLevelHooks()
 	g_hHookMouse = SetWindowsHookEx(WH_MOUSE_LL, mouse_hook, nullptr, 0);
 }
 
-void InputCollector::SendKeyboardInputToInputMapper(DWORD p_dwVirtKey) {
+void C_InputCollector::SendKeyboardInputToInputMapper(DWORD p_dwVirtKey) {
 	m_pInputMapper->MapKeyboardInputToAction(p_dwVirtKey);
 }

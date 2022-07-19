@@ -18,25 +18,25 @@
     <ClCompile Include="src\Palm_Client.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\input\InputMapper.cpp">
+    <ClCompile Include="src\input\C_InputMapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SystemManager.cpp">
+    <ClCompile Include="src\ModuleManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\input\InputSystem.cpp">
+    <ClCompile Include="src\input\InputModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\input\InputCollector.cpp">
+    <ClCompile Include="src\input\C_InputCollector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\GraphicSystem.cpp">
+    <ClCompile Include="src\graphics\GraphicModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\gui_controls\Panel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SystemGlobals.cpp">
+    <ClCompile Include="src\Modules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\graphics\gui_controls\Frame.cpp">
@@ -47,31 +47,31 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\input\InputMapper.h">
+    <ClInclude Include="src\input\C_InputMapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\CSystemEvent.h">
+    <ClInclude Include="src\C_ModuleEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SystemManager.h">
+    <ClInclude Include="src\ModuleManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ISystem.h">
+    <ClInclude Include="src\IModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\input\InputSystem.h">
+    <ClInclude Include="src\input\InputModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\input\InputCollector.h">
+    <ClInclude Include="src\input\C_InputCollector.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\GraphicSystem.h">
+    <ClInclude Include="src\graphics\GraphicModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\gui_controls\Panel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\SystemGlobals.h">
+    <ClInclude Include="src\Modules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\gui_controls\Frame.h">
