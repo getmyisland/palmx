@@ -58,43 +58,25 @@ void ModuleManager::GameLoop()
 	game_state current_state;
 	game_state previous_state;
 
-	bool game_running = true;
-
-	MSG msg;
-	BOOL bRet;
 	while (game_running)
 	{
-
-		bRet = GetMessage(&msg, NULL, NULL, NULL);
-
-		if (bRet == -1)
-		{
-			std::wcout << GetLastError() << L" Error occured in main game loop" << std::endl;
-			game_running = false;
-		}
-		else
-		{
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-
-		//auto delta_time = clock::now() - time_start;
-		//time_start = clock::now();
-		//lag += std::chrono::duration_cast<std::chrono::nanoseconds>(delta_time);
+		auto delta_time = clock::now() - time_start;
+		time_start = clock::now();
+		lag += std::chrono::duration_cast<std::chrono::nanoseconds>(delta_time);
 
 		// update game logic as lag permits
-		//while (lag >= timestep) {
-			//lag -= timestep;
+		while (lag >= timestep) {
+			lag -= timestep;
 
-			//previous_state = current_state;
-			//UpdateSystems(); // update at a fixed rate each time
-		//}
+			previous_state = current_state;
+			UpdateSystems(); // update at a fixed rate each time
+		}
 
 		// calculate how close or far we are from the next timestep
-		//auto alpha = (float)lag.count() / timestep.count();
-		//auto interpolated_state = Interpolate(current_state, previous_state, alpha);
+		auto alpha = (float)lag.count() / timestep.count();
+		auto interpolated_state = Interpolate(current_state, previous_state, alpha);
 
-		//RenderSystems();
+		RenderSystems();
 	}
 }
 
@@ -105,7 +87,7 @@ void ModuleManager::UpdateSystems()
 
 void ModuleManager::RenderSystems()
 {
-
+	Module::g_GraphicSystem.Update();
 }
 
 void ModuleManager::ShutdownSystems()
@@ -117,4 +99,9 @@ void ModuleManager::ShutdownSystems()
 void ModuleManager::SendEventToSystems(C_ModuleEvent p_CSystemEvent)
 {
 
+}
+
+void ModuleManager::KillGameLoop()
+{
+	game_running = false;
 }

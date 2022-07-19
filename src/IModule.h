@@ -6,7 +6,7 @@
 
 #include "C_ModuleEvent.h"
 
-class ISystem
+class IModule
 {
 	virtual void Init() = 0;
 	virtual void Update() = 0;

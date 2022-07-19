@@ -18,6 +18,23 @@ gui_controls::Frame::Frame(HINSTANCE* p_hInstance, gui_controls::Panel* p_Parent
 	ConstructPanel();
 }
 
+gui_controls::Frame::Frame(HINSTANCE* p_hInstance, const wchar_t* p_wszWindowText)
+{
+	m_phInstance = p_hInstance;
+
+	if (m_phInstance == nullptr)
+	{
+		std::cout << "HINSTANCE is a nullptr" << std::endl;
+		return;
+	}
+
+	m_wszWindowText = p_wszWindowText;
+	m_wszWindowClassText = p_wszWindowText;
+	m_dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
+
+	ConstructPanel();
+}
+
 gui_controls::Frame::Frame(HINSTANCE* p_hInstance, gui_controls::Panel* p_ParentPanel, const wchar_t* p_wszWindowText, DWORD p_dwStyle)
 {
 	m_phInstance = p_hInstance;

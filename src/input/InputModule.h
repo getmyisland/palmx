@@ -8,7 +8,7 @@
 #include "C_InputCollector.h"
 #include "C_InputMapper.h"
 
-class InputModule : public ISystem
+class InputModule : public IModule
 {
 public:
 	InputModule();

@@ -77,6 +77,7 @@ void gui_controls::Panel::ConstructPanel()
 	if (m_hWnd == nullptr)
 	{
 		std::wcout << L"Failed to create handle" << std::endl;
+		std::wcout << GetLastError() << std::endl;
 		return;
 	}
 

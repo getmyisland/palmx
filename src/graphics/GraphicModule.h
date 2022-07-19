@@ -8,8 +8,9 @@
 #include "gui_controls/Frame.h"
 #include <Windows.h>
 #include <vector>
+#include <thread>
 
-class GraphicModule : public ISystem
+class GraphicModule : public IModule
 {
 public:
 	GraphicModule();
@@ -23,16 +24,26 @@ public:
 
 	static void AddElementToList(gui_controls::Panel* p_PanelToAdd);
 
-	gui_controls::Panel* GetRoot() {
+	HINSTANCE* GetHInstance()
+	{
+		return m_phInstance;
+	}
+
+	gui_controls::Panel* GetRoot()
+	{
 		return m_pROOT;
 	}
 
-	gui_controls::Panel* GetViewport() {
+	gui_controls::Panel* GetViewport()
+	{
 		return m_pViewport;
 	}
 
 private:
 	HINSTANCE* m_phInstance = nullptr;
+
+	MSG msg;
+	BOOL bRet;
 
 	gui_controls::Panel* m_pROOT = nullptr;
 	gui_controls::Panel* m_pViewport = nullptr;

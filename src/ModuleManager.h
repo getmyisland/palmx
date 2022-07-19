@@ -14,6 +14,7 @@ public:
 
 	void StartEngine(HINSTANCE p_hInst);
 	void SendEventToSystems(C_ModuleEvent p_CSystemEvent);
+	void KillGameLoop();
 
 	HINSTANCE* GetHInstance()
 	{
@@ -25,6 +26,8 @@ private:
 
 	// The instance of the engine
 	HINSTANCE m_hInstance = nullptr;
+
+	bool game_running = true;
 
 	void InitSystems();
 	void GameLoop();

@@ -88,7 +88,7 @@ namespace gui_controls
 		// Window styles
 		UINT m_wStyle = 0;
 		DWORD m_dwExStyle = WS_EX_APPWINDOW;
-		DWORD m_dwStyle = WS_CLIPCHILDREN; // WS_CHILD | WS_BORDER | WS_VISIBLE
+		DWORD m_dwStyle = WS_CLIPCHILDREN | WS_CHILD; // WS_CHILD | WS_BORDER | WS_VISIBLE
 
 		// X and Y position
 		int m_nPosX = 0;
