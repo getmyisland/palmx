@@ -7,7 +7,8 @@
 #include "input/InputModule.h"
 #include "graphics/GraphicModule.h"
 
-namespace Module {
+namespace Module
+{
 	extern InputModule g_InputSystem;
 	extern GraphicModule g_GraphicSystem;
 }

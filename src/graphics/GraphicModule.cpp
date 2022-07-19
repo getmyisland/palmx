@@ -5,7 +5,8 @@
 GraphicModule::GraphicModule() {};
 GraphicModule::~GraphicModule() {};
 
-void GraphicModule::Init() {
+void GraphicModule::Init() 
+{
 	m_phInstance = ModuleManager::Instance().GetHInstance();
 
 	gui_controls::Frame ROOT = gui_controls::Frame(m_phInstance, nullptr, L"PalmEngine");
@@ -17,11 +18,13 @@ void GraphicModule::Init() {
 
 void GraphicModule::Update() {};
 
-void GraphicModule::Shutdown() {
+void GraphicModule::Shutdown() 
+{
 
 }
 
-void GraphicModule::OnEvent(C_ModuleEvent* i_CSystemEvent) {
+void GraphicModule::OnEvent(C_ModuleEvent* i_CSystemEvent) 
+{
 
 }
 

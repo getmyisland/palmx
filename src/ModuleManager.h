@@ -15,7 +15,10 @@ public:
 	void StartEngine(HINSTANCE p_hInst);
 	void SendEventToSystems(C_ModuleEvent p_CSystemEvent);
 
-	HINSTANCE* GetHInstance() { return &m_hInstance; }
+	HINSTANCE* GetHInstance()
+	{
+		return &m_hInstance;
+	}
 
 private:
 	ModuleManager() {};

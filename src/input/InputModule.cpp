@@ -12,8 +12,10 @@ void InputModule::Update() {};
 
 void InputModule::Shutdown()
 {
+
 }
 
 void InputModule::OnEvent(C_ModuleEvent* i_CSystemEvent)
 {
+
 }

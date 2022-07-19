@@ -6,8 +6,10 @@
 
 #include "Panel.h"
 
-namespace gui_controls {
-	class EditablePanel : public Panel {
+namespace gui_controls
+{
+	class EditablePanel : public Panel
+	{
 	public:
 		EditablePanel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText); // Standard
 		EditablePanel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText, UINT p_wStyle, DWORD p_dwStyle);

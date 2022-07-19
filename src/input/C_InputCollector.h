@@ -7,7 +7,8 @@
 #include <Windows.h>
 #include "C_InputMapper.h"
 
-class C_InputCollector {
+class C_InputCollector
+{
 public:
 	C_InputCollector(C_InputMapper* p_pInputMapper);
 	~C_InputCollector();

@@ -9,11 +9,13 @@ using namespace std::chrono_literals;
 // we use a fixed timestep of 1 / (60 fps) = 16 milliseconds
 constexpr std::chrono::nanoseconds timestep(16ms);
 
-struct game_state {
+struct game_state
+{
 	// this contains the state of your game, such as positions and velocities
 };
 
-game_state Interpolate(game_state const& current, game_state const& previous, float alpha) {
+game_state Interpolate(game_state const& current, game_state const& previous, float alpha)
+{
 	game_state interpolated_state;
 
 	// interpolate between previous and current by alpha here
@@ -21,13 +23,15 @@ game_state Interpolate(game_state const& current, game_state const& previous, fl
 	return interpolated_state;
 }
 
-ModuleManager& ModuleManager::Instance() {
+ModuleManager& ModuleManager::Instance()
+{
 	static ModuleManager    instance;
 
 	return instance;
 };
 
-void ModuleManager::StartEngine(HINSTANCE hInst) {
+void ModuleManager::StartEngine(HINSTANCE hInst)
+{
 	m_hInstance = hInst;
 
 	InitSystems();
@@ -37,12 +41,14 @@ void ModuleManager::StartEngine(HINSTANCE hInst) {
 	ShutdownSystems();
 }
 
-void ModuleManager::InitSystems() {
+void ModuleManager::InitSystems()
+{
 	Module::g_InputSystem.Init();
 	Module::g_GraphicSystem.Init();
 }
 
-void ModuleManager::GameLoop() {
+void ModuleManager::GameLoop()
+{
 	using clock = std::chrono::high_resolution_clock;
 
 	std::chrono::nanoseconds lag(0ns);
@@ -56,16 +62,18 @@ void ModuleManager::GameLoop() {
 
 	MSG msg;
 	BOOL bRet;
-	while (game_running) {
+	while (game_running)
+	{
 
 		bRet = GetMessage(&msg, NULL, NULL, NULL);
-		
+
 		if (bRet == -1)
 		{
 			std::wcout << GetLastError() << L" Error occured in main game loop" << std::endl;
 			game_running = false;
 		}
-		else {
+		else
+		{
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
@@ -90,19 +98,23 @@ void ModuleManager::GameLoop() {
 	}
 }
 
-void ModuleManager::UpdateSystems() {
+void ModuleManager::UpdateSystems()
+{
 
 }
 
-void ModuleManager::RenderSystems() {
+void ModuleManager::RenderSystems()
+{
 
 }
 
-void ModuleManager::ShutdownSystems() {
+void ModuleManager::ShutdownSystems()
+{
 	Module::g_InputSystem.Shutdown();
 	Module::g_GraphicSystem.Shutdown();
 }
 
-void ModuleManager::SendEventToSystems(C_ModuleEvent p_CSystemEvent) {
+void ModuleManager::SendEventToSystems(C_ModuleEvent p_CSystemEvent)
+{
 
 }

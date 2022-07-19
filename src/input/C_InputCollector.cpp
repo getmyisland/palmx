@@ -1,7 +1,11 @@
 #include "C_InputCollector.h"
 #include <iostream>
 
-C_InputCollector::C_InputCollector(C_InputMapper* inputMapper) { inputMapper = m_pInputMapper; };
+C_InputCollector::C_InputCollector(C_InputMapper* inputMapper)
+{
+	inputMapper = m_pInputMapper;
+}
+
 C_InputCollector::~C_InputCollector() {};
 
 C_InputCollector* g_pInputCollector = nullptr;
@@ -10,9 +14,12 @@ HHOOK g_hHookKeyboard{ NULL };
 HHOOK g_hHookMouse{ NULL };
 
 // See https://docs.microsoft.com/de-de/windows/win32/winmsg/lowlevelkeyboardproc
-LRESULT CALLBACK keyboard_hook(const int nCode, const WPARAM wParam, const LPARAM lParam) {
-	switch (wParam) {
-	case (WM_KEYDOWN): {
+LRESULT CALLBACK keyboard_hook(const int nCode, const WPARAM wParam, const LPARAM lParam)
+{
+	switch (wParam)
+	{
+	case (WM_KEYDOWN):
+	{
 		KBDLLHOOKSTRUCT* kbdStruct = (KBDLLHOOKSTRUCT*)lParam;
 		DWORD wVirtKey = kbdStruct->vkCode;
 		DWORD wScanCode = kbdStruct->scanCode;
@@ -21,13 +28,16 @@ LRESULT CALLBACK keyboard_hook(const int nCode, const WPARAM wParam, const LPARA
 
 		break;
 	}
-	case (WM_KEYUP): {
+	case (WM_KEYUP):
+	{
 		break;
 	}
-	case(WM_SYSKEYDOWN): {
+	case(WM_SYSKEYDOWN):
+	{
 		break;
 	}
-	case (WM_SYSKEYUP): {
+	case (WM_SYSKEYUP):
+	{
 		break;
 	}
 	}
@@ -38,23 +48,30 @@ LRESULT CALLBACK keyboard_hook(const int nCode, const WPARAM wParam, const LPARA
 // See https://docs.microsoft.com/de-de/windows/win32/winmsg/lowlevelmouseproc
 LRESULT mouse_hook(const int nCode, const WPARAM wParam, const LPARAM lParam)
 {
-	switch (wParam) {
-	case (WM_LBUTTONDOWN): {
+	switch (wParam)
+	{
+	case (WM_LBUTTONDOWN):
+	{
 		break;
 	}
-	case (WM_LBUTTONUP): {
+	case (WM_LBUTTONUP):
+	{
 		break;
 	}
-	case (WM_RBUTTONDOWN): {
+	case (WM_RBUTTONDOWN):
+	{
 		break;
 	}
-	case (WM_RBUTTONUP): {
+	case (WM_RBUTTONUP):
+	{
 		break;
 	}
-	case (WM_MOUSEWHEEL): {
+	case (WM_MOUSEWHEEL):
+	{
 		break;
 	}
-	case (WM_MOUSEMOVE): {
+	case (WM_MOUSEMOVE):
+	{
 		break;
 	}
 	}
@@ -70,6 +87,7 @@ void C_InputCollector::EnableLowLevelHooks()
 	g_hHookMouse = SetWindowsHookEx(WH_MOUSE_LL, mouse_hook, nullptr, 0);
 }
 
-void C_InputCollector::SendKeyboardInputToInputMapper(DWORD p_dwVirtKey) {
+void C_InputCollector::SendKeyboardInputToInputMapper(DWORD p_dwVirtKey)
+{
 	m_pInputMapper->MapKeyboardInputToAction(p_dwVirtKey);
 }

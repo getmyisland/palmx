@@ -7,8 +7,10 @@
 #include "EditablePanel.h"
 #include <Windows.h>
 
-namespace gui_controls {
-	class Frame : public EditablePanel {
+namespace gui_controls
+{
+	class Frame : public EditablePanel
+	{
 	public:
 		Frame(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText); // Standard
 		Frame(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText, DWORD p_dwStyle);
@@ -45,7 +47,7 @@ namespace gui_controls {
 		const wchar_t* m_wszWindowClassText = L"Default Window Class";
 
 		DWORD m_dwStyle = WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN;
-		
+
 		// X and Y position
 		int m_nPosX = 0;
 		int m_nPosY = 0;

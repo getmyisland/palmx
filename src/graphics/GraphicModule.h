@@ -9,11 +9,12 @@
 #include <Windows.h>
 #include <vector>
 
-class GraphicModule : public ISystem {
+class GraphicModule : public ISystem
+{
 public:
 	GraphicModule();
 	~GraphicModule();
-	
+
 	// Inherited via ISystem
 	virtual void Init() override;
 	virtual void Update() override;
@@ -21,7 +22,7 @@ public:
 	virtual void OnEvent(C_ModuleEvent* i_CSystemEvent) override;
 
 	static void AddElementToList(gui_controls::Panel* p_PanelToAdd);
-	
+
 	gui_controls::Panel* GetRoot() {
 		return m_pROOT;
 	}
