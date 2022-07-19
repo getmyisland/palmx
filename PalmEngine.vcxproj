@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
-    <None Include="doc\Info.md" />
     <None Include="src\README.md" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

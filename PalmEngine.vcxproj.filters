@@ -84,6 +84,5 @@
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="src\README.md" />
-    <None Include="doc\Info.md" />
   </ItemGroup>
 </Project>
