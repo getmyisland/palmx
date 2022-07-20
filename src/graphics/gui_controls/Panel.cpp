@@ -165,12 +165,6 @@ LRESULT gui_controls::Panel::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, L
 {
 	switch (uMsg)
 	{
-	case WM_DESTROY:
-	{
-		PostQuitMessage(0);
-
-		break;
-	}
 	default: { return DefWindowProc(m_hWnd, uMsg, wParam, lParam); }
 	}
 

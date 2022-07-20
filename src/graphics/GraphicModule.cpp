@@ -9,7 +9,7 @@ void GraphicModule::Init()
 {
 	m_phInstance = ModuleManager::Instance().GetHInstance();
 
-	gui_controls::Frame ROOT = gui_controls::Frame(m_phInstance, L"PalmEngine");
+	gui_controls::Frame ROOT = gui_controls::Frame(m_phInstance, nullptr, L"PalmEngine", WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, 0, 0, 1280, 720);
 	m_pROOT = &ROOT;
 
 	gui_controls::Panel Viewport = gui_controls::Panel(m_phInstance, m_pROOT, L"BaseViewport");

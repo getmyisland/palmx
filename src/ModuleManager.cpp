@@ -105,3 +105,8 @@ void ModuleManager::KillGameLoop()
 {
 	game_running = false;
 }
+
+HINSTANCE* ModuleManager::GetHInstance()
+{
+	return &m_hInstance;
+}

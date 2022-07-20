@@ -118,6 +118,7 @@ void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr
 	}
 }
 
+// Main entry
 int APIENTRY wWinMain(_In_ HINSTANCE m_phInstance,
 	_In_opt_ HINSTANCE hPrevInstance,
 	_In_ LPWSTR    lpCmdLine,

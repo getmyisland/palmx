@@ -16,10 +16,7 @@ public:
 	void SendEventToSystems(C_ModuleEvent p_CSystemEvent);
 	void KillGameLoop();
 
-	HINSTANCE* GetHInstance()
-	{
-		return &m_hInstance;
-	}
+	HINSTANCE* GetHInstance();
 
 private:
 	ModuleManager() {};
