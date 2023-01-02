@@ -9,6 +9,7 @@
 
 namespace Module
 {
+	// All modules listed here
 	extern InputModule g_InputSystem;
 	extern GraphicModule g_GraphicSystem;
 }

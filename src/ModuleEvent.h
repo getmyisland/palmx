@@ -1,5 +1,5 @@
-#ifndef C_MODULE_EVENT_H
-#define C_MODULE_EVENT_H
+#ifndef MODULE_EVENT_H
+#define MODULE_EVENT_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -7,7 +7,7 @@
 #include <string>
 #include <map>
 
-class C_ModuleEvent
+class ModuleEvent
 {
 public:
 	// All Events
@@ -16,7 +16,7 @@ public:
 		TEST
 	};
 
-	C_ModuleEvent(const Event pEvent)
+	ModuleEvent(const Event pEvent)
 	{
 		m_Event = pEvent;
 	}
@@ -43,10 +43,10 @@ public:
 private:
 	Event m_Event;
 
-	std::map<C_ModuleEvent::Event, std::string> m_EventMap =
+	std::map<ModuleEvent::Event, std::string> m_EventMap =
 	{
-		{C_ModuleEvent::Event::TEST, "TEST"}
+		{ModuleEvent::Event::TEST, "TEST"}
 	};
 };
 
-#endif // C_MODULE_EVENT_H
+#endif // MODULE_EVENT_H

@@ -20,7 +20,7 @@ public:
 	virtual void Init() override;
 	virtual void Update() override;
 	virtual void Shutdown() override;
-	virtual void OnEvent(C_ModuleEvent* i_CSystemEvent) override;
+	virtual void OnEvent(ModuleEvent* i_CSystemEvent) override;
 
 	static void AddElementToList(gui_controls::Panel* p_PanelToAdd);
 

@@ -1,5 +1,6 @@
 #include "Panel.h"
 #include "../GraphicModule.h"
+#include "../../debug/Logger.h"
 #include <iostream>
 
 gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText)
@@ -8,7 +9,7 @@ gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const w
 
 	if (m_phInstance == nullptr)
 	{
-		std::cout << "HINSTANCE is a nullptr" << std::endl;
+		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -25,7 +26,7 @@ gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const w
 
 	if (m_phInstance == nullptr)
 	{
-		std::cout << "HINSTANCE is a nullptr" << std::endl;
+		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -46,7 +47,7 @@ gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const w
 
 	if (m_phInstance == nullptr)
 	{
-		std::cout << "HINSTANCE is a nullptr" << std::endl;
+		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -68,7 +69,7 @@ gui_controls::Panel::~Panel() {};
 
 void gui_controls::Panel::ConstructPanel()
 {
-	std::wcout << L"Creating " << GetWindowName() << std::endl;
+	Logger::LogW(Logger::Severity::INFO, L"Creating " + std::wstring(GetWindowName()) + L" panel");
 
 	RegisterWindowClass();
 
@@ -76,8 +77,7 @@ void gui_controls::Panel::ConstructPanel()
 
 	if (m_hWnd == nullptr)
 	{
-		std::wcout << L"Failed to create handle" << std::endl;
-		std::wcout << GetLastError() << std::endl;
+		Logger::Log(Logger::Severity::FATAL, "Failed to create handle with error " + GetLastError());
 		return;
 	}
 
@@ -89,12 +89,12 @@ void gui_controls::Panel::ConstructPanel()
 	}
 	else
 	{
-		std::wcout << L"No parent panel provided" << std::endl;
+		Logger::Log(Logger::Severity::WARNING, "No parent panel provided");
 	}
 
 	GraphicModule::AddElementToList(this);
 
-	std::wcout << L"Finished creating " << GetWindowName() << std::endl;
+	//spdlog::info("Finished creating " + GetWindowName() + " panel");
 }
 
 void gui_controls::Panel::RegisterWindowClass()
@@ -117,8 +117,7 @@ void gui_controls::Panel::RegisterWindowClass()
 
 	if (!RegisterClassExW(&windowClass))
 	{
-		std::cout << "Failed to register window class" << std::endl;
-		std::cout << GetLastError() << std::endl;
+		Logger::Log(Logger::Severity::FATAL, "Failed to register window class with error " + GetLastError());
 	}
 }
 
@@ -163,11 +162,6 @@ LRESULT gui_controls::Panel::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam,
 
 LRESULT gui_controls::Panel::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	switch (uMsg)
-	{
-	default: { return DefWindowProc(m_hWnd, uMsg, wParam, lParam); }
-	}
-
 	return DefWindowProc(m_hWnd, uMsg, wParam, lParam);
 }
 

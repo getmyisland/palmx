@@ -15,7 +15,7 @@ void InputModule::Shutdown()
 
 }
 
-void InputModule::OnEvent(C_ModuleEvent* i_CSystemEvent)
+void InputModule::OnEvent(ModuleEvent* i_CSystemEvent)
 {
 
 }

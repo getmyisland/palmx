@@ -1,5 +1,6 @@
 #include "GraphicModule.h"
 #include "../ModuleManager.h"
+#include "../debug/Logger.h"
 #include <iostream>
 
 GraphicModule::GraphicModule() {};
@@ -22,7 +23,7 @@ void GraphicModule::Update()
 
 	if (bRet == -1)
 	{
-		std::wcout << GetLastError() << L" Error occured in main game loop" << std::endl;
+		Logger::Log(Logger::Severity::FATAL, GetLastError() + " error occured in update loop");
 		ModuleManager::Instance().KillGameLoop();
 	}
 	else
@@ -38,7 +39,7 @@ void GraphicModule::Shutdown()
 
 }
 
-void GraphicModule::OnEvent(C_ModuleEvent* i_CSystemEvent)
+void GraphicModule::OnEvent(ModuleEvent* i_CSystemEvent)
 {
 
 }
@@ -49,5 +50,5 @@ void GraphicModule::AddElementToList(gui_controls::Panel* panelToAdd)
 {
 	GraphicModule::s_vecPanels.push_back(panelToAdd);
 
-	std::wcout << "Added " << panelToAdd->GetWindowName() << " to the list" << std::endl;
+	Logger::LogW(Logger::Severity::INFO, L"Added " + std::wstring(panelToAdd->GetWindowName()) + L" panel to the panel list");
 }

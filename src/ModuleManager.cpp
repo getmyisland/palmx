@@ -96,7 +96,7 @@ void ModuleManager::ShutdownSystems()
 	Module::g_GraphicSystem.Shutdown();
 }
 
-void ModuleManager::SendEventToSystems(C_ModuleEvent p_CSystemEvent)
+void ModuleManager::SendEventToSystems(ModuleEvent p_CSystemEvent)
 {
 
 }

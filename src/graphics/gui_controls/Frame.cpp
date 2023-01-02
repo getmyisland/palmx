@@ -1,4 +1,5 @@
 #include "Frame.h"
+#include "../../debug/Logger.h"
 #include <iostream>
 
 gui_controls::Frame::Frame(HINSTANCE* p_hInstance, gui_controls::Panel* p_ParentPanel, const wchar_t* p_wszWindowText)
@@ -7,7 +8,7 @@ gui_controls::Frame::Frame(HINSTANCE* p_hInstance, gui_controls::Panel* p_Parent
 
 	if (m_phInstance == nullptr)
 	{
-		std::cout << "HINSTANCE is a nullptr" << std::endl;
+		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -24,7 +25,7 @@ gui_controls::Frame::Frame(HINSTANCE* p_hInstance, gui_controls::Panel* p_Parent
 
 	if (m_phInstance == nullptr)
 	{
-		std::cout << "HINSTANCE is a nullptr" << std::endl;
+		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -42,7 +43,7 @@ gui_controls::Frame::Frame(HINSTANCE* p_hInstance, gui_controls::Panel* p_Parent
 
 	if (m_phInstance == nullptr)
 	{
-		std::cout << "HINSTANCE is a nullptr" << std::endl;
+		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -63,7 +64,7 @@ gui_controls::Frame::Frame(HINSTANCE* p_hInstance, gui_controls::Panel* p_Parent
 
 	if (m_phInstance == nullptr)
 	{
-		std::cout << "HINSTANCE is a nullptr" << std::endl;
+		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -101,8 +102,7 @@ void gui_controls::Frame::RegisterWindowClass()
 
 	if (!RegisterClassExW(&windowClass))
 	{
-		std::cout << "Failed to register window class" << std::endl;
-		std::cout << GetLastError() << std::endl;
+		Logger::Log(Logger::Severity::FATAL, "Failed to register window class with error " + GetLastError());
 	}
 }
 
@@ -133,11 +133,6 @@ LRESULT gui_controls::Frame::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam,
 
 LRESULT gui_controls::Frame::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	switch (uMsg)
-	{
-	default: { return DefWindowProc(m_hWnd, uMsg, wParam, lParam); }
-	}
-
 	return DefWindowProc(m_hWnd, uMsg, wParam, lParam);
 }
 

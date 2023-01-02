@@ -5,8 +5,8 @@
 #endif
 
 #include "../IModule.h"
-#include "C_InputCollector.h"
-#include "C_InputMapper.h"
+#include "InputCollector.h"
+#include "InputMapper.h"
 
 class InputModule : public IModule
 {
@@ -18,11 +18,11 @@ public:
 	virtual void Init() override;
 	virtual void Update() override;
 	virtual void Shutdown() override;
-	virtual void OnEvent(C_ModuleEvent* i_CSystemEvent) override;
+	virtual void OnEvent(ModuleEvent* i_CSystemEvent) override;
 
 private:
-	C_InputMapper m_InputMapper;
-	C_InputCollector m_InputCollector = C_InputCollector(&m_InputMapper);
+	InputMapper m_InputMapper;
+	InputCollector m_InputCollector = InputCollector(&m_InputMapper);
 };
 
 #endif // INPUT_MODULE_H
