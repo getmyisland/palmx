@@ -7,6 +7,7 @@
 #define LOGGER Logger::GetInstance()
 
 #include <string>
+#include <Windows.h>
 #include <source_location>
 
 class Logger
@@ -39,6 +40,10 @@ public:
 
 	void LogW(Logger::Severity const severity,
 		std::wstring const message,
+		std::source_location const source = std::source_location::current());
+
+	void LogLastError(Logger::Severity const severity,
+		DWORD const errorMessageID,
 		std::source_location const source = std::source_location::current());
 };
 

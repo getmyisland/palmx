@@ -1,5 +1,4 @@
 #include "InputCollector.h"
-#include <iostream>
 
 InputCollector::InputCollector(InputMapper* inputMapper)
 {

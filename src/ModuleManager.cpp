@@ -1,6 +1,5 @@
 #include "ModuleManager.h"
 #include "Modules.h"
-#include <iostream>
 #include <chrono>
 #include <Windows.h>
 
@@ -15,7 +14,7 @@ void ModuleManager::StartEngine(HINSTANCE* hInst)
 
 	InitModules();
 	GameLoop();
-	ShutdownSystems();
+	ShutdownModules();
 }
 
 void ModuleManager::InitModules()
@@ -86,7 +85,7 @@ void ModuleManager::RenderSystems()
 	Modules::g_GraphicModule.Update();
 }
 
-void ModuleManager::ShutdownSystems()
+void ModuleManager::ShutdownModules()
 {
 	Modules::g_InputModule.Shutdown();
 	Modules::g_GraphicModule.Shutdown();

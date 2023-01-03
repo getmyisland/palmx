@@ -1,6 +1,5 @@
 #include "Frame.h"
 #include "../../logging/Logger.h"
-#include <iostream>
 
 gui_controls::Frame::Frame(HINSTANCE* p_hInstance, gui_controls::Panel* p_ParentPanel, const wchar_t* p_wszWindowText)
 {
@@ -102,7 +101,8 @@ void gui_controls::Frame::RegisterWindowClass()
 
 	if (!RegisterClassExW(&windowClass))
 	{
-		LOGGER.Log(Logger::Severity::Error, "Failed to register window class with error " + GetLastError());
+		LOGGER.Log(Logger::Severity::Error, "Failed to register window class");
+		LOGGER.LogLastError(Logger::Severity::Error, GetLastError());
 	}
 }
 

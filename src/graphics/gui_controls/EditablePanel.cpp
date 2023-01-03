@@ -1,6 +1,5 @@
 #include "EditablePanel.h"
 #include "../../logging/Logger.h"
-#include <iostream>
 
 gui_controls::EditablePanel::EditablePanel(HINSTANCE* p_hInstance, gui_controls::Panel* p_ParentPanel, const wchar_t* p_wszWindowText)
 {
@@ -104,7 +103,8 @@ void gui_controls::EditablePanel::RegisterWindowClass()
 
 	if (!RegisterClassExW(&windowClass))
 	{
-		LOGGER.Log(Logger::Severity::Error, "Failed to register window class with error " + GetLastError());
+		LOGGER.Log(Logger::Severity::Error, "Failed to register window class");
+		LOGGER.LogLastError(Logger::Severity::Error, GetLastError());
 	}
 }
 

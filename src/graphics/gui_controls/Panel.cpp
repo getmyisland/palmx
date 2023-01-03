@@ -1,7 +1,6 @@
 #include "Panel.h"
 #include "../GraphicModule.h"
 #include "../../logging/Logger.h"
-#include <iostream>
 
 gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText)
 {
@@ -67,6 +66,16 @@ gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const w
 
 gui_controls::Panel::~Panel() {};
 
+bool gui_controls::Panel::Release() 
+{
+	if (!DestroyWindow(m_hWnd))
+	{
+		return false;
+	}
+
+	return true;
+}
+
 void gui_controls::Panel::ConstructPanel()
 {
 	LOGGER.LogW(Logger::Severity::Info, L"Creating " + std::wstring(GetWindowName()) + L" panel");
@@ -77,8 +86,13 @@ void gui_controls::Panel::ConstructPanel()
 
 	if (m_hWnd == nullptr)
 	{
-		LOGGER.Log(Logger::Severity::Error, "Failed to create handle with error " + GetLastError());
+		LOGGER.Log(Logger::Severity::Error, "Failed to create handle");
+		LOGGER.LogLastError(Logger::Severity::Error, GetLastError());
 		return;
+	}
+	else 
+	{
+		LOGGER.LogW(Logger::Severity::Info, L"Created handle for " + std::wstring(GetWindowName()) + L" panel");
 	}
 
 	ShowWindowHandle();
@@ -94,7 +108,7 @@ void gui_controls::Panel::ConstructPanel()
 
 	GraphicModule::AddElementToList(this);
 
-	//spdlog::info("Finished creating " + GetWindowName() + " panel");
+	LOGGER.LogW(Logger::Severity::Info, L"Finished creating " + std::wstring(GetWindowName()) + L" panel");
 }
 
 void gui_controls::Panel::RegisterWindowClass()
@@ -117,7 +131,12 @@ void gui_controls::Panel::RegisterWindowClass()
 
 	if (!RegisterClassExW(&windowClass))
 	{
-		LOGGER.Log(Logger::Severity::Error, "Failed to register window class with error " + GetLastError());
+		LOGGER.Log(Logger::Severity::Error, "Failed to register window class");
+		LOGGER.LogLastError(Logger::Severity::Error, GetLastError());
+	}
+	else 
+	{
+		LOGGER.LogW(Logger::Severity::Info, L"Created window class for " + std::wstring(GetWindowName()) + L" panel");
 	}
 }
 
@@ -174,10 +193,14 @@ void gui_controls::Panel::ShowWindowHandle()
 	UpdateWindow(m_hWnd);
 }
 
-// General
 HWND* gui_controls::Panel::GetHandle()
 {
 	return &m_hWnd;
+}
+
+const HINSTANCE* gui_controls::Panel::GetWindowInstance() 
+{
+	return m_phInstance;
 }
 
 const wchar_t* gui_controls::Panel::GetWindowName()
@@ -265,7 +288,6 @@ bool gui_controls::Panel::IsEnabled()
 	return IsWindowEnabled(m_hWnd);
 }
 
-// Parent
 gui_controls::Panel* gui_controls::Panel::GetParentPanel()
 {
 	return m_pParentPanel;
@@ -311,7 +333,6 @@ void gui_controls::Panel::SetNewParent(Panel* p_pNewParentPanel)
 	SetParent(m_hWnd, *m_pParentPanel->GetHandle());
 }
 
-// Child
 void gui_controls::Panel::OnChildAdded(Panel* p_pAddedChildPanel)
 {
 	m_vecChildPanels.push_back(p_pAddedChildPanel);
@@ -347,7 +368,6 @@ int gui_controls::Panel::GetChildPanelCount()
 	return (int)m_vecChildPanels.size();
 }
 
-// Layout
 int gui_controls::Panel::GetPosX()
 {
 	return m_nPosX;
@@ -382,7 +402,6 @@ void gui_controls::Panel::SetSize(int p_nWidth, int p_nHeight)
 	SetWindowPos(m_hWnd, nullptr, m_nPosX, m_nPosY, m_nWidth, m_nHeight, SWP_FRAMECHANGED);
 }
 
-// Painting
 UINT gui_controls::Panel::GetStyle()
 {
 	return m_wStyle;
