@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\debug\Logger.cpp" />
+    <ClCompile Include="src\logging\Logger.cpp" />
     <ClCompile Include="src\graphics\gui_controls\EditablePanel.cpp" />
     <ClCompile Include="src\graphics\gui_controls\Frame.cpp" />
     <ClCompile Include="src\Modules.cpp" />
@@ -32,7 +32,7 @@
     <ClCompile Include="src\ModuleManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\debug\Logger.h" />
+    <ClInclude Include="src\logging\Logger.h" />
     <ClInclude Include="src\graphics\gui_controls\EditablePanel.h" />
     <ClInclude Include="src\graphics\gui_controls\Frame.h" />
     <ClInclude Include="src\Modules.h" />

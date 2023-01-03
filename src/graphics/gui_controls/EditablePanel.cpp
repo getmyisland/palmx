@@ -1,5 +1,5 @@
 #include "EditablePanel.h"
-#include "../../debug/Logger.h"
+#include "../../logging/Logger.h"
 #include <iostream>
 
 gui_controls::EditablePanel::EditablePanel(HINSTANCE* p_hInstance, gui_controls::Panel* p_ParentPanel, const wchar_t* p_wszWindowText)
@@ -8,7 +8,7 @@ gui_controls::EditablePanel::EditablePanel(HINSTANCE* p_hInstance, gui_controls:
 
 	if (m_phInstance == nullptr)
 	{
-		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
+		LOGGER.Log(Logger::Severity::Error, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -25,7 +25,7 @@ gui_controls::EditablePanel::EditablePanel(HINSTANCE* p_hInstance, gui_controls:
 
 	if (m_phInstance == nullptr)
 	{
-		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
+		LOGGER.Log(Logger::Severity::Error, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -44,7 +44,7 @@ gui_controls::EditablePanel::EditablePanel(HINSTANCE* p_hInstance, gui_controls:
 
 	if (m_phInstance == nullptr)
 	{
-		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
+		LOGGER.Log(Logger::Severity::Error, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -65,7 +65,7 @@ gui_controls::EditablePanel::EditablePanel(HINSTANCE* p_hInstance, gui_controls:
 
 	if (m_phInstance == nullptr)
 	{
-		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
+		LOGGER.Log(Logger::Severity::Error, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -104,7 +104,7 @@ void gui_controls::EditablePanel::RegisterWindowClass()
 
 	if (!RegisterClassExW(&windowClass))
 	{
-		Logger::Log(Logger::Severity::FATAL, "Failed to register window class with error " + GetLastError());
+		LOGGER.Log(Logger::Severity::Error, "Failed to register window class with error " + GetLastError());
 	}
 }
 

@@ -1,6 +1,6 @@
 #include "GraphicModule.h"
 #include "../ModuleManager.h"
-#include "../debug/Logger.h"
+#include "../logging/Logger.h"
 #include <iostream>
 
 GraphicModule::GraphicModule() {};
@@ -23,7 +23,7 @@ void GraphicModule::Update()
 
 	if (bRet == -1)
 	{
-		Logger::Log(Logger::Severity::FATAL, GetLastError() + " error occured in update loop");
+		LOGGER.Log(Logger::Severity::Error, GetLastError() + " error occured in update loop");
 		ModuleManager::Instance().KillGameLoop();
 	}
 	else
@@ -50,5 +50,5 @@ void GraphicModule::AddElementToList(gui_controls::Panel* panelToAdd)
 {
 	GraphicModule::s_vecPanels.push_back(panelToAdd);
 
-	Logger::LogW(Logger::Severity::INFO, L"Added " + std::wstring(panelToAdd->GetWindowName()) + L" panel to the panel list");
+	LOGGER.LogW(Logger::Severity::Info, L"Added " + std::wstring(panelToAdd->GetWindowName()) + L" panel to the panel list");
 }

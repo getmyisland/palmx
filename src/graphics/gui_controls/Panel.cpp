@@ -1,6 +1,6 @@
 #include "Panel.h"
 #include "../GraphicModule.h"
-#include "../../debug/Logger.h"
+#include "../../logging/Logger.h"
 #include <iostream>
 
 gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText)
@@ -9,7 +9,7 @@ gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const w
 
 	if (m_phInstance == nullptr)
 	{
-		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
+		LOGGER.Log(Logger::Severity::Error, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -26,7 +26,7 @@ gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const w
 
 	if (m_phInstance == nullptr)
 	{
-		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
+		LOGGER.Log(Logger::Severity::Error, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -47,7 +47,7 @@ gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const w
 
 	if (m_phInstance == nullptr)
 	{
-		Logger::Log(Logger::Severity::FATAL, "HINSTANCE is a nullptr");
+		LOGGER.Log(Logger::Severity::Error, "HINSTANCE is a nullptr");
 		return;
 	}
 
@@ -69,7 +69,7 @@ gui_controls::Panel::~Panel() {};
 
 void gui_controls::Panel::ConstructPanel()
 {
-	Logger::LogW(Logger::Severity::INFO, L"Creating " + std::wstring(GetWindowName()) + L" panel");
+	LOGGER.LogW(Logger::Severity::Info, L"Creating " + std::wstring(GetWindowName()) + L" panel");
 
 	RegisterWindowClass();
 
@@ -77,7 +77,7 @@ void gui_controls::Panel::ConstructPanel()
 
 	if (m_hWnd == nullptr)
 	{
-		Logger::Log(Logger::Severity::FATAL, "Failed to create handle with error " + GetLastError());
+		LOGGER.Log(Logger::Severity::Error, "Failed to create handle with error " + GetLastError());
 		return;
 	}
 
@@ -89,7 +89,7 @@ void gui_controls::Panel::ConstructPanel()
 	}
 	else
 	{
-		Logger::Log(Logger::Severity::WARNING, "No parent panel provided");
+		LOGGER.Log(Logger::Severity::Warning, "No parent panel provided");
 	}
 
 	GraphicModule::AddElementToList(this);
@@ -117,7 +117,7 @@ void gui_controls::Panel::RegisterWindowClass()
 
 	if (!RegisterClassExW(&windowClass))
 	{
-		Logger::Log(Logger::Severity::FATAL, "Failed to register window class with error " + GetLastError());
+		LOGGER.Log(Logger::Severity::Error, "Failed to register window class with error " + GetLastError());
 	}
 }
 
