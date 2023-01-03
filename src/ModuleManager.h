@@ -4,37 +4,44 @@
 #pragma once
 #endif
 
+#define MODULE_MANAGER ModuleManager::GetInstance()
+
 #include "ModuleEvent.h"
 #include <Windows.h>
 
 class ModuleManager
 {
 public:
-	static ModuleManager& Instance();
+	static ModuleManager& GetInstance()
+	{
+		static ModuleManager instance;
 
-	void StartEngine(HINSTANCE p_hInst);
-	void SendEventToSystems(ModuleEvent p_CSystemEvent);
-	void KillGameLoop();
+		return instance;
+	}
 
-	HINSTANCE* GetHInstance();
+	ModuleManager(ModuleManager const&) = delete;
+	void operator=(ModuleManager const&) = delete;
 
 private:
 	ModuleManager() {};
 
 	// The instance of the engine
-	HINSTANCE m_hInstance = nullptr;
+	HINSTANCE* m_hInstance = nullptr;
 
 	bool game_running = true;
 
-	void InitSystems();
+	void InitModules();
 	void GameLoop();
 	void UpdateSystems();
 	void RenderSystems();
-	void ShutdownSystems();
+	void ShutdownModules();
 
 public:
-	ModuleManager(ModuleManager const&) = delete;
-	void operator=(ModuleManager const&) = delete;
+	HINSTANCE* GetEngineInstance();
+
+	void StartEngine(HINSTANCE* p_hInst);
+	void SendEventToSystems(ModuleEvent p_CSystemEvent);
+	void KillGameLoop();
 };
 
 #endif // MODULE_MANAGER_H

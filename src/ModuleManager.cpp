@@ -4,6 +4,26 @@
 #include <chrono>
 #include <Windows.h>
 
+HINSTANCE* ModuleManager::GetEngineInstance()
+{
+	return m_hInstance;
+}
+
+void ModuleManager::StartEngine(HINSTANCE* hInst)
+{
+	m_hInstance = hInst;
+
+	InitModules();
+	GameLoop();
+	ShutdownSystems();
+}
+
+void ModuleManager::InitModules()
+{
+	Modules::g_InputModule.Init();
+	Modules::g_GraphicModule.Init();
+}
+
 using namespace std::chrono_literals;
 
 // we use a fixed timestep of 1 / (60 fps) = 16 milliseconds
@@ -21,30 +41,6 @@ game_state Interpolate(game_state const& current, game_state const& previous, fl
 	// interpolate between previous and current by alpha here
 
 	return interpolated_state;
-}
-
-ModuleManager& ModuleManager::Instance()
-{
-	static ModuleManager    instance;
-
-	return instance;
-};
-
-void ModuleManager::StartEngine(HINSTANCE hInst)
-{
-	m_hInstance = hInst;
-
-	InitSystems();
-
-	GameLoop();
-
-	ShutdownSystems();
-}
-
-void ModuleManager::InitSystems()
-{
-	Module::g_InputSystem.Init();
-	Module::g_GraphicSystem.Init();
 }
 
 void ModuleManager::GameLoop()
@@ -87,13 +83,13 @@ void ModuleManager::UpdateSystems()
 
 void ModuleManager::RenderSystems()
 {
-	Module::g_GraphicSystem.Update();
+	Modules::g_GraphicModule.Update();
 }
 
 void ModuleManager::ShutdownSystems()
 {
-	Module::g_InputSystem.Shutdown();
-	Module::g_GraphicSystem.Shutdown();
+	Modules::g_InputModule.Shutdown();
+	Modules::g_GraphicModule.Shutdown();
 }
 
 void ModuleManager::SendEventToSystems(ModuleEvent p_CSystemEvent)
@@ -104,9 +100,4 @@ void ModuleManager::SendEventToSystems(ModuleEvent p_CSystemEvent)
 void ModuleManager::KillGameLoop()
 {
 	game_running = false;
-}
-
-HINSTANCE* ModuleManager::GetHInstance()
-{
-	return &m_hInstance;
 }

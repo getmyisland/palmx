@@ -7,6 +7,7 @@
 #include "../IModule.h"
 #include "gui_controls/Frame.h"
 #include <Windows.h>
+#include <d3d11.h>
 #include <vector>
 #include <thread>
 
@@ -24,11 +25,6 @@ public:
 
 	static void AddElementToList(gui_controls::Panel* p_PanelToAdd);
 
-	HINSTANCE* GetHInstance()
-	{
-		return m_phInstance;
-	}
-
 	gui_controls::Panel* GetRoot()
 	{
 		return m_pROOT;
@@ -43,7 +39,7 @@ private:
 	HINSTANCE* m_phInstance = nullptr;
 
 	MSG msg;
-	BOOL bRet;
+	BOOL bRet = NULL;
 
 	gui_controls::Panel* m_pROOT = nullptr;
 	gui_controls::Panel* m_pViewport = nullptr;

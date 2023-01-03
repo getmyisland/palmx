@@ -7,11 +7,11 @@
 #include "input/InputModule.h"
 #include "graphics/GraphicModule.h"
 
-namespace Module
+namespace Modules
 {
 	// All modules listed here
-	extern InputModule g_InputSystem;
-	extern GraphicModule g_GraphicSystem;
+	extern InputModule g_InputModule;
+	extern GraphicModule g_GraphicModule;
 }
 
 #endif // MODULES_H

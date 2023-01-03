@@ -1,4 +1,4 @@
 #include "Modules.h"
 
-InputModule Module::g_InputSystem = InputModule();
-GraphicModule Module::g_GraphicSystem = GraphicModule();
+InputModule Modules::g_InputModule = InputModule();
+GraphicModule Modules::g_GraphicModule = GraphicModule();

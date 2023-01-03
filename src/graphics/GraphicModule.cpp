@@ -4,11 +4,12 @@
 #include <iostream>
 
 GraphicModule::GraphicModule() {};
+
 GraphicModule::~GraphicModule() {};
 
 void GraphicModule::Init()
 {
-	m_phInstance = ModuleManager::Instance().GetHInstance();
+	m_phInstance = MODULE_MANAGER.GetEngineInstance();
 
 	gui_controls::Frame ROOT = gui_controls::Frame(m_phInstance, nullptr, L"PalmEngine", WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, 0, 0, 1280, 720);
 	m_pROOT = &ROOT;
@@ -24,7 +25,7 @@ void GraphicModule::Update()
 	if (bRet == -1)
 	{
 		LOGGER.Log(Logger::Severity::Error, GetLastError() + " error occured in update loop");
-		ModuleManager::Instance().KillGameLoop();
+		MODULE_MANAGER.KillGameLoop();
 	}
 	else
 	{

@@ -22,7 +22,6 @@
     <ClCompile Include="src\logging\Logger.cpp" />
     <ClCompile Include="src\graphics\gui_controls\EditablePanel.cpp" />
     <ClCompile Include="src\graphics\gui_controls\Frame.cpp" />
-    <ClCompile Include="src\Modules.cpp" />
     <ClCompile Include="src\graphics\gui_controls\Panel.cpp" />
     <ClCompile Include="src\graphics\GraphicModule.cpp" />
     <ClCompile Include="src\input\InputCollector.cpp" />
@@ -30,6 +29,7 @@
     <ClCompile Include="src\input\InputModule.cpp" />
     <ClCompile Include="src\Palm_Client.cpp" />
     <ClCompile Include="src\ModuleManager.cpp" />
+    <ClCompile Include="src\Modules.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\logging\Logger.h" />
@@ -157,6 +157,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
