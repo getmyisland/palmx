@@ -51,10 +51,8 @@ namespace gui_controls
 		virtual void SetSize(int p_nWidth, int p_nHeight);
 
 		virtual UINT GetStyle();
-
 		virtual DWORD GetDwExStyle();
 		virtual void SetDwExStyle(DWORD p_dwNewExStyle);
-
 		virtual DWORD GetDwStyle();
 		virtual void SetDwStyle(DWORD p_dwNewStyle);
 

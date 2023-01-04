@@ -1,5 +1,5 @@
 #include "Frame.h"
-#include "../../logging/Logger.h"
+#include "../logging/Logger.h"
 
 gui_controls::Frame::Frame(HINSTANCE* p_hInstance, gui_controls::Panel* p_ParentPanel, const wchar_t* p_wszWindowText)
 {
@@ -133,7 +133,21 @@ LRESULT gui_controls::Frame::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam,
 
 LRESULT gui_controls::Frame::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	return DefWindowProc(m_hWnd, uMsg, wParam, lParam);
+	switch (uMsg)
+	{
+	case WM_CLOSE:
+		DestroyWindow(m_hWnd);
+		break;
+
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+	
+	default:
+		return DefWindowProc(m_hWnd, uMsg, wParam, lParam);
+	}
+
+	return NULL;
 }
 
 const wchar_t* gui_controls::Frame::GetWindowName()

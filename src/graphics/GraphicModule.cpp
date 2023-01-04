@@ -1,6 +1,7 @@
 #include "GraphicModule.h"
 #include "../ModuleManager.h"
 #include "../logging/Logger.h"
+#include "SwapChain.h"
 
 GraphicModule::GraphicModule() {};
 GraphicModule::~GraphicModule() {};
@@ -14,6 +15,49 @@ void GraphicModule::Init()
 
 	gui_controls::Panel Viewport = gui_controls::Panel(m_phInstance, m_pROOT, L"Base Viewport");
 	m_pViewport = &Viewport;
+
+	D3D_DRIVER_TYPE driverTypes[] =
+	{
+		D3D_DRIVER_TYPE_HARDWARE,
+		D3D_DRIVER_TYPE_WARP,
+		D3D_DRIVER_TYPE_REFERENCE
+	};
+
+	UINT cDriverTypes = ARRAYSIZE(driverTypes);
+
+	D3D_FEATURE_LEVEL featureLevels[] =
+	{
+		D3D_FEATURE_LEVEL_11_0,
+	};
+
+	UINT cFeatureLevel = ARRAYSIZE(featureLevels);
+
+	HRESULT result = 0;
+	for (UINT driverTypeIndex = 0; driverTypeIndex < cDriverTypes;)
+	{
+		result = D3D11CreateDevice(NULL, driverTypes[driverTypeIndex], NULL, NULL, featureLevels, cFeatureLevel, D3D11_SDK_VERSION, &m_pDevice, &m_featureLevel, &m_pDeviceContext);
+
+		if (SUCCEEDED(result))
+		{
+			break;
+		}
+
+		++driverTypeIndex;
+	}
+
+	if (FAILED(result))
+	{
+		//return false;
+	}
+
+	m_pDevice->QueryInterface(__uuidof(IDXGIDevice), (void**)&m_pDgxiDevice);
+	m_pDgxiDevice->GetParent(__uuidof(IDXGIAdapter),(void**) &m_pDgxiAdapter);
+	m_pDgxiAdapter->GetParent(__uuidof(IDXGIFactory), (void**)&m_pDgxiFactory);
+
+	m_pSwapChain = CreateSwapChain();
+	m_pSwapChain->Init(m_pROOT);
+
+	// return true;
 }
 
 void GraphicModule::Update()
@@ -33,12 +77,24 @@ void GraphicModule::Update()
 
 void GraphicModule::Shutdown()
 {
+	m_pSwapChain->Release();
 
+	m_pDgxiFactory->Release();
+	m_pDgxiAdapter->Release();
+	m_pDgxiDevice->Release();
+
+	m_pDeviceContext->Release();
+	m_pDevice->Release();
 }
 
 void GraphicModule::OnEvent(ModuleEvent* i_CSystemEvent)
 {
 
+}
+
+SwapChain* GraphicModule::CreateSwapChain()
+{
+	return new SwapChain();
 }
 
 std::vector<gui_controls::Panel*> GraphicModule::s_vecPanels = {};

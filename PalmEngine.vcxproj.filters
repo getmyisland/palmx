@@ -27,13 +27,13 @@
     <ClCompile Include="src\graphics\GraphicModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\gui_controls\Panel.cpp">
+    <ClCompile Include="src\window\Panel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\gui_controls\Frame.cpp">
+    <ClCompile Include="src\window\Frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics\gui_controls\EditablePanel.cpp">
+    <ClCompile Include="src\window\EditablePanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\input\InputCollector.cpp">
@@ -46,6 +46,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Modules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphics\SwapChain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,16 +65,16 @@
     <ClInclude Include="src\graphics\GraphicModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\gui_controls\Panel.h">
+    <ClInclude Include="src\window\Panel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Modules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\gui_controls\Frame.h">
+    <ClInclude Include="src\window\Frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\graphics\gui_controls\EditablePanel.h">
+    <ClInclude Include="src\window\EditablePanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\input\InputCollector.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\logging\Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\SwapChain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

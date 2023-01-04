@@ -1,6 +1,6 @@
 #include "Panel.h"
-#include "../GraphicModule.h"
-#include "../../logging/Logger.h"
+#include "../graphics/GraphicModule.h"
+#include "../logging/Logger.h"
 
 gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText)
 {
@@ -181,7 +181,21 @@ LRESULT gui_controls::Panel::StaticWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam,
 
 LRESULT gui_controls::Panel::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-	return DefWindowProc(m_hWnd, uMsg, wParam, lParam);
+	switch (uMsg)
+	{
+	case WM_CLOSE:
+		DestroyWindow(m_hWnd);
+		break;
+
+	case WM_DESTROY:
+		PostQuitMessage(0);
+		break;
+
+	default:
+		return DefWindowProc(m_hWnd, uMsg, wParam, lParam);
+	}
+
+	return NULL;
 }
 
 void gui_controls::Panel::ShowWindowHandle()
