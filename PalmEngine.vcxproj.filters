@@ -27,13 +27,13 @@
     <ClCompile Include="src\graphics\GraphicModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\window\Panel.cpp">
+    <ClCompile Include="src\graphics\window\Panel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\window\Frame.cpp">
+    <ClCompile Include="src\graphics\window\Frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\window\EditablePanel.cpp">
+    <ClCompile Include="src\graphics\window\EditablePanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\input\InputCollector.cpp">
@@ -51,6 +51,9 @@
     <ClCompile Include="src\graphics\SwapChain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphics\DeviceContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ModuleManager.h">
@@ -65,16 +68,16 @@
     <ClInclude Include="src\graphics\GraphicModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\window\Panel.h">
+    <ClInclude Include="src\graphics\window\Panel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Modules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\window\Frame.h">
+    <ClInclude Include="src\graphics\window\Frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\window\EditablePanel.h">
+    <ClInclude Include="src\graphics\window\EditablePanel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\input\InputCollector.h">
@@ -90,6 +93,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics\SwapChain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\math\Rect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\Prequisites.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics\DeviceContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

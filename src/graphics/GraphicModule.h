@@ -5,13 +5,16 @@
 #endif
 
 #include "../IModule.h"
-#include "../window/Frame.h"
+#include "window/Frame.h"
 #include <Windows.h>
 #include <d3d11.h>
 #include <vector>
 #include "SwapChain.h"
+#include "math/Rect.h"
+#include "DeviceContext.h"
 
 class SwapChain;
+class DeviceContext;
 
 class GraphicModule : public IModule
 {
@@ -26,18 +29,12 @@ public:
 	virtual void OnEvent(ModuleEvent* i_CSystemEvent) override;
 
 	SwapChain* CreateSwapChain();
+	
+	void AddElementToList(gui_controls::Panel* p_pPanelToAdd);
+	void SetViewport(const Rect& size);
 
-	static void AddElementToList(gui_controls::Panel* p_PanelToAdd);
-
-	gui_controls::Panel* GetRoot()
-	{
-		return m_pROOT;
-	}
-
-	gui_controls::Panel* GetViewport()
-	{
-		return m_pViewport;
-	}
+	gui_controls::Panel* GetRootPanel()	{ return m_pRootPanel; }
+	gui_controls::Panel* GetViewportPanel() { return m_pBaseViewportPanel; }
 
 private:
 	HINSTANCE* m_phInstance = nullptr;
@@ -45,14 +42,15 @@ private:
 	MSG msg;
 	BOOL bRet = NULL;
 
-	gui_controls::Panel* m_pROOT = nullptr;
-	gui_controls::Panel* m_pViewport = nullptr;
+	gui_controls::Panel* m_pRootPanel = nullptr;
+	gui_controls::Panel* m_pBaseViewportPanel = nullptr;
 
-	static std::vector<gui_controls::Panel*> s_vecPanels;
+	static std::vector<gui_controls::Panel*> s_vecAllPanels;
+
+	DeviceContext* m_pDeviceContext = nullptr;
 
 	ID3D11Device* m_pDevice = nullptr;
 	D3D_FEATURE_LEVEL m_featureLevel;
-	ID3D11DeviceContext* m_pDeviceContext = nullptr;
 
 	IDXGIDevice* m_pDgxiDevice = nullptr;
 	IDXGIAdapter* m_pDgxiAdapter = nullptr;

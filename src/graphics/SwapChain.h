@@ -6,6 +6,8 @@
 
 #include "../graphics/GraphicModule.h"
 
+class DeviceContext;
+
 class SwapChain
 {
 public:
@@ -13,10 +15,14 @@ public:
 	~SwapChain();
 
 	bool Init(gui_controls::Panel* p_pPanel);
+	bool Present(bool p_bVSync);
 	bool Release();
 
 private:
 	IDXGISwapChain* m_pDxgiSwapChain;
+	ID3D11RenderTargetView* m_pID3D11RenderTargetView;
+
+	friend class DeviceContext;
 };
 
 #endif // SWAP_CHAIN_H

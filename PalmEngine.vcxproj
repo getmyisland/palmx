@@ -19,10 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\DeviceContext.cpp" />
     <ClCompile Include="src\logging\Logger.cpp" />
-    <ClCompile Include="src\window\EditablePanel.cpp" />
-    <ClCompile Include="src\window\Frame.cpp" />
-    <ClCompile Include="src\window\Panel.cpp" />
+    <ClCompile Include="src\graphics\window\EditablePanel.cpp" />
+    <ClCompile Include="src\graphics\window\Frame.cpp" />
+    <ClCompile Include="src\graphics\window\Panel.cpp" />
     <ClCompile Include="src\graphics\GraphicModule.cpp" />
     <ClCompile Include="src\input\InputCollector.cpp" />
     <ClCompile Include="src\input\InputMapper.cpp" />
@@ -33,11 +34,14 @@
     <ClCompile Include="src\graphics\SwapChain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\DeviceContext.h" />
+    <ClInclude Include="src\graphics\Prequisites.h" />
     <ClInclude Include="src\logging\Logger.h" />
-    <ClInclude Include="src\window\EditablePanel.h" />
-    <ClInclude Include="src\window\Frame.h" />
+    <ClInclude Include="src\graphics\math\Rect.h" />
+    <ClInclude Include="src\graphics\window\EditablePanel.h" />
+    <ClInclude Include="src\graphics\window\Frame.h" />
     <ClInclude Include="src\Modules.h" />
-    <ClInclude Include="src\window\Panel.h" />
+    <ClInclude Include="src\graphics\window\Panel.h" />
     <ClInclude Include="src\graphics\GraphicModule.h" />
     <ClInclude Include="src\input\InputCollector.h" />
     <ClInclude Include="src\input\InputMapper.h" />

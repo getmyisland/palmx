@@ -35,6 +35,29 @@ bool SwapChain::Init(gui_controls::Panel* p_pPanel)
 		return false;
 	}
 
+	ID3D11Texture2D* buffer = NULL;
+	result = m_pDxgiSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&buffer);
+
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	result = device->CreateRenderTargetView(buffer, NULL, &m_pID3D11RenderTargetView);
+	buffer->Release();
+
+	if (FAILED(result))
+	{
+		return false;
+	}
+
+	return true;
+}
+
+bool SwapChain::Present(bool p_bVSync)
+{
+	m_pDxgiSwapChain->Present(p_bVSync, NULL);
+
 	return true;
 }
 

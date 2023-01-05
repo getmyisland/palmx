@@ -1,6 +1,6 @@
 #include "Panel.h"
-#include "../graphics/GraphicModule.h"
-#include "../logging/Logger.h"
+#include "../../Modules.h"
+#include "../../logging/Logger.h"
 
 gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const wchar_t* p_wszWindowText)
 {
@@ -106,7 +106,7 @@ void gui_controls::Panel::ConstructPanel()
 		LOGGER.Log(Logger::Severity::Warning, "No parent panel provided");
 	}
 
-	GraphicModule::AddElementToList(this);
+	Modules::g_GraphicModule.AddElementToList(this);
 
 	LOGGER.LogW(Logger::Severity::Info, L"Finished creating " + std::wstring(GetWindowName()) + L" panel");
 }
