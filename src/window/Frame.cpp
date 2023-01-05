@@ -135,6 +135,8 @@ LRESULT gui_controls::Frame::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, L
 {
 	switch (uMsg)
 	{
+	case WM_PAINT:
+		break;
 	case WM_CLOSE:
 		DestroyWindow(m_hWnd);
 		break;

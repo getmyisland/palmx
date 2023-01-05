@@ -32,8 +32,8 @@ private:
 
 	void InitModules();
 	void GameLoop();
-	void UpdateSystems();
-	void RenderSystems();
+	void UpdateModules();
+	void RenderModules();
 	void ShutdownModules();
 
 public:

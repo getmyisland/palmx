@@ -137,6 +137,8 @@ LRESULT gui_controls::EditablePanel::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM w
 {
 	switch (uMsg)
 	{
+	case WM_PAINT:
+		break;
 	case WM_CLOSE:
 		DestroyWindow(m_hWnd);
 		break;

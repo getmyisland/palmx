@@ -66,7 +66,7 @@ gui_controls::Panel::Panel(HINSTANCE* p_hInstance, Panel* p_ParentPanel, const w
 
 gui_controls::Panel::~Panel() {};
 
-bool gui_controls::Panel::Release() 
+bool gui_controls::Panel::Release()
 {
 	if (!DestroyWindow(m_hWnd))
 	{
@@ -183,6 +183,8 @@ LRESULT gui_controls::Panel::RealWndProc(HWND pHwnd, UINT uMsg, WPARAM wParam, L
 {
 	switch (uMsg)
 	{
+	case WM_PAINT:
+		break;
 	case WM_CLOSE:
 		DestroyWindow(m_hWnd);
 		break;

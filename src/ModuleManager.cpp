@@ -23,6 +23,16 @@ void ModuleManager::InitModules()
 	Modules::g_GraphicModule.Init();
 }
 
+void ModuleManager::GameLoop()
+{
+	while (game_running)
+	{
+		UpdateModules();
+		RenderModules();
+	}
+}
+
+/*
 using namespace std::chrono_literals;
 
 // we use a fixed timestep of 1 / (60 fps) = 16 milliseconds
@@ -74,13 +84,14 @@ void ModuleManager::GameLoop()
 		RenderSystems();
 	}
 }
+*/
 
-void ModuleManager::UpdateSystems()
+void ModuleManager::UpdateModules()
 {
 
 }
 
-void ModuleManager::RenderSystems()
+void ModuleManager::RenderModules()
 {
 	Modules::g_GraphicModule.Update();
 }

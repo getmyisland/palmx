@@ -75,12 +75,16 @@ void Logger::Log(Logger::Severity const severity, std::string const message, std
 {
     using namespace date;
     std::cout << std::chrono::system_clock::now() << " [" << GetSeverityLevel(severity) << "] " << GetLocationString(source) << " " << message << std::endl;
+	OutputDebugStringA(message.c_str());
+	OutputDebugStringA("\n");
 }
 
 void Logger::LogW(Logger::Severity const severity, std::wstring const message, std::source_location const source)
 {
 	using namespace date;
 	std::wcout << std::chrono::system_clock::now() << L" [" << GetSeverityLevelW(severity) << L"] " << GetLocationStringW(source) << L" " << message << std::endl;
+	OutputDebugStringW(message.c_str());
+	OutputDebugStringW(L"\n");
 }
 
 void Logger::LogLastError(Logger::Severity const severity, DWORD const errorMessageID, std::source_location const source)
@@ -104,4 +108,6 @@ void Logger::LogLastError(Logger::Severity const severity, DWORD const errorMess
 	
 	using namespace date;
 	std::cout << std::chrono::system_clock::now() << " [" << GetSeverityLevel(severity) << "] " << GetLocationString(source) << " " << message << std::endl;
+	OutputDebugStringA(message.c_str());
+	OutputDebugStringA("\n");
 }

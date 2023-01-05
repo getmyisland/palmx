@@ -13,6 +13,8 @@ void GraphicModule::Init()
 	gui_controls::Frame ROOT = gui_controls::Frame(m_phInstance, nullptr, L"Palm Engine", WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN, 0, 0, 1280, 720);
 	m_pROOT = &ROOT;
 
+	return;
+
 	gui_controls::Panel Viewport = gui_controls::Panel(m_phInstance, m_pROOT, L"Base Viewport");
 	m_pViewport = &Viewport;
 
@@ -62,21 +64,32 @@ void GraphicModule::Init()
 
 void GraphicModule::Update()
 {
-	bRet = PeekMessage(&msg, *m_pROOT->GetHandle(), NULL, NULL, PM_REMOVE);
-	if (bRet == -1)
+	if (m_pROOT == nullptr || m_pROOT->GetHandle() == nullptr)
 	{
-		LOGGER.Log(Logger::Severity::Error, GetLastError() + " error occured in update loop");
-		MODULE_MANAGER.KillGameLoop();
+		LOGGER.Log(Logger::Severity::Error, "Handler is null");
+		return;
 	}
-	else
+
+	bRet = GetMessage(&msg, *m_pROOT->GetHandle(), NULL, NULL);
+	if (bRet != 0)
 	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
+		if (bRet == -1)
+		{
+			LOGGER.LogLastError(Logger::Severity::Error, GetLastError());
+			MODULE_MANAGER.KillGameLoop();
+		}
+		else
+		{
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
 	}
 }
 
 void GraphicModule::Shutdown()
 {
+	return;
+
 	m_pSwapChain->Release();
 
 	m_pDgxiFactory->Release();
