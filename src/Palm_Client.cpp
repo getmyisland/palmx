@@ -1,142 +1,46 @@
-#include <SDKDDKVer.h>
-#include <windows.h>
-#include <iostream>
-#include <io.h>
-#include <fcntl.h>
+#include <GLFW/glfw3.h>
+
 #include "ModuleManager.h"
+#include <palm_engine/logger/Logger.h>
 
-// Enables iostream in win32 application
-void BindCrtHandlesToStdHandles(bool bindStdIn, bool bindStdOut, bool bindStdErr)
+void framebuffer_size_callback(GLFWwindow* pWindow, int width, int height);
+
+// Settings
+const unsigned int kScreenWidth = 800;
+const unsigned int kScreenHeight = 600;
+
+int main()
 {
-	// Re-initialize the C runtime "FILE" handles with clean handles bound to "nul". We do this because it has been
-	// observed that the file number of our standard handle file objects can be assigned internally to a value of -2
-	// when not bound to a valid target, which represents some kind of unknown internal invalid state. In this state our
-	// call to "_dup2" fails, as it specifically tests to ensure that the target file number isn't equal to this value
-	// before allowing the operation to continue. We can resolve this issue by first "re-opening" the target files to
-	// use the "nul" device, which will place them into a valid state, after which we can redirect them to our target
-	// using the "_dup2" function.
-	if (bindStdIn)
-	{
-		FILE* dummyFile;
-		freopen_s(&dummyFile, "nul", "r", stdin);
-	}
-	if (bindStdOut)
-	{
-		FILE* dummyFile;
-		freopen_s(&dummyFile, "nul", "w", stdout);
-	}
-	if (bindStdErr)
-	{
-		FILE* dummyFile;
-		freopen_s(&dummyFile, "nul", "w", stderr);
-	}
+    // Initialize and configure glfw
+    glfwInit();
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	// Redirect unbuffered stdin from the current standard input handle
-	if (bindStdIn)
-	{
-		HANDLE stdHandle = GetStdHandle(STD_INPUT_HANDLE);
-		if (stdHandle != INVALID_HANDLE_VALUE)
-		{
-			int fileDescriptor = _open_osfhandle((intptr_t)stdHandle, _O_TEXT);
-			if (fileDescriptor != -1)
-			{
-				FILE* file = _fdopen(fileDescriptor, "r");
-				if (file != NULL)
-				{
-					int dup2Result = _dup2(_fileno(file), _fileno(stdin));
-					if (dup2Result == 0)
-					{
-						setvbuf(stdin, NULL, _IONBF, 0);
-					}
-				}
-			}
-		}
-	}
-
-	// Redirect unbuffered stdout to the current standard output handle
-	if (bindStdOut)
-	{
-		HANDLE stdHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-		if (stdHandle != INVALID_HANDLE_VALUE)
-		{
-			int fileDescriptor = _open_osfhandle((intptr_t)stdHandle, _O_TEXT);
-			if (fileDescriptor != -1)
-			{
-				FILE* file = _fdopen(fileDescriptor, "w");
-				if (file != NULL)
-				{
-					int dup2Result = _dup2(_fileno(file), _fileno(stdout));
-					if (dup2Result == 0)
-					{
-						setvbuf(stdout, NULL, _IONBF, 0);
-					}
-				}
-			}
-		}
-	}
-
-	// Redirect unbuffered stderr to the current standard error handle
-	if (bindStdErr)
-	{
-		HANDLE stdHandle = GetStdHandle(STD_ERROR_HANDLE);
-		if (stdHandle != INVALID_HANDLE_VALUE)
-		{
-			int fileDescriptor = _open_osfhandle((intptr_t)stdHandle, _O_TEXT);
-			if (fileDescriptor != -1)
-			{
-				FILE* file = _fdopen(fileDescriptor, "w");
-				if (file != NULL)
-				{
-					int dup2Result = _dup2(_fileno(file), _fileno(stderr));
-					if (dup2Result == 0)
-					{
-						setvbuf(stderr, NULL, _IONBF, 0);
-					}
-				}
-			}
-		}
-	}
-
-	// Clear the error state for each of the C++ standard stream objects. We need to do this, as attempts to access the
-	// standard streams before they refer to a valid target will cause the iostream objects to enter an error state. In
-	// versions of Visual Studio after 2005, this seems to always occur during startup regardless of whether anything
-	// has been read from or written to the targets or not.
-	if (bindStdIn)
-	{
-		std::wcin.clear();
-		std::cin.clear();
-	}
-	if (bindStdOut)
-	{
-		std::wcout.clear();
-		std::cout.clear();
-	}
-	if (bindStdErr)
-	{
-		std::wcerr.clear();
-		std::cerr.clear();
-	}
-}
-
-// Main entry
-int APIENTRY wWinMain(_In_ HINSTANCE m_phInstance,
-	_In_opt_ HINSTANCE hPrevInstance,
-	_In_ LPWSTR    lpCmdLine,
-	_In_ int       nCmdShow)
-{
-	UNREFERENCED_PARAMETER(hPrevInstance);
-	UNREFERENCED_PARAMETER(lpCmdLine);
-
-#ifdef _DEBUG
-	// Allocate a console window for this process
-	AllocConsole();
-
-	// Update the C/C++ runtime standard input, output, and error targets to use the console window
-	BindCrtHandlesToStdHandles(true, true, true);
+#ifdef __APPLE__
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-	// Start the engine
-	MODULE_MANAGER.StartEngine(&m_phInstance);
+    // Create window
+    GLFWwindow* pWindow = glfwCreateWindow(kScreenWidth, kScreenHeight, "Palm Engine", NULL, NULL);
+    if (pWindow == NULL)
+    {
+        Logger::Log(SEVERITY_ERROR, "Failed to create GLFW window");
+        glfwTerminate();
+        return -1;
+    }
+    glfwMakeContextCurrent(pWindow);
+    glfwSetFramebufferSizeCallback(pWindow, framebuffer_size_callback);
 
+    MODULE_MANAGER.StartEngine(pWindow);
+
+    glfwTerminate();
 	return 0;
+}
+
+void framebuffer_size_callback(GLFWwindow* pWindow, int width, int height)
+{
+    // make sure the viewport matches the new window dimensions; note that width and 
+    // height will be significantly larger than specified on retina displays.
+    glViewport(0, 0, width, height);
 }

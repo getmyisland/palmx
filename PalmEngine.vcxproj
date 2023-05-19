@@ -19,41 +19,31 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\graphics\DeviceContext.cpp" />
-    <ClCompile Include="src\logging\Logger.cpp" />
-    <ClCompile Include="src\graphics\window\EditablePanel.cpp" />
-    <ClCompile Include="src\graphics\window\Frame.cpp" />
-    <ClCompile Include="src\graphics\window\Panel.cpp" />
-    <ClCompile Include="src\graphics\GraphicModule.cpp" />
-    <ClCompile Include="src\input\InputCollector.cpp" />
-    <ClCompile Include="src\input\InputMapper.cpp" />
+    <ClCompile Include="include\glad\glad.c" />
+    <ClCompile Include="include\palm_engine\logger\Logger.cpp" />
+    <ClCompile Include="src\rendering\RenderModule.cpp" />
     <ClCompile Include="src\input\InputModule.cpp" />
     <ClCompile Include="src\Palm_Client.cpp" />
     <ClCompile Include="src\ModuleManager.cpp" />
     <ClCompile Include="src\Modules.cpp" />
-    <ClCompile Include="src\graphics\SwapChain.cpp" />
+    <ClCompile Include="src\rendering\shaders\Shader.cpp" />
+    <ClCompile Include="include\palm_engine\file_system\FileSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\graphics\DeviceContext.h" />
-    <ClInclude Include="src\graphics\Prequisites.h" />
-    <ClInclude Include="src\logging\Logger.h" />
-    <ClInclude Include="src\graphics\math\Rect.h" />
-    <ClInclude Include="src\graphics\window\EditablePanel.h" />
-    <ClInclude Include="src\graphics\window\Frame.h" />
+    <ClInclude Include="include\palm_engine\file_system\FileSystem.h" />
+    <ClInclude Include="include\palm_engine\logger\Logger.h" />
     <ClInclude Include="src\Modules.h" />
-    <ClInclude Include="src\graphics\window\Panel.h" />
-    <ClInclude Include="src\graphics\GraphicModule.h" />
-    <ClInclude Include="src\input\InputCollector.h" />
-    <ClInclude Include="src\input\InputMapper.h" />
+    <ClInclude Include="src\rendering\RenderModule.h" />
     <ClInclude Include="src\input\InputModule.h" />
     <ClInclude Include="src\IModule.h" />
-    <ClInclude Include="src\ModuleEvent.h" />
     <ClInclude Include="src\ModuleManager.h" />
-    <ClInclude Include="src\graphics\SwapChain.h" />
+    <ClInclude Include="src\rendering\shaders\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
     <None Include="src\README.md" />
+    <None Include="src\rendering\shaders\shader.fs" />
+    <None Include="src\rendering\shaders\shader.vs" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -117,6 +107,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>.\bin</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
+    <IntDir>$(Platform)\$(Configuration)\tmp\</IntDir>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -158,12 +150,13 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ShowIncludes>false</ShowIncludes>
-      <AdditionalIncludeDirectories>./include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>d3d11.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;d3d11.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)/lib/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

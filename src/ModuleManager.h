@@ -1,13 +1,9 @@
 #ifndef MODULE_MANAGER_H
 #define MODULE_MANAGER_H
-#ifdef _WIN32
-#pragma once
-#endif
 
 #define MODULE_MANAGER ModuleManager::GetInstance()
 
-#include "ModuleEvent.h"
-#include <Windows.h>
+#include <GLFW/glfw3.h>
 
 class ModuleManager
 {
@@ -25,10 +21,8 @@ public:
 private:
 	ModuleManager() {};
 
-	// The instance of the engine
-	HINSTANCE* m_hInstance = nullptr;
-
-	bool game_running = true;
+	// The main window of the application
+	GLFWwindow* m_pWindow = nullptr;
 
 	void InitModules();
 	void GameLoop();
@@ -37,11 +31,10 @@ private:
 	void ShutdownModules();
 
 public:
-	HINSTANCE* GetEngineInstance();
+	GLFWwindow* GetApplicationWindow();
 
-	void StartEngine(HINSTANCE* p_hInst);
-	void SendEventToSystems(ModuleEvent p_CSystemEvent);
+	void StartEngine(GLFWwindow* pWindow);
 	void KillGameLoop();
 };
 
-#endif // MODULE_MANAGER_H
+#endif

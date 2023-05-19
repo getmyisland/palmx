@@ -1,21 +1,22 @@
 #include "InputModule.h"
 
+#include <palm_engine/logger/Logger.h>
+
 InputModule::InputModule() {};
 InputModule::~InputModule() {};
 
 void InputModule::Init()
 {
-	m_InputCollector.EnableLowLevelHooks();
+	Logger::Log(SEVERITY_INFO, "Input Module initialized");
 }
 
-void InputModule::Update() {};
+void InputModule::CollectInput(GLFWwindow* pWindow)
+{
+	if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(pWindow, true);
+}
 
 void InputModule::Shutdown()
-{
-
-}
-
-void InputModule::OnEvent(ModuleEvent* i_CSystemEvent)
 {
 
 }
