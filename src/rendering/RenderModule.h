@@ -18,7 +18,7 @@ public:
 	void Render(GLFWwindow* pWindow);
 
 private:
-	Shader* shader = nullptr;
+	Shader shader;
 
 	unsigned int VAO = 0;
 	unsigned int VBO = 0;

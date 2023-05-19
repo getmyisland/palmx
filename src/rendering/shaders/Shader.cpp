@@ -5,14 +5,14 @@
 #include <palm_engine/logger/Logger.h>
 #include <palm_engine/file_system/FileSystem.h>
 
-Shader::Shader(const char* vertexShaderFilePath, const char* fragmentShaderFilePath)
+Shader::Shader(std::string vertexShaderFilePath, std::string fragmentShaderFilePath)
 {
 	// Vertex Shader File Content
-	std::string vertexFileContent = FileSystem::GetFileContent(vertexShaderFilePath).c_str();
+	std::string vertexFileContent = FileSystem::GetFileContent(vertexShaderFilePath);
 	const char* vertexShaderCode = vertexFileContent.c_str();
 
 	// Fragment Shader File Content
-	std::string fragmentFileContent = FileSystem::GetFileContent(fragmentShaderFilePath).c_str();
+	std::string fragmentFileContent = FileSystem::GetFileContent(fragmentShaderFilePath);
 	const char* fragmentShaderCode = fragmentFileContent.c_str();
 
 	// Compile shaders

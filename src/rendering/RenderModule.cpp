@@ -18,13 +18,9 @@ void RenderModule::Init()
 		return;
 	}
 
-	// Configure global OpenGL state
-	glEnable(GL_DEPTH_TEST);
-
 	std::string rootDir(FileSystem::GetProjectRootDirectory());
-	Shader tempShader((rootDir + "/src/rendering/shaders/shader.vs").c_str(), (rootDir + "/src/rendering/shaders/shader.fs").c_str());
-	shader = &tempShader;
-
+	shader = Shader(rootDir + "/src/rendering/shaders/shader.vs", rootDir + "/src/rendering/shaders/shader.fs");
+	
 	float vertices[] = {
 		// positions         // colors
 		 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
@@ -54,7 +50,7 @@ void RenderModule::Render(GLFWwindow* pWindow)
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	shader->Use();
+	shader.Use();
 
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 3);

@@ -10,11 +10,10 @@
 class Shader
 {
 public:
-	Shader(const char* vertexShaderFilePath, const char* fragmentShaderFilePath);
-
-private:
+	Shader(std::string vertexShaderFilePath, std::string fragmentShaderFilePath);
 	Shader() {}
 
+private:
 	unsigned int ID = 0;
 
 public:
