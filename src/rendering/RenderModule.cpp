@@ -19,7 +19,7 @@ void RenderModule::Init()
 	}
 
 	std::string rootDir(FileSystem::GetProjectRootDirectory());
-	shader = Shader(rootDir + "/src/rendering/shaders/shader.vs", rootDir + "/src/rendering/shaders/shader.fs");
+	_shader = Shader(rootDir + "/src/rendering/shaders/shader.vs", rootDir + "/src/rendering/shaders/shader.fs");
 	
 	float vertices[] = {
 		// positions         // colors
@@ -28,11 +28,11 @@ void RenderModule::Init()
 		 0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
 	};
 
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+	glGenVertexArrays(1, &_VAO);
+	glBindVertexArray(_VAO);
 	
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glGenBuffers(1, &_VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, _VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	// position attribute
@@ -50,9 +50,9 @@ void RenderModule::Render(GLFWwindow* pWindow)
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	shader.Use();
+	_shader.Use();
 
-	glBindVertexArray(VAO);
+	glBindVertexArray(_VAO);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	// Check and calls events
@@ -63,6 +63,6 @@ void RenderModule::Render(GLFWwindow* pWindow)
 
 void RenderModule::Shutdown()
 {
-	glDeleteVertexArrays(1, &VAO);
-	glDeleteBuffers(1, &VBO);
+	glDeleteVertexArrays(1, &_VAO);
+	glDeleteBuffers(1, &_VBO);
 }

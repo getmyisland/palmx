@@ -18,10 +18,10 @@ public:
 	void Render(GLFWwindow* pWindow);
 
 private:
-	Shader shader;
+	Shader _shader;
 
-	unsigned int VAO = 0;
-	unsigned int VBO = 0;
+	unsigned int _VAO = 0;
+	unsigned int _VBO = 0;
 };
 
 #endif

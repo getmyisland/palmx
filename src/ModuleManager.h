@@ -10,9 +10,9 @@ class ModuleManager
 public:
 	static ModuleManager& GetInstance()
 	{
-		static ModuleManager instance;
+		static ModuleManager s_instance;
 
-		return instance;
+		return s_instance;
 	}
 
 	ModuleManager(ModuleManager const&) = delete;
@@ -22,7 +22,7 @@ private:
 	ModuleManager() {};
 
 	// The main window of the application
-	GLFWwindow* m_pWindow = nullptr;
+	GLFWwindow* _pWindow = nullptr;
 
 	void InitModules();
 	void GameLoop();

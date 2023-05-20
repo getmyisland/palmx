@@ -3,12 +3,12 @@
 
 GLFWwindow* ModuleManager::GetApplicationWindow()
 {
-	return m_pWindow;
+	return _pWindow;
 }
 
 void ModuleManager::StartEngine(GLFWwindow* pWindow)
 {
-	m_pWindow = pWindow;
+	_pWindow = pWindow;
 
 	InitModules();
 	GameLoop();
@@ -23,7 +23,7 @@ void ModuleManager::InitModules()
 
 void ModuleManager::GameLoop()
 {
-	while (!glfwWindowShouldClose(m_pWindow))
+	while (!glfwWindowShouldClose(_pWindow))
 	{
 		UpdateModules();
 		RenderModules();
@@ -32,12 +32,12 @@ void ModuleManager::GameLoop()
 
 void ModuleManager::UpdateModules()
 {
-	Modules::g_InputModule.CollectInput(m_pWindow);
+	Modules::g_InputModule.CollectInput(_pWindow);
 }
 
 void ModuleManager::RenderModules()
 {
-	Modules::g_RenderModule.Render(m_pWindow);
+	Modules::g_RenderModule.Render(_pWindow);
 }
 
 void ModuleManager::ShutdownModules()
@@ -48,5 +48,5 @@ void ModuleManager::ShutdownModules()
 
 void ModuleManager::KillGameLoop()
 {
-	glfwSetWindowShouldClose(m_pWindow, true);
+	glfwSetWindowShouldClose(_pWindow, true);
 }

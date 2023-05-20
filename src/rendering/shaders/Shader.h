@@ -14,7 +14,7 @@ public:
 	Shader() {}
 
 private:
-	unsigned int ID = 0;
+	unsigned int _ID = 0;
 
 public:
 	void Use();

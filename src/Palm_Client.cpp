@@ -6,8 +6,8 @@
 void framebuffer_size_callback(GLFWwindow* pWindow, int width, int height);
 
 // Settings
-const unsigned int kScreenWidth = 800;
-const unsigned int kScreenHeight = 600;
+const unsigned int cScreenWidth = 800;
+const unsigned int cScreenHeight = 600;
 
 int main()
 {
@@ -21,8 +21,8 @@ int main()
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-    // Create window
-    GLFWwindow* pWindow = glfwCreateWindow(kScreenWidth, kScreenHeight, "Palm Engine", NULL, NULL);
+    // Create glfw window
+    GLFWwindow* pWindow = glfwCreateWindow(cScreenWidth, cScreenHeight, "Palm Engine", NULL, NULL);
     if (pWindow == NULL)
     {
         Logger::Log(SEVERITY_ERROR, "Failed to create GLFW window");
@@ -32,6 +32,7 @@ int main()
     glfwMakeContextCurrent(pWindow);
     glfwSetFramebufferSizeCallback(pWindow, framebuffer_size_callback);
 
+    // Start the actual game engine
     MODULE_MANAGER.StartEngine(pWindow);
 
     glfwTerminate();

@@ -13,7 +13,9 @@ void InputModule::Init()
 void InputModule::CollectInput(GLFWwindow* pWindow)
 {
 	if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	{
 		glfwSetWindowShouldClose(pWindow, true);
+	}
 }
 
 void InputModule::Shutdown()
