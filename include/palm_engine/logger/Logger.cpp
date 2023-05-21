@@ -10,23 +10,23 @@ std::string GetLocationString(std::source_location const source)
     return "[" + std::filesystem::path(source.file_name()).filename().string() + "] [" + source.function_name() + "] [" + std::to_string(source.line()) + ":" + std::to_string(source.column()) + "]";
 }
 
-std::string GetSeverityLevel(Logger::Severity severity)
+std::string GetSeverityLevel(PalmEngine::Logger::Severity severity)
 {
 	switch (severity)
 	{
-	case Logger::Severity::Debug:
+	case PalmEngine::Logger::Severity::Debug:
 	{
 		return "DEBUG";
 	}
-	case Logger::Severity::Info:
+	case PalmEngine::Logger::Severity::Info:
 	{
 		return "INFO";
 	}
-	case Logger::Severity::Warning:
+	case PalmEngine::Logger::Severity::Warning:
 	{
 		return "WARNING";
 	}
-	case Logger::Severity::Error:
+	case PalmEngine::Logger::Severity::Error:
 	{
 		return "ERROR";
 	}
@@ -35,7 +35,7 @@ std::string GetSeverityLevel(Logger::Severity severity)
 	}
 }
 
-void Logger::Log(Logger::Severity const severity, std::string const message, std::source_location const source)
+void PalmEngine::Logger::Log(Logger::Severity const severity, std::string const message, std::source_location const source)
 {
     using namespace date;
     std::cout << std::chrono::system_clock::now() << " [" << GetSeverityLevel(severity) << "] " << GetLocationString(source) << " " << message << std::endl;

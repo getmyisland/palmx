@@ -19,25 +19,25 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\input\InputModule.cpp" />
+    <ClCompile Include="engine\ModuleManager.cpp" />
+    <ClCompile Include="engine\Modules.cpp" />
+    <ClCompile Include="engine\Palm_Client.cpp" />
+    <ClCompile Include="engine\rendering\RenderModule.cpp" />
+    <ClCompile Include="engine\rendering\Shader.cpp" />
     <ClCompile Include="include\glad\glad.c" />
     <ClCompile Include="include\palm_engine\logger\Logger.cpp" />
-    <ClCompile Include="src\rendering\RenderModule.cpp" />
-    <ClCompile Include="src\input\InputModule.cpp" />
-    <ClCompile Include="src\Palm_Client.cpp" />
-    <ClCompile Include="src\ModuleManager.cpp" />
-    <ClCompile Include="src\Modules.cpp" />
-    <ClCompile Include="src\rendering\shaders\Shader.cpp" />
-    <ClCompile Include="include\palm_engine\file_system\FileSystem.cpp" />
+    <ClCompile Include="include\palm_engine\resource_manager\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\palm_engine\file_system\FileSystem.h" />
+    <ClInclude Include="engine\IModule.h" />
+    <ClInclude Include="engine\input\InputModule.h" />
+    <ClInclude Include="engine\ModuleManager.h" />
+    <ClInclude Include="engine\Modules.h" />
+    <ClInclude Include="engine\rendering\RenderModule.h" />
+    <ClInclude Include="engine\rendering\Shader.h" />
+    <ClInclude Include="include\palm_engine\resource_manager\ResourceManager.h" />
     <ClInclude Include="include\palm_engine\logger\Logger.h" />
-    <ClInclude Include="src\Modules.h" />
-    <ClInclude Include="src\rendering\RenderModule.h" />
-    <ClInclude Include="src\input\InputModule.h" />
-    <ClInclude Include="src\IModule.h" />
-    <ClInclude Include="src\ModuleManager.h" />
-    <ClInclude Include="src\rendering\shaders\Shader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

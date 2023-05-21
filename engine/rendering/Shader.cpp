@@ -3,16 +3,16 @@
 #include <glad/glad.h>
 
 #include <palm_engine/logger/Logger.h>
-#include <palm_engine/file_system/FileSystem.h>
+#include <palm_engine/resource_manager/ResourceManager.h>
 
-Shader::Shader(std::string vertexShaderFilePath, std::string fragmentShaderFilePath)
+PalmEngine::Shader::Shader(std::string vertexShaderFilePath, std::string fragmentShaderFilePath)
 {
 	// Vertex Shader File Content
-	std::string vertexFileContent = FileSystem::GetFileContent(vertexShaderFilePath);
+	std::string vertexFileContent = ResourceManager::GetFileContentAsString(vertexShaderFilePath);
 	const char* vertexShaderCode = vertexFileContent.c_str();
 
 	// Fragment Shader File Content
-	std::string fragmentFileContent = FileSystem::GetFileContent(fragmentShaderFilePath);
+	std::string fragmentFileContent = ResourceManager::GetFileContentAsString(fragmentShaderFilePath);
 	const char* fragmentShaderCode = fragmentFileContent.c_str();
 
 	// Compile shaders
@@ -29,7 +29,7 @@ Shader::Shader(std::string vertexShaderFilePath, std::string fragmentShaderFileP
 	if (!success)
 	{
 		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-		Logger::Log(SEVERITY_ERROR, "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" + std::string(infoLog));
+		PE_LOGGER_LOG(PE_ERROR, "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" + std::string(infoLog));
 	};
 
 	// Fragment Shader
@@ -41,7 +41,7 @@ Shader::Shader(std::string vertexShaderFilePath, std::string fragmentShaderFileP
 	if (!success)
 	{
 		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-		Logger::Log(SEVERITY_ERROR, "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" + std::string(infoLog));
+		PE_LOGGER_LOG(PE_ERROR, "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" + std::string(infoLog));
 	};
 
 	// Shader Program
@@ -54,7 +54,7 @@ Shader::Shader(std::string vertexShaderFilePath, std::string fragmentShaderFileP
 	if (!success)
 	{
 		glGetProgramInfoLog(_ID, 512, NULL, infoLog);
-		Logger::Log(SEVERITY_ERROR, "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" + std::string(infoLog));
+		PE_LOGGER_LOG(PE_ERROR, "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" + std::string(infoLog));
 	}
 
 	// Delete the shaders as they're linked into our program now and no longer necessary
@@ -62,24 +62,24 @@ Shader::Shader(std::string vertexShaderFilePath, std::string fragmentShaderFileP
 	glDeleteShader(fragment);
 }
 
-void Shader::Use()
+void PalmEngine::Shader::Use()
 {
 	glUseProgram(_ID);
 }
 
-void Shader::SetBool(const std::string& name, bool value) const
+void PalmEngine::Shader::SetBool(const std::string& name, bool value) const
 {
 	glUniform1i(glGetUniformLocation(_ID, name.c_str()), (int)value);
 }
-void Shader::SetInt(const std::string& name, int value) const
+void PalmEngine::Shader::SetInt(const std::string& name, int value) const
 {
 	glUniform1i(glGetUniformLocation(_ID, name.c_str()), value);
 }
-void Shader::SetFloat(const std::string& name, float value) const
+void PalmEngine::Shader::SetFloat(const std::string& name, float value) const
 {
 	glUniform1f(glGetUniformLocation(_ID, name.c_str()), value);
 }
-void Shader::SetMat4(const std::string& name, glm::mat4 value) const
+void PalmEngine::Shader::SetMat4(const std::string& name, glm::mat4 value) const
 {
 	glUniformMatrix4fv(glGetUniformLocation(_ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 }

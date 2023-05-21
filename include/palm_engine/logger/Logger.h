@@ -1,32 +1,37 @@
-#ifndef LOGGER_H
-#define LOGGER_H
+#ifndef _PE_LOGGER_H__
+#define _PE_LOGGER_H__
 
-#define SEVERITY_DEBUG Logger::Severity::Debug
-#define SEVERITY_INFO Logger::Severity::Info
-#define SEVERITY_WARNING Logger::Severity::Warning
-#define SEVERITY_ERROR Logger::Severity::Error
+#define PE_LOGGER_LOG PalmEngine::Logger::Log
+
+#define PE_DEBUG PalmEngine::Logger::Severity::Debug
+#define PE_INFO PalmEngine::Logger::Severity::Info
+#define PE_WARNING PalmEngine::Logger::Severity::Warning
+#define PE_ERROR PalmEngine::Logger::Severity::Error
 
 #include <string>
 #include <source_location>
 
-class Logger
+namespace PalmEngine
 {
-public:
-	enum class Severity
+	class Logger
 	{
-		Debug,
-		Info,
-		Warning,
-		Error
+	public:
+		enum class Severity
+		{
+			Debug,
+			Info,
+			Warning,
+			Error
+		};
+
+	private:
+		Logger() {}
+
+	public:
+		static void Log(Logger::Severity const severity,
+			std::string const message,
+			std::source_location const source = std::source_location::current());
 	};
-
-private:
-	Logger() {}
-
-public:
-	static void Log(Logger::Severity const severity,
-		std::string const message,
-		std::source_location const source = std::source_location::current());
-};
+}
 
 #endif

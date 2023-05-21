@@ -1,4 +1,4 @@
-#include "FileSystem.h"
+#include "ResourceManager.h"
 
 #include <palm_engine/logger/Logger.h>
 
@@ -9,7 +9,7 @@
 #include <direct.h>
 #define GET_CURRENT_DIR _getcwd
 
-std::string FileSystem::GetProjectRootDirectory()
+std::string PalmEngine::ResourceManager::GetProjectRootDirectory()
 {
 	char buff[FILENAME_MAX]; // Create string buffer to hold path
 	char* content = GET_CURRENT_DIR(buff, FILENAME_MAX);
@@ -19,12 +19,12 @@ std::string FileSystem::GetProjectRootDirectory()
 	}
 	else
 	{
-		Logger::Log(SEVERITY_WARNING, "Could not get root directory");
+		PE_LOGGER_LOG(PE_WARNING, "Could not get root directory");
 		return std::string("");
 	}
 }
 
-std::string FileSystem::GetFileContent(std::string filePath)
+std::string PalmEngine::ResourceManager::GetFileContentAsString(std::string& filePath)
 {
 	std::ifstream file;
 
@@ -44,7 +44,7 @@ std::string FileSystem::GetFileContent(std::string filePath)
 	}
 	catch (std::ifstream::failure e)
 	{
-		Logger::Log(SEVERITY_ERROR, "FILE_NOT_SUCCESFULLY_READ::PATH::" + filePath);
+		PE_LOGGER_LOG(PE_ERROR, "FILE_NOT_SUCCESFULLY_READ::PATH::" + filePath);
 		return std::string("");
 	}
 }

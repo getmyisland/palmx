@@ -3,23 +3,23 @@
 #include "RenderModule.h"
 
 #include <palm_engine/logger/Logger.h>
-#include <palm_engine/file_system/FileSystem.h>
+#include <palm_engine/resource_manager/ResourceManager.h>
 
-RenderModule::RenderModule() {};
-RenderModule::~RenderModule() {};
+PalmEngine::RenderModule::RenderModule() {};
+PalmEngine::RenderModule::~RenderModule() {};
 
-void RenderModule::Init()
+void PalmEngine::RenderModule::StartUp()
 {
 	// Load all OpenGL function pointers
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 	{
-		Logger::Log(SEVERITY_ERROR, "Failed to initialize GLAD");
-		MODULE_MANAGER.KillGameLoop();
+		PE_LOGGER_LOG(PE_ERROR, "Failed to initialize GLAD");
+		PE_MODULE_MANAGER.KillGameLoop();
 		return;
 	}
 
-	std::string rootDir(FileSystem::GetProjectRootDirectory());
-	_shader = Shader(rootDir + "/src/rendering/shaders/shader.vs", rootDir + "/src/rendering/shaders/shader.fs");
+	std::string rootDir(ResourceManager::GetProjectRootDirectory());
+	_shader = Shader(rootDir + "/resources/shaders/shader.vs", rootDir + "/resources/shaders/shader.fs");
 	
 	float vertices[] = {
 		// positions         // colors
@@ -42,10 +42,10 @@ void RenderModule::Init()
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 
-	Logger::Log(SEVERITY_INFO, "Render Module initialized");
+	PE_LOGGER_LOG(PE_INFO, "Render Module initialized");
 }
 
-void RenderModule::Render(GLFWwindow* pWindow)
+void PalmEngine::RenderModule::Render(GLFWwindow* pWindow)
 {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -61,7 +61,7 @@ void RenderModule::Render(GLFWwindow* pWindow)
 	glfwPollEvents();
 }
 
-void RenderModule::Shutdown()
+void PalmEngine::RenderModule::ShutDown()
 {
 	glDeleteVertexArrays(1, &_VAO);
 	glDeleteBuffers(1, &_VBO);

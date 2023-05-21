@@ -22,18 +22,18 @@ int main()
 #endif
 
     // Create glfw window
-    GLFWwindow* pWindow = glfwCreateWindow(cScreenWidth, cScreenHeight, "Palm Engine", NULL, NULL);
-    if (pWindow == NULL)
+    GLFWwindow* window = glfwCreateWindow(cScreenWidth, cScreenHeight, "Palm Engine", NULL, NULL);
+    if (window == NULL)
     {
-        Logger::Log(SEVERITY_ERROR, "Failed to create GLFW window");
+        PE_LOGGER_LOG(PE_ERROR, "Failed to create GLFW window");
         glfwTerminate();
         return -1;
     }
-    glfwMakeContextCurrent(pWindow);
-    glfwSetFramebufferSizeCallback(pWindow, framebuffer_size_callback);
+    glfwMakeContextCurrent(window);
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     // Start the actual game engine
-    MODULE_MANAGER.StartEngine(pWindow);
+    PE_MODULE_MANAGER.Run(window);
 
     glfwTerminate();
 	return 0;
