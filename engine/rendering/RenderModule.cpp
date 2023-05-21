@@ -20,7 +20,7 @@ void PalmEngine::RenderModule::StartUp()
 	}
 
 	std::string rootDir(ResourceManager::GetProjectRootDirectory());
-	_shader = Shader(rootDir + "/resources/shaders/shader.vs", rootDir + "/resources/shaders/shader.fs");
+	_shader = Shader(rootDir + "/resources/shaders/shader.vert", rootDir + "/resources/shaders/shader.frag");
 	_testModel = Model(rootDir + "/resources/objects/scp173/cb_scp173.fbx");
 
 	float vertices[] = {
@@ -55,14 +55,14 @@ void PalmEngine::RenderModule::Render(GLFWwindow* window)
 	_shader.Use();
 
 	// View/Projection Transformations
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)PE_CONFIG_SCREEN_WIDTH / (float)PE_CONFIG_SCREEN_HEIGHT, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)PE_CONFIG_SCREEN_WIDTH / (float)PE_CONFIG_SCREEN_HEIGHT, 0.1f, 100.0f);
 	glm::mat4 view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 	_shader.SetMat4("projection", projection);
 	_shader.SetMat4("view", view);
 
 	// Render the loaded model
 	glm::mat4 model = glm::mat4(1.0f);
-	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, -20.0f)); // translate it down so it's at the center of the scene
 	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
 	_shader.SetMat4("model", model);
 	_testModel.Draw(_shader);

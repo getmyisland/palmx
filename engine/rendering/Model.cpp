@@ -41,13 +41,13 @@ void PalmEngine::Model::LoadModel(string path)
 
 void PalmEngine::Model::ProcessNode(aiNode* node, const aiScene* scene)
 {
-    // process all the node's meshes (if any)
+    // Process all the node's meshes (if any)
     for (unsigned int i = 0; i < node->mNumMeshes; i++)
     {
         aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
         _meshes.push_back(ProcessMesh(mesh, scene));
     }
-    // then do the same for each of its children
+    // Then do the same for each of its children
     for (unsigned int i = 0; i < node->mNumChildren; i++)
     {
         ProcessNode(node->mChildren[i], scene);
@@ -101,6 +101,7 @@ PalmEngine::Mesh PalmEngine::Model::ProcessMesh(aiMesh* mesh, const aiScene* sce
     if (mesh->mMaterialIndex >= 0)
     {
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
+        PE_LOGGER_LOG(PE_INFO, material->GetName().C_Str());
         vector<Texture> diffuseMaps = LoadMaterialTextures(material,
             aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
@@ -132,7 +133,7 @@ unsigned int TextureFromFile(const char* path, const string& directory)
 {
     string filename = string(path);
     filename = directory + '/' + filename;
-
+    PE_LOGGER_LOG(PE_INFO, filename);
     unsigned int textureID;
     glGenTextures(1, &textureID);
 
