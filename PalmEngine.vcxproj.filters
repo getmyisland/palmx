@@ -33,13 +33,19 @@
     <ClCompile Include="engine\Modules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\Palm_Client.cpp">
+    <ClCompile Include="engine\PalmEngine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\rendering\RenderModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\rendering\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\rendering\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="engine\rendering\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -66,6 +72,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\rendering\Shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\rendering\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\rendering\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\stb\stb_image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\PalmEngineConfig.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

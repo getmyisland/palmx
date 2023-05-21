@@ -5,6 +5,8 @@
 #include <palm_engine/logger/Logger.h>
 #include <palm_engine/resource_manager/ResourceManager.h>
 
+PalmEngine::Shader::Shader() {}
+
 PalmEngine::Shader::Shader(std::string vertexShaderFilePath, std::string fragmentShaderFilePath)
 {
 	// Vertex Shader File Content
@@ -45,15 +47,15 @@ PalmEngine::Shader::Shader(std::string vertexShaderFilePath, std::string fragmen
 	};
 
 	// Shader Program
-	_ID = glCreateProgram();
-	glAttachShader(_ID, vertex);
-	glAttachShader(_ID, fragment);
-	glLinkProgram(_ID);
+	mID = glCreateProgram();
+	glAttachShader(mID, vertex);
+	glAttachShader(mID, fragment);
+	glLinkProgram(mID);
 
-	glGetProgramiv(_ID, GL_LINK_STATUS, &success);
+	glGetProgramiv(mID, GL_LINK_STATUS, &success);
 	if (!success)
 	{
-		glGetProgramInfoLog(_ID, 512, NULL, infoLog);
+		glGetProgramInfoLog(mID, 512, NULL, infoLog);
 		PE_LOGGER_LOG(PE_ERROR, "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" + std::string(infoLog));
 	}
 
@@ -64,22 +66,22 @@ PalmEngine::Shader::Shader(std::string vertexShaderFilePath, std::string fragmen
 
 void PalmEngine::Shader::Use()
 {
-	glUseProgram(_ID);
+	glUseProgram(mID);
 }
 
 void PalmEngine::Shader::SetBool(const std::string& name, bool value) const
 {
-	glUniform1i(glGetUniformLocation(_ID, name.c_str()), (int)value);
+	glUniform1i(glGetUniformLocation(mID, name.c_str()), (int)value);
 }
 void PalmEngine::Shader::SetInt(const std::string& name, int value) const
 {
-	glUniform1i(glGetUniformLocation(_ID, name.c_str()), value);
+	glUniform1i(glGetUniformLocation(mID, name.c_str()), value);
 }
 void PalmEngine::Shader::SetFloat(const std::string& name, float value) const
 {
-	glUniform1f(glGetUniformLocation(_ID, name.c_str()), value);
+	glUniform1f(glGetUniformLocation(mID, name.c_str()), value);
 }
 void PalmEngine::Shader::SetMat4(const std::string& name, glm::mat4 value) const
 {
-	glUniformMatrix4fv(glGetUniformLocation(_ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+	glUniformMatrix4fv(glGetUniformLocation(mID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 }

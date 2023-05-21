@@ -1,13 +1,10 @@
 #include <GLFW/glfw3.h>
 
+#include "PalmEngineConfig.h"
 #include "ModuleManager.h"
 #include <palm_engine/logger/Logger.h>
 
 void framebuffer_size_callback(GLFWwindow* pWindow, int width, int height);
-
-// Settings
-const unsigned int cScreenWidth = 800;
-const unsigned int cScreenHeight = 600;
 
 int main()
 {
@@ -22,7 +19,7 @@ int main()
 #endif
 
     // Create glfw window
-    GLFWwindow* window = glfwCreateWindow(cScreenWidth, cScreenHeight, "Palm Engine", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(PalmEngine::PE_CONFIG_SCREEN_WIDTH, PalmEngine::PE_CONFIG_SCREEN_HEIGHT, "Palm Engine", NULL, NULL);
     if (window == NULL)
     {
         PE_LOGGER_LOG(PE_ERROR, "Failed to create GLFW window");

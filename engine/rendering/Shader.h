@@ -12,13 +12,11 @@ namespace PalmEngine
 	class Shader
 	{
 	public:
+		Shader();
 		Shader(std::string vertexShaderFilePath, std::string fragmentShaderFilePath);
-		Shader() {}
 
-	private:
-		unsigned int _ID = 0;
+		unsigned int mID = 0;
 
-	public:
 		void Use();
 
 		void SetBool(const std::string& name, bool value) const;

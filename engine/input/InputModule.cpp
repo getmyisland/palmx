@@ -10,11 +10,11 @@ void PalmEngine::InputModule::StartUp()
 	PE_LOGGER_LOG(PE_INFO, "Input Module initialized");
 }
 
-void PalmEngine::InputModule::CollectInput(GLFWwindow* pWindow)
+void PalmEngine::InputModule::CollectInput(GLFWwindow* window)
 {
-	if (glfwGetKey(pWindow, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 	{
-		glfwSetWindowShouldClose(pWindow, true);
+		glfwSetWindowShouldClose(window, true);
 	}
 }
 

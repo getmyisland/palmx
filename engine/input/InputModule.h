@@ -16,7 +16,7 @@ namespace PalmEngine
 		virtual void StartUp() override;
 		virtual void ShutDown() override;
 
-		void CollectInput(GLFWwindow* pWindow);
+		void CollectInput(GLFWwindow* window);
 	};
 }
 

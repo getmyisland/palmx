@@ -3,6 +3,7 @@
 
 #include "../IModule.h"
 #include "Shader.h"
+#include "Model.h"
 
 #include <GLFW/glfw3.h>
 
@@ -17,10 +18,11 @@ namespace PalmEngine
 		virtual void StartUp() override;
 		virtual void ShutDown() override;
 
-		void Render(GLFWwindow* pWindow);
+		void Render(GLFWwindow* window);
 
 	private:
 		Shader _shader;
+		Model _testModel;
 
 		unsigned int _VAO = 0;
 		unsigned int _VBO = 0;

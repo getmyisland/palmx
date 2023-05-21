@@ -1,6 +1,7 @@
 #include <glad/glad.h>
 
 #include "RenderModule.h"
+#include "../PalmEngineConfig.h"
 
 #include <palm_engine/logger/Logger.h>
 #include <palm_engine/resource_manager/ResourceManager.h>
@@ -20,7 +21,8 @@ void PalmEngine::RenderModule::StartUp()
 
 	std::string rootDir(ResourceManager::GetProjectRootDirectory());
 	_shader = Shader(rootDir + "/resources/shaders/shader.vs", rootDir + "/resources/shaders/shader.fs");
-	
+	_testModel = Model(rootDir + "/resources/objects/scp173/cb_scp173.fbx");
+
 	float vertices[] = {
 		// positions         // colors
 		 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
@@ -45,19 +47,29 @@ void PalmEngine::RenderModule::StartUp()
 	PE_LOGGER_LOG(PE_INFO, "Render Module initialized");
 }
 
-void PalmEngine::RenderModule::Render(GLFWwindow* pWindow)
+void PalmEngine::RenderModule::Render(GLFWwindow* window)
 {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	_shader.Use();
 
-	glBindVertexArray(_VAO);
-	glDrawArrays(GL_TRIANGLES, 0, 3);
+	// View/Projection Transformations
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)PE_CONFIG_SCREEN_WIDTH / (float)PE_CONFIG_SCREEN_HEIGHT, 0.1f, 100.0f);
+	glm::mat4 view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	_shader.SetMat4("projection", projection);
+	_shader.SetMat4("view", view);
+
+	// Render the loaded model
+	glm::mat4 model = glm::mat4(1.0f);
+	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f)); // translate it down so it's at the center of the scene
+	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	// it's a bit too big for our scene, so scale it down
+	_shader.SetMat4("model", model);
+	_testModel.Draw(_shader);
 
 	// Check and calls events
 	// Swap buffers
-	glfwSwapBuffers(pWindow);
+	glfwSwapBuffers(window);
 	glfwPollEvents();
 }
 

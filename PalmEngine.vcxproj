@@ -22,7 +22,9 @@
     <ClCompile Include="engine\input\InputModule.cpp" />
     <ClCompile Include="engine\ModuleManager.cpp" />
     <ClCompile Include="engine\Modules.cpp" />
-    <ClCompile Include="engine\Palm_Client.cpp" />
+    <ClCompile Include="engine\PalmEngine.cpp" />
+    <ClCompile Include="engine\rendering\Mesh.cpp" />
+    <ClCompile Include="engine\rendering\Model.cpp" />
     <ClCompile Include="engine\rendering\RenderModule.cpp" />
     <ClCompile Include="engine\rendering\Shader.cpp" />
     <ClCompile Include="include\glad\glad.c" />
@@ -34,10 +36,14 @@
     <ClInclude Include="engine\input\InputModule.h" />
     <ClInclude Include="engine\ModuleManager.h" />
     <ClInclude Include="engine\Modules.h" />
+    <ClInclude Include="engine\PalmEngineConfig.h" />
+    <ClInclude Include="engine\rendering\Mesh.h" />
+    <ClInclude Include="engine\rendering\Model.h" />
     <ClInclude Include="engine\rendering\RenderModule.h" />
     <ClInclude Include="engine\rendering\Shader.h" />
     <ClInclude Include="include\palm_engine\resource_manager\ResourceManager.h" />
     <ClInclude Include="include\palm_engine\logger\Logger.h" />
+    <ClInclude Include="include\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />
@@ -155,7 +161,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glfw3.lib;d3d11.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;glfw3.lib;d3d11.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)/lib/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
