@@ -15,13 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\palm_engine\logger\Logger.cpp">
+    <ClCompile Include="engine\logger\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\glad\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="include\palm_engine\resource_manager\ResourceManager.cpp">
+    <ClCompile Include="engine\resource_manager\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\input\InputModule.cpp">
@@ -48,12 +48,15 @@
     <ClCompile Include="engine\rendering\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\Test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\palm_engine\logger\Logger.h">
+    <ClInclude Include="engine\logger\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\palm_engine\resource_manager\ResourceManager.h">
+    <ClInclude Include="engine\resource_manager\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\rendering\RenderModule.h">

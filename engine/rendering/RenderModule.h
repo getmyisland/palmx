@@ -19,13 +19,6 @@ namespace PalmEngine
 		virtual void ShutDown() override;
 
 		void Render(GLFWwindow* window);
-
-	private:
-		Shader _shader;
-		Model _testModel;
-
-		unsigned int _VAO = 0;
-		unsigned int _VBO = 0;
 	};
 }
 

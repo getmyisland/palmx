@@ -2,8 +2,8 @@
 
 #include <glad/glad.h>
 
-#include <palm_engine/logger/Logger.h>
-#include <palm_engine/resource_manager/ResourceManager.h>
+#include <logger/Logger.h>
+#include <resource_manager/ResourceManager.h>
 
 PalmEngine::Shader::Shader() {}
 

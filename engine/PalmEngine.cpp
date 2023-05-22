@@ -1,8 +1,8 @@
 #include <GLFW/glfw3.h>
 
-#include "PalmEngineConfig.h"
-#include "ModuleManager.h"
-#include <palm_engine/logger/Logger.h>
+#include <PalmEngineConfig.h>
+#include <ModuleManager.h>
+#include <logger/Logger.h>
 
 void framebuffer_size_callback(GLFWwindow* pWindow, int width, int height);
 

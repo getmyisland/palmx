@@ -27,9 +27,10 @@
     <ClCompile Include="engine\rendering\Model.cpp" />
     <ClCompile Include="engine\rendering\RenderModule.cpp" />
     <ClCompile Include="engine\rendering\Shader.cpp" />
+    <ClCompile Include="game\Test.cpp" />
     <ClCompile Include="include\glad\glad.c" />
-    <ClCompile Include="include\palm_engine\logger\Logger.cpp" />
-    <ClCompile Include="include\palm_engine\resource_manager\ResourceManager.cpp" />
+    <ClCompile Include="engine\logger\Logger.cpp" />
+    <ClCompile Include="engine\resource_manager\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\IModule.h" />
@@ -41,8 +42,8 @@
     <ClInclude Include="engine\rendering\Model.h" />
     <ClInclude Include="engine\rendering\RenderModule.h" />
     <ClInclude Include="engine\rendering\Shader.h" />
-    <ClInclude Include="include\palm_engine\resource_manager\ResourceManager.h" />
-    <ClInclude Include="include\palm_engine\logger\Logger.h" />
+    <ClInclude Include="engine\resource_manager\ResourceManager.h" />
+    <ClInclude Include="engine\logger\Logger.h" />
     <ClInclude Include="include\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +157,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ShowIncludes>false</ShowIncludes>
-      <AdditionalIncludeDirectories>$(ProjectDir)/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/include;$(ProjectDir)/engine</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

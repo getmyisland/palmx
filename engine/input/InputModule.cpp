@@ -1,6 +1,6 @@
 #include "InputModule.h"
 
-#include <palm_engine/logger/Logger.h>
+#include <logger/Logger.h>
 
 PalmEngine::InputModule::InputModule() {};
 PalmEngine::InputModule::~InputModule() {};

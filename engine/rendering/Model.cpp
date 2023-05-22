@@ -1,6 +1,6 @@
 #include <glad/glad.h> // holds all OpenGL type declarations
 
-#include <palm_engine/logger/Logger.h>
+#include <logger/Logger.h>
 #include "Model.h"
 
 #ifndef STBI_INCLUDE_STB_IMAGE_H

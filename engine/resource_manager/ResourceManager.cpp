@@ -1,6 +1,6 @@
 #include "ResourceManager.h"
 
-#include <palm_engine/logger/Logger.h>
+#include <logger/Logger.h>
 
 #include <fstream>
 #include <sstream>
