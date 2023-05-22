@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 
+#include <PalmEngineConfig.h>
 #include <PalmEngineSingleton.h>
 #include <entity/EntityManager.h>
 #include <input/InputManager.h>
@@ -16,10 +17,12 @@ namespace PalmEngine
 	class PalmEngineRoot : public PalmEngineSingleton<PalmEngineRoot>
 	{
 	public:
-		PalmEngineRoot(const unsigned int width, const unsigned int height);
+		PalmEngineRoot(PalmEngineConfig& palmEngineConfig);
 
 		static PalmEngineRoot& GetSingleton(void);
 		static PalmEngineRoot* GetSingletonPtr(void);
+
+		~PalmEngineRoot();
 
 	private:
 		PalmEngineRoot();

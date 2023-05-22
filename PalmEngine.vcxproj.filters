@@ -95,6 +95,15 @@
     <ClInclude Include="engine\PalmEngineSingleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="engine\PalmEngineConfig.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\PalmEngineEntry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\Test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

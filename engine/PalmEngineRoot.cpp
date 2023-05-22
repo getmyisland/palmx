@@ -22,7 +22,7 @@ namespace PalmEngine
 
 	PalmEngineRoot::PalmEngineRoot() {}
 
-	PalmEngineRoot::PalmEngineRoot(const unsigned int width, const unsigned int height)
+	PalmEngineRoot::PalmEngineRoot(PalmEngineConfig& palmEngineConfig)
 	{
 		// Initialize and configure glfw
 		glfwInit();
@@ -35,7 +35,7 @@ namespace PalmEngine
 #endif
 
 		// Create glfw window
-		GLFWwindow* window = glfwCreateWindow(width, height, "Palm Engine", NULL, NULL);
+		GLFWwindow* window = glfwCreateWindow(palmEngineConfig.mWidth, palmEngineConfig.mHeight, "Palm Engine", NULL, NULL);
 		if (window == NULL)
 		{
 			PE_LOG_MANAGER->LogError("Failed to create GLFW window");
@@ -58,6 +58,15 @@ namespace PalmEngine
 		ShutdownModules();
 
 		glfwTerminate();
+	}
+
+	PalmEngine::PalmEngineRoot::~PalmEngineRoot() 
+	{
+		mEntityManager.release();
+		mRenderManager.release();
+		mInputManager.release();
+		mResourceManager.release();
+		mLogManager.release();
 	}
 
 	void PalmEngineRoot::StartUpModules()

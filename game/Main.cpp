@@ -1,12 +1,14 @@
 #include <GLFW/glfw3.h>
 
+#include "Test.h"
+#include <PalmEngineEntry.h>
 #include <PalmEngineRoot.h>
 
 int main()
 {
-	const unsigned int width = 800;
-	const unsigned int height = 600;
-	PalmEngine::PalmEngineRoot(width, height);
+	Test test;
+	PalmEngine::PalmEngineConfig config(test, 800, 600);
+	PalmEngine::PalmEngineRoot palmEngineRoot(config);
 
 	return 0;
 }

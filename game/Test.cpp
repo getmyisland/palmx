@@ -1,3 +1,4 @@
+#include "Test.h"
 #include <rendering/Shader.h>
 #include <rendering/Model.h>
 #include <filesystem/ResourceManager.h>
@@ -6,6 +7,13 @@ using namespace PalmEngine;
 
 Shader shader;
 Model testModel;
+
+void Start();
+
+void Test::Entry()
+{
+	Start();
+}
 
 void Start()
 {

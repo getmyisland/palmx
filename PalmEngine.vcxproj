@@ -34,6 +34,8 @@
     <ClCompile Include="engine\filesystem\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\PalmEngineConfig.h" />
+    <ClInclude Include="engine\PalmEngineEntry.h" />
     <ClInclude Include="engine\PalmEngineManager.h" />
     <ClInclude Include="engine\input\InputManager.h" />
     <ClInclude Include="engine\PalmEngineRoot.h" />
@@ -46,6 +48,7 @@
     <ClInclude Include="engine\logging\LogManager.h" />
     <ClInclude Include="engine\entity\Entity.h" />
     <ClInclude Include="engine\entity\EntityManager.h" />
+    <ClInclude Include="game\Test.h" />
     <ClInclude Include="include\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
