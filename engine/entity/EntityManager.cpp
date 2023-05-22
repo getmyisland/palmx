@@ -1,14 +1,31 @@
 #include "EntityManager.h"
 
-PalmEngine::EntityManager::EntityManager() { }
-PalmEngine::EntityManager::~EntityManager() { }
-
-void PalmEngine::EntityManager::StartUp()
+namespace PalmEngine
 {
+	EntityManager::EntityManager() { }
+	EntityManager::~EntityManager() { }
 
-}
+	//-----------------------------------------------------------------------
 
-void PalmEngine::EntityManager::ShutDown()
-{
+	template<> EntityManager* PalmEngineSingleton<EntityManager>::msSingleton = 0;
+	EntityManager* EntityManager::GetSingletonPtr(void)
+	{
+		return msSingleton;
+	}
+	EntityManager& EntityManager::GetSingleton(void)
+	{
+		return (*msSingleton);
+	}
 
+	//-----------------------------------------------------------------------
+
+	void PalmEngine::EntityManager::StartUp()
+	{
+
+	}
+
+	void PalmEngine::EntityManager::ShutDown()
+	{
+
+	}
 }

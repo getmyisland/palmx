@@ -19,7 +19,6 @@ namespace PalmEngine
 		PalmEngineRoot(const unsigned int width, const unsigned int height);
 
 		static PalmEngineRoot& GetSingleton(void);
-		/// @copydoc Singleton::getSingleton()
 		static PalmEngineRoot* GetSingletonPtr(void);
 
 	private:

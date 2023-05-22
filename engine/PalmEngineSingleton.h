@@ -32,12 +32,12 @@ namespace PalmEngine
         {
             msSingleton = 0;
         }
-        /// Get the singleton instance
+        // Get the singleton instance
         static T& GetSingleton(void)
         {
             return (*msSingleton);
         }
-        /// @copydoc getSingleton
+        // Get a pointer to the singleton instance
         static T* GetSingletonPtr(void) { return msSingleton; }
     };
 }

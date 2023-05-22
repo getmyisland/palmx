@@ -2,23 +2,42 @@
 
 #include <logging/LogManager.h>
 
-PalmEngine::InputManager::InputManager() {};
-PalmEngine::InputManager::~InputManager() {};
-
-void PalmEngine::InputManager::StartUp()
+namespace PalmEngine
 {
-	PE_LOG_MANAGER->LogInfo("Input Module initialized");
-}
+	InputManager::InputManager() {};
+	InputManager::~InputManager() {};
 
-void PalmEngine::InputManager::CollectInput(GLFWwindow* window)
-{
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	//-----------------------------------------------------------------------
+
+	template<> InputManager* PalmEngineSingleton<InputManager>::msSingleton = 0;
+	InputManager* InputManager::GetSingletonPtr(void)
 	{
-		glfwSetWindowShouldClose(window, true);
+		return msSingleton;
 	}
-}
+	InputManager& InputManager::GetSingleton(void)
+	{
+		return (*msSingleton);
+	}
 
-void PalmEngine::InputManager::ShutDown()
-{
+	//-----------------------------------------------------------------------
 
+	void InputManager::StartUp()
+	{
+		PE_LOG_MANAGER->LogInfo("Input Module initialized");
+	}
+
+	void InputManager::ShutDown()
+	{
+
+	}
+
+	//-----------------------------------------------------------------------
+
+	void InputManager::CollectInput(GLFWwindow* window)
+	{
+		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		{
+			glfwSetWindowShouldClose(window, true);
+		}
+	}
 }

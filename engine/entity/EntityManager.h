@@ -6,11 +6,14 @@
 
 namespace PalmEngine
 {
-	class EntityManager : PalmEngineManager, PalmEngineSingleton<EntityManager>
+	class EntityManager : PalmEngineManager, public PalmEngineSingleton<EntityManager>
 	{
 	public:
 		EntityManager();
 		~EntityManager();
+
+		static EntityManager& GetSingleton(void);
+		static EntityManager* GetSingletonPtr(void);
 
 		virtual void StartUp() override;
 		virtual void ShutDown() override;

@@ -365,6 +365,9 @@ RECENT REVISION HISTORY:
 //    default this is set to (1 << 24), which is 16777216, but that's still
 //    very big.
 
+// Disable the warning to not spam the ouput with unnecessary warnings
+#pragma warning( disable : 4100 )
+
 #ifndef STBI_NO_STDIO
 #include <stdio.h>
 #endif // STBI_NO_STDIO

@@ -10,11 +10,14 @@
 
 namespace PalmEngine
 {
-	class LogManager : PalmEngineManager, PalmEngineSingleton<LogManager>
+	class LogManager : PalmEngineManager, public PalmEngineSingleton<LogManager>
 	{
 	public:
 		LogManager();
 		~LogManager();
+
+		static LogManager& GetSingleton(void);
+		static LogManager* GetSingletonPtr(void);
 
 		virtual void StartUp() override;
 		virtual void ShutDown() override;
@@ -27,9 +30,6 @@ namespace PalmEngine
 
 		void LogError(std::string const message,
 			std::source_location const source = std::source_location::current());
-
-		static LogManager& GetSingleton(void);
-		static LogManager* GetSingletonPtr(void);
 	};
 }
 

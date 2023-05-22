@@ -7,6 +7,9 @@
 
 namespace PalmEngine
 {
+    LogManager::LogManager() {}
+    LogManager::~LogManager() {}
+
     //-----------------------------------------------------------------------
     
     template<> LogManager* PalmEngineSingleton<LogManager>::msSingleton = 0;
@@ -18,11 +21,6 @@ namespace PalmEngine
     {
         return (*msSingleton);
     }
-    
-    //-----------------------------------------------------------------------
-    
-    LogManager::LogManager() {}
-    LogManager::~LogManager() {}
     
     //-----------------------------------------------------------------------
     

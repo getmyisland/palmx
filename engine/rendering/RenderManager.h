@@ -1,6 +1,7 @@
 #ifndef _PE_RENDER_MANAGER_H__
 #define _PE_RENDER_MANAGER_H__
 
+#include <PalmEngineSingleton.h>
 #include <PalmEngineManager.h>
 #include "Shader.h"
 #include "Model.h"
@@ -9,7 +10,7 @@
 
 namespace PalmEngine
 {
-	class RenderManager : public PalmEngineManager
+	class RenderManager : PalmEngineManager, public PalmEngineSingleton<RenderManager>
 	{
 	public:
 		RenderManager();
@@ -17,6 +18,9 @@ namespace PalmEngine
 
 		virtual void StartUp() override;
 		virtual void ShutDown() override;
+
+		static RenderManager& GetSingleton(void);
+		static RenderManager* GetSingletonPtr(void);
 
 		void Render(GLFWwindow* window);
 	};

@@ -4,34 +4,53 @@
 
 #include <logging/LogManager.h>
 
-PalmEngine::RenderManager::RenderManager() {};
-PalmEngine::RenderManager::~RenderManager() {};
-
-void PalmEngine::RenderManager::StartUp()
+namespace PalmEngine
 {
-	// Load all OpenGL function pointers
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	RenderManager::RenderManager() {};
+	RenderManager::~RenderManager() {};
+
+	//-----------------------------------------------------------------------
+
+	template<> RenderManager* PalmEngineSingleton<RenderManager>::msSingleton = 0;
+	RenderManager* RenderManager::GetSingletonPtr(void)
 	{
-		PE_LOG_MANAGER->LogError("Failed to initialize GLAD");
-		//PE_MODULE_MANAGER.KillGameLoop();
-		return;
+		return msSingleton;
+	}
+	RenderManager& RenderManager::GetSingleton(void)
+	{
+		return (*msSingleton);
 	}
 
-	PE_LOG_MANAGER->LogInfo("Render Module initialized");
-}
+	//-----------------------------------------------------------------------
 
-void PalmEngine::RenderManager::Render(GLFWwindow* window)
-{
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
+	void RenderManager::StartUp()
+	{
+		// Load all OpenGL function pointers
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+		{
+			PE_LOG_MANAGER->LogError("Failed to initialize GLAD");
+			//PE_MODULE_MANAGER.KillGameLoop();
+			return;
+		}
 
-	// Check and calls events
-	// Swap buffers
-	glfwSwapBuffers(window);
-	glfwPollEvents();
-}
+		PE_LOG_MANAGER->LogInfo("Render Module initialized");
+	}
 
-void PalmEngine::RenderManager::ShutDown()
-{
-	
+	void RenderManager::ShutDown()
+	{
+
+	}
+
+	//-----------------------------------------------------------------------
+
+	void RenderManager::Render(GLFWwindow* window)
+	{
+		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
+
+		// Check and calls events
+		// Swap buffers
+		glfwSwapBuffers(window);
+		glfwPollEvents();
+	}
 }
