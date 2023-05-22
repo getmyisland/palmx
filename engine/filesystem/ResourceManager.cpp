@@ -1,6 +1,6 @@
 #include "ResourceManager.h"
 
-#include <logger/Logger.h>
+#include <logging/LogManager.h>
 
 #include <fstream>
 #include <sstream>
@@ -8,6 +8,19 @@
 
 #include <direct.h>
 #define GET_CURRENT_DIR _getcwd
+
+PalmEngine::ResourceManager::ResourceManager() {}
+PalmEngine::ResourceManager::~ResourceManager() {}
+
+void PalmEngine::ResourceManager::StartUp()
+{
+
+}
+
+void PalmEngine::ResourceManager::ShutDown()
+{
+
+}
 
 std::string PalmEngine::ResourceManager::GetProjectRootDirectory()
 {
@@ -19,7 +32,7 @@ std::string PalmEngine::ResourceManager::GetProjectRootDirectory()
 	}
 	else
 	{
-		PE_LOGGER_LOG(PE_WARNING, "Could not get root directory");
+		PE_LOG_MANAGER->LogWarning("Could not get root directory");
 		return std::string("");
 	}
 }
@@ -44,7 +57,7 @@ std::string PalmEngine::ResourceManager::GetFileContentAsString(std::string& fil
 	}
 	catch (std::ifstream::failure e)
 	{
-		PE_LOGGER_LOG(PE_ERROR, "FILE_NOT_SUCCESFULLY_READ::PATH::" + filePath);
+		PE_LOG_MANAGER->LogError("FILE_NOT_SUCCESFULLY_READ::PATH::" + filePath);
 		return std::string("");
 	}
 }

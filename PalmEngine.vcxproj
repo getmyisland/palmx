@@ -19,31 +19,33 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\input\InputModule.cpp" />
-    <ClCompile Include="engine\ModuleManager.cpp" />
-    <ClCompile Include="engine\Modules.cpp" />
-    <ClCompile Include="engine\PalmEngine.cpp" />
+    <ClCompile Include="engine\input\InputManager.cpp" />
+    <ClCompile Include="engine\PalmEngineRoot.cpp" />
+    <ClCompile Include="game\Main.cpp" />
     <ClCompile Include="engine\rendering\Mesh.cpp" />
     <ClCompile Include="engine\rendering\Model.cpp" />
-    <ClCompile Include="engine\rendering\RenderModule.cpp" />
+    <ClCompile Include="engine\rendering\RenderManager.cpp" />
     <ClCompile Include="engine\rendering\Shader.cpp" />
+    <ClCompile Include="engine\entity\Entity.cpp" />
+    <ClCompile Include="engine\entity\EntityManager.cpp" />
     <ClCompile Include="game\Test.cpp" />
     <ClCompile Include="include\glad\glad.c" />
-    <ClCompile Include="engine\logger\Logger.cpp" />
-    <ClCompile Include="engine\resource_manager\ResourceManager.cpp" />
+    <ClCompile Include="engine\logging\LogManager.cpp" />
+    <ClCompile Include="engine\filesystem\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\IModule.h" />
-    <ClInclude Include="engine\input\InputModule.h" />
-    <ClInclude Include="engine\ModuleManager.h" />
-    <ClInclude Include="engine\Modules.h" />
-    <ClInclude Include="engine\PalmEngineConfig.h" />
+    <ClInclude Include="engine\PalmEngineManager.h" />
+    <ClInclude Include="engine\input\InputManager.h" />
+    <ClInclude Include="engine\PalmEngineRoot.h" />
+    <ClInclude Include="engine\PalmEngineSingleton.h" />
     <ClInclude Include="engine\rendering\Mesh.h" />
     <ClInclude Include="engine\rendering\Model.h" />
-    <ClInclude Include="engine\rendering\RenderModule.h" />
+    <ClInclude Include="engine\rendering\RenderManager.h" />
     <ClInclude Include="engine\rendering\Shader.h" />
-    <ClInclude Include="engine\resource_manager\ResourceManager.h" />
-    <ClInclude Include="engine\logger\Logger.h" />
+    <ClInclude Include="engine\filesystem\ResourceManager.h" />
+    <ClInclude Include="engine\logging\LogManager.h" />
+    <ClInclude Include="engine\entity\Entity.h" />
+    <ClInclude Include="engine\entity\EntityManager.h" />
     <ClInclude Include="include\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>

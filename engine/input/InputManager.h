@@ -1,17 +1,16 @@
-#ifndef _PE_INPUT_MODULE_H__
-#define _PE_INPUT_MODULE_H__
+#ifndef _PE_INPUT_MANAGER_H__
+#define _PE_INPUT_MANAGER_H__
 
-#include "../IModule.h"
-
+#include <PalmEngineManager.h>
 #include <GLFW/glfw3.h>
 
 namespace PalmEngine
 {
-	class InputModule : public IModule
+	class InputManager : public PalmEngineManager
 	{
 	public:
-		InputModule();
-		~InputModule();
+		InputManager();
+		~InputManager();
 
 		virtual void StartUp() override;
 		virtual void ShutDown() override;

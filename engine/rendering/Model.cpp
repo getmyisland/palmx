@@ -1,6 +1,6 @@
 #include <glad/glad.h> // holds all OpenGL type declarations
 
-#include <logger/Logger.h>
+#include <logging/LogManager.h>
 #include "Model.h"
 
 #ifndef STBI_INCLUDE_STB_IMAGE_H
@@ -31,7 +31,7 @@ void PalmEngine::Model::LoadModel(string path)
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
     {
         auto error = importer.GetErrorString();
-        PE_LOGGER_LOG(PE_ERROR, std::string("ASSIMP::") + error);
+        PE_LOG_MANAGER->LogError(std::string("ASSIMP::") + error);
         return;
     }
     _directory = path.substr(0, path.find_last_of('/'));
@@ -101,7 +101,7 @@ PalmEngine::Mesh PalmEngine::Model::ProcessMesh(aiMesh* mesh, const aiScene* sce
     if (mesh->mMaterialIndex >= 0)
     {
         aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-        PE_LOGGER_LOG(PE_INFO, material->GetName().C_Str());
+        PE_LOG_MANAGER->LogInfo(material->GetName().C_Str());
         vector<Texture> diffuseMaps = LoadMaterialTextures(material,
             aiTextureType_DIFFUSE, "texture_diffuse");
         textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
@@ -133,7 +133,7 @@ unsigned int TextureFromFile(const char* path, const string& directory)
 {
     string filename = string(path);
     filename = directory + '/' + filename;
-    PE_LOGGER_LOG(PE_INFO, filename);
+    PE_LOG_MANAGER->LogInfo(filename);
     unsigned int textureID;
     glGenTextures(1, &textureID);
 
@@ -162,7 +162,7 @@ unsigned int TextureFromFile(const char* path, const string& directory)
     }
     else
     {
-        PE_LOGGER_LOG(PE_ERROR, "Texture failed to load at path: " + std::string(path));
+        PE_LOG_MANAGER->LogError("Texture failed to load at path: " + std::string(path));
         stbi_image_free(data);
     }
 

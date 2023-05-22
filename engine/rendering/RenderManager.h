@@ -1,7 +1,7 @@
-#ifndef _PE_RENDER_MODULE_H__
-#define _PE_RENDER_MODULE_H__
+#ifndef _PE_RENDER_MANAGER_H__
+#define _PE_RENDER_MANAGER_H__
 
-#include "../IModule.h"
+#include <PalmEngineManager.h>
 #include "Shader.h"
 #include "Model.h"
 
@@ -9,11 +9,11 @@
 
 namespace PalmEngine
 {
-	class RenderModule : public IModule
+	class RenderManager : public PalmEngineManager
 	{
 	public:
-		RenderModule();
-		~RenderModule();
+		RenderManager();
+		~RenderManager();
 
 		virtual void StartUp() override;
 		virtual void ShutDown() override;

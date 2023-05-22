@@ -1,7 +1,6 @@
-#include <PalmEngineConfig.h>
 #include <rendering/Shader.h>
 #include <rendering/Model.h>
-#include <resource_manager/ResourceManager.h>
+#include <filesystem/ResourceManager.h>
 
 using namespace PalmEngine;
 
@@ -20,7 +19,7 @@ void Update()
 	shader.Use();
 
 	// View/Projection Transformations
-	glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)PE_CONFIG_SCREEN_WIDTH / (float)PE_CONFIG_SCREEN_HEIGHT, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)800 / (float)600, 0.1f, 100.0f);
 	glm::mat4 view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 	shader.SetMat4("projection", projection);
 	shader.SetMat4("view", view);

@@ -2,8 +2,8 @@
 
 #include <glad/glad.h>
 
-#include <logger/Logger.h>
-#include <resource_manager/ResourceManager.h>
+#include <logging/LogManager.h>
+#include <filesystem/ResourceManager.h>
 
 PalmEngine::Shader::Shader() {}
 
@@ -31,7 +31,7 @@ PalmEngine::Shader::Shader(std::string vertexShaderFilePath, std::string fragmen
 	if (!success)
 	{
 		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-		PE_LOGGER_LOG(PE_ERROR, "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" + std::string(infoLog));
+		PE_LOG_MANAGER->LogError("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" + std::string(infoLog));
 	};
 
 	// Fragment Shader
@@ -43,7 +43,7 @@ PalmEngine::Shader::Shader(std::string vertexShaderFilePath, std::string fragmen
 	if (!success)
 	{
 		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-		PE_LOGGER_LOG(PE_ERROR, "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" + std::string(infoLog));
+		PE_LOG_MANAGER->LogError("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" + std::string(infoLog));
 	};
 
 	// Shader Program
@@ -56,7 +56,7 @@ PalmEngine::Shader::Shader(std::string vertexShaderFilePath, std::string fragmen
 	if (!success)
 	{
 		glGetProgramInfoLog(mID, 512, NULL, infoLog);
-		PE_LOGGER_LOG(PE_ERROR, "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" + std::string(infoLog));
+		PE_LOG_MANAGER->LogError("ERROR::SHADER::PROGRAM::LINKING_FAILED\n" + std::string(infoLog));
 	}
 
 	// Delete the shaders as they're linked into our program now and no longer necessary
