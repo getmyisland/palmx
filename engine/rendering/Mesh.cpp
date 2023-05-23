@@ -1,32 +1,52 @@
 #include <glad/glad.h> // holds all OpenGL type declarations
 
+#include "Material.h"
 #include "Mesh.h"
 
 namespace PalmEngine
 {
-    Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Material material)
+    //-----------------------------------------------------------------------
+
+    Mesh::Mesh() {}
+
+    Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material* material)
     {
         mVertices = vertices;
         mIndices = indices;
-        mMaterial = material;
+        mMaterial.reset(material);
 
         // Set the vertex buffers and its attribute pointers
         SetupMesh();
     }
 
-    void Mesh::Draw(Shader& _shader)
+    Mesh::~Mesh()
     {
+        mMaterial.release();
+    }
+
+    //-----------------------------------------------------------------------
+
+    void Mesh::Draw(glm::vec3 position, glm::vec3 scale)
+    {
+        mMaterial->mShader->Use();
+
+        // Render the mesh
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, position);
+        model = glm::scale(model, scale);
+        mMaterial->mShader->SetMat4("model", model);
+
         glActiveTexture(GL_TEXTURE0 + 0);
         // Set the sampler to the correct texture unit
-        glUniform1i(glGetUniformLocation(_shader.mID, "texture_albedo"), 0);
+        glUniform1i(glGetUniformLocation(mMaterial->mShader->mID, "texture_albedo"), 0);
         // Bind the texture
-        glBindTexture(GL_TEXTURE_2D, mMaterial.mAlbedoTexture.mID);
+        glBindTexture(GL_TEXTURE_2D, mMaterial->mAlbedoTexture->mID);
 
         glActiveTexture(GL_TEXTURE0 + 1);
         // Set the sampler to the correct texture unit
-        glUniform1i(glGetUniformLocation(_shader.mID, "texture_normal"), 1);
+        glUniform1i(glGetUniformLocation(mMaterial->mShader->mID, "texture_normal"), 1);
         // Bind the texture
-        glBindTexture(GL_TEXTURE_2D, mMaterial.mNormalTexture.mID);
+        glBindTexture(GL_TEXTURE_2D, mMaterial->mNormalTexture->mID);
 
         // Draw mesh
         glBindVertexArray(mVAO);

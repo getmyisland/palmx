@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\scene\Scene.cpp" />
     <ClCompile Include="engine\input\InputManager.cpp" />
     <ClCompile Include="engine\PalmEngineRoot.cpp" />
     <ClCompile Include="game\Main.cpp" />
@@ -26,16 +27,16 @@
     <ClCompile Include="engine\rendering\Model.cpp" />
     <ClCompile Include="engine\rendering\RenderManager.cpp" />
     <ClCompile Include="engine\rendering\Shader.cpp" />
-    <ClCompile Include="engine\entity\Entity.cpp" />
-    <ClCompile Include="engine\entity\EntityManager.cpp" />
-    <ClCompile Include="game\Test.cpp" />
+    <ClCompile Include="engine\Entity.cpp" />
+    <ClCompile Include="engine\scene\SceneManager.cpp" />
     <ClCompile Include="include\glad\glad.c" />
     <ClCompile Include="engine\logging\LogManager.cpp" />
     <ClCompile Include="engine\filesystem\ResourceManager.cpp" />
+    <ClCompile Include="engine\rendering\Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\PalmEngineConfig.h" />
-    <ClInclude Include="engine\PalmEngineEntry.h" />
+    <ClInclude Include="engine\scene\Scene.h" />
     <ClInclude Include="engine\PalmEngineManager.h" />
     <ClInclude Include="engine\input\InputManager.h" />
     <ClInclude Include="engine\PalmEngineRoot.h" />
@@ -46,10 +47,10 @@
     <ClInclude Include="engine\rendering\Shader.h" />
     <ClInclude Include="engine\filesystem\ResourceManager.h" />
     <ClInclude Include="engine\logging\LogManager.h" />
-    <ClInclude Include="engine\entity\Entity.h" />
-    <ClInclude Include="engine\entity\EntityManager.h" />
-    <ClInclude Include="game\Test.h" />
+    <ClInclude Include="engine\Entity.h" />
+    <ClInclude Include="engine\scene\SceneManager.h" />
     <ClInclude Include="include\stb\stb_image.h" />
+    <ClInclude Include="engine\rendering\Material.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

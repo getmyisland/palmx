@@ -51,7 +51,7 @@ namespace PalmEngine
 		mResourceManager.reset(new ResourceManager());
 		mInputManager.reset(new InputManager());
 		mRenderManager.reset(new RenderManager());
-		mEntityManager.reset(new EntityManager());
+		mSceneManager.reset(new SceneManager());
 
 		StartUpModules();
 		GameLoop();
@@ -62,7 +62,7 @@ namespace PalmEngine
 
 	PalmEngine::PalmEngineRoot::~PalmEngineRoot() 
 	{
-		mEntityManager.release();
+		mSceneManager.release();
 		mRenderManager.release();
 		mInputManager.release();
 		mResourceManager.release();
@@ -75,7 +75,7 @@ namespace PalmEngine
 		mResourceManager->StartUp();
 		mInputManager->StartUp();
 		mRenderManager->StartUp();
-		mEntityManager->StartUp();
+		mSceneManager->StartUp();
 	}
 
 	void PalmEngineRoot::GameLoop()
@@ -106,7 +106,7 @@ namespace PalmEngine
 
 	void PalmEngineRoot::ShutdownModules()
 	{
-		mEntityManager->ShutDown();
+		mSceneManager->ShutDown();
 		mRenderManager->ShutDown();
 		mInputManager->ShutDown();
 		mResourceManager->ShutDown();

@@ -6,7 +6,7 @@
 
 #include <PalmEngineConfig.h>
 #include <PalmEngineSingleton.h>
-#include <entity/EntityManager.h>
+#include <scene/SceneManager.h>
 #include <input/InputManager.h>
 #include <logging/LogManager.h>
 #include <filesystem/ResourceManager.h>
@@ -30,7 +30,7 @@ namespace PalmEngine
 	public:
 		std::unique_ptr<LogManager> mLogManager;
 		std::unique_ptr<ResourceManager> mResourceManager;
-		std::unique_ptr<EntityManager> mEntityManager;
+		std::unique_ptr<SceneManager> mSceneManager;
 		std::unique_ptr<InputManager> mInputManager;
 		std::unique_ptr<RenderManager> mRenderManager;
 

@@ -10,22 +10,30 @@
 
 namespace PalmEngine
 {
-    unsigned int TextureFromFile(const char* path, const std::string& directory);
+    unsigned int TextureFromFile(std::string path, const std::string& directory);
+
+    //-----------------------------------------------------------------------
 
     Model::Model() {}
 
-    Model::Model(std::string path)
+    Model::Model(std::string path, Shader& shader)
     {
-        LoadModel(path);
+        LoadModel(path, shader);
     }
 
-    void Model::Draw(Shader& _shader)
+    Model::~Model() {}
+
+    //-----------------------------------------------------------------------
+
+    void Model::Draw(glm::vec3 position, glm::vec3 scale)
     {
         for (unsigned int i = 0; i < _meshes.size(); i++)
-            _meshes[i].Draw(_shader);
+        {
+            _meshes[i]->Draw(position, scale);
+        }
     }
 
-    void Model::LoadModel(std::string path)
+    void Model::LoadModel(std::string path, Shader& shader)
     {
         Assimp::Importer importer;
         const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -38,25 +46,25 @@ namespace PalmEngine
         }
         _directory = path.substr(0, path.find_last_of('/'));
 
-        ProcessNode(scene->mRootNode, scene);
+        ProcessNode(shader, scene->mRootNode, scene);
     }
 
-    void Model::ProcessNode(aiNode* node, const aiScene* scene)
+    void Model::ProcessNode(Shader& shader, aiNode* node, const aiScene* scene)
     {
         // Process all the node's meshes (if any)
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
             aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-            _meshes.push_back(ProcessMesh(mesh, scene));
+            _meshes.push_back(ProcessMesh(shader, mesh, scene));
         }
         // Then do the same for each of its children
         for (unsigned int i = 0; i < node->mNumChildren; i++)
         {
-            ProcessNode(node->mChildren[i], scene);
+            ProcessNode(shader, node->mChildren[i], scene);
         }
     }
 
-    Mesh PalmEngine::Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+    Mesh* PalmEngine::Model::ProcessMesh(Shader& shader, aiMesh* mesh, const aiScene* scene)
     {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
@@ -99,29 +107,30 @@ namespace PalmEngine
         }
 
         // Create material
-        Material material = CreateMaterial();
+        Material* material = CreateMaterial(shader, scene->mMaterials[mesh->mMaterialIndex]->GetName().C_Str());
 
-        return Mesh(vertices, indices, material);
+        Mesh constructedMesh(vertices, indices, material);
+        return &constructedMesh;
     }
 
-    Material Model::CreateMaterial()
+    Material* Model::CreateMaterial(Shader& shader, std::string materialName)
     {
-        Material material;
+        // Based on the material name this function tries to find the necessary textures
+        // Textures should all follow the same naming convention
 
         Texture albedoTexture;
-        albedoTexture.mID = TextureFromFile("texture_albedo.jpg", _directory);
+        albedoTexture.mID = TextureFromFile(std::string(materialName + "_texture_albedo.jpg"), _directory);
         albedoTexture.mType = TextureType::Albedo;
-        material.mAlbedoTexture = albedoTexture;
 
         Texture normalTexture;
-        normalTexture.mID = TextureFromFile("texture_normal.jpg", _directory);
+        normalTexture.mID = TextureFromFile(std::string(materialName + "_texture_normal.jpg"), _directory);
         normalTexture.mType = TextureType::Albedo;
-        material.mNormalTexture = normalTexture;
 
-        return material;
+        Material material(&shader, &albedoTexture, &normalTexture);
+        return &material;
     }
 
-    unsigned int TextureFromFile(const char* path, const std::string& directory)
+    unsigned int TextureFromFile(std::string path, const std::string& directory)
     {
         std::string filename = std::string(path);
         filename = directory + '/' + filename;

@@ -6,6 +6,7 @@
 
 #include "Shader.h"
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -13,58 +14,50 @@
 
 namespace PalmEngine
 {
-    struct Vertex {
-        // position
-        glm::vec3 mPosition;
-        // normal
-        glm::vec3 mNormal;
-        // texCoords
-        glm::vec2 mTexCoords;
-        // tangent
-        glm::vec3 mTangent;
-        // bitangent
-        glm::vec3 mBitangent;
-        //bone indexes which will influence this vertex
-        int mBoneIDs[MAX_BONE_INFLUENCE];
-        //weights from each bone
-        float mWeights[MAX_BONE_INFLUENCE];
-    };
+	struct Vertex {
+		// position
+		glm::vec3 mPosition;
+		// normal
+		glm::vec3 mNormal;
+		// texCoords
+		glm::vec2 mTexCoords;
+		// tangent
+		glm::vec3 mTangent;
+		// bitangent
+		glm::vec3 mBitangent;
+		//bone indexes which will influence this vertex
+		int mBoneIDs[MAX_BONE_INFLUENCE];
+		//weights from each bone
+		float mWeights[MAX_BONE_INFLUENCE];
+	};
 
-    enum class TextureType
-    {
-        Albedo,
-        Normal
-    };
+	//-----------------------------------------------------------------------
 
-    struct Texture {
-        unsigned int mID = 0;
-        TextureType mType;
-    };
+	class Mesh
+	{
+	public:
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material* material);
+		~Mesh();
 
-    struct Material {
-        Texture mAlbedoTexture;
-        Texture mNormalTexture;
-    };
+	private:
+		Mesh();
 
-    class Mesh {
-    public:
-        // Mesh Data
-        std::vector<Vertex>       mVertices;
-        std::vector<unsigned int> mIndices;
-        Material mMaterial;
+	public:
+		// Mesh Data
+		std::vector<Vertex>       mVertices;
+		std::vector<unsigned int> mIndices;
+		std::unique_ptr<Material> mMaterial;
 
-        unsigned int mVAO;
+		unsigned int mVAO;
 
-        Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Material material);
+		void Draw(glm::vec3 position, glm::vec3 scale);
 
-        void Draw(Shader& _shader);
+	private:
+		// Render Data 
+		unsigned int _VBO, _EBO;
 
-    private:
-        // Render Data 
-        unsigned int _VBO, _EBO;
-
-        void SetupMesh();
-    };
+		void SetupMesh();
+	};
 }
 
 #endif

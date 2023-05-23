@@ -1,7 +1,7 @@
 #ifndef _PALM_ENGINE_CONFIG_H__
 #define _PALM_ENGINE_CONFIG_H__
 
-#include <PalmEngineEntry.h>
+#include <scene/Scene.h>
 #include <memory>
 
 namespace PalmEngine
@@ -9,23 +9,24 @@ namespace PalmEngine
 	class PalmEngineConfig
 	{
 	public:
-		PalmEngineConfig(PalmEngineEntry &palmEngineEntry, const unsigned int width, const unsigned int height) : mWidth(width), mHeight(height)
+		PalmEngineConfig(Scene &startScene, const unsigned int width, const unsigned int height) : mWidth(width), mHeight(height)
 		{
-			mPalmEngineEntry.reset(&palmEngineEntry);
+			mStartScene.reset(&startScene);
 		}
 
 		~PalmEngineConfig()
 		{
-			mPalmEngineEntry.release();
+			mStartScene.release();
 		}
-
-		std::unique_ptr<PalmEngineEntry> mPalmEngineEntry;
-
-		unsigned int const mWidth{ 1920 };
-		unsigned int const mHeight{ 1080 };
 
 	private:
 		PalmEngineConfig() {}
+
+	public:
+		std::unique_ptr<Scene> mStartScene;
+
+		unsigned int const mWidth{ 1920 };
+		unsigned int const mHeight{ 1080 };
 	};
 }
 
