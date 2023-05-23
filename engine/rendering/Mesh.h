@@ -8,7 +8,6 @@
 
 #include <string>
 #include <vector>
-using namespace std;
 
 #define MAX_BONE_INFLUENCE 4
 
@@ -31,21 +30,32 @@ namespace PalmEngine
         float mWeights[MAX_BONE_INFLUENCE];
     };
 
+    enum class TextureType
+    {
+        Albedo,
+        Normal
+    };
+
     struct Texture {
         unsigned int mID = 0;
-        string mType;
-        string mPath;
+        TextureType mType;
+    };
+
+    struct Material {
+        Texture mAlbedoTexture;
+        Texture mNormalTexture;
     };
 
     class Mesh {
     public:
         // Mesh Data
-        vector<Vertex>       mVertices;
-        vector<unsigned int> mIndices;
-        vector<Texture>      mTextures;
+        std::vector<Vertex>       mVertices;
+        std::vector<unsigned int> mIndices;
+        Material mMaterial;
+
         unsigned int mVAO;
 
-        Mesh(vector<Vertex> vertices, vector<unsigned int> indices, vector<Texture> textures);
+        Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Material material);
 
         void Draw(Shader& _shader);
 

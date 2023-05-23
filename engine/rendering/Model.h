@@ -19,14 +19,13 @@ namespace PalmEngine
 
     private:
         // Model Data
-        vector<Mesh> _meshes;
-        string _directory;
+        std::vector<Mesh> _meshes;
+        std::string _directory;
 
-        void LoadModel(string path);
+        void LoadModel(std::string path);
         void ProcessNode(aiNode* node, const aiScene* scene);
         Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
-        vector<Texture> LoadMaterialTextures(aiMaterial* mat, aiTextureType type,
-            string typeName);
+        Material CreateMaterial();
     };
 }
 
