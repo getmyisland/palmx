@@ -22,6 +22,7 @@
     <ClCompile Include="engine\scene\Scene.cpp" />
     <ClCompile Include="engine\input\InputManager.cpp" />
     <ClCompile Include="engine\PalmEngineRoot.cpp" />
+    <ClCompile Include="engine\window\WindowManager.cpp" />
     <ClCompile Include="game\Main.cpp" />
     <ClCompile Include="engine\rendering\Mesh.cpp" />
     <ClCompile Include="engine\rendering\Model.cpp" />

@@ -4,10 +4,6 @@ namespace PalmEngine
 {
 	//-----------------------------------------------------------------------
 
-	void framebuffer_size_callback(GLFWwindow* pWindow, int width, int height);
-
-	//-----------------------------------------------------------------------
-
 	template<> PalmEngineRoot* PalmEngineSingleton<PalmEngineRoot>::msSingleton = 0;
 	PalmEngineRoot* PalmEngineRoot::GetSingletonPtr(void)
 	{
@@ -24,40 +20,16 @@ namespace PalmEngine
 
 	PalmEngineRoot::PalmEngineRoot(PalmEngineConfig& palmEngineConfig)
 	{
-		// Initialize and configure glfw
-		glfwInit();
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-#ifdef __APPLE__
-		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
-		// Create glfw window
-		GLFWwindow* window = glfwCreateWindow(palmEngineConfig.mWidth, palmEngineConfig.mHeight, "Palm Engine", NULL, NULL);
-		if (window == NULL)
-		{
-			PE_LOG_MANAGER->LogError("Failed to create GLFW window");
-			glfwTerminate();
-			return;
-		}
-		glfwMakeContextCurrent(window);
-		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-
-		_window = window;
+		mConfig.reset(&palmEngineConfig);
 
 		mLogManager.reset(new LogManager());
 		mResourceManager.reset(new ResourceManager());
 		mInputManager.reset(new InputManager());
 		mRenderManager.reset(new RenderManager());
 		mSceneManager.reset(new SceneManager());
+		mWindowManager.reset(new WindowManager());
 
 		StartUpModules();
-		GameLoop();
-		ShutdownModules();
-
-		glfwTerminate();
 	}
 
 	PalmEngine::PalmEngineRoot::~PalmEngineRoot() 
@@ -67,10 +39,14 @@ namespace PalmEngine
 		mInputManager.release();
 		mResourceManager.release();
 		mLogManager.release();
+		mWindowManager.release();
+
+		mConfig.release();
 	}
 
 	void PalmEngineRoot::StartUpModules()
 	{
+		mWindowManager->StartUp();
 		mLogManager->StartUp();
 		mResourceManager->StartUp();
 		mInputManager->StartUp();
@@ -78,12 +54,18 @@ namespace PalmEngine
 		mSceneManager->StartUp();
 	}
 
+	void PalmEngineRoot::Run()
+	{
+		GameLoop();
+		ShutdownModules();
+	}
+
 	void PalmEngineRoot::GameLoop()
 	{
 		float deltaTime = 0.0f;	// time between current frame and last frame
 		float lastFrame = 0.0f;
 
-		while (!glfwWindowShouldClose(_window))
+		while (!glfwWindowShouldClose(mWindowManager->mMainWindow.get()))
 		{
 			float currentFrame = static_cast<float>(glfwGetTime());
 			deltaTime = currentFrame - lastFrame;
@@ -96,12 +78,12 @@ namespace PalmEngine
 
 	void PalmEngineRoot::UpdateModules()
 	{
-		mInputManager->CollectInput(_window);
+		mInputManager->CollectInput(mWindowManager->mMainWindow.get());
 	}
 
 	void PalmEngineRoot::RenderModules()
 	{
-		mRenderManager->Render(_window);
+		mRenderManager->Render(mWindowManager->mMainWindow.get());
 	}
 
 	void PalmEngineRoot::ShutdownModules()
@@ -111,17 +93,11 @@ namespace PalmEngine
 		mInputManager->ShutDown();
 		mResourceManager->ShutDown();
 		mLogManager->ShutDown();
+		mWindowManager->ShutDown();
 	}
 
 	void PalmEngineRoot::KillGameLoop()
 	{
-		glfwSetWindowShouldClose(_window, true);
-	}
-
-	void framebuffer_size_callback(GLFWwindow* pWindow, int width, int height)
-	{
-		// make sure the viewport matches the new window dimensions; note that width and 
-		// height will be significantly larger than specified on retina displays.
-		glViewport(0, 0, width, height);
+		glfwSetWindowShouldClose(mWindowManager->mMainWindow.get(), true);
 	}
 }

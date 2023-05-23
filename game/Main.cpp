@@ -3,17 +3,14 @@
 #include <rendering/Shader.h>
 #include <rendering/Model.h>
 #include <scene/Scene.h>
+#include <scene/SceneManager.h>
 #include <PalmEngineRoot.h>
 
 int main()
 {
-	// This needs to be done at the start or else PalmEngine objects can't be created because some of them rely on OpenGL functions
-	// TODO Find a better method
-	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
-	{
-		PE_LOG_MANAGER->LogError("Failed to initialize GLAD");
-		return -1;
-	}
+	// First initialize the engine before creating any objects
+	PalmEngine::PalmEngineConfig config(800, 600);
+	PalmEngine::PalmEngineRoot palmEngineRoot(config);
 
 	PalmEngine::Scene scene;
 
@@ -24,8 +21,10 @@ int main()
 	PalmEngine::Model testModel(rootDir + "/resources/models/scp173/cb_scp173.fbx", shader);
 	//testEntity.mModel.reset(&testModel);
 
-	PalmEngine::PalmEngineConfig config(scene, 800, 600);
-	PalmEngine::PalmEngineRoot palmEngineRoot(config);
+	PalmEngine::SceneManager::GetSingletonPtr()->SetActiveScene(scene);
+
+	// After all required objects have been created run the engine
+	palmEngineRoot.Run();
 
 	return 0;
 }
