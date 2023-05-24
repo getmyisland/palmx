@@ -1,5 +1,5 @@
 # Palm-Engine
 
-Palm-Engine is an Open Source Game Engine written in C++. The inspiration of this game engine is the Source Engine and its games made by Valve.
+Palm Engine is an open source game engine written in C++. It is currently under active development. The goal is to provide an easy way to develop small PlayStation 1 style retro games.
 
-The Goal of this game engine is to provide a simple framework for creating games like DUSK, Half Life, Quake or Doom.
+Information about the different possibilities the engine offers for emulating the PlayStation 1 will be added shortly.
