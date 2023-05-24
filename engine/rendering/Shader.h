@@ -2,6 +2,7 @@
 #define _PE_SHADER_H__
 
 #include <string>
+#include <filesystem/ResourceManager.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -12,15 +13,12 @@ namespace PalmEngine
 	class Shader
 	{
 	public:
-		Shader(std::string vertexShaderFilePath, std::string fragmentShaderFilePath);
-
-	private:
-		Shader();
+		Shader(std::string vertexShaderFilePath = DEFAULT_SHADER_VERTEX, std::string fragmentShaderFilePath = DEFAULT_SHADER_FRAGMENT);
 
 	public:
 		unsigned int mID = 0;
 
-		void Use();
+		void Use() const;
 
 		void SetBool(const std::string& name, bool value) const;
 		void SetInt(const std::string& name, int value) const;

@@ -14,7 +14,7 @@ namespace PalmEngine
 	class Entity
 	{
 	public:
-		Entity(std::string name, Entity* parent, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 scale = glm::vec3(0.0f, 0.0f, 0.0f));
+		Entity(std::string name, Entity* parent, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f));
 		~Entity();
 
 	private:
@@ -49,7 +49,7 @@ namespace PalmEngine
 		const std::string _name;
 
 		glm::vec3 _localPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 _localScale = glm::vec3(0.0f, 0.0f, 0.0f);
+		glm::vec3 _localScale = glm::vec3(1.0f, 1.0f, 1.0f);
 
 		Entity* _parent = nullptr;
 		std::vector<Entity*> _children;

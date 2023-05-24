@@ -1,9 +1,8 @@
 #ifndef _PE_MATERIAL_H__
 #define _PE_MATERIAL_H__
 
+#include <filesystem/ResourceManager.h>
 #include "Shader.h"
-
-#include <memory>
 
 namespace PalmEngine
 {
@@ -12,33 +11,27 @@ namespace PalmEngine
 		Albedo,
 		Normal
 	};
-
-	//-----------------------------------------------------------------------
-
+	
 	struct Texture
 	{
 		unsigned int mID = 0;
-		TextureType mType;
+		TextureType mType = TextureType::Albedo;
 	};
 
 	class Material
 	{
 	public:
-		Material(Shader* shader, Texture* albedoTexture, Texture* normalTexture);
+		Material(const Shader& shader = Shader(), const Texture& albedoTexture = Texture(), const Texture& normalTexture = Texture());
 		~Material();
 
-	private:
-		Material();
-
-	public:
-		Shader* GetShader() const;
-		Texture* GetAlbedoTexture() const;
-		Texture* GetNormalTexture() const;
+		const Shader& GetShader() const;
+		const Texture& GetAlbedoTexture() const;
+		const Texture& GetNormalTexture() const;
 
 	private:
-		std::unique_ptr<Shader> _shader;
-		std::unique_ptr<Texture> _albedoTexture;
-		std::unique_ptr<Texture> _normalTexture;
+		Shader _shader;
+		Texture _albedoTexture;
+		Texture _normalTexture;
 	};
 }
 

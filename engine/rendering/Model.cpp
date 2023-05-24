@@ -55,7 +55,8 @@ namespace PalmEngine
         for (unsigned int i = 0; i < node->mNumMeshes; i++)
         {
             aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-            _meshes.push_back(ProcessMesh(shader, mesh, scene));
+            Mesh constructedMesh = ProcessMesh(shader, mesh, scene);
+            _meshes.push_back(&constructedMesh);
         }
         // Then do the same for each of its children
         for (unsigned int i = 0; i < node->mNumChildren; i++)
@@ -64,7 +65,7 @@ namespace PalmEngine
         }
     }
 
-    Mesh* PalmEngine::Model::ProcessMesh(Shader& shader, aiMesh* mesh, const aiScene* scene)
+    Mesh PalmEngine::Model::ProcessMesh(Shader& shader, aiMesh* mesh, const aiScene* scene)
     {
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
@@ -109,11 +110,10 @@ namespace PalmEngine
         // Create material
         Material material = CreateMaterial(shader, scene->mMaterials[mesh->mMaterialIndex]->GetName().C_Str());
 
-        Mesh constructedMesh(vertices, indices, material);
-        return &constructedMesh;
+        return Mesh(vertices, indices, material);
     }
 
-    Material Model::CreateMaterial(Shader& shader, std::string materialName)
+    Material& Model::CreateMaterial(Shader& shader, std::string materialName)
     {
         // Based on the material name this function tries to find the necessary textures
         // Textures should all follow the same naming convention
@@ -126,7 +126,8 @@ namespace PalmEngine
         normalTexture.mID = TextureFromFile(std::string(materialName + "_texture_normal.jpg"), _directory);
         normalTexture.mType = TextureType::Albedo;
 
-        return Material(&shader, &albedoTexture, &normalTexture);
+        Material material(shader, albedoTexture, normalTexture);
+        return material;
     }
 
     unsigned int TextureFromFile(std::string path, const std::string& directory)

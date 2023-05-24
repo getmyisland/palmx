@@ -6,7 +6,6 @@
 
 #include "Shader.h"
 
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -36,7 +35,7 @@ namespace PalmEngine
 	class Mesh
 	{
 	public:
-		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material& material);
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Material& material);
 		~Mesh();
 
 	private:
@@ -49,11 +48,12 @@ namespace PalmEngine
 		// Mesh Data
 		std::vector<Vertex>       _vertices;
 		std::vector<unsigned int> _indices;
-		std::unique_ptr<Material> _material;
+		Material _material;
 
 		// Render Data 
-		unsigned int mVAO;
-		unsigned int _VBO, _EBO;
+		unsigned int mVAO = 0;
+		unsigned int _VBO = 0;
+		unsigned int _EBO = 0;
 
 		void SetupMesh();
 	};

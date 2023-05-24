@@ -1,6 +1,9 @@
 #ifndef _PE_RESOURCE_MANAGER_H__
 #define _PE_RESOURCE_MANAGER_H__
 
+#define DEFAULT_SHADER_VERTEX PalmEngine::ResourceManager::GetProjectRootDirectory() + "/resources/shaders/shader.vert"
+#define DEFAULT_SHADER_FRAGMENT PalmEngine::ResourceManager::GetProjectRootDirectory() + "/resources/shaders/shader.frag"
+
 #include <PalmEngineSingleton.h>
 #include <PalmEngineManager.h>
 #include <string>

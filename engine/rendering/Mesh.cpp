@@ -1,5 +1,7 @@
 #include <glad/glad.h> // holds all OpenGL type declarations
 
+#include <logging/LogManager.h>
+
 #include "Material.h"
 #include "Mesh.h"
 
@@ -7,13 +9,11 @@ namespace PalmEngine
 {
     //-----------------------------------------------------------------------
 
-    Mesh::Mesh() {}
-
-    Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material& material)
+    Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Material& material)
+        : _material(material)
     {
         _vertices = vertices;
         _indices = indices;
-        _material.reset(&material);
 
         // Set the vertex buffers and its attribute pointers
         SetupMesh();
@@ -21,32 +21,39 @@ namespace PalmEngine
 
     Mesh::~Mesh()
     {
-        _material.release();
+        
     }
 
     //-----------------------------------------------------------------------
 
     void Mesh::Draw(glm::vec3 position, glm::vec3 scale)
     {
-        _material->GetShader()->Use();
+        // Throws error because material is nullptr
+        _material.GetShader().Use();
+
+        // View/Projection Transformations
+        glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)800 / (float)600, 0.1f, 100.0f);
+        glm::mat4 view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+        _material.GetShader().SetMat4("projection", projection);
+        _material.GetShader().SetMat4("view", view);
 
         // Render the mesh
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, position);
         model = glm::scale(model, scale);
-        _material->GetShader()->SetMat4("model", model);
+        _material.GetShader().SetMat4("model", model);
 
         glActiveTexture(GL_TEXTURE0 + 0);
         // Set the sampler to the correct texture unit
-        glUniform1i(glGetUniformLocation(_material->GetShader()->mID, "texture_albedo"), 0);
+        glUniform1i(glGetUniformLocation(_material.GetShader().mID, "texture_albedo"), 0);
         // Bind the texture
-        glBindTexture(GL_TEXTURE_2D, _material->GetAlbedoTexture()->mID);
+        glBindTexture(GL_TEXTURE_2D, _material.GetAlbedoTexture().mID);
 
         glActiveTexture(GL_TEXTURE0 + 1);
         // Set the sampler to the correct texture unit
-        glUniform1i(glGetUniformLocation(_material->GetShader()->mID, "texture_normal"), 1);
+        glUniform1i(glGetUniformLocation(_material.GetShader().mID, "texture_normal"), 1);
         // Bind the texture
-        glBindTexture(GL_TEXTURE_2D, _material->GetNormalTexture()->mID);
+        glBindTexture(GL_TEXTURE_2D, _material.GetNormalTexture().mID);
 
         // Draw mesh
         glBindVertexArray(mVAO);
