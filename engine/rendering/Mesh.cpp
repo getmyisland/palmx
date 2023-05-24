@@ -9,11 +9,11 @@ namespace PalmEngine
 
     Mesh::Mesh() {}
 
-    Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material* material)
+    Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material& material)
     {
-        mVertices = vertices;
-        mIndices = indices;
-        mMaterial.reset(material);
+        _vertices = vertices;
+        _indices = indices;
+        _material.reset(&material);
 
         // Set the vertex buffers and its attribute pointers
         SetupMesh();
@@ -21,36 +21,36 @@ namespace PalmEngine
 
     Mesh::~Mesh()
     {
-        mMaterial.release();
+        _material.release();
     }
 
     //-----------------------------------------------------------------------
 
     void Mesh::Draw(glm::vec3 position, glm::vec3 scale)
     {
-        mMaterial->mShader->Use();
+        _material->GetShader()->Use();
 
         // Render the mesh
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, position);
         model = glm::scale(model, scale);
-        mMaterial->mShader->SetMat4("model", model);
+        _material->GetShader()->SetMat4("model", model);
 
         glActiveTexture(GL_TEXTURE0 + 0);
         // Set the sampler to the correct texture unit
-        glUniform1i(glGetUniformLocation(mMaterial->mShader->mID, "texture_albedo"), 0);
+        glUniform1i(glGetUniformLocation(_material->GetShader()->mID, "texture_albedo"), 0);
         // Bind the texture
-        glBindTexture(GL_TEXTURE_2D, mMaterial->mAlbedoTexture->mID);
+        glBindTexture(GL_TEXTURE_2D, _material->GetAlbedoTexture()->mID);
 
         glActiveTexture(GL_TEXTURE0 + 1);
         // Set the sampler to the correct texture unit
-        glUniform1i(glGetUniformLocation(mMaterial->mShader->mID, "texture_normal"), 1);
+        glUniform1i(glGetUniformLocation(_material->GetShader()->mID, "texture_normal"), 1);
         // Bind the texture
-        glBindTexture(GL_TEXTURE_2D, mMaterial->mNormalTexture->mID);
+        glBindTexture(GL_TEXTURE_2D, _material->GetNormalTexture()->mID);
 
         // Draw mesh
         glBindVertexArray(mVAO);
-        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(mIndices.size()), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(_indices.size()), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
 
         // Always good practice to set everything back to defaults once configured.
@@ -70,10 +70,10 @@ namespace PalmEngine
         // A great thing about structs is that their memory layout is sequential for all its items.
         // The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
         // Again translates to 3/2 floats which translates to a byte array.
-        glBufferData(GL_ARRAY_BUFFER, mVertices.size() * sizeof(Vertex), &mVertices[0], GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, _vertices.size() * sizeof(Vertex), &_vertices[0], GL_STATIC_DRAW);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, mIndices.size() * sizeof(unsigned int), &mIndices[0], GL_STATIC_DRAW);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, _indices.size() * sizeof(unsigned int), &_indices[0], GL_STATIC_DRAW);
 
         // Set the vertex attribute pointers
         // Vertex Positions

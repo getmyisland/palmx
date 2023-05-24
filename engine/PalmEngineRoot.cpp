@@ -54,8 +54,10 @@ namespace PalmEngine
 		mSceneManager->StartUp();
 	}
 
-	void PalmEngineRoot::Run()
+	void PalmEngineRoot::Run(Scene& startScene)
 	{
+		mSceneManager->SetActiveScene(startScene);
+
 		GameLoop();
 		ShutdownModules();
 	}
@@ -65,7 +67,7 @@ namespace PalmEngine
 		float deltaTime = 0.0f;	// time between current frame and last frame
 		float lastFrame = 0.0f;
 
-		while (!glfwWindowShouldClose(mWindowManager->mMainWindow.get()))
+		while (!glfwWindowShouldClose(mWindowManager->GetMainWindow()))
 		{
 			float currentFrame = static_cast<float>(glfwGetTime());
 			deltaTime = currentFrame - lastFrame;
@@ -78,12 +80,12 @@ namespace PalmEngine
 
 	void PalmEngineRoot::UpdateModules()
 	{
-		mInputManager->CollectInput(mWindowManager->mMainWindow.get());
+		mInputManager->CollectInput(mWindowManager->GetMainWindow());
 	}
 
 	void PalmEngineRoot::RenderModules()
 	{
-		mRenderManager->Render(mWindowManager->mMainWindow.get());
+		mRenderManager->Render(mWindowManager->GetMainWindow());
 	}
 
 	void PalmEngineRoot::ShutdownModules()
@@ -96,8 +98,8 @@ namespace PalmEngine
 		mWindowManager->ShutDown();
 	}
 
-	void PalmEngineRoot::KillGameLoop()
+	void PalmEngineRoot::Stop()
 	{
-		glfwSetWindowShouldClose(mWindowManager->mMainWindow.get(), true);
+		glfwSetWindowShouldClose(mWindowManager->GetMainWindow(), true);
 	}
 }

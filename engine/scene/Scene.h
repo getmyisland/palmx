@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 
+#include <string>
 #include <vector>
 
 namespace PalmEngine
@@ -10,14 +11,25 @@ namespace PalmEngine
 	class Scene
 	{
 	public:
-		Scene();
+		Scene(std::string name);		
 		~Scene();
 
+	private:
+		Scene();
+
 	public:
-		std::vector<Entity> mEntitiesInScene;
+		std::string GetName() const;
+
+		std::vector<Entity*> GetEntitiesInScene() const;
+		void AddEntityToScene(Entity& entity);
+		void RemoveEntityFromScene(Entity& entity);
 
 		void OnLoad();
 		void OnUnload();
+
+	private:
+		const std::string _name;
+		std::vector<Entity*> _entitiesInScene;
 	};
 }
 

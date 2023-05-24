@@ -3,7 +3,6 @@
 #include <rendering/Shader.h>
 #include <rendering/Model.h>
 #include <scene/Scene.h>
-#include <scene/SceneManager.h>
 #include <PalmEngineRoot.h>
 
 int main()
@@ -12,19 +11,18 @@ int main()
 	PalmEngine::PalmEngineConfig config(800, 600);
 	PalmEngine::PalmEngineRoot palmEngineRoot(config);
 
-	PalmEngine::Scene scene;
+	PalmEngine::Scene scene("Testing");
 
 	//PalmEngine::Entity testEntity(std::string("Test"), nullptr);
-
 	std::string rootDir(PalmEngine::ResourceManager::GetProjectRootDirectory());
 	PalmEngine::Shader shader(rootDir + "/resources/shaders/shader.vert", rootDir + "/resources/shaders/shader.frag");
 	PalmEngine::Model testModel(rootDir + "/resources/models/scp173/cb_scp173.fbx", shader);
-	//testEntity.mModel.reset(&testModel);
+	//testEntity.SetModel(testModel);
 
-	PalmEngine::SceneManager::GetSingletonPtr()->SetActiveScene(scene);
+	//scene.AddEntityToScene(testEntity);
 
 	// After all required objects have been created run the engine
-	palmEngineRoot.Run();
+	palmEngineRoot.Run(scene);
 
 	return 0;
 }

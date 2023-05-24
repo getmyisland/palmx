@@ -5,7 +5,6 @@
 #include <PalmEngineSingleton.h>
 
 #include <GLFW/glfw3.h>
-#include <memory>
 
 namespace PalmEngine
 {
@@ -22,7 +21,10 @@ namespace PalmEngine
 		virtual void ShutDown() override;
 
 	public:
-		std::unique_ptr<GLFWwindow> mMainWindow;
+		GLFWwindow* GetMainWindow() const;
+
+	private:
+		GLFWwindow* _mainWindow = nullptr;
 	};
 }
 

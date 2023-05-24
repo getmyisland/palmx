@@ -36,24 +36,23 @@ namespace PalmEngine
 	class Mesh
 	{
 	public:
-		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material* material);
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, Material& material);
 		~Mesh();
 
 	private:
 		Mesh();
 
 	public:
-		// Mesh Data
-		std::vector<Vertex>       mVertices;
-		std::vector<unsigned int> mIndices;
-		std::unique_ptr<Material> mMaterial;
-
-		unsigned int mVAO;
-
 		void Draw(glm::vec3 position, glm::vec3 scale);
 
 	private:
+		// Mesh Data
+		std::vector<Vertex>       _vertices;
+		std::vector<unsigned int> _indices;
+		std::unique_ptr<Material> _material;
+
 		// Render Data 
+		unsigned int mVAO;
 		unsigned int _VBO, _EBO;
 
 		void SetupMesh();

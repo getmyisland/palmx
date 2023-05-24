@@ -38,8 +38,8 @@ namespace PalmEngine
 		std::unique_ptr<RenderManager> mRenderManager;
 		std::unique_ptr<WindowManager> mWindowManager;
 
-		void Run();
-		void KillGameLoop();
+		void Run(Scene& startScene);
+		void Stop();
 	
 	private:
 		void StartUpModules();

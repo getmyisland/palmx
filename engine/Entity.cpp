@@ -2,45 +2,129 @@
 
 namespace PalmEngine
 {
-	Entity::Entity() {}
+	//-----------------------------------------------------------------------
 
-	Entity::Entity(std::string name, Entity* parent, glm::vec3 position, glm::vec3 scale)
+	Entity::Entity() : _name("Entity")
 	{
-		mName = name;
-		mParent = parent;
-		mLocalPosition = position;
-		mLocalScale = scale;
+	
+	}
+
+	Entity::Entity(std::string name, Entity* parent, glm::vec3 position, glm::vec3 scale) : _name(name)
+	{
+		_parent = parent;
+		_localPosition = position;
+		_localScale = scale;
 	}
 
 	Entity::~Entity() {}
 
 	//-----------------------------------------------------------------------
 
-	glm::vec3 Entity::GetGlobalPosition()
+	std::string Entity::GetName() const
 	{
-		glm::vec3 globalPosition = mLocalPosition;
+		return _name;
+	}
+
+	//-----------------------------------------------------------------------
+
+	glm::vec3 Entity::GetLocalPosition() const
+	{
+		return _localPosition;
+	}
+
+	void Entity::SetLocalPosition(glm::vec3 localPosition)
+	{
+		_localPosition = localPosition;
+	}
+
+	glm::vec3 Entity::GetGlobalPosition() const
+	{
+		glm::vec3 globalPosition = _localPosition;
 		
-		Entity* parent = mParent;
+		Entity* parent = _parent;
 		while (parent != nullptr)
 		{
-			globalPosition += parent->mLocalPosition;
-			parent = parent->mParent;
+			globalPosition += parent->GetLocalPosition();
+			parent = parent->_parent;
 		}
 
 		return globalPosition;
 	}
 
-	glm::vec3 Entity::GetGlobalScale()
+	void Entity::SetGlobalPosition(glm::vec3 globalPosition)
 	{
-		glm::vec3 globalScale = mLocalScale;
 
-		Entity* parent = mParent;
+	}
+
+	glm::vec3 Entity::GetLocalScale() const
+	{
+		return _localScale;
+	}
+
+	void Entity::SetLocalScale(glm::vec3 localScale)
+	{
+		_localScale = localScale;
+	}
+
+	glm::vec3 Entity::GetGlobalScale() const
+	{
+		glm::vec3 globalScale = _localScale;
+
+		Entity* parent = _parent;
 		while (parent != nullptr)
 		{
-			globalScale += parent->mLocalScale;
-			parent = parent->mParent;
+			globalScale += parent->GetLocalScale();
+			parent = parent->_parent;
 		}
 
 		return globalScale;
+	}
+
+	void Entity::SetGlobalScale(glm::vec3 globalScale)
+	{
+
+	}
+
+	//-----------------------------------------------------------------------
+
+	Entity* Entity::GetParent() const
+	{
+		return _parent;
+	}
+
+	void Entity::SetParent(Entity* parent)
+	{
+		_parent->RemoveChild(*this);
+
+		_parent = parent;
+
+		parent->AddChild(*this);
+	}
+
+	std::vector<Entity*> Entity::GetChildren() const
+	{
+		return _children;
+	}
+
+	void Entity::AddChild(Entity& child)
+	{
+		_children.push_back(&child);
+	}
+
+	void Entity::RemoveChild(Entity& child)
+	{
+		_children.erase(std::remove(_children.begin(), _children.end(), &child), _children.end());
+	}
+
+	//-----------------------------------------------------------------------
+
+	Model* Entity::GetModel() const
+	{
+		return _model;
+	}
+
+	void Entity::SetModel(Model& model)
+	{
+		_model = &model;
 	}
 }

@@ -13,10 +13,7 @@ namespace PalmEngine
 
 	WindowManager::WindowManager() { }
 	
-	WindowManager::~WindowManager() 
-	{
-		mMainWindow.release();
-	}
+	WindowManager::~WindowManager() { }
 
 	//-----------------------------------------------------------------------
 
@@ -45,20 +42,27 @@ namespace PalmEngine
 #endif
 
 		// Create glfw window
-		mMainWindow.reset(glfwCreateWindow(PalmEngineRoot::GetSingletonPtr()->mConfig->mWidth, PalmEngineRoot::GetSingletonPtr()->mConfig->mHeight, "Palm Engine", NULL, NULL));
-		if (mMainWindow.get() == nullptr)
+		_mainWindow = glfwCreateWindow(PalmEngineRoot::GetSingletonPtr()->mConfig->GetWidth(), PalmEngineRoot::GetSingletonPtr()->mConfig->GetHeigth(), "Palm Engine", NULL, NULL);
+		if (_mainWindow == nullptr)
 		{
 			PE_LOG_MANAGER->LogError("Failed to create GLFW window");
 			glfwTerminate();
 			return;
 		}
-		glfwMakeContextCurrent(mMainWindow.get());
-		glfwSetFramebufferSizeCallback(mMainWindow.get(), FramebufferSizeCallback);
+		glfwMakeContextCurrent(_mainWindow);
+		glfwSetFramebufferSizeCallback(_mainWindow, FramebufferSizeCallback);
 	}
 
 	void WindowManager::ShutDown()
 	{
 		glfwTerminate();
+	}
+
+	//-----------------------------------------------------------------------
+
+	GLFWwindow* WindowManager::GetMainWindow() const
+	{
+		return _mainWindow;
 	}
 
 	void FramebufferSizeCallback(GLFWwindow* window, int width, int height)

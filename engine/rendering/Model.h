@@ -32,7 +32,7 @@ namespace PalmEngine
 		void LoadModel(std::string path, Shader& shader);
 		void ProcessNode(Shader& shader, aiNode* node, const aiScene* scene);
 		Mesh* ProcessMesh(Shader& shader, aiMesh* mesh, const aiScene* scene);
-		Material* CreateMaterial(Shader& shader, std::string materialName);
+		Material CreateMaterial(Shader& shader, std::string materialName);
 	};
 }
 

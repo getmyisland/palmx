@@ -107,13 +107,13 @@ namespace PalmEngine
         }
 
         // Create material
-        Material* material = CreateMaterial(shader, scene->mMaterials[mesh->mMaterialIndex]->GetName().C_Str());
+        Material material = CreateMaterial(shader, scene->mMaterials[mesh->mMaterialIndex]->GetName().C_Str());
 
         Mesh constructedMesh(vertices, indices, material);
         return &constructedMesh;
     }
 
-    Material* Model::CreateMaterial(Shader& shader, std::string materialName)
+    Material Model::CreateMaterial(Shader& shader, std::string materialName)
     {
         // Based on the material name this function tries to find the necessary textures
         // Textures should all follow the same naming convention
@@ -126,8 +126,7 @@ namespace PalmEngine
         normalTexture.mID = TextureFromFile(std::string(materialName + "_texture_normal.jpg"), _directory);
         normalTexture.mType = TextureType::Albedo;
 
-        Material material(&shader, &albedoTexture, &normalTexture);
-        return &material;
+        return Material(&shader, &albedoTexture, &normalTexture);
     }
 
     unsigned int TextureFromFile(std::string path, const std::string& directory)

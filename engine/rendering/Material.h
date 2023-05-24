@@ -31,9 +31,14 @@ namespace PalmEngine
 		Material();
 
 	public:
-		std::unique_ptr<Shader> mShader;
-		std::unique_ptr<Texture> mAlbedoTexture;
-		std::unique_ptr<Texture> mNormalTexture;
+		Shader* GetShader() const;
+		Texture* GetAlbedoTexture() const;
+		Texture* GetNormalTexture() const;
+
+	private:
+		std::unique_ptr<Shader> _shader;
+		std::unique_ptr<Texture> _albedoTexture;
+		std::unique_ptr<Texture> _normalTexture;
 	};
 }
 

@@ -31,7 +31,7 @@ namespace PalmEngine
 
 	//-----------------------------------------------------------------------
 
-	Scene* SceneManager::GetActiveScene()
+	Scene* SceneManager::GetActiveScene() const
 	{
 		return _activeScene.get();
 	}

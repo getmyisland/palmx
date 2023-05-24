@@ -23,7 +23,7 @@ namespace PalmEngine
 		virtual void ShutDown() override;
 
 	public:
-		Scene* GetActiveScene();
+		Scene* GetActiveScene() const;
 		void SetActiveScene(Scene& scene);
 
 	private:

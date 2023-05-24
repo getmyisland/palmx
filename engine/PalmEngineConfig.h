@@ -6,15 +6,26 @@ namespace PalmEngine
 	class PalmEngineConfig
 	{
 	public:
-		PalmEngineConfig(const unsigned int width, const unsigned int height) : mWidth(width), mHeight(height) {}
+		PalmEngineConfig(const unsigned int width, const unsigned int height) : _width(width), _height(height) {}
 		~PalmEngineConfig() {}
 
 	private:
 		PalmEngineConfig() {}
 
 	public:
-		unsigned int const mWidth{ 1920 };
-		unsigned int const mHeight{ 1080 };
+		const unsigned int GetWidth() const
+		{
+			return _width;
+		}
+
+		const unsigned int GetHeigth() const
+		{
+			return _height;
+		}
+
+	private:
+		const unsigned int _width { 1920 };
+		const unsigned int _height { 1080 };
 	};
 }
 

@@ -48,11 +48,11 @@ namespace PalmEngine
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		for (auto& entity : SceneManager::GetSingletonPtr()->GetActiveScene()->mEntitiesInScene)
+		for (auto& entity : SceneManager::GetSingletonPtr()->GetActiveScene()->GetEntitiesInScene())
 		{
-			if (entity.mModel != nullptr)
+			if (entity->GetModel() != nullptr)
 			{
-				entity.mModel->Draw(entity.GetGlobalPosition(), entity.GetGlobalScale());
+				entity->GetModel()->Draw(entity->GetGlobalPosition(), entity->GetGlobalScale());
 			}
 		}
 
