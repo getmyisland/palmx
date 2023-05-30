@@ -3,8 +3,8 @@
 
 #include <PalmEngineSingleton.h>
 #include <PalmEngineManager.h>
-#include "Shader.h"
-#include "Model.h"
+
+#include <scene/Scene.h>
 
 #include <GLFW/glfw3.h>
 
@@ -22,7 +22,7 @@ namespace PalmEngine
 		static RenderManager& GetSingleton(void);
 		static RenderManager* GetSingletonPtr(void);
 
-		void Render(GLFWwindow* window);
+		void Render(GLFWwindow* window, Scene* scene);
 	};
 }
 

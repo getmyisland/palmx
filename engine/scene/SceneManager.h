@@ -1,5 +1,5 @@
-#ifndef _PE_ENTITY_MANAGER_H__
-#define _PE_ENTITY_MANAGER_H__
+#ifndef _PE_SCENE_MANAGER_H__
+#define _PE_SCENE_MANAGER_H__
 
 #include <PalmEngineSingleton.h>
 #include <PalmEngineManager.h>

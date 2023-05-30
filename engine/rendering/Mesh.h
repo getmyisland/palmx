@@ -4,8 +4,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Shader.h"
-
 #include <string>
 #include <vector>
 
@@ -14,46 +12,44 @@
 namespace PalmEngine
 {
 	struct Vertex {
-		// position
 		glm::vec3 mPosition;
-		// normal
 		glm::vec3 mNormal;
-		// texCoords
 		glm::vec2 mTexCoords;
-		// tangent
 		glm::vec3 mTangent;
-		// bitangent
 		glm::vec3 mBitangent;
-		//bone indexes which will influence this vertex
 		int mBoneIDs[MAX_BONE_INFLUENCE];
-		//weights from each bone
 		float mWeights[MAX_BONE_INFLUENCE];
 	};
 
-	//-----------------------------------------------------------------------
+	struct Texture
+	{
+		unsigned int mID = 0;
+	};
 
 	class Mesh
 	{
 	public:
-		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Material& material);
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Texture& albedoTexture, const Texture& normalTexture);
 		~Mesh();
+
+		const std::vector<Vertex> GetVertices() const;
+		const std::vector<unsigned int> GetIndices() const;
+		const Texture& GetAlbedoTexture() const;
+		const Texture& GetNormalTexture() const;
+
+		const unsigned int GetVAO() const;
 
 	private:
 		Mesh();
 
-	public:
-		void Draw(glm::vec3 position, glm::vec3 scale);
-
-	private:
-		// Mesh Data
 		std::vector<Vertex>       _vertices;
 		std::vector<unsigned int> _indices;
-		Material _material;
+		const Texture _albedoTexture;
+		const Texture _normalTexture;
 
-		// Render Data 
-		unsigned int mVAO = 0;
-		unsigned int _VBO = 0;
-		unsigned int _EBO = 0;
+		unsigned int _vao = 0;
+		unsigned int _vbo = 0;
+		unsigned int _ebo = 0;
 
 		void SetupMesh();
 	};

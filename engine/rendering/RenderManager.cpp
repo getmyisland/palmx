@@ -3,7 +3,6 @@
 #include "RenderManager.h"
 
 #include <logging/LogManager.h>
-#include <scene/SceneManager.h>
 
 namespace PalmEngine
 {
@@ -43,17 +42,14 @@ namespace PalmEngine
 
 	//-----------------------------------------------------------------------
 
-	void RenderManager::Render(GLFWwindow* window)
+	void RenderManager::Render(GLFWwindow* window, Scene* scene)
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		for (auto& entity : SceneManager::GetSingletonPtr()->GetActiveScene()->GetEntitiesInScene())
+		for (auto& entity : scene->GetEntitiesInScene())
 		{
-			if (entity->GetModel() != nullptr)
-			{
-				entity->GetModel()->Draw(entity->GetGlobalPosition(), entity->GetGlobalScale());
-			}
+			entity->Render();
 		}
 
 		// Check and calls events

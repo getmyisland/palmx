@@ -1,9 +1,7 @@
 #ifndef _PE_MODEL_H__
 #define _PE_MODEL_H__
 
-#include "Material.h"
 #include "Mesh.h"
-#include "Shader.h"
 
 #include <memory>
 #include <assimp/Importer.hpp>
@@ -15,24 +13,20 @@ namespace PalmEngine
 	class Model
 	{
 	public:
-		Model(std::string path, Shader& shader);
+		Model(std::string path);
 		~Model();
+
+		const std::vector<Mesh> GetMeshes() const;
 
 	private:
 		Model();
 
-	public:
-		void Draw(glm::vec3 position, glm::vec3 scale);
-
-	private:
-		// Model Data
-		std::vector<Mesh*> _meshes;
+		std::vector<Mesh> _meshes;
 		std::string _directory;
 
-		void LoadModel(std::string path, Shader& shader);
-		void ProcessNode(Shader& shader, aiNode* node, const aiScene* scene);
-		Mesh ProcessMesh(Shader& shader, aiMesh* mesh, const aiScene* scene);
-		Material& CreateMaterial(Shader& shader, std::string materialName);
+		void LoadModel(std::string path);
+		void ProcessNode(aiNode* node, const aiScene* scene);
+		Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);
 	};
 }
 

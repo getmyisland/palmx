@@ -5,8 +5,6 @@ namespace PalmEngine
 	SceneManager::SceneManager() { }
 	SceneManager::~SceneManager() { }
 
-	//-----------------------------------------------------------------------
-
 	template<> SceneManager* PalmEngineSingleton<SceneManager>::msSingleton = 0;
 	SceneManager* SceneManager::GetSingletonPtr(void)
 	{
@@ -17,8 +15,6 @@ namespace PalmEngine
 		return (*msSingleton);
 	}
 
-	//-----------------------------------------------------------------------
-
 	void SceneManager::StartUp()
 	{
 
@@ -28,8 +24,6 @@ namespace PalmEngine
 	{
 
 	}
-
-	//-----------------------------------------------------------------------
 
 	Scene* SceneManager::GetActiveScene() const
 	{

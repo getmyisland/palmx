@@ -1,12 +1,12 @@
 #ifndef _PE_SHADER_H__
 #define _PE_SHADER_H__
 
-#include <string>
-#include <filesystem/ResourceManager.h>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <string>
+#include <filesystem/ResourceManager.h>
 
 namespace PalmEngine
 {

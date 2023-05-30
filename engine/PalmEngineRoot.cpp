@@ -85,7 +85,7 @@ namespace PalmEngine
 
 	void PalmEngineRoot::RenderModules()
 	{
-		mRenderManager->Render(mWindowManager->GetMainWindow());
+		mRenderManager->Render(mWindowManager->GetMainWindow(), mSceneManager->GetActiveScene());
 	}
 
 	void PalmEngineRoot::ShutdownModules()

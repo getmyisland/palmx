@@ -1,7 +1,7 @@
 #ifndef _PE_SCENE_H__
 #define _PE_SCENE_H__
 
-#include "Entity.h"
+#include <entity/Entity.h>
 
 #include <string>
 #include <vector>
