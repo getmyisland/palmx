@@ -3,7 +3,7 @@
 
 #include "Model.h"
 #include "Shader.h"
-#include <entity/Transform.h>
+#include <entity/components/Transform.h>
 
 namespace PalmEngine
 {

@@ -44,18 +44,18 @@ namespace PalmEngine
     void LogManager::LogInfo(std::string const message, std::source_location const source)
     {
         using namespace date;
-        std::cout << std::chrono::system_clock::now() << " [INFO] " << GetLocationString(source) << " " << message << std::endl;
+        std::cout << std::chrono::system_clock::now() << " [INFO] " << GetLocationString(source) << " " << message << "\n";
     }
 
     void LogManager::LogWarning(std::string const message, std::source_location const source)
     {
         using namespace date;
-        std::cout << std::chrono::system_clock::now() << " [WARNING] " << GetLocationString(source) << " " << message << std::endl;
+        std::cout << std::chrono::system_clock::now() << " [WARNING] " << GetLocationString(source) << " " << message << "\n";
     }
 
     void LogManager::LogError(std::string const message, std::source_location const source)
     {
         using namespace date;
-        std::cout << std::chrono::system_clock::now() << " [ERROR] " << GetLocationString(source) << " " << message << std::endl;
+        std::cout << std::chrono::system_clock::now() << " [ERROR] " << GetLocationString(source) << " " << message << "\n";
     }
 }

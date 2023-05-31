@@ -1,8 +1,8 @@
 #ifndef _PE_ENTITY_H__
 #define _PE_ENTITY_H__
 
-#include <entity/ScriptBehavior.h>
-#include <entity/Transform.h>
+#include <entity/components/ScriptBehavior.h>
+#include <entity/components/Transform.h>
 #include <rendering/Renderer.h>
 
 namespace PalmEngine

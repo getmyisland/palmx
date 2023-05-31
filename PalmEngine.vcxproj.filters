@@ -57,7 +57,7 @@
     <ClCompile Include="engine\window\WindowManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entity\Transform.cpp">
+    <ClCompile Include="engine\entity\components\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\rendering\Renderer.cpp">
@@ -116,22 +116,22 @@
     <ClInclude Include="engine\scene\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\Transform.h">
+    <ClInclude Include="engine\entity\components\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\rendering\Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\rendering\Camera.h">
+    <ClInclude Include="engine\entity\components\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\ScriptBehavior.h">
+    <ClInclude Include="engine\entity\components\ScriptBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\input\Input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="engine\rendering\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
