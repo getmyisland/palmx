@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\input\Input.cpp" />
     <ClCompile Include="engine\scene\Scene.cpp" />
     <ClCompile Include="engine\input\InputManager.cpp" />
     <ClCompile Include="engine\PalmEngineRoot.cpp" />
@@ -35,9 +36,13 @@
     <ClCompile Include="engine\filesystem\ResourceManager.cpp" />
     <ClCompile Include="engine\entity\Transform.cpp" />
     <ClCompile Include="engine\rendering\Renderer.cpp" />
+    <ClCompile Include="game\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="engine\entity\ScriptBehavior.h" />
+    <ClInclude Include="engine\input\Input.h" />
     <ClInclude Include="engine\PalmEngineConfig.h" />
+    <ClInclude Include="engine\rendering\Camera.h" />
     <ClInclude Include="engine\scene\Scene.h" />
     <ClInclude Include="engine\PalmEngineManager.h" />
     <ClInclude Include="engine\input\InputManager.h" />
@@ -54,6 +59,7 @@
     <ClInclude Include="include\stb\stb_image.h" />
     <ClInclude Include="engine\entity\Transform.h" />
     <ClInclude Include="engine\rendering\Renderer.h" />
+    <ClInclude Include="game\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include=".gitignore" />

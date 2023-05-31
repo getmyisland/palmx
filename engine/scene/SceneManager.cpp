@@ -25,6 +25,14 @@ namespace PalmEngine
 
 	}
 
+	void SceneManager::UpdateEntities() 
+	{
+		for (auto& entity : GetActiveScene()->GetEntitiesInScene())
+		{
+			entity->Update();
+		}
+	}
+
 	Scene* SceneManager::GetActiveScene() const
 	{
 		return _activeScene.get();

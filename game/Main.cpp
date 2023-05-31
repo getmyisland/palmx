@@ -6,6 +6,7 @@
 #include <rendering/Renderer.h>
 #include <scene/Scene.h>
 #include <PalmEngineRoot.h>
+#include "PlayerController.h"
 
 using namespace PalmEngine;
 
@@ -18,15 +19,17 @@ int main()
 	Scene scene("Testing");
 
 	Entity entity(std::string("Test Entity"));
-
 	std::string rootDir(ResourceManager::GetProjectRootDirectory());
 	Shader shader(rootDir + "/resources/shaders/shader.vert", rootDir + "/resources/shaders/shader.frag");
 	Model testModel(rootDir + "/resources/models/scp173/cb_scp173.fbx");
-	
 	Renderer modelRenderer(testModel, shader);
 	entity.SetRenderer(&modelRenderer);
-
 	scene.AddEntityToScene(entity);
+
+	Entity player(std::string("Player"));
+	PlayerController playerController;
+	player.AddScriptBehavior(playerController);
+	scene.AddEntityToScene(player);
 
 	// After all required objects have been created run the engine
 	palmEngineRoot.Run(scene);

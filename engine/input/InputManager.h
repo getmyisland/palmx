@@ -3,6 +3,7 @@
 
 #include <PalmEngineSingleton.h>
 #include <PalmEngineManager.h>
+
 #include <GLFW/glfw3.h>
 
 namespace PalmEngine

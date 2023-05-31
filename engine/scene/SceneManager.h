@@ -22,6 +22,8 @@ namespace PalmEngine
 		virtual void StartUp() override;
 		virtual void ShutDown() override;
 
+		void UpdateEntities();
+
 	public:
 		Scene* GetActiveScene() const;
 		void SetActiveScene(Scene& scene);

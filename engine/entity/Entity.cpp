@@ -9,6 +9,17 @@ namespace PalmEngine
 
 	Entity::~Entity() {}
 
+	void Entity::Update()
+	{
+		for (auto& scriptBehavior : _scriptBehaviors)
+		{
+			if (scriptBehavior != nullptr)
+			{
+				scriptBehavior->Update();
+			}
+		}
+	}
+
 	void Entity::Render() const
 	{
 		if (_renderer != nullptr)
@@ -25,6 +36,16 @@ namespace PalmEngine
 	const Transform* Entity::GetTransform()
 	{
 		return &_transform;
+	}
+
+	void Entity::AddScriptBehavior(ScriptBehavior& scriptBehavior)
+	{
+		_scriptBehaviors.push_back(&scriptBehavior);
+	}
+	
+	void Entity::RemoveScriptBehavior(ScriptBehavior& scriptBehavior)
+	{
+		// TODO
 	}
 
 	void Entity::SetRenderer(Renderer* renderer)

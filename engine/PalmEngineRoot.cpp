@@ -81,6 +81,7 @@ namespace PalmEngine
 	void PalmEngineRoot::UpdateModules()
 	{
 		mInputManager->CollectInput(mWindowManager->GetMainWindow());
+		mSceneManager->UpdateEntities();
 	}
 
 	void PalmEngineRoot::RenderModules()
