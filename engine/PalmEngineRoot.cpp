@@ -2,8 +2,6 @@
 
 namespace PalmEngine
 {
-	//-----------------------------------------------------------------------
-
 	template<> PalmEngineRoot* PalmEngineSingleton<PalmEngineRoot>::msSingleton = 0;
 	PalmEngineRoot* PalmEngineRoot::GetSingletonPtr(void)
 	{
@@ -13,8 +11,6 @@ namespace PalmEngine
 	{
 		return (*msSingleton);
 	}
-
-	//-----------------------------------------------------------------------
 
 	PalmEngineRoot::PalmEngineRoot() {}
 
@@ -73,15 +69,15 @@ namespace PalmEngine
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
-			UpdateModules();
+			UpdateModules(deltaTime);
 			RenderModules();
 		}
 	}
 
-	void PalmEngineRoot::UpdateModules()
+	void PalmEngineRoot::UpdateModules(float deltaTime)
 	{
 		mInputManager->CollectInput(mWindowManager->GetMainWindow());
-		mSceneManager->UpdateEntities();
+		mSceneManager->UpdateEntities(deltaTime);
 	}
 
 	void PalmEngineRoot::RenderModules()

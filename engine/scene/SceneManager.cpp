@@ -25,11 +25,11 @@ namespace PalmEngine
 
 	}
 
-	void SceneManager::UpdateEntities() 
+	void SceneManager::UpdateEntities(float deltaTime)
 	{
 		for (auto& entity : GetActiveScene()->GetEntitiesInScene())
 		{
-			entity->Update();
+			entity->Update(deltaTime);
 		}
 	}
 

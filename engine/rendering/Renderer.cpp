@@ -14,22 +14,23 @@ namespace PalmEngine
 
 	}
 
-	void Renderer::Render(const Transform& transform)
+	void Renderer::Render(Camera* camera, const Transform& transform)
 	{
 		for (auto& mesh : _model.GetMeshes())
 		{
 			_shader.Use();
 
 			// View/Projection Transformations
-			glm::mat4 projection = glm::perspective(glm::radians(60.0f), (float)800 / (float)600, 0.1f, 100.0f);
-			glm::mat4 view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+			glm::mat4 projection = glm::perspective(glm::radians(camera->GetZoom()), (float)800 / (float)600, 0.1f, 100.0f);
 			_shader.SetMat4("projection", projection);
+
+			glm::mat4 view = camera->GetViewMatrix();
 			_shader.SetMat4("view", view);
 
 			// Render the mesh
 			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, transform.GetLocalPosition());
-			model = glm::scale(model, transform.GetLocalScale());
+			model = glm::translate(model, transform.GetPosition());
+			model = glm::scale(model, transform.GetScale());
 			_shader.SetMat4("model", model);
 
 			glActiveTexture(GL_TEXTURE0 + 0);

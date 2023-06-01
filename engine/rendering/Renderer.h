@@ -3,6 +3,7 @@
 
 #include "Model.h"
 #include "Shader.h"
+#include <entity/components/Camera.h>
 #include <entity/components/Transform.h>
 
 namespace PalmEngine
@@ -13,7 +14,7 @@ namespace PalmEngine
 		Renderer(const Model& model, const Shader& shader);
 		~Renderer();
 
-		void Render(const Transform& transform);
+		void Render(Camera* camera, const Transform& transform);
 
 	private:
 		Renderer();

@@ -4,19 +4,25 @@
 
 namespace PalmEngine
 {
-	//-----------------------------------------------------------------------
-
 	Scene::Scene() {}
 
 	Scene::Scene(std::string name) : _name(name) { }
 
 	Scene::~Scene() {}
 
-	//-----------------------------------------------------------------------
-
 	std::string Scene::GetName() const
 	{
 		return _name;
+	}
+
+	Camera* Scene::GetMainCamera()
+	{
+		return _mainCamera;
+	}
+
+	void Scene::SetMainCamera(Camera& mainCamera)
+	{
+		_mainCamera = &mainCamera;
 	}
 
 	std::vector<Entity*> Scene::GetEntitiesInScene() const

@@ -1,14 +1,14 @@
 #ifndef _PE_SCRIPT_BEHAVIOR_H__
 #define _PE_SCRIPT_BEHAVIOR_H__
 
-#include <logging/LogManager.h>
+#include "Transform.h"
 
 namespace PalmEngine
 {
 	class ScriptBehavior
 	{
 	public:
-		virtual void Update() = 0;
+		virtual void Update(float deltaTime, Transform& transform) = 0;
 	};
 }
 

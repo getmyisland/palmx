@@ -23,13 +23,16 @@ int main()
 	Shader shader(rootDir + "/resources/shaders/shader.vert", rootDir + "/resources/shaders/shader.frag");
 	Model testModel(rootDir + "/resources/models/scp173/cb_scp173.fbx");
 	Renderer modelRenderer(testModel, shader);
-	entity.SetRenderer(&modelRenderer);
+	entity.SetRenderer(modelRenderer);
 	scene.AddEntityToScene(entity);
 
 	Entity player(std::string("Player"));
 	PlayerController playerController;
+	Camera camera(*player.GetTransform());
 	player.AddScriptBehavior(playerController);
+	player.SetCamera(camera);
 	scene.AddEntityToScene(player);
+	scene.SetMainCamera(camera);
 
 	// After all required objects have been created run the engine
 	palmEngineRoot.Run(scene);

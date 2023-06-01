@@ -38,8 +38,10 @@ namespace PalmEngine
 
 		static inline std::map<KeyCode, KeyState> _keyCodeToKeyStates = std::map<KeyCode, KeyState>(
 			{
-				{	KEY_ARROW_UP, KEY_DEFAULT
-				},
+				{KEY_ARROW_UP, KEY_DEFAULT},
+				{KEY_ARROW_DOWN, KEY_DEFAULT},
+				{KEY_ARROW_LEFT, KEY_DEFAULT},
+				{KEY_ARROW_RIGHT, KEY_DEFAULT},
 			});
 	};
 }

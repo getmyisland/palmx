@@ -1,12 +1,15 @@
 #ifndef PLAYER_CONTROLLER_H
 #define PLAYER_CONTROLLER_H
 
-#include <entity/components/ScriptBehavior.h>
+#include <entity/Entity.h>
 
 class PlayerController : public PalmEngine::ScriptBehavior
 {
 public:
-	virtual void Update() override;
+	void Update(float deltaTime, PalmEngine::Transform& transform) override;
+
+private:
+	float _movementSpeed = 2.5f;
 };
 
 #endif

@@ -9,22 +9,22 @@ namespace PalmEngine
 
 	Entity::~Entity() {}
 
-	void Entity::Update()
+	void Entity::Update(float deltaTime)
 	{
 		for (auto& scriptBehavior : _scriptBehaviors)
 		{
 			if (scriptBehavior != nullptr)
 			{
-				scriptBehavior->Update();
+				scriptBehavior->Update(deltaTime, _transform);
 			}
 		}
 	}
 
-	void Entity::Render() const
+	void Entity::Render(Camera* camera) const
 	{
 		if (_renderer != nullptr)
 		{
-			_renderer->Render(_transform);
+			_renderer->Render(camera, _transform);
 		}
 	}
 
@@ -33,7 +33,7 @@ namespace PalmEngine
 		return _name;
 	}
 
-	const Transform* Entity::GetTransform()
+	Transform* Entity::GetTransform()
 	{
 		return &_transform;
 	}
@@ -48,8 +48,13 @@ namespace PalmEngine
 		// TODO
 	}
 
-	void Entity::SetRenderer(Renderer* renderer)
+	void Entity::SetCamera(Camera& camera)
 	{
-		_renderer = renderer;
+		_camera = &camera;
+	}
+
+	void Entity::SetRenderer(Renderer& renderer)
+	{
+		_renderer = &renderer;
 	}
 }

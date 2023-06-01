@@ -44,7 +44,7 @@ namespace PalmEngine
 	private:
 		void StartUpModules();
 		void GameLoop();
-		void UpdateModules();
+		void UpdateModules(float deltaTime);
 		void RenderModules();
 		void ShutdownModules();
 	};

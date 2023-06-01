@@ -5,43 +5,79 @@
 
 namespace PalmEngine
 {
-	glm::vec3 Transform::GetLocalPosition() const
+	Transform::Transform()
 	{
-		return _localPosition;
+		UpdateLocalDirectionVectors();
 	}
 
-	void Transform::SetLocalPosition(glm::vec3 localPosition)
+	glm::vec3 Transform::GetPosition() const
 	{
-		_localPosition = localPosition;
+		return _position;
 	}
 
-	glm::vec3 Transform::GetLocalRotation() const
+	void Transform::SetPosition(glm::vec3 position)
 	{
-		return _localRotation;
+		_position = position;
 	}
 
-	void Transform::SetLocalRotation(glm::vec3 localRotation)
+	glm::vec3 Transform::GetRotation() const
 	{
-		_localRotation = localRotation;
+		return _rotation;
 	}
 
-	glm::vec3 Transform::GetLocalScale() const
+	void Transform::SetRotation(glm::vec3 rotation)
 	{
-		return _localScale;
+		_rotation = rotation;
+		UpdateLocalDirectionVectors();
 	}
 
-	void Transform::SetLocalScale(glm::vec3 localScale)
+	glm::vec3 Transform::GetScale() const
 	{
-		_localScale = localScale;
+		return _scale;
+	}
+
+	void Transform::SetScale(glm::vec3 scale)
+	{
+		_scale = scale;
+	}
+
+	glm::vec3 Transform::GetForward() const
+	{
+		return _forward;
+	}
+
+	void Transform::SetForward(glm::vec3 forward)
+	{
+		_forward = forward;
+	}
+
+	glm::vec3 Transform::GetRight() const
+	{
+		return _right;
+	}
+
+	void Transform::SetRight(glm::vec3 right)
+	{
+		_right = right;
+	}
+
+	glm::vec3 Transform::GetUp() const
+	{
+		return _up;
+	}
+
+	void Transform::SetUp(glm::vec3 up)
+	{
+		_up = up;
 	}
 
 	void Transform::UpdateLocalDirectionVectors()
 	{
 		// calculate the new Front vector
 		glm::vec3 forward;
-		forward.x = cos(glm::radians(_localRotation.y)) * cos(glm::radians(_localRotation.x));
-		forward.y = sin(glm::radians(_localRotation.x));
-		forward.z = sin(glm::radians(_localRotation.y)) * cos(glm::radians(_localRotation.x));
+		forward.x = cos(glm::radians(_rotation.y)) * cos(glm::radians(_rotation.x));
+		forward.y = sin(glm::radians(_rotation.x));
+		forward.z = sin(glm::radians(_rotation.y)) * cos(glm::radians(_rotation.x));
 		_forward = glm::normalize(forward);
 		// also re-calculate the Right and Up vector
 		_right = glm::normalize(glm::cross(_forward, glm::vec3(0, 1, 0)));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.

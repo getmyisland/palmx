@@ -22,7 +22,7 @@ namespace PalmEngine
 		virtual void StartUp() override;
 		virtual void ShutDown() override;
 
-		void UpdateEntities();
+		void UpdateEntities(float deltaTime);
 
 	public:
 		Scene* GetActiveScene() const;

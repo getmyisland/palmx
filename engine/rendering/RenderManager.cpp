@@ -9,8 +9,6 @@ namespace PalmEngine
 	RenderManager::RenderManager() {};
 	RenderManager::~RenderManager() {};
 
-	//-----------------------------------------------------------------------
-
 	template<> RenderManager* PalmEngineSingleton<RenderManager>::msSingleton = 0;
 	RenderManager* RenderManager::GetSingletonPtr(void)
 	{
@@ -20,8 +18,6 @@ namespace PalmEngine
 	{
 		return (*msSingleton);
 	}
-
-	//-----------------------------------------------------------------------
 
 	void RenderManager::StartUp()
 	{
@@ -40,16 +36,17 @@ namespace PalmEngine
 
 	}
 
-	//-----------------------------------------------------------------------
-
 	void RenderManager::Render(GLFWwindow* window, Scene* scene)
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		for (auto& entity : scene->GetEntitiesInScene())
+		if (scene->GetMainCamera() != nullptr)
 		{
-			entity->Render();
+			for (auto& entity : scene->GetEntitiesInScene())
+			{
+				entity->Render(scene->GetMainCamera());
+			}
 		}
 
 		// Check and calls events

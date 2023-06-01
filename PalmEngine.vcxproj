@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="engine\entity\components\Camera.cpp" />
     <ClCompile Include="engine\input\Input.cpp" />
     <ClCompile Include="engine\scene\Scene.cpp" />
     <ClCompile Include="engine\input\InputManager.cpp" />
