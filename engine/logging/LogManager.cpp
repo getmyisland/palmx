@@ -10,8 +10,6 @@ namespace PalmEngine
     LogManager::LogManager() {}
     LogManager::~LogManager() {}
 
-    //-----------------------------------------------------------------------
-    
     template<> LogManager* PalmEngineSingleton<LogManager>::msSingleton = 0;
     LogManager* LogManager::GetSingletonPtr(void)
     {
@@ -22,19 +20,15 @@ namespace PalmEngine
         return (*msSingleton);
     }
     
-    //-----------------------------------------------------------------------
-    
     void LogManager::StartUp()
     {
-
+        PE_LOG_MANAGER->LogInfo("Log Manager initialized");
     }
 
     void LogManager::ShutDown()
     {
 
     }
-    
-    //-----------------------------------------------------------------------
     
     std::string GetLocationString(std::source_location const source)
     {

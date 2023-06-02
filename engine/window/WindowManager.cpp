@@ -45,6 +45,8 @@ namespace PalmEngine
 		glfwSetFramebufferSizeCallback(_mainWindow, FramebufferSizeCallback);
 
 		glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+		PE_LOG_MANAGER->LogInfo("Window Manager initialized");
 	}
 
 	void WindowManager::ShutDown()

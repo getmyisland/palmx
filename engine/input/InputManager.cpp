@@ -23,7 +23,7 @@ namespace PalmEngine
 		glfwSetCursorPosCallback(mainWindow, Input::MouseCallback);
 		glfwSetScrollCallback(mainWindow, Input::ScrollCallback);
 
-		PE_LOG_MANAGER->LogInfo("Input Module initialized");
+		PE_LOG_MANAGER->LogInfo("Input Manager initialized");
 	}
 
 	void InputManager::ShutDown()

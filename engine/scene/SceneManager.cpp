@@ -1,5 +1,7 @@
 #include "SceneManager.h"
 
+#include <logging/LogManager.h>
+
 namespace PalmEngine
 {
 	SceneManager::SceneManager() { }
@@ -17,7 +19,7 @@ namespace PalmEngine
 
 	void SceneManager::StartUp()
 	{
-
+		PE_LOG_MANAGER->LogInfo("Scene Manager initialized");
 	}
 
 	void SceneManager::ShutDown()

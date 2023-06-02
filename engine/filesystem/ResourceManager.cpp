@@ -14,8 +14,6 @@ namespace PalmEngine
 	ResourceManager::ResourceManager() {}
 	ResourceManager::~ResourceManager() {}
 
-	//-----------------------------------------------------------------------
-
 	template<> ResourceManager* PalmEngineSingleton<ResourceManager>::msSingleton = 0;
 	ResourceManager* ResourceManager::GetSingletonPtr(void)
 	{
@@ -26,19 +24,15 @@ namespace PalmEngine
 		return (*msSingleton);
 	}
 
-	//-----------------------------------------------------------------------
-
 	void ResourceManager::StartUp()
 	{
-
+		PE_LOG_MANAGER->LogInfo("Resource Manager initialized");
 	}
 
 	void ResourceManager::ShutDown()
 	{
 
 	}
-
-	//-----------------------------------------------------------------------
 
 	std::string ResourceManager::GetProjectRootDirectory()
 	{

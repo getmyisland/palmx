@@ -28,7 +28,7 @@ namespace PalmEngine
 			return;
 		}
 
-		PE_LOG_MANAGER->LogInfo("Render Module initialized");
+		PE_LOG_MANAGER->LogInfo("Render Manager initialized");
 	}
 
 	void RenderManager::ShutDown()

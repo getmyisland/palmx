@@ -69,20 +69,11 @@ namespace PalmEngine
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
-			UpdateModules(deltaTime);
-			RenderModules();
+			mInputManager->CollectInput(mWindowManager->GetMainWindow());
+			mSceneManager->UpdateEntities(deltaTime);
+
+			mRenderManager->Render(mWindowManager->GetMainWindow(), mSceneManager->GetActiveScene());
 		}
-	}
-
-	void PalmEngineRoot::UpdateModules(float deltaTime)
-	{
-		mInputManager->CollectInput(mWindowManager->GetMainWindow());
-		mSceneManager->UpdateEntities(deltaTime);
-	}
-
-	void PalmEngineRoot::RenderModules()
-	{
-		mRenderManager->Render(mWindowManager->GetMainWindow(), mSceneManager->GetActiveScene());
 	}
 
 	void PalmEngineRoot::ShutdownModules()
