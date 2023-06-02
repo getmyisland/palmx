@@ -85,10 +85,10 @@ namespace PalmEngine
 		}
 	}
 
-	void Input::MouseCallback(GLFWwindow* window, double xPosIn, double yPosIn)
+	void Input::MouseCallback(GLFWwindow* window, double yPosIn, double xPosIn)
 	{
-		float xPos = static_cast<float>(xPosIn);
-		float yPos = static_cast<float>(yPosIn);
+		float xPos = static_cast<float>(-xPosIn);
+		float yPos = static_cast<float>(-yPosIn);
 
 		if (_firstMouseInput)
 		{
