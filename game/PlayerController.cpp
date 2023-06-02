@@ -14,42 +14,37 @@ void PlayerController::Update(float deltaTime, Transform& transform)
 
 	if (Input::GetKey(KEY_ARROW_UP))
 	{
-		glm::vec3 up = transform.GetPosition() + (transform.GetForward() * velocity);
-		transform.SetPosition(up);
+		transform.mPosition = transform.mPosition + (transform.mForward * velocity);
 	}
 
 	if (Input::GetKey(KEY_ARROW_DOWN))
 	{
-		glm::vec3 down = transform.GetPosition() - (transform.GetForward() * velocity);
-		transform.SetPosition(down);
+		transform.mPosition = transform.mPosition - (transform.mForward * velocity);
 	}
 
 	if (Input::GetKey(KEY_ARROW_LEFT))
 	{
-		glm::vec3 left = transform.GetPosition() - (transform.GetRight() * velocity);
-		transform.SetPosition(left);
+		transform.mPosition = transform.mPosition - (transform.mRight * velocity);
 	}
 
 	if (Input::GetKey(KEY_ARROW_RIGHT))
 	{
-		glm::vec3 right = transform.GetPosition() + (transform.GetRight() * velocity);
-		transform.SetPosition(right);
+		transform.mPosition = transform.mPosition + (transform.mRight * velocity);
 	}
 
-	// TODO Mouse rotation seems to be flipped
 	glm::vec2 mouseInput = Input::GetAxis(AXIS_MOUSE);
 	mouseInput.x *= _mouseSensitivity;
 	mouseInput.y *= _mouseSensitivity;
 
-	transform.SetRotation(transform.GetRotation() + glm::vec3(mouseInput.x, mouseInput.y, 0));
+	transform.mRotation = transform.mRotation + glm::vec3(mouseInput.x, mouseInput.y, 0);
 
-	// Make sure that when x-Rotation is out of bounds, Screen doesn't get flipped
-	if (transform.GetRotation().x > 89.0f)
+	// Make sure that when x-Rotation is out of bounds, the screen doesn't get flipped
+	if (transform.mRotation.x > 89.0f)
 	{
-		transform.SetRotation(glm::vec3(89.0f, transform.GetRotation().y, transform.GetRotation().z));
+		transform.mRotation = glm::vec3(89.0f, transform.mRotation.y, transform.mRotation.z);
 	}
-	if (transform.GetRotation().x < -89.0f)
+	if (transform.mRotation.x < -89.0f)
 	{
-		transform.SetRotation(glm::vec3(-89.0f, transform.GetRotation().y, transform.GetRotation().z));
+		transform.mRotation = glm::vec3(-89.0f, transform.mRotation.y, transform.mRotation.z);
 	}
 }

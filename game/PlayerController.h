@@ -9,7 +9,7 @@ public:
 	void Update(float deltaTime, PalmEngine::Transform& transform) override;
 
 private:
-	float _movementSpeed = 2.5f;
+	float _movementSpeed = 3.5f;
 	float _mouseSensitivity = 0.1f;
 };
 

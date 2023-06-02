@@ -29,8 +29,9 @@ namespace PalmEngine
 
 			// Render the mesh
 			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, transform.GetPosition());
-			model = glm::scale(model, transform.GetScale());
+			model = glm::translate(model, transform.mPosition);
+			//model = glm::rotate(model, transform.mRotation); Currently deactivated because this requires a Quaternion which is yet to be implemented
+			model = glm::scale(model, transform.mScale);
 			_shader.SetMat4("model", model);
 
 			glActiveTexture(GL_TEXTURE0 + 0);
