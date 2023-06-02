@@ -4,13 +4,12 @@
 #define PE_LOG_MANAGER PalmEngine::LogManager::GetSingletonPtr()
 
 #include <PalmEngineSingleton.h>
-#include <PalmEngineManager.h>
 #include <string>
 #include <source_location>
 
 namespace PalmEngine
 {
-	class LogManager : PalmEngineManager, public PalmEngineSingleton<LogManager>
+	class LogManager : public PalmEngineSingleton<LogManager>
 	{
 	public:
 		LogManager();
@@ -19,8 +18,8 @@ namespace PalmEngine
 		static LogManager& GetSingleton(void);
 		static LogManager* GetSingletonPtr(void);
 
-		virtual void StartUp() override;
-		virtual void ShutDown() override;
+		void StartUp();
+		void ShutDown();
 
 		void LogInfo(std::string const message,
 			std::source_location const source = std::source_location::current());

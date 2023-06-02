@@ -83,9 +83,6 @@
     <ClInclude Include="engine\rendering\RenderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\PalmEngineManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine\PalmEngineRoot.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -5,19 +5,18 @@
 #define DEFAULT_SHADER_FRAGMENT PalmEngine::ResourceManager::GetProjectRootDirectory() + "/resources/shaders/shader.frag"
 
 #include <PalmEngineSingleton.h>
-#include <PalmEngineManager.h>
 #include <string>
 
 namespace PalmEngine
 {
-	class ResourceManager : PalmEngineManager, public PalmEngineSingleton<ResourceManager>
+	class ResourceManager : public PalmEngineSingleton<ResourceManager>
 	{
 	public:
 		ResourceManager();
 		~ResourceManager();
 
-		virtual void StartUp() override;
-		virtual void ShutDown() override;
+		void StartUp();
+		void ShutDown();
 
 		static ResourceManager& GetSingleton(void);
 		static ResourceManager* GetSingletonPtr(void);

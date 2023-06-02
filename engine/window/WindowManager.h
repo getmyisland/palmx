@@ -1,14 +1,13 @@
-#ifndef _PE_WINDOW_MANAGER__
-#define _PE_WINDOW_MANAGER__
+#ifndef _PE_WINDOW_MANAGER_H__
+#define _PE_WINDOW_MANAGER_H__
 
-#include <PalmEngineManager.h>
 #include <PalmEngineSingleton.h>
 
 #include <GLFW/glfw3.h>
 
 namespace PalmEngine
 {
-	class WindowManager : PalmEngineManager, public PalmEngineSingleton<WindowManager>
+	class WindowManager : public PalmEngineSingleton<WindowManager>
 	{
 	public:
 		WindowManager();
@@ -17,8 +16,8 @@ namespace PalmEngine
 		static WindowManager& GetSingleton(void);
 		static WindowManager* GetSingletonPtr(void);
 
-		virtual void StartUp() override;
-		virtual void ShutDown() override;
+		void StartUp();
+		void ShutDown();
 
 	public:
 		GLFWwindow* GetMainWindow() const;

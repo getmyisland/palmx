@@ -10,6 +10,7 @@ public:
 
 private:
 	float _movementSpeed = 2.5f;
+	float _mouseSensitivity = 0.1f;
 };
 
 #endif

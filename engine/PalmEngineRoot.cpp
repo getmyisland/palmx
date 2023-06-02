@@ -45,7 +45,7 @@ namespace PalmEngine
 		mWindowManager->StartUp();
 		mLogManager->StartUp();
 		mResourceManager->StartUp();
-		mInputManager->StartUp();
+		mInputManager->StartUp(mWindowManager->GetMainWindow());
 		mRenderManager->StartUp();
 		mSceneManager->StartUp();
 	}

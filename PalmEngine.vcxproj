@@ -46,7 +46,6 @@
     <ClInclude Include="engine\PalmEngineConfig.h" />
     <ClInclude Include="engine\entity\components\Camera.h" />
     <ClInclude Include="engine\scene\Scene.h" />
-    <ClInclude Include="engine\PalmEngineManager.h" />
     <ClInclude Include="engine\input\InputManager.h" />
     <ClInclude Include="engine\PalmEngineRoot.h" />
     <ClInclude Include="engine\PalmEngineSingleton.h" />

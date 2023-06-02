@@ -5,17 +5,11 @@
 
 namespace PalmEngine
 {
-	//-----------------------------------------------------------------------
-
 	void FramebufferSizeCallback(GLFWwindow* pWindow, int width, int height);
-
-	//-----------------------------------------------------------------------
 
 	WindowManager::WindowManager() { }
 	
 	WindowManager::~WindowManager() { }
-
-	//-----------------------------------------------------------------------
 
 	template<> WindowManager* PalmEngineSingleton<WindowManager>::msSingleton = 0;
 	WindowManager* WindowManager::GetSingletonPtr(void)
@@ -26,8 +20,6 @@ namespace PalmEngine
 	{
 		return (*msSingleton);
 	}
-
-	//-----------------------------------------------------------------------
 
 	void WindowManager::StartUp()
 	{
@@ -51,14 +43,14 @@ namespace PalmEngine
 		}
 		glfwMakeContextCurrent(_mainWindow);
 		glfwSetFramebufferSizeCallback(_mainWindow, FramebufferSizeCallback);
+
+		glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}
 
 	void WindowManager::ShutDown()
 	{
 		glfwTerminate();
 	}
-
-	//-----------------------------------------------------------------------
 
 	GLFWwindow* WindowManager::GetMainWindow() const
 	{

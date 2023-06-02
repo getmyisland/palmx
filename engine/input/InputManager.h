@@ -2,13 +2,12 @@
 #define _PE_INPUT_MANAGER_H__
 
 #include <PalmEngineSingleton.h>
-#include <PalmEngineManager.h>
 
 #include <GLFW/glfw3.h>
 
 namespace PalmEngine
 {
-	class InputManager : PalmEngineManager, public PalmEngineSingleton<InputManager>
+	class InputManager : public PalmEngineSingleton<InputManager>
 	{
 	public:
 		InputManager();
@@ -17,8 +16,8 @@ namespace PalmEngine
 		static InputManager& GetSingleton(void);
 		static InputManager* GetSingletonPtr(void);
 
-		virtual void StartUp() override;
-		virtual void ShutDown() override;
+		void StartUp(GLFWwindow* mainWindow);
+		void ShutDown();
 
 		void CollectInput(GLFWwindow* window);
 	};

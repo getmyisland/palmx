@@ -2,7 +2,6 @@
 #define _PE_SCENE_MANAGER_H__
 
 #include <PalmEngineSingleton.h>
-#include <PalmEngineManager.h>
 
 #include "Scene.h"
 
@@ -10,7 +9,7 @@
 
 namespace PalmEngine
 {
-	class SceneManager : PalmEngineManager, public PalmEngineSingleton<SceneManager>
+	class SceneManager : public PalmEngineSingleton<SceneManager>
 	{
 	public:
 		SceneManager();
@@ -19,8 +18,8 @@ namespace PalmEngine
 		static SceneManager& GetSingleton(void);
 		static SceneManager* GetSingletonPtr(void);
 
-		virtual void StartUp() override;
-		virtual void ShutDown() override;
+		void StartUp();
+		void ShutDown();
 
 		void UpdateEntities(float deltaTime);
 

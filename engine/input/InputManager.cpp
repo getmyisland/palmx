@@ -18,8 +18,11 @@ namespace PalmEngine
 		return (*msSingleton);
 	}
 
-	void InputManager::StartUp()
+	void InputManager::StartUp(GLFWwindow* mainWindow)
 	{
+		glfwSetCursorPosCallback(mainWindow, Input::MouseCallback);
+		glfwSetScrollCallback(mainWindow, Input::ScrollCallback);
+
 		PE_LOG_MANAGER->LogInfo("Input Module initialized");
 	}
 
@@ -36,5 +39,6 @@ namespace PalmEngine
 		}
 
 		Input::SetKeyStates(window);
+		Input::ResetAxisOffset();
 	}
 }

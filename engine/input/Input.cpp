@@ -1,5 +1,7 @@
 #include "Input.h"
 
+#include <logging/LogManager.h>
+
 namespace PalmEngine
 {
 	Input::Input() {}
@@ -59,5 +61,60 @@ namespace PalmEngine
 		{
 			_keyCodeToKeyStates[KEY_ARROW_RIGHT] = KEY_DEFAULT;
 		}
+	}
+
+	void Input::ResetAxisOffset()
+	{
+		// Dirty trick to check if the mouse offset should be resetted
+		// TODO Do this for Mouse Wheel
+		if (_mouseCallbackThisFrame)
+		{
+			_mouseCallbackLastFrame = true;
+			_mouseCallbackThisFrame = false;
+		}
+
+		if (_mouseCallbackLastFrame)
+		{
+			_mouseCallbackLastFrame = false;
+			return;
+		}
+
+		for (auto& [key, value] : _axisCodeToOffset)
+		{
+			value = glm::vec2();
+		}
+	}
+
+	void Input::MouseCallback(GLFWwindow* window, double xPosIn, double yPosIn)
+	{
+		float xPos = static_cast<float>(xPosIn);
+		float yPos = static_cast<float>(yPosIn);
+
+		if (_firstMouseInput)
+		{
+			_lastMousePosX = xPos;
+			_lastMousePosY = yPos;
+			_firstMouseInput = false;
+		}
+
+		float xOffset = xPos - _lastMousePosX;
+		float yOffset = _lastMousePosY - yPos; // Reversed since y-Coordinates go from bottom to top
+
+		_lastMousePosX = xPos;
+		_lastMousePosY = yPos;
+
+		_axisCodeToOffset.at(AXIS_MOUSE) = glm::vec2(xOffset, yOffset);
+
+		_mouseCallbackThisFrame = true;
+	}
+
+	void Input::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+	{
+		_axisCodeToOffset.at(AXIS_MOUSE_WHEEL) = glm::vec2(static_cast<float>(xOffset), static_cast<float>(yOffset));
+	}
+
+	glm::vec2 Input::GetAxis(AxisCode axisCode)
+	{
+		return _axisCodeToOffset.at(axisCode);
 	}
 }

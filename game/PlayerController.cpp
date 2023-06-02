@@ -26,15 +26,30 @@ void PlayerController::Update(float deltaTime, Transform& transform)
 
 	if (Input::GetKey(KEY_ARROW_LEFT))
 	{
-		glm::vec3 left = transform.GetPosition() + (transform.GetRight() * velocity);
+		glm::vec3 left = transform.GetPosition() - (transform.GetRight() * velocity);
 		transform.SetPosition(left);
 	}
 
 	if (Input::GetKey(KEY_ARROW_RIGHT))
 	{
-		glm::vec3 right = transform.GetPosition() - (transform.GetRight() * velocity);
+		glm::vec3 right = transform.GetPosition() + (transform.GetRight() * velocity);
 		transform.SetPosition(right);
 	}
 
-	//PE_LOG_MANAGER->LogInfo(glm::to_string(transform.GetPosition()));
+	// TODO Mouse rotation seems to be flipped
+	glm::vec2 mouseInput = Input::GetAxis(AXIS_MOUSE);
+	mouseInput.x *= _mouseSensitivity;
+	mouseInput.y *= _mouseSensitivity;
+
+	transform.SetRotation(transform.GetRotation() + glm::vec3(mouseInput.x, mouseInput.y, 0));
+
+	// Make sure that when x-Rotation is out of bounds, Screen doesn't get flipped
+	if (transform.GetRotation().x > 89.0f)
+	{
+		transform.SetRotation(glm::vec3(89.0f, transform.GetRotation().y, transform.GetRotation().z));
+	}
+	if (transform.GetRotation().x < -89.0f)
+	{
+		transform.SetRotation(glm::vec3(-89.0f, transform.GetRotation().y, transform.GetRotation().z));
+	}
 }
