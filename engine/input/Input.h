@@ -1,8 +1,7 @@
 #ifndef _PE_INPUT_H__
 #define _PE_INPUT_H__
 
-#include <vector>
-#include <map>
+#include <unordered_map>
 
 #include <GLFW/glfw3.h>
 
@@ -12,24 +11,27 @@ namespace PalmEngine
 {
 	enum KeyState
 	{
-		KEY_DEFAULT,
-		KEY_DOWN,
-		KEY_PRESS,
-		KEY_UP
+		KeyDefault,
+		KeyDown,
+		KeyPress,
+		KeyUp
 	};
 
 	enum KeyCode
 	{
-		KEY_ARROW_UP,
-		KEY_ARROW_DOWN,
-		KEY_ARROW_LEFT,
-		KEY_ARROW_RIGHT
+		KeyW,
+		KeyS,
+		KeyA,
+		KeyD
 	};
 
-	enum AxisCode
+	struct Key
 	{
-		AXIS_MOUSE,
-		AXIS_MOUSE_WHEEL
+		Key(const unsigned int glfwKeyCode) : mGlfwKeyCode(glfwKeyCode) {}
+
+		const unsigned int mGlfwKeyCode;
+		KeyState mKeyState{ KeyDefault };
+		KeyState mLastKeyState{ KeyDefault };
 	};
 
 	class Input
@@ -40,36 +42,32 @@ namespace PalmEngine
 		static bool GetKeyUp(KeyCode keyCode);
 
 		static void SetKeyStates(GLFWwindow* window);
-		static void ResetAxisOffset();
+		
+		static void MouseCallback(GLFWwindow* window, double xPosIn, double yPosIn);
+		static glm::vec2 GetMouseOffset();
+		static void ResetMouseOffset();
 
-		static void MouseCallback(GLFWwindow* window, double xposIn, double yposIn);
-		static void ScrollCallback(GLFWwindow* window, double xoffset, double yoffset);
-
-		static glm::vec2 GetAxis(AxisCode axisCode);
+		static void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
 	private:
 		Input();
 
-		static inline std::map<KeyCode, KeyState> _keyCodeToKeyStates = std::map<KeyCode, KeyState>(
+		static void SetKeyState(GLFWwindow* window, KeyCode keyCode, Key& key);
+		static inline std::unordered_map<KeyCode, Key> _keys = std::unordered_map<KeyCode, Key>(
 			{
-				{KEY_ARROW_UP, KEY_DEFAULT},
-				{KEY_ARROW_DOWN, KEY_DEFAULT},
-				{KEY_ARROW_LEFT, KEY_DEFAULT},
-				{KEY_ARROW_RIGHT, KEY_DEFAULT},
+				{KeyW, Key(GLFW_KEY_W)},
+				{KeyS, Key(GLFW_KEY_S)},
+				{KeyA, Key(GLFW_KEY_A)},
+				{KeyD, Key(GLFW_KEY_D)}
 			}
 		);
 
-		static inline float _lastMousePosX = 0;
-		static inline float _lastMousePosY = 0;
 		static inline bool _firstMouseInput = true;
 		static inline bool _mouseCallbackThisFrame = false;
-		static inline bool _mouseCallbackLastFrame = false;
-		static inline std::map<AxisCode, glm::vec2> _axisCodeToOffset = std::map<AxisCode, glm::vec2>(
-			{
-				{AXIS_MOUSE, glm::vec2()},
-				{AXIS_MOUSE_WHEEL, glm::vec2()}
-			}
-		);
+		static inline glm::vec2 _lastMousePos = glm::vec2();
+		static inline glm::vec2 _mouseOffset = glm::vec2();
+
+		static inline glm::vec2 _mouseWheelOffset = glm::vec2();
 	};
 }
 

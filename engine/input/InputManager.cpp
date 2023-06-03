@@ -39,6 +39,6 @@ namespace PalmEngine
 		}
 
 		Input::SetKeyStates(window);
-		Input::ResetAxisOffset();
+		Input::ResetMouseOffset();
 	}
 }

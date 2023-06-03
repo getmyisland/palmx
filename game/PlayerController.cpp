@@ -12,31 +12,31 @@ void PlayerController::Update(float deltaTime, Transform& transform)
 {
 	float velocity = _movementSpeed * deltaTime;
 
-	if (Input::GetKey(KEY_ARROW_UP))
+	if (Input::GetKey(KeyW))
 	{
 		glm::vec3 up = transform.GetPosition() + (transform.GetForward() * velocity);
 		transform.SetPosition(up);
 	}
 
-	if (Input::GetKey(KEY_ARROW_DOWN))
+	if (Input::GetKey(KeyS))
 	{
 		glm::vec3 down = transform.GetPosition() - (transform.GetForward() * velocity);
 		transform.SetPosition(down);
 	}
 
-	if (Input::GetKey(KEY_ARROW_LEFT))
+	if (Input::GetKey(KeyA))
 	{
 		glm::vec3 left = transform.GetPosition() - (transform.GetRight() * velocity);
 		transform.SetPosition(left);
 	}
 
-	if (Input::GetKey(KEY_ARROW_RIGHT))
+	if (Input::GetKey(KeyD))
 	{
 		glm::vec3 right = transform.GetPosition() + (transform.GetRight() * velocity);
 		transform.SetPosition(right);
 	}
 
-	glm::vec2 mouseInput = Input::GetAxis(AXIS_MOUSE);
+	glm::vec2 mouseInput = Input::GetMouseOffset();
 	mouseInput.x *= _mouseSensitivity;
 	mouseInput.y *= _mouseSensitivity;
 

@@ -5,83 +5,76 @@
 namespace PalmEngine
 {
 	Input::Input() {}
-	
+
 	bool Input::GetKeyDown(KeyCode keyCode)
 	{
-		return _keyCodeToKeyStates.at(keyCode) == KeyState::KEY_DOWN;
+		auto iter = _keys.find(keyCode);
+		if (iter != _keys.end())
+		{
+			const Key& key = iter->second;
+			return key.mKeyState == KeyState::KeyDown;
+		}
+
+		return false;
 	}
 
 	bool Input::GetKey(KeyCode keyCode)
 	{
-		return _keyCodeToKeyStates.at(keyCode) == KeyState::KEY_PRESS;
+		auto iter = _keys.find(keyCode);
+		if (iter != _keys.end())
+		{
+			const Key& key = iter->second;
+			return key.mKeyState == KeyState::KeyPress;
+		}
+
+		return false;
 	}
-		
+
 	bool Input::GetKeyUp(KeyCode keyCode)
 	{
-		return _keyCodeToKeyStates.at(keyCode) == KeyState::KEY_UP;
+		auto iter = _keys.find(keyCode);
+		if (iter != _keys.end())
+		{
+			const Key& key = iter->second;
+			return key.mKeyState == KeyState::KeyUp;
+		}
+
+		return false;
 	}
 
 	void Input::SetKeyStates(GLFWwindow* window)
 	{
-		// Set the state for each key
-		// A separate implementation of this may be overkill
-		// Maybe use glfw system instead
-		if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		for (auto& [key, value] : _keys)
 		{
-			_keyCodeToKeyStates[KEY_ARROW_UP] = KEY_PRESS;
-		}
-		else
-		{
-			_keyCodeToKeyStates[KEY_ARROW_UP] = KEY_DEFAULT;
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		{
-			_keyCodeToKeyStates[KEY_ARROW_DOWN] = KEY_PRESS;
-		}
-		else
-		{
-			_keyCodeToKeyStates[KEY_ARROW_DOWN] = KEY_DEFAULT;
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		{
-			_keyCodeToKeyStates[KEY_ARROW_LEFT] = KEY_PRESS;
-		}
-		else
-		{
-			_keyCodeToKeyStates[KEY_ARROW_LEFT] = KEY_DEFAULT;
-		}
-
-		if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		{
-			_keyCodeToKeyStates[KEY_ARROW_RIGHT] = KEY_PRESS;
-		}
-		else
-		{
-			_keyCodeToKeyStates[KEY_ARROW_RIGHT] = KEY_DEFAULT;
+			SetKeyState(window, key, value);
 		}
 	}
 
-	void Input::ResetAxisOffset()
+	void Input::SetKeyState(GLFWwindow* window, KeyCode keyCode, Key& key)
 	{
-		// Dirty trick to check if the mouse offset should be resetted
-		// TODO Do this for Mouse Wheel
-		if (_mouseCallbackThisFrame)
-		{
-			_mouseCallbackLastFrame = true;
-			_mouseCallbackThisFrame = false;
-		}
+		key.mLastKeyState = key.mKeyState;
 
-		if (_mouseCallbackLastFrame)
+		if (glfwGetKey(window, key.mGlfwKeyCode) == GLFW_PRESS)
 		{
-			_mouseCallbackLastFrame = false;
-			return;
+			if (key.mLastKeyState == KeyDefault)
+			{
+				key.mKeyState = KeyDown;
+			}
+			else
+			{
+				key.mKeyState = KeyPress;
+			}
 		}
-
-		for (auto& [key, value] : _axisCodeToOffset)
+		else
 		{
-			value = glm::vec2();
+			if (key.mLastKeyState == KeyPress)
+			{
+				key.mKeyState = KeyUp;
+			}
+			else
+			{
+				key.mKeyState = KeyDefault;
+			}
 		}
 	}
 
@@ -92,29 +85,37 @@ namespace PalmEngine
 
 		if (_firstMouseInput)
 		{
-			_lastMousePosX = xPos;
-			_lastMousePosY = yPos;
+			_lastMousePos = glm::vec2(xPos, yPos);
 			_firstMouseInput = false;
 		}
 
-		float xOffset = xPos - _lastMousePosX;
-		float yOffset = _lastMousePosY - yPos; // Reversed since y-Coordinates go from bottom to top
+		float xOffset = xPos - _lastMousePos.x;
+		float yOffset = _lastMousePos.y - yPos; // Reversed since y-Coordinates go from bottom to top
 
-		_lastMousePosX = xPos;
-		_lastMousePosY = yPos;
-
-		_axisCodeToOffset.at(AXIS_MOUSE) = glm::vec2(xOffset, yOffset);
+		_lastMousePos = glm::vec2(xPos, yPos);
+		_mouseOffset = glm::vec2(xOffset, yOffset);
 
 		_mouseCallbackThisFrame = true;
 	}
 
-	void Input::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+	glm::vec2 Input::GetMouseOffset()
 	{
-		_axisCodeToOffset.at(AXIS_MOUSE_WHEEL) = glm::vec2(static_cast<float>(xOffset), static_cast<float>(yOffset));
+		return _mouseOffset;
 	}
 
-	glm::vec2 Input::GetAxis(AxisCode axisCode)
+	void Input::ResetMouseOffset()
 	{
-		return _axisCodeToOffset.at(axisCode);
+		if (_mouseCallbackThisFrame)
+		{
+			_mouseCallbackThisFrame = false;
+			return;
+		}
+
+		_mouseOffset = glm::vec2();
+	}
+
+	void Input::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+	{
+		_mouseWheelOffset = glm::vec2(static_cast<float>(xOffset), static_cast<float>(yOffset));
 	}
 }
