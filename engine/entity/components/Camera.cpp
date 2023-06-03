@@ -11,7 +11,7 @@ namespace PalmEngine
 
 	glm::mat4 Camera::GetViewMatrix()
 	{
-		return glm::lookAt(_transform->mPosition, _transform->mPosition + _transform->mForward, _transform->mUp);
+		return glm::lookAt(_transform->GetPosition(), _transform->GetPosition() + _transform->GetForward(), _transform->GetUp());
 	}
 
 	float Camera::GetZoom() const

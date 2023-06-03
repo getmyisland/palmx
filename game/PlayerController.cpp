@@ -14,37 +14,41 @@ void PlayerController::Update(float deltaTime, Transform& transform)
 
 	if (Input::GetKey(KEY_ARROW_UP))
 	{
-		transform.mPosition = transform.mPosition + (transform.mForward * velocity);
+		glm::vec3 up = transform.GetPosition() + (transform.GetForward() * velocity);
+		transform.SetPosition(up);
 	}
 
 	if (Input::GetKey(KEY_ARROW_DOWN))
 	{
-		transform.mPosition = transform.mPosition - (transform.mForward * velocity);
+		glm::vec3 down = transform.GetPosition() - (transform.GetForward() * velocity);
+		transform.SetPosition(down);
 	}
 
 	if (Input::GetKey(KEY_ARROW_LEFT))
 	{
-		transform.mPosition = transform.mPosition - (transform.mRight * velocity);
+		glm::vec3 left = transform.GetPosition() - (transform.GetRight() * velocity);
+		transform.SetPosition(left);
 	}
 
 	if (Input::GetKey(KEY_ARROW_RIGHT))
 	{
-		transform.mPosition = transform.mPosition + (transform.mRight * velocity);
+		glm::vec3 right = transform.GetPosition() + (transform.GetRight() * velocity);
+		transform.SetPosition(right);
 	}
 
 	glm::vec2 mouseInput = Input::GetAxis(AXIS_MOUSE);
 	mouseInput.x *= _mouseSensitivity;
 	mouseInput.y *= _mouseSensitivity;
 
-	transform.mRotation = transform.mRotation + glm::vec3(mouseInput.x, mouseInput.y, 0);
+	transform.SetRotation(transform.GetRotation() + glm::vec3(mouseInput.x, mouseInput.y, 0));
 
 	// Make sure that when x-Rotation is out of bounds, the screen doesn't get flipped
-	if (transform.mRotation.x > 89.0f)
+	if (transform.GetRotation().x > 89.0f)
 	{
-		transform.mRotation = glm::vec3(89.0f, transform.mRotation.y, transform.mRotation.z);
+		transform.SetRotation(glm::vec3(89.0f, transform.GetRotation().y, transform.GetRotation().z));
 	}
-	if (transform.mRotation.x < -89.0f)
+	if (transform.GetRotation().x < -89.0f)
 	{
-		transform.mRotation = glm::vec3(-89.0f, transform.mRotation.y, transform.mRotation.z);
+		transform.SetRotation(glm::vec3(-89.0f, transform.GetRotation().y, transform.GetRotation().z));
 	}
 }

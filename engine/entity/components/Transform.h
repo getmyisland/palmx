@@ -5,44 +5,37 @@
 
 namespace PalmEngine
 {
-	//template<typename T>
-	//class AssignmentHook {
-	//public:
-	//	typedef void (hook_t)(const T& newValue);
-
-	//	AssignmentHook(T& value, hook_t hook) : _ref(value), _hook(hook) {}
-
-	//	T& operator=(const T& rhs)
-	//	{
-	//		_hook(rhs);
-	//		_ref = rhs;
-	//	}
-	//private:
-	//	// I'd rather not want to think about copying this
-	//	AssignmentHook(const AssignmentHook&);
-	//	void operator=(const AssignmentHook&);
-
-	//	T& _ref;
-	//	hook_t _hook;
-	//};
-
 	class Transform
 	{
 	public:
-		Transform();
+		Transform(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 rotation = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 scale = glm::vec3(1.0f, 1.0f, 1.0f));
 
-		glm::vec3 mPosition = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 mRotation = glm::vec3(0.0f, 0.0f, 0.0f); // Pitch, Yaw, Roll
-		glm::vec3 mScale = glm::vec3(1.0f, 1.0f, 1.0f);
+		glm::vec3 GetPosition() const;
+		void SetPosition(glm::vec3 position);
 
-		glm::vec3 mForward;
-		glm::vec3 mRight;
-		glm::vec3 mUp;
+		glm::vec3 GetRotation() const;
+		void SetRotation(glm::vec3 rotation);
+
+		glm::vec3 GetScale() const;
+		void SetScale(glm::vec3 scale);
+
+		glm::vec3 GetForward() const;
+		void SetForward(glm::vec3 forward);
+		glm::vec3 GetRight() const;
+		void SetRight(glm::vec3 right);
+		glm::vec3 GetUp() const;
+		void SetUp(glm::vec3 up);
 
 	private:
-		// AssignmentHook<glm::vec3> _rotationChangeHook;
+		glm::vec3 _position;
+		glm::vec3 _rotation; // Pitch, Yaw, Roll
+		glm::vec3 _scale;
 
-		void UpdateDirectionVectors(const glm::vec3& newValue);
+		glm::vec3 _forward;
+		glm::vec3 _right;
+		glm::vec3 _up;
+
+		void UpdateDirectionVectors();
 	};
 }
 
