@@ -1,6 +1,7 @@
 #include <glad/glad.h> // holds all OpenGL type declarations
 
 #include "Renderer.h"
+#include <PalmEngineRoot.h>
 
 namespace PalmEngine
 {
@@ -21,7 +22,7 @@ namespace PalmEngine
 			_shader.Use();
 
 			// View/Projection Transformations
-			glm::mat4 projection = glm::perspective(glm::radians(camera->GetZoom()), (float)800 / (float)600, 0.1f, 100.0f);
+			glm::mat4 projection = glm::perspective(glm::radians(camera->GetZoom()), static_cast<float>(PalmEngineRoot::GetSingletonPtr()->mConfig->GetWidth()) / static_cast<float>(PalmEngineRoot::GetSingletonPtr()->mConfig->GetHeight()), 0.1f, 100.0f);
 			_shader.SetMat4("projection", projection);
 
 			glm::mat4 view = camera->GetViewMatrix();

@@ -16,14 +16,14 @@ namespace PalmEngine
 
 	PalmEngineRoot::PalmEngineRoot(PalmEngineConfig& palmEngineConfig)
 	{
-		mConfig.reset(&palmEngineConfig);
+		mConfig = std::make_unique<PalmEngineConfig>(palmEngineConfig);
 
-		mLogManager.reset(new LogManager());
-		mResourceManager.reset(new ResourceManager());
-		mInputManager.reset(new InputManager());
-		mRenderManager.reset(new RenderManager());
-		mSceneManager.reset(new SceneManager());
-		mWindowManager.reset(new WindowManager());
+		mLogManager = std::make_unique<LogManager>();
+		mResourceManager = std::make_unique<ResourceManager>();
+		mInputManager = std::make_unique<InputManager>();
+		mRenderManager = std::make_unique<RenderManager>();
+		mSceneManager = std::make_unique<SceneManager>();
+		mWindowManager = std::make_unique<WindowManager>();
 
 		StartUpModules();
 	}
@@ -70,7 +70,7 @@ namespace PalmEngine
 			lastFrame = currentFrame;
 
 			mInputManager->CollectInput(mWindowManager->GetMainWindow());
-			mSceneManager->UpdateEntities(deltaTime);
+			mSceneManager->Update(deltaTime);
 
 			mRenderManager->Render(mWindowManager->GetMainWindow(), mSceneManager->GetActiveScene());
 		}

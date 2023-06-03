@@ -1,5 +1,5 @@
-#ifndef _PALM_ENGINE_H__
-#define _PALM_ENGINE_H__
+#ifndef _PALM_ENGINE_ROOT_H__
+#define _PALM_ENGINE_ROOT_H__
 
 #include <GLFW/glfw3.h>
 #include <memory>

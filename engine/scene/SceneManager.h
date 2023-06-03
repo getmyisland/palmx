@@ -21,7 +21,7 @@ namespace PalmEngine
 		void StartUp();
 		void ShutDown();
 
-		void UpdateEntities(float deltaTime);
+		void Update(float deltaTime);
 
 	public:
 		Scene* GetActiveScene() const;
