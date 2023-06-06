@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\entity\components\Camera.cpp" />
+    <ClCompile Include="engine\components\Camera.cpp" />
+    <ClCompile Include="engine\components\Renderer.cpp" />
     <ClCompile Include="engine\input\Input.cpp" />
+    <ClCompile Include="engine\scene\Entity.cpp" />
     <ClCompile Include="engine\scene\Scene.cpp" />
     <ClCompile Include="engine\input\InputManager.cpp" />
     <ClCompile Include="engine\PalmEngineRoot.cpp" />
@@ -30,21 +32,21 @@
     <ClCompile Include="engine\rendering\Model.cpp" />
     <ClCompile Include="engine\rendering\RenderManager.cpp" />
     <ClCompile Include="engine\rendering\Shader.cpp" />
-    <ClCompile Include="engine\entity\Entity.cpp" />
     <ClCompile Include="engine\scene\SceneManager.cpp" />
     <ClCompile Include="include\glad\glad.c" />
     <ClCompile Include="engine\logging\LogManager.cpp" />
     <ClCompile Include="engine\filesystem\ResourceManager.cpp" />
-    <ClCompile Include="engine\entity\components\Transform.cpp" />
-    <ClCompile Include="engine\rendering\Renderer.cpp" />
+    <ClCompile Include="engine\components\Transform.cpp" />
     <ClCompile Include="game\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\rendering\Renderer.h" />
-    <ClInclude Include="engine\entity\components\ScriptBehavior.h" />
+    <ClInclude Include="engine\components\Renderer.h" />
+    <ClInclude Include="engine\components\ScriptBehavior.h" />
+    <ClInclude Include="engine\components\ScriptHook.h" />
     <ClInclude Include="engine\input\Input.h" />
     <ClInclude Include="engine\PalmEngineConfig.h" />
-    <ClInclude Include="engine\entity\components\Camera.h" />
+    <ClInclude Include="engine\components\Camera.h" />
+    <ClInclude Include="engine\scene\Entity.h" />
     <ClInclude Include="engine\scene\Scene.h" />
     <ClInclude Include="engine\input\InputManager.h" />
     <ClInclude Include="engine\PalmEngineRoot.h" />
@@ -55,10 +57,10 @@
     <ClInclude Include="engine\rendering\Shader.h" />
     <ClInclude Include="engine\filesystem\ResourceManager.h" />
     <ClInclude Include="engine\logging\LogManager.h" />
-    <ClInclude Include="engine\entity\Entity.h" />
     <ClInclude Include="engine\scene\SceneManager.h" />
+    <ClInclude Include="engine\scene\SceneView.h" />
     <ClInclude Include="include\stb\stb_image.h" />
-    <ClInclude Include="engine\entity\components\Transform.h" />
+    <ClInclude Include="engine\components\Transform.h" />
     <ClInclude Include="game\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,10 +1,15 @@
 #include "Camera.h"
 
+#include <logging/LogManager.h>
+
 namespace PalmEngine
 {
-	Camera::Camera() {}
+	Camera::Camera() 
+	{
 
-	Camera::Camera(Transform& transform) : _transform(&transform)
+	}
+
+	Camera::~Camera()
 	{
 
 	}
@@ -22,5 +27,10 @@ namespace PalmEngine
 	void Camera::SetZoom(float zoom)
 	{
 		_zoom = zoom;
+	}
+
+	void Camera::SetTransform(Transform& transform)
+	{
+		_transform = &transform;
 	}
 }

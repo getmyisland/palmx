@@ -1,7 +1,7 @@
 #ifndef _PE_CAMERA_H__
 #define _PE_CAMERA_H__
 
-#include <entity/components/Transform.h>
+#include <components/Transform.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -13,19 +13,20 @@ namespace PalmEngine
 	class Camera
 	{
 	public:
-		Camera(Transform& transform);
+		Camera();
+		~Camera();
 
 		glm::mat4 GetViewMatrix();
-	
+
 		float GetZoom() const;
 		void SetZoom(float zoom);
 
+		void SetTransform(Transform& transform);
+
 	private:
-		Camera();
+		float _zoom{ 45 };
 
 		Transform* _transform;
-
-		float _zoom = 45;
 	};
 }
 

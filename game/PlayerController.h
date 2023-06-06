@@ -1,12 +1,13 @@
 #ifndef PLAYER_CONTROLLER_H
 #define PLAYER_CONTROLLER_H
 
-#include <entity/Entity.h>
+#include <components/ScriptBehavior.h>
+#include <scene/Entity.h>
 
 class PlayerController : public PalmEngine::ScriptBehavior
 {
 public:
-	void Update(float deltaTime, PalmEngine::Transform& transform) override;
+	void Update(PalmEngine::EntityID entityID, float deltaTime) override;
 
 private:
 	float _movementSpeed = 3.5f;

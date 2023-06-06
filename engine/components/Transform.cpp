@@ -48,29 +48,14 @@ namespace PalmEngine
 		return _forward;
 	}
 
-	void Transform::SetForward(glm::vec3 forward)
-	{
-		_forward = forward;
-	}
-
 	glm::vec3 Transform::GetRight() const
 	{
 		return _right;
 	}
 
-	void Transform::SetRight(glm::vec3 right)
-	{
-		_right = right;
-	}
-
 	glm::vec3 Transform::GetUp() const
 	{
 		return _up;
-	}
-
-	void Transform::SetUp(glm::vec3 up)
-	{
-		_up = up;
 	}
 
 	void Transform::UpdateDirectionVectors()

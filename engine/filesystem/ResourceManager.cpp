@@ -14,14 +14,14 @@ namespace PalmEngine
 	ResourceManager::ResourceManager() {}
 	ResourceManager::~ResourceManager() {}
 
-	template<> ResourceManager* PalmEngineSingleton<ResourceManager>::msSingleton = 0;
+	template<> ResourceManager* PalmEngineSingleton<ResourceManager>::ms_Singleton = 0;
 	ResourceManager* ResourceManager::GetSingletonPtr(void)
 	{
-		return msSingleton;
+		return ms_Singleton;
 	}
 	ResourceManager& ResourceManager::GetSingleton(void)
 	{
-		return (*msSingleton);
+		return (*ms_Singleton);
 	}
 
 	void ResourceManager::StartUp()

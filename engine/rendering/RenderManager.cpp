@@ -2,21 +2,25 @@
 
 #include "RenderManager.h"
 
+#include <components/Renderer.h>
+#include <components/Transform.h>
 #include <logging/LogManager.h>
+#include <scene/Entity.h>
+#include <scene/SceneView.h>
 
 namespace PalmEngine
 {
 	RenderManager::RenderManager() {};
 	RenderManager::~RenderManager() {};
 
-	template<> RenderManager* PalmEngineSingleton<RenderManager>::msSingleton = 0;
+	template<> RenderManager* PalmEngineSingleton<RenderManager>::ms_Singleton = 0;
 	RenderManager* RenderManager::GetSingletonPtr(void)
 	{
-		return msSingleton;
+		return ms_Singleton;
 	}
 	RenderManager& RenderManager::GetSingleton(void)
 	{
-		return (*msSingleton);
+		return (*ms_Singleton);
 	}
 
 	void RenderManager::StartUp()
@@ -43,9 +47,9 @@ namespace PalmEngine
 
 		if (scene->GetMainCamera() != nullptr)
 		{
-			for (auto& entity : scene->GetEntitiesInScene())
+			for (EntityID ent : SceneView<Transform, Renderer>(*scene))
 			{
-				entity->Render(scene->GetMainCamera());
+				scene->GetComponent<Renderer>(ent)->Render(scene->GetMainCamera(), scene->GetComponent<Transform>(ent));
 			}
 		}
 

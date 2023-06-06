@@ -10,14 +10,14 @@ namespace PalmEngine
     LogManager::LogManager() {}
     LogManager::~LogManager() {}
 
-    template<> LogManager* PalmEngineSingleton<LogManager>::msSingleton = 0;
+    template<> LogManager* PalmEngineSingleton<LogManager>::ms_Singleton = 0;
     LogManager* LogManager::GetSingletonPtr(void)
     {
-        return msSingleton;
+        return ms_Singleton;
     }
     LogManager& LogManager::GetSingleton(void)
     {
-        return (*msSingleton);
+        return (*ms_Singleton);
     }
     
     void LogManager::StartUp()

@@ -2,57 +2,57 @@
 
 namespace PalmEngine
 {
-	template<> PalmEngineRoot* PalmEngineSingleton<PalmEngineRoot>::msSingleton = 0;
+	template<> PalmEngineRoot* PalmEngineSingleton<PalmEngineRoot>::ms_Singleton = 0;
 	PalmEngineRoot* PalmEngineRoot::GetSingletonPtr(void)
 	{
-		return msSingleton;
+		return ms_Singleton;
 	}
 	PalmEngineRoot& PalmEngineRoot::GetSingleton(void)
 	{
-		return (*msSingleton);
+		return (*ms_Singleton);
 	}
 
 	PalmEngineRoot::PalmEngineRoot() {}
 
 	PalmEngineRoot::PalmEngineRoot(PalmEngineConfig& palmEngineConfig)
 	{
-		mConfig = std::make_unique<PalmEngineConfig>(palmEngineConfig);
+		m_pConfig = std::make_unique<PalmEngineConfig>(palmEngineConfig);
 
-		mLogManager = std::make_unique<LogManager>();
-		mResourceManager = std::make_unique<ResourceManager>();
-		mInputManager = std::make_unique<InputManager>();
-		mRenderManager = std::make_unique<RenderManager>();
-		mSceneManager = std::make_unique<SceneManager>();
-		mWindowManager = std::make_unique<WindowManager>();
+		m_pLogManager = std::make_unique<LogManager>();
+		m_pResourceManager = std::make_unique<ResourceManager>();
+		m_pInputManager = std::make_unique<InputManager>();
+		m_pRenderManager = std::make_unique<RenderManager>();
+		m_pSceneManager = std::make_unique<SceneManager>();
+		m_pWindowManager = std::make_unique<WindowManager>();
 
 		StartUpModules();
 	}
 
 	PalmEngine::PalmEngineRoot::~PalmEngineRoot() 
 	{
-		mSceneManager.release();
-		mRenderManager.release();
-		mInputManager.release();
-		mResourceManager.release();
-		mLogManager.release();
-		mWindowManager.release();
+		m_pSceneManager.release();
+		m_pRenderManager.release();
+		m_pInputManager.release();
+		m_pResourceManager.release();
+		m_pLogManager.release();
+		m_pWindowManager.release();
 
-		mConfig.release();
+		m_pConfig.release();
 	}
 
 	void PalmEngineRoot::StartUpModules()
 	{
-		mWindowManager->StartUp();
-		mLogManager->StartUp();
-		mResourceManager->StartUp();
-		mInputManager->StartUp(mWindowManager->GetMainWindow());
-		mRenderManager->StartUp();
-		mSceneManager->StartUp();
+		m_pWindowManager->StartUp();
+		m_pLogManager->StartUp();
+		m_pResourceManager->StartUp();
+		m_pInputManager->StartUp(m_pWindowManager->GetMainWindow());
+		m_pRenderManager->StartUp();
+		m_pSceneManager->StartUp();
 	}
 
 	void PalmEngineRoot::Run(Scene& startScene)
 	{
-		mSceneManager->SetActiveScene(startScene);
+		m_pSceneManager->SetActiveScene(startScene);
 
 		GameLoop();
 		ShutdownModules();
@@ -63,31 +63,31 @@ namespace PalmEngine
 		float deltaTime = 0.0f;	// time between current frame and last frame
 		float lastFrame = 0.0f;
 
-		while (!glfwWindowShouldClose(mWindowManager->GetMainWindow()))
+		while (!glfwWindowShouldClose(m_pWindowManager->GetMainWindow()))
 		{
 			float currentFrame = static_cast<float>(glfwGetTime());
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
-			mInputManager->CollectInput(mWindowManager->GetMainWindow());
-			mSceneManager->Update(deltaTime);
+			m_pInputManager->CollectInput(m_pWindowManager->GetMainWindow());
+			m_pSceneManager->Update(deltaTime);
 
-			mRenderManager->Render(mWindowManager->GetMainWindow(), mSceneManager->GetActiveScene());
+			m_pRenderManager->Render(m_pWindowManager->GetMainWindow(), m_pSceneManager->GetActiveScene());
 		}
 	}
 
 	void PalmEngineRoot::ShutdownModules()
 	{
-		mSceneManager->ShutDown();
-		mRenderManager->ShutDown();
-		mInputManager->ShutDown();
-		mResourceManager->ShutDown();
-		mLogManager->ShutDown();
-		mWindowManager->ShutDown();
+		m_pSceneManager->ShutDown();
+		m_pRenderManager->ShutDown();
+		m_pInputManager->ShutDown();
+		m_pResourceManager->ShutDown();
+		m_pLogManager->ShutDown();
+		m_pWindowManager->ShutDown();
 	}
 
 	void PalmEngineRoot::Stop()
 	{
-		glfwSetWindowShouldClose(mWindowManager->GetMainWindow(), true);
+		glfwSetWindowShouldClose(m_pWindowManager->GetMainWindow(), true);
 	}
 }

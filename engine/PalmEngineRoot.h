@@ -19,29 +19,26 @@ namespace PalmEngine
 	{
 	public:
 		PalmEngineRoot(PalmEngineConfig& palmEngineConfig);
+		~PalmEngineRoot();
 
 		static PalmEngineRoot& GetSingleton(void);
 		static PalmEngineRoot* GetSingletonPtr(void);
 
-		~PalmEngineRoot();
+		std::unique_ptr<PalmEngineConfig> m_pConfig;
 
-	private:
-		PalmEngineRoot();
-
-	public:
-		std::unique_ptr<PalmEngineConfig> mConfig;
-
-		std::unique_ptr<LogManager> mLogManager;
-		std::unique_ptr<ResourceManager> mResourceManager;
-		std::unique_ptr<SceneManager> mSceneManager;
-		std::unique_ptr<InputManager> mInputManager;
-		std::unique_ptr<RenderManager> mRenderManager;
-		std::unique_ptr<WindowManager> mWindowManager;
+		std::unique_ptr<LogManager> m_pLogManager;
+		std::unique_ptr<ResourceManager> m_pResourceManager;
+		std::unique_ptr<SceneManager> m_pSceneManager;
+		std::unique_ptr<InputManager> m_pInputManager;
+		std::unique_ptr<RenderManager> m_pRenderManager;
+		std::unique_ptr<WindowManager> m_pWindowManager;
 
 		void Run(Scene& startScene);
 		void Stop();
 	
 	private:
+		PalmEngineRoot();
+
 		void StartUpModules();
 		void GameLoop();
 		void ShutdownModules();

@@ -1,9 +1,13 @@
 #include <glad/glad.h>
 
-#include <entity/Entity.h>
+#include <glm/vec3.hpp>
+#include <glm/gtx/string_cast.hpp>
+
+#include <scene/Entity.h>
 #include <rendering/Shader.h>
 #include <rendering/Model.h>
-#include <rendering/Renderer.h>
+#include <components/Renderer.h>
+#include <components/ScriptHook.h>
 #include <scene/Scene.h>
 #include <PalmEngineRoot.h>
 #include "PlayerController.h"
@@ -16,22 +20,23 @@ int main()
 	PalmEngineConfig config(800, 600);
 	PalmEngineRoot palmEngineRoot(config);
 
-	Scene scene("Testing");
-
-	Entity entity(std::string("Test Entity"));
+	Scene scene;
+	EntityID entity = scene.NewEntity();
+	scene.AddComponent<Transform>(entity);
 	std::string rootDir(ResourceManager::GetProjectRootDirectory());
 	Shader shader(rootDir + "/resources/shaders/shader.vert", rootDir + "/resources/shaders/shader.frag");
 	Model testModel(rootDir + "/resources/models/scp173/cb_scp173.fbx");
-	Renderer modelRenderer(testModel, shader);
-	entity.SetRenderer(modelRenderer);
-	scene.AddEntityToScene(entity);
+	Renderer* modelRenderer = scene.AddComponent<Renderer>(entity);
+	modelRenderer->SetModel(testModel);
+	modelRenderer->SetShader(shader);
 
-	Entity player(std::string("Player"));
-	PlayerController playerController;
-	Camera camera(*player.GetTransform());
-	player.AddScriptBehavior(playerController);
-	player.SetCamera(camera);
-	scene.AddEntityToScene(player);
+	EntityID player = scene.NewEntity();
+	Transform* transform = scene.AddComponent<Transform>(player);
+	scene.AddComponent<ScriptHook>(player);
+	PlayerController controller;
+	scene.GetComponent<ScriptHook>(player)->AddScriptBehavior(controller);
+	Camera* camera = scene.AddComponent<Camera>(player);
+	camera->SetTransform(*transform);
 	scene.SetMainCamera(camera);
 
 	// After all required objects have been created run the engine

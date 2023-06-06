@@ -8,14 +8,14 @@ namespace PalmEngine
 	InputManager::InputManager() {};
 	InputManager::~InputManager() {};
 
-	template<> InputManager* PalmEngineSingleton<InputManager>::msSingleton = 0;
+	template<> InputManager* PalmEngineSingleton<InputManager>::ms_Singleton = 0;
 	InputManager* InputManager::GetSingletonPtr(void)
 	{
-		return msSingleton;
+		return ms_Singleton;
 	}
 	InputManager& InputManager::GetSingleton(void)
 	{
-		return (*msSingleton);
+		return (*ms_Singleton);
 	}
 
 	void InputManager::StartUp(GLFWwindow* mainWindow)

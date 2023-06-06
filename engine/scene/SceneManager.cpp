@@ -1,20 +1,22 @@
 #include "SceneManager.h"
 
+#include <components/ScriptHook.h>
 #include <logging/LogManager.h>
+#include <scene/SceneView.h>
 
 namespace PalmEngine
 {
 	SceneManager::SceneManager() { }
 	SceneManager::~SceneManager() { }
 
-	template<> SceneManager* PalmEngineSingleton<SceneManager>::msSingleton = 0;
+	template<> SceneManager* PalmEngineSingleton<SceneManager>::ms_Singleton = 0;
 	SceneManager* SceneManager::GetSingletonPtr(void)
 	{
-		return msSingleton;
+		return ms_Singleton;
 	}
 	SceneManager& SceneManager::GetSingleton(void)
 	{
-		return (*msSingleton);
+		return (*ms_Singleton);
 	}
 
 	void SceneManager::StartUp()
@@ -29,9 +31,12 @@ namespace PalmEngine
 
 	void SceneManager::Update(float deltaTime)
 	{
-		for (auto& entity : GetActiveScene()->GetEntitiesInScene())
+		for (EntityID ent : SceneView<ScriptHook>(*GetActiveScene()))
 		{
-			entity->Update(deltaTime);
+			for (auto& scriptBehavior : GetActiveScene()->GetComponent<ScriptHook>(ent)->GetScriptBehavior())
+			{
+				scriptBehavior->Update(ent, deltaTime);
+			}
 		}
 	}
 

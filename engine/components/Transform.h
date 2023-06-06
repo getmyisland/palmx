@@ -20,11 +20,8 @@ namespace PalmEngine
 		void SetScale(glm::vec3 scale);
 
 		glm::vec3 GetForward() const;
-		void SetForward(glm::vec3 forward);
 		glm::vec3 GetRight() const;
-		void SetRight(glm::vec3 right);
 		glm::vec3 GetUp() const;
-		void SetUp(glm::vec3 up);
 
 	private:
 		glm::vec3 _position;

@@ -11,14 +11,14 @@ namespace PalmEngine
 	
 	WindowManager::~WindowManager() { }
 
-	template<> WindowManager* PalmEngineSingleton<WindowManager>::msSingleton = 0;
+	template<> WindowManager* PalmEngineSingleton<WindowManager>::ms_Singleton = 0;
 	WindowManager* WindowManager::GetSingletonPtr(void)
 	{
-		return msSingleton;
+		return ms_Singleton;
 	}
 	WindowManager& WindowManager::GetSingleton(void)
 	{
-		return (*msSingleton);
+		return (*ms_Singleton);
 	}
 
 	void WindowManager::StartUp()
@@ -34,7 +34,7 @@ namespace PalmEngine
 #endif
 
 		// Create glfw window
-		_mainWindow = glfwCreateWindow(PalmEngineRoot::GetSingletonPtr()->mConfig->GetWidth(), PalmEngineRoot::GetSingletonPtr()->mConfig->GetHeight(), "Palm Engine", NULL, NULL);
+		_mainWindow = glfwCreateWindow(PalmEngineRoot::GetSingletonPtr()->m_pConfig->GetWidth(), PalmEngineRoot::GetSingletonPtr()->m_pConfig->GetHeight(), "Palm Engine", NULL, NULL);
 		if (_mainWindow == nullptr)
 		{
 			PE_LOG_MANAGER->LogError("Failed to create GLFW window");
@@ -61,8 +61,8 @@ namespace PalmEngine
 
 	void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 	{
-		PalmEngineRoot::GetSingletonPtr()->mConfig->SetWidth(width);
-		PalmEngineRoot::GetSingletonPtr()->mConfig->SetHeight(height);
+		PalmEngineRoot::GetSingletonPtr()->m_pConfig->SetWidth(width);
+		PalmEngineRoot::GetSingletonPtr()->m_pConfig->SetHeight(height);
 
 		// Make sure the viewport matches the new window dimensions; note that width and 
 		// Height will be significantly larger than specified on retina displays.
