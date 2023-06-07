@@ -4,13 +4,13 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 
-#include <PalmEngineConfig.h>
-#include <PalmEngineSingleton.h>
-#include <scene/SceneManager.h>
+#include <filesystem/ResourceManager.h>
 #include <input/InputManager.h>
 #include <logging/LogManager.h>
-#include <filesystem/ResourceManager.h>
+#include <PalmEngineConfig.h>
+#include <PalmEngineSingleton.h>
 #include <rendering/RenderManager.h>
+#include <scene/SceneManager.h>
 #include <window/WindowManager.h>
 
 namespace PalmEngine

@@ -7,8 +7,7 @@ namespace PalmEngine
 {
 	void FramebufferSizeCallback(GLFWwindow* pWindow, int width, int height);
 
-	WindowManager::WindowManager() { }
-	
+	WindowManager::WindowManager() { }	
 	WindowManager::~WindowManager() { }
 
 	template<> WindowManager* PalmEngineSingleton<WindowManager>::ms_Singleton = 0;

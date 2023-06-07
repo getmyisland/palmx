@@ -5,15 +5,14 @@
 namespace PalmEngine
 {
 	Scene::Scene() {}
-
 	Scene::~Scene() {}
 
-	Camera* Scene::GetMainCamera()
+	MainCamera* Scene::GetMainCamera()
 	{
 		return _mainCamera;
 	}
 
-	void Scene::SetMainCamera(Camera* mainCamera)
+	void Scene::SetMainCamera(MainCamera* mainCamera)
 	{
 		_mainCamera = mainCamera;
 	}

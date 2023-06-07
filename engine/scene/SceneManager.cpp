@@ -1,7 +1,7 @@
 #include "SceneManager.h"
 
-#include <components/ScriptHook.h>
 #include <logging/LogManager.h>
+#include <scene/components/ScriptHook.h>
 #include <scene/SceneView.h>
 
 namespace PalmEngine

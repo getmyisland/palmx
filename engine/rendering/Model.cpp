@@ -69,22 +69,22 @@ namespace PalmEngine
 			vector.x = mesh->mVertices[i].x;
 			vector.y = mesh->mVertices[i].y;
 			vector.z = mesh->mVertices[i].z;
-			vertex.mPosition = vector;
+			vertex.m_Position = vector;
 
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
-			vertex.mNormal = vector;
+			vertex.m_Normal = vector;
 
 			if (mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?
 			{
 				glm::vec2 vec;
 				vec.x = mesh->mTextureCoords[0][i].x;
 				vec.y = mesh->mTextureCoords[0][i].y;
-				vertex.mTexCoords = vec;
+				vertex.m_TexCoords = vec;
 			}
 			else
-				vertex.mTexCoords = glm::vec2(0.0f, 0.0f);
+				vertex.m_TexCoords = glm::vec2(0.0f, 0.0f);
 
 			vertices.push_back(vertex);
 		}
@@ -100,9 +100,9 @@ namespace PalmEngine
 		// Create textures
 		std::string materialName = scene->mMaterials[mesh->mMaterialIndex]->GetName().C_Str();
 		Texture albedoTexture;
-		albedoTexture.mID = TextureFromFile(std::string(materialName + "_texture_albedo.jpg"), _directory);
+		albedoTexture.m_ID = TextureFromFile(std::string(materialName + "_texture_albedo.jpg"), _directory);
 		Texture normalTexture;
-		normalTexture.mID = TextureFromFile(std::string(materialName + "_texture_normal.jpg"), _directory);
+		normalTexture.m_ID = TextureFromFile(std::string(materialName + "_texture_normal.jpg"), _directory);
 
 		return Mesh(vertices, indices, albedoTexture, normalTexture);
 	}

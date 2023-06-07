@@ -1,7 +1,7 @@
 #ifndef _PE_SCENE_H__
 #define _PE_SCENE_H__
 
-#include <components/Camera.h>
+#include <scene/components/Camera.h>
 #include <scene/Entity.h>
 
 #include <string>
@@ -16,8 +16,8 @@ namespace PalmEngine
 		~Scene();
 
 	public:
-		Camera* GetMainCamera();
-		void SetMainCamera(Camera* mainCamera);
+		MainCamera* GetMainCamera();
+		void SetMainCamera(MainCamera* mainCamera);
 
 		std::vector<Entity> GetEntitiesInScene() const;
 		EntityID NewEntity();
@@ -87,7 +87,7 @@ namespace PalmEngine
 		void OnUnload();
 
 	private:
-		Camera* _mainCamera = nullptr;
+		MainCamera* _mainCamera = nullptr;
 
 		std::vector<Entity> _entities;
 		std::vector<EntityIndex> _freeEntities;

@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\components\Camera.cpp" />
-    <ClCompile Include="engine\components\Renderer.cpp" />
+    <ClCompile Include="engine\scene\components\Camera.cpp" />
+    <ClCompile Include="engine\scene\components\Renderer.cpp" />
     <ClCompile Include="engine\input\Input.cpp" />
     <ClCompile Include="engine\scene\Entity.cpp" />
     <ClCompile Include="engine\scene\Scene.cpp" />
@@ -36,16 +36,16 @@
     <ClCompile Include="include\glad\glad.c" />
     <ClCompile Include="engine\logging\LogManager.cpp" />
     <ClCompile Include="engine\filesystem\ResourceManager.cpp" />
-    <ClCompile Include="engine\components\Transform.cpp" />
+    <ClCompile Include="engine\scene\components\Transform.cpp" />
     <ClCompile Include="game\PlayerController.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\components\Renderer.h" />
-    <ClInclude Include="engine\components\ScriptBehavior.h" />
-    <ClInclude Include="engine\components\ScriptHook.h" />
+    <ClInclude Include="engine\scene\components\Renderer.h" />
+    <ClInclude Include="engine\scene\components\ScriptBehavior.h" />
+    <ClInclude Include="engine\scene\components\ScriptHook.h" />
     <ClInclude Include="engine\input\Input.h" />
     <ClInclude Include="engine\PalmEngineConfig.h" />
-    <ClInclude Include="engine\components\Camera.h" />
+    <ClInclude Include="engine\scene\components\Camera.h" />
     <ClInclude Include="engine\scene\Entity.h" />
     <ClInclude Include="engine\scene\Scene.h" />
     <ClInclude Include="engine\input\InputManager.h" />
@@ -60,7 +60,7 @@
     <ClInclude Include="engine\scene\SceneManager.h" />
     <ClInclude Include="engine\scene\SceneView.h" />
     <ClInclude Include="include\stb\stb_image.h" />
-    <ClInclude Include="engine\components\Transform.h" />
+    <ClInclude Include="engine\scene\components\Transform.h" />
     <ClInclude Include="game\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>

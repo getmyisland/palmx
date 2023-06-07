@@ -1,8 +1,8 @@
 #include "PlayerController.h"
 
-#include <components/Transform.h>
 #include <input/Input.h>
 #include <logging/LogManager.h>
+#include <scene/components/Transform.h>
 #include <scene/Scene.h>
 #include <scene/SceneManager.h>
 
@@ -56,6 +56,4 @@ void PlayerController::Update(EntityID entityID, float deltaTime)
 	{
 		transform->SetRotation(glm::vec3(-89.0f, transform->GetRotation().y, transform->GetRotation().z));
 	}
-
-	PE_LOG_MANAGER->LogInfo(glm::to_string(transform->GetPosition()));
 }

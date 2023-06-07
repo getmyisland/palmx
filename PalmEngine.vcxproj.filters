@@ -54,7 +54,7 @@
     <ClCompile Include="engine\window\WindowManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\components\Transform.cpp">
+    <ClCompile Include="engine\scene\components\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\PlayerController.cpp">
@@ -63,10 +63,10 @@
     <ClCompile Include="engine\input\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\components\Camera.cpp">
+    <ClCompile Include="engine\scene\components\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\components\Renderer.cpp">
+    <ClCompile Include="engine\scene\components\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\scene\Entity.cpp">
@@ -113,16 +113,16 @@
     <ClInclude Include="engine\scene\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\Transform.h">
+    <ClInclude Include="engine\scene\components\Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\Camera.h">
+    <ClInclude Include="engine\scene\components\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\ScriptBehavior.h">
+    <ClInclude Include="engine\scene\components\ScriptBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\input\Input.h">
@@ -134,10 +134,10 @@
     <ClInclude Include="engine\scene\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\Renderer.h">
+    <ClInclude Include="engine\scene\components\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\components\ScriptHook.h">
+    <ClInclude Include="engine\scene\components\ScriptHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

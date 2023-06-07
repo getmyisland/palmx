@@ -47,15 +47,15 @@ namespace PalmEngine
 		};
 
 		// Shader Program
-		mID = glCreateProgram();
-		glAttachShader(mID, vertex);
-		glAttachShader(mID, fragment);
-		glLinkProgram(mID);
+		m_ID = glCreateProgram();
+		glAttachShader(m_ID, vertex);
+		glAttachShader(m_ID, fragment);
+		glLinkProgram(m_ID);
 
-		glGetProgramiv(mID, GL_LINK_STATUS, &success);
+		glGetProgramiv(m_ID, GL_LINK_STATUS, &success);
 		if (!success)
 		{
-			glGetProgramInfoLog(mID, 512, NULL, infoLog);
+			glGetProgramInfoLog(m_ID, 512, NULL, infoLog);
 			PE_LOG_MANAGER->LogError("ERROR::SHADER::PROGRAM::LINKING_FAILED\n" + std::string(infoLog));
 		}
 
@@ -66,23 +66,23 @@ namespace PalmEngine
 
 	void Shader::Use() const
 	{
-		glUseProgram(mID);
+		glUseProgram(m_ID);
 	}
 
 	void Shader::SetBool(const std::string& name, bool value) const
 	{
-		glUniform1i(glGetUniformLocation(mID, name.c_str()), (int)value);
+		glUniform1i(glGetUniformLocation(m_ID, name.c_str()), (int)value);
 	}
 	void Shader::SetInt(const std::string& name, int value) const
 	{
-		glUniform1i(glGetUniformLocation(mID, name.c_str()), value);
+		glUniform1i(glGetUniformLocation(m_ID, name.c_str()), value);
 	}
 	void Shader::SetFloat(const std::string& name, float value) const
 	{
-		glUniform1f(glGetUniformLocation(mID, name.c_str()), value);
+		glUniform1f(glGetUniformLocation(m_ID, name.c_str()), value);
 	}
 	void Shader::SetMat4(const std::string& name, glm::mat4 value) const
 	{
-		glUniformMatrix4fv(glGetUniformLocation(mID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+		glUniformMatrix4fv(glGetUniformLocation(m_ID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 	}
 }

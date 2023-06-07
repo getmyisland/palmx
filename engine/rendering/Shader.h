@@ -16,7 +16,7 @@ namespace PalmEngine
 		Shader(std::string vertexShaderFilePath = DEFAULT_SHADER_VERTEX, std::string fragmentShaderFilePath = DEFAULT_SHADER_FRAGMENT);
 
 	public:
-		unsigned int mID = 0;
+		unsigned int m_ID = 0;
 
 		void Use() const;
 

@@ -3,8 +3,8 @@
 
 #include <rendering/Model.h>
 #include <rendering/Shader.h>
-#include <components/Camera.h>
-#include <components/Transform.h>
+#include <scene/components/Camera.h>
+#include <scene/components/Transform.h>
 
 namespace PalmEngine
 {
@@ -14,14 +14,14 @@ namespace PalmEngine
 		Renderer();
 		~Renderer();
 
-		void Render(Camera* camera, Transform* transform);
+		void Render(const MainCamera& mainCamera, const Transform& transform);
 
 		void SetModel(Model& model);
 		void SetShader(Shader& shader);
 
 	private:
-		Model* _model;
-		Shader* _shader;
+		Model* _model{ nullptr };
+		Shader* _shader{ nullptr };
 	};
 }
 

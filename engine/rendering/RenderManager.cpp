@@ -2,9 +2,9 @@
 
 #include "RenderManager.h"
 
-#include <components/Renderer.h>
-#include <components/Transform.h>
 #include <logging/LogManager.h>
+#include <scene/components/Renderer.h>
+#include <scene/components/Transform.h>
 #include <scene/Entity.h>
 #include <scene/SceneView.h>
 
@@ -49,7 +49,7 @@ namespace PalmEngine
 		{
 			for (EntityID ent : SceneView<Transform, Renderer>(*scene))
 			{
-				scene->GetComponent<Renderer>(ent)->Render(scene->GetMainCamera(), scene->GetComponent<Transform>(ent));
+				scene->GetComponent<Renderer>(ent)->Render(*scene->GetMainCamera(), *scene->GetComponent<Transform>(ent));
 			}
 		}
 

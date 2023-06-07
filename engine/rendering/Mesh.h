@@ -12,18 +12,18 @@
 namespace PalmEngine
 {
 	struct Vertex {
-		glm::vec3 mPosition;
-		glm::vec3 mNormal;
-		glm::vec2 mTexCoords;
-		glm::vec3 mTangent;
-		glm::vec3 mBitangent;
-		int mBoneIDs[MAX_BONE_INFLUENCE];
-		float mWeights[MAX_BONE_INFLUENCE];
+		glm::vec3 m_Position;
+		glm::vec3 m_Normal;
+		glm::vec2 m_TexCoords;
+		glm::vec3 m_Tangent;
+		glm::vec3 m_Bitangent;
+		int m_BoneIDs[MAX_BONE_INFLUENCE];
+		float m_Weights[MAX_BONE_INFLUENCE];
 	};
 
 	struct Texture
 	{
-		unsigned int mID = 0;
+		unsigned int m_ID = 0;
 	};
 
 	class Mesh

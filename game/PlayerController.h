@@ -1,7 +1,7 @@
 #ifndef PLAYER_CONTROLLER_H
 #define PLAYER_CONTROLLER_H
 
-#include <components/ScriptBehavior.h>
+#include <scene/components/ScriptBehavior.h>
 #include <scene/Entity.h>
 
 class PlayerController : public PalmEngine::ScriptBehavior
