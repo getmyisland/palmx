@@ -1,14 +1,14 @@
-#ifndef _PE_MODEL_H__
-#define _PE_MODEL_H__
+#ifndef PALMX_MODEL_H_
+#define PALMX_MODEL_H_
 
 #include "Mesh.h"
 
-#include <memory>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include <memory>
 
-namespace PalmEngine
+namespace palmx
 {
 	class Model
 	{

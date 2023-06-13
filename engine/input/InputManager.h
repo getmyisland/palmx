@@ -1,13 +1,13 @@
-#ifndef _PE_INPUT_MANAGER_H__
-#define _PE_INPUT_MANAGER_H__
+#ifndef PALMX_INPUT_MANAGER_H_
+#define PALMX_INPUT_MANAGER_H_
 
-#include <PalmEngineSingleton.h>
+#include <Singleton.h>
 
 #include <GLFW/glfw3.h>
 
-namespace PalmEngine
+namespace palmx
 {
-	class InputManager : public PalmEngineSingleton<InputManager>
+	class InputManager : public Singleton<InputManager>
 	{
 	public:
 		InputManager();

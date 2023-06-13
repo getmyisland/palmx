@@ -1,15 +1,15 @@
-#ifndef _PE_RENDER_MANAGER_H__
-#define _PE_RENDER_MANAGER_H__
-
-#include <PalmEngineSingleton.h>
-
-#include <scene/Scene.h>
+#ifndef PALMX_RENDER_MANAGER_H_
+#define PALMX_RENDER_MANAGER_H_
 
 #include <GLFW/glfw3.h>
 
-namespace PalmEngine
+#include <Singleton.h>
+
+#include <entity/Scene.h>
+
+namespace palmx
 {
-	class RenderManager : public PalmEngineSingleton<RenderManager>
+	class RenderManager : public Singleton<RenderManager>
 	{
 	public:
 		RenderManager();

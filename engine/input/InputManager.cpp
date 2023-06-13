@@ -1,21 +1,21 @@
 #include "InputManager.h"
 
-#include <logging/LogManager.h>
 #include "Input.h"
+#include <logging/LogManager.h>
 
-namespace PalmEngine
+namespace palmx
 {
 	InputManager::InputManager() {};
 	InputManager::~InputManager() {};
 
-	template<> InputManager* PalmEngineSingleton<InputManager>::ms_Singleton = 0;
+	template<> InputManager* Singleton<InputManager>::msSingleton = 0;
 	InputManager* InputManager::GetSingletonPtr(void)
 	{
-		return ms_Singleton;
+		return msSingleton;
 	}
 	InputManager& InputManager::GetSingleton(void)
 	{
-		return (*ms_Singleton);
+		return (*msSingleton);
 	}
 
 	void InputManager::StartUp(GLFWwindow* mainWindow)
@@ -23,7 +23,7 @@ namespace PalmEngine
 		glfwSetCursorPosCallback(mainWindow, Input::MouseCallback);
 		glfwSetScrollCallback(mainWindow, Input::ScrollCallback);
 
-		PE_LOG_MANAGER->LogInfo("Input Manager initialized");
+		DEBUG_LOG_INFO("Input Manager initialized");
 	}
 
 	void InputManager::ShutDown()

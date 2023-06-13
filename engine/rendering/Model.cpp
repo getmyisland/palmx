@@ -1,14 +1,14 @@
 #include <glad/glad.h> // holds all OpenGL type declarations
 
-#include <logging/LogManager.h>
 #include "Model.h"
+#include <utility/LogManager.h>
 
 #ifndef STBI_INCLUDE_STB_IMAGE_H
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb/stb_image.h>
 #endif
 
-namespace PalmEngine
+namespace palmx
 {
 	unsigned int TextureFromFile(std::string path, const std::string& directory);
 
@@ -32,7 +32,7 @@ namespace PalmEngine
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
 			auto error = importer.GetErrorString();
-			PE_LOG_MANAGER->LogError(std::string("ASSIMP::") + error);
+			DEBUG_LOG_ERROR(std::string("ASSIMP::") + error);
 			return;
 		}
 		_directory = path.substr(0, path.find_last_of('/'));
@@ -55,7 +55,7 @@ namespace PalmEngine
 		}
 	}
 
-	Mesh PalmEngine::Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+	Mesh palmx::Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		std::vector<Vertex> vertices;
 		std::vector<unsigned int> indices;
@@ -69,22 +69,22 @@ namespace PalmEngine
 			vector.x = mesh->mVertices[i].x;
 			vector.y = mesh->mVertices[i].y;
 			vector.z = mesh->mVertices[i].z;
-			vertex.m_Position = vector;
+			vertex.mPosition = vector;
 
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
-			vertex.m_Normal = vector;
+			vertex.mNormal = vector;
 
 			if (mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?
 			{
 				glm::vec2 vec;
 				vec.x = mesh->mTextureCoords[0][i].x;
 				vec.y = mesh->mTextureCoords[0][i].y;
-				vertex.m_TexCoords = vec;
+				vertex.mTexCoords = vec;
 			}
 			else
-				vertex.m_TexCoords = glm::vec2(0.0f, 0.0f);
+				vertex.mTexCoords = glm::vec2(0.0f, 0.0f);
 
 			vertices.push_back(vertex);
 		}
@@ -100,9 +100,9 @@ namespace PalmEngine
 		// Create textures
 		std::string materialName = scene->mMaterials[mesh->mMaterialIndex]->GetName().C_Str();
 		Texture albedoTexture;
-		albedoTexture.m_ID = TextureFromFile(std::string(materialName + "_texture_albedo.jpg"), _directory);
+		albedoTexture.mID = TextureFromFile(std::string(materialName + "_texture_albedo.jpg"), _directory);
 		Texture normalTexture;
-		normalTexture.m_ID = TextureFromFile(std::string(materialName + "_texture_normal.jpg"), _directory);
+		normalTexture.mID = TextureFromFile(std::string(materialName + "_texture_normal.jpg"), _directory);
 
 		return Mesh(vertices, indices, albedoTexture, normalTexture);
 	}
@@ -139,7 +139,7 @@ namespace PalmEngine
 		}
 		else
 		{
-			PE_LOG_MANAGER->LogError("Texture failed to load at path: " + std::string(filename));
+			DEBUG_LOG_ERROR("Texture failed to load at path: " + std::string(filename));
 			stbi_image_free(data);
 		}
 

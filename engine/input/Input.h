@@ -1,13 +1,12 @@
 #ifndef _PE_INPUT_H__
 #define _PE_INPUT_H__
 
-#include <unordered_map>
-
 #include <GLFW/glfw3.h>
-
 #include <glm/vec2.hpp>
 
-namespace PalmEngine
+#include <unordered_map>
+
+namespace palmx
 {
 	enum KeyState
 	{

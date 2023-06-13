@@ -8,19 +8,19 @@
 #include <scene/Entity.h>
 #include <scene/SceneView.h>
 
-namespace PalmEngine
+namespace palmx
 {
 	RenderManager::RenderManager() {};
 	RenderManager::~RenderManager() {};
 
-	template<> RenderManager* PalmEngineSingleton<RenderManager>::ms_Singleton = 0;
+	template<> RenderManager* Singleton<RenderManager>::msSingleton = 0;
 	RenderManager* RenderManager::GetSingletonPtr(void)
 	{
-		return ms_Singleton;
+		return msSingleton;
 	}
 	RenderManager& RenderManager::GetSingleton(void)
 	{
-		return (*ms_Singleton);
+		return (*msSingleton);
 	}
 
 	void RenderManager::StartUp()
@@ -28,11 +28,11 @@ namespace PalmEngine
 		// Load all OpenGL function pointers
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
-			PE_LOG_MANAGER->LogError("Failed to initialize GLAD");
+			DEBUG_LOG_ERROR("Failed to initialize GLAD");
 			return;
 		}
 
-		PE_LOG_MANAGER->LogInfo("Render Manager initialized");
+		DEBUG_LOG_INFO("Render Manager initialized");
 	}
 
 	void RenderManager::ShutDown()

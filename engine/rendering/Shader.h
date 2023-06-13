@@ -1,14 +1,15 @@
-#ifndef _PE_SHADER_H__
-#define _PE_SHADER_H__
+#ifndef PALMX_SHADER_H_
+#define PALMX_SHADER_H_
+
+#include <string>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <string>
-#include <filesystem/ResourceManager.h>
+#include <utility/ResourceManager.h>
 
-namespace PalmEngine
+namespace palmx
 {
 	class Shader
 	{
@@ -16,7 +17,7 @@ namespace PalmEngine
 		Shader(std::string vertexShaderFilePath = DEFAULT_SHADER_VERTEX, std::string fragmentShaderFilePath = DEFAULT_SHADER_FRAGMENT);
 
 	public:
-		unsigned int m_ID = 0;
+		unsigned int mID = 0;
 
 		void Use() const;
 

@@ -9,7 +9,7 @@
 #include <glm/ext.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-using namespace PalmEngine;
+using namespace palmx;
 
 void PlayerController::Update(EntityID entityID, float deltaTime)
 {

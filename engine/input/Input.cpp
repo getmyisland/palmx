@@ -2,7 +2,7 @@
 
 #include <logging/LogManager.h>
 
-namespace PalmEngine
+namespace palmx
 {
 	Input::Input() {}
 
