@@ -1,11 +1,11 @@
 #ifndef PALMX_SCENE_MANAGER_H_
 #define PALMX_SCENE_MANAGER_H_
 
-#include <memory>
-
 #include <Singleton.h>
 
 #include "Scene.h"
+
+#include <memory>
 
 namespace palmx
 {

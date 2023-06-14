@@ -21,13 +21,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\utility\LogManager.cpp">
+    <ClCompile Include="engine\debug\LogManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\glad\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\utility\ResourceManager.cpp">
+    <ClCompile Include="engine\filesystem\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="engine\input\InputManager.cpp">
@@ -80,10 +80,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\utility\LogManager.h">
+    <ClInclude Include="engine\debug\LogManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\utility\ResourceManager.h">
+    <ClInclude Include="engine\filesystem\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\rendering\RenderManager.h">
@@ -108,9 +108,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="engine\Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\entity\Scene.h">

@@ -1,11 +1,10 @@
 #ifndef PALMX_RENDER_MANAGER_H_
 #define PALMX_RENDER_MANAGER_H_
 
-#include <GLFW/glfw3.h>
-
 #include <Singleton.h>
-
 #include <entity/Scene.h>
+
+#include <GLFW/glfw3.h>
 
 namespace palmx
 {

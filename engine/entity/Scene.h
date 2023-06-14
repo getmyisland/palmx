@@ -1,11 +1,11 @@
 #ifndef PALMX_SCENE_H_
 #define PALMX_SCENE_H_
 
-#include <string>
-#include <vector>
-
 #include <entity/Camera.h>
 #include <entity/Entity.h>
+
+#include <string>
+#include <vector>
 
 namespace palmx
 {

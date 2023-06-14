@@ -1,8 +1,7 @@
 #include "WindowManager.h"
 
+#include <debug/LogManager.h>
 #include <Root.h>
-
-#include <utility/LogManager.h>
 
 namespace palmx
 {
@@ -21,7 +20,7 @@ namespace palmx
 		return (*msSingleton);
 	}
 
-	void WindowManager::StartUp()
+	void WindowManager::StartUp(unsigned int width, unsigned int height)
 	{
 		// Initialize and configure glfw
 		glfwInit();
@@ -34,7 +33,7 @@ namespace palmx
 #endif
 
 		// Create glfw window
-		_mainWindow = glfwCreateWindow(Root::GetSingletonPtr()->mConfig->GetWidth(), Root::GetSingletonPtr()->mConfig->GetHeight(), "Palm Engine", NULL, NULL);
+		_mainWindow = glfwCreateWindow(width, height, "Palm Engine", NULL, NULL);
 		if (_mainWindow == nullptr)
 		{
 			DEBUG_LOG_ERROR("Failed to create GLFW window");
@@ -59,10 +58,15 @@ namespace palmx
 		return _mainWindow;
 	}
 
+	void WindowManager::ResizeMainWindow(unsigned int width, unsigned int height)
+	{
+		FramebufferSizeCallback(_mainWindow, width, height);
+	}
+
 	void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
 	{
-		Root::GetSingletonPtr()->mConfig->SetWidth(width);
-		Root::GetSingletonPtr()->mConfig->SetHeight(height);
+		palmx::Root::GetSingletonPtr()->mpConfig->mWidth = width;
+		palmx::Root::GetSingletonPtr()->mpConfig->mHeight = height;
 
 		// Make sure the viewport matches the new window dimensions; note that width and 
 		// Height will be significantly larger than specified on retina displays.

@@ -1,9 +1,9 @@
 #include "Transform.h"
 
+#include <debug/LogManager.h>
+
 #include <glm/detail/func_geometric.inl>
 #include <glm/trigonometric.hpp>
-
-#include <utility/LogManager.h>
 
 namespace palmx
 {

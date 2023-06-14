@@ -1,8 +1,8 @@
-#include <glad/glad.h>
-
-#include <Root.h>
+#include <glad/glad.h> // Needs to be included first
 
 #include "Renderer.h"
+
+#include <Root.h>
 
 namespace palmx
 {
@@ -22,7 +22,7 @@ namespace palmx
 			_shader->Use();
 
 			// View/Projection Transformations
-			glm::mat4 projection = glm::perspective(glm::radians(mainCamera.mCamera->mZoom), static_cast<float>(Root::GetSingletonPtr()->mConfig->GetWidth()) / static_cast<float>(Root::GetSingletonPtr()->mConfig->GetHeight()), 0.1f, 100.0f);
+			glm::mat4 projection = glm::perspective(glm::radians(mainCamera.mCamera->mZoom), static_cast<float>(Root::GetSingletonPtr()->mpConfig->mWidth) / static_cast<float>(Root::GetSingletonPtr()->mpConfig->mHeight), 0.1f, 100.0f);
 			_shader->SetMat4("projection", projection);
 
 			glm::mat4 view = mainCamera.mCamera->GetViewMatrix(*mainCamera.mTransform);

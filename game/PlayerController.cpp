@@ -1,20 +1,20 @@
 #include "PlayerController.h"
 
+#include <debug/LogManager.h>
 #include <input/Input.h>
-#include <logging/LogManager.h>
-#include <scene/components/Transform.h>
-#include <scene/Scene.h>
-#include <scene/SceneManager.h>
+#include <entity/Transform.h>
+#include <entity/Scene.h>
+#include <entity/SceneManager.h>
 
 #include <glm/ext.hpp>
 #include <glm/gtx/string_cast.hpp>
 
 using namespace palmx;
 
-void PlayerController::Update(EntityID entityID, float deltaTime)
+void PlayerController::Update(EntityID entityId, float deltaTime)
 {
 	Scene* scene = SceneManager::GetSingletonPtr()->GetActiveScene();
-	Transform* transform = scene->GetComponent<Transform>(entityID);
+	Transform* transform = scene->GetComponent<Transform>(entityId);
 	float velocity = _movementSpeed * deltaTime;
 
 	if (Input::GetKey(KeyW))

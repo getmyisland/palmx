@@ -1,8 +1,8 @@
 #include "SceneManager.h"
 
-#include <logging/LogManager.h>
-#include <scene/components/ScriptHook.h>
-#include <scene/SceneView.h>
+#include <debug/LogManager.h>
+#include <entity/ScriptHook.h>
+#include <entity/SceneView.h>
 
 namespace palmx
 {

@@ -1,7 +1,8 @@
-#include <glad/glad.h> // holds all OpenGL type declarations
+#include <glad/glad.h> // Needs to be imported first
 
 #include "Model.h"
-#include <utility/LogManager.h>
+
+#include <debug/LogManager.h>
 
 #ifndef STBI_INCLUDE_STB_IMAGE_H
 #define STB_IMAGE_IMPLEMENTATION

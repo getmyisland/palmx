@@ -1,8 +1,8 @@
 #ifndef PALMX_SCENE_VIEW_H_
 #define PALMX_SCENE_VIEW_H_
 
-#include <scene/Entity.h>
-#include <scene/Scene.h>
+#include <entity/Entity.h>
+#include <entity/Scene.h>
 
 namespace palmx
 {

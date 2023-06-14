@@ -1,7 +1,7 @@
 #include "InputManager.h"
 
+#include <debug/LogManager.h>
 #include "Input.h"
-#include <logging/LogManager.h>
 
 namespace palmx
 {

@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-#include <logging/LogManager.h>
+#include <debug/LogManager.h>
 
 namespace palmx
 {

@@ -1,6 +1,6 @@
 #include "ResourceManager.h"
 
-#include "LogManager.h"
+#include <debug/LogManager.h>
 
 #include <fstream>
 #include <sstream>
@@ -44,7 +44,7 @@ namespace palmx
 		}
 		else
 		{
-			DEBUG_LOG_WARNING("Could not get root directory");
+			DEBUG_LOG_WARNING("Could not get project root directory");
 			return std::string("");
 		}
 	}

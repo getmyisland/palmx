@@ -5,12 +5,12 @@
 
 #include <Root.h>
 
-#include <scene/Entity.h>
+#include <entity/Entity.h>
 #include <rendering/Shader.h>
 #include <rendering/Model.h>
-#include <scene/components/Renderer.h>
-#include <scene/components/ScriptHook.h>
-#include <scene/Scene.h>
+#include <entity/Renderer.h>
+#include <entity/ScriptHook.h>
+#include <entity/Scene.h>
 
 #include "PlayerController.h"
 
@@ -20,7 +20,7 @@ int main()
 {
 	// First initialize the engine before creating any objects
 	Config config(800, 600);
-	Root palmEngineRoot(config);
+	Root root(config);
 
 	// Create the scene object which acts as an entity container
 	Scene scene;
@@ -52,7 +52,7 @@ int main()
 	scene.SetMainCamera(&mainCamera);
 
 	// After all required objects have been created run the engine
-	palmEngineRoot.Run(scene);
+	root.Run(scene);
 
 	return 0;
 }

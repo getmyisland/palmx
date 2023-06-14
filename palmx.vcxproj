@@ -34,8 +34,8 @@
     <ClCompile Include="engine\rendering\Shader.cpp" />
     <ClCompile Include="engine\entity\SceneManager.cpp" />
     <ClCompile Include="include\glad\glad.c" />
-    <ClCompile Include="engine\utility\LogManager.cpp" />
-    <ClCompile Include="engine\utility\ResourceManager.cpp" />
+    <ClCompile Include="engine\debug\LogManager.cpp" />
+    <ClCompile Include="engine\filesystem\ResourceManager.cpp" />
     <ClCompile Include="engine\entity\Transform.cpp" />
     <ClCompile Include="game\PlayerController.cpp" />
   </ItemGroup>
@@ -44,7 +44,6 @@
     <ClInclude Include="engine\entity\ScriptBehavior.h" />
     <ClInclude Include="engine\entity\ScriptHook.h" />
     <ClInclude Include="engine\input\Input.h" />
-    <ClInclude Include="engine\Config.h" />
     <ClInclude Include="engine\entity\Camera.h" />
     <ClInclude Include="engine\entity\Entity.h" />
     <ClInclude Include="engine\entity\Scene.h" />
@@ -55,8 +54,8 @@
     <ClInclude Include="engine\rendering\Model.h" />
     <ClInclude Include="engine\rendering\RenderManager.h" />
     <ClInclude Include="engine\rendering\Shader.h" />
-    <ClInclude Include="engine\utility\ResourceManager.h" />
-    <ClInclude Include="engine\utility\LogManager.h" />
+    <ClInclude Include="engine\filesystem\ResourceManager.h" />
+    <ClInclude Include="engine\debug\LogManager.h" />
     <ClInclude Include="engine\entity\SceneManager.h" />
     <ClInclude Include="engine\entity\SceneView.h" />
     <ClInclude Include="include\stb\stb_image.h" />

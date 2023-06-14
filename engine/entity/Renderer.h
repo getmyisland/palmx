@@ -1,10 +1,10 @@
 #ifndef PALMX_RENDERER_H_
 #define PALMX_RENDERER_H_
 
+#include <entity/Camera.h>
+#include <entity/Transform.h>
 #include <rendering/Model.h>
 #include <rendering/Shader.h>
-#include <scene/components/Camera.h>
-#include <scene/components/Transform.h>
 
 namespace palmx
 {

@@ -1,7 +1,7 @@
 #ifndef PALMX_BEHAVIOR_H_
 #define PALMX_BEHAVIOR_H_
 
-#include <scene/Entity.h>
+#include <entity/Entity.h>
 
 namespace palmx
 {

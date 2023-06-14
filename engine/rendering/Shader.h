@@ -1,13 +1,13 @@
 #ifndef PALMX_SHADER_H_
 #define PALMX_SHADER_H_
 
-#include <string>
+#include <filesystem/ResourceManager.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <utility/ResourceManager.h>
+#include <string>
 
 namespace palmx
 {

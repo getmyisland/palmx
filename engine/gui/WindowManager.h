@@ -16,11 +16,11 @@ namespace palmx
 		static WindowManager& GetSingleton(void);
 		static WindowManager* GetSingletonPtr(void);
 
-		void StartUp();
+		void StartUp(unsigned int width, unsigned int height);
 		void ShutDown();
 
-	public:
 		GLFWwindow* GetMainWindow() const;
+		void ResizeMainWindow(unsigned int width, unsigned int height);
 
 	private:
 		GLFWwindow* _mainWindow = nullptr;

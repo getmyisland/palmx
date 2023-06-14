@@ -2,11 +2,11 @@
 
 #include "RenderManager.h"
 
-#include <logging/LogManager.h>
-#include <scene/components/Renderer.h>
-#include <scene/components/Transform.h>
-#include <scene/Entity.h>
-#include <scene/SceneView.h>
+#include <debug/LogManager.h>
+#include <entity/Renderer.h>
+#include <entity/Transform.h>
+#include <entity/Entity.h>
+#include <entity/SceneView.h>
 
 namespace palmx
 {

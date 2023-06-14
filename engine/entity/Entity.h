@@ -56,24 +56,24 @@ namespace palmx
 		{
 			// We'll allocate enough memory to hold MAX_ENTITIES, each with element size
 			_elementSize = elementSize;
-			_data = new char[_elementSize * MAX_ENTITIES];
+			_pData = new char[_elementSize * MAX_ENTITIES];
 		}
 
 		~ComponentPool()
 		{
-			delete[] _data;
+			delete[] _pData;
 		}
 
 		inline void* Get(size_t index)
 		{
 			// looking up the component at the desired index
-			return _data + index * _elementSize;
+			return _pData + index * _elementSize;
 		}
 
 	private:
 		ComponentPool() {}
 
-		char* _data{ nullptr };
+		char* _pData{ nullptr };
 		size_t _elementSize{ 0 };
 	};
 }

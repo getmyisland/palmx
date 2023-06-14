@@ -1,4 +1,4 @@
-#include <glad/glad.h> // holds all OpenGL type declarations
+#include <glad/glad.h> // Needs to be included first
 
 #include "Mesh.h"
 

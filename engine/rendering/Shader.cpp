@@ -2,7 +2,7 @@
 
 #include "Shader.h"
 
-#include <logging/LogManager.h>
+#include <debug/LogManager.h>
 #include <filesystem/ResourceManager.h>
 
 namespace palmx
