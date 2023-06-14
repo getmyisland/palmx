@@ -1,6 +1,6 @@
 #include "Input.h"
 
-#include <debug/LogManager.h>
+#include <logging/LogManager.h>
 
 namespace palmx
 {

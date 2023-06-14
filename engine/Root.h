@@ -3,7 +3,7 @@
 
 #include <Singleton.h>
 
-#include <debug/LogManager.h>
+#include <logging/LogManager.h>
 #include <entity/SceneManager.h>
 #include <filesystem/ResourceManager.h>
 #include <gui/WindowManager.h>

@@ -1,6 +1,6 @@
 #include "Transform.h"
 
-#include <debug/LogManager.h>
+#include <logging/LogManager.h>
 
 #include <glm/detail/func_geometric.inl>
 #include <glm/trigonometric.hpp>

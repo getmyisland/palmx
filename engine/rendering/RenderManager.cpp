@@ -2,7 +2,7 @@
 
 #include "RenderManager.h"
 
-#include <debug/LogManager.h>
+#include <logging/LogManager.h>
 #include <entity/Renderer.h>
 #include <entity/Transform.h>
 #include <entity/Entity.h>

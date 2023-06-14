@@ -21,7 +21,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\debug\LogManager.cpp">
+    <ClCompile Include="engine\logging\LogManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\glad\glad.c">
@@ -80,7 +80,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\debug\LogManager.h">
+    <ClInclude Include="engine\logging\LogManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="engine\filesystem\ResourceManager.h">

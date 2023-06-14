@@ -1,6 +1,6 @@
 #include "PlayerController.h"
 
-#include <debug/LogManager.h>
+#include <logging/LogManager.h>
 #include <input/Input.h>
 #include <entity/Transform.h>
 #include <entity/Scene.h>

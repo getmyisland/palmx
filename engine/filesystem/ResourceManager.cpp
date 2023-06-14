@@ -1,6 +1,6 @@
 #include "ResourceManager.h"
 
-#include <debug/LogManager.h>
+#include <logging/LogManager.h>
 
 #include <fstream>
 #include <sstream>

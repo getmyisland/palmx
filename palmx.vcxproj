@@ -34,7 +34,7 @@
     <ClCompile Include="engine\rendering\Shader.cpp" />
     <ClCompile Include="engine\entity\SceneManager.cpp" />
     <ClCompile Include="include\glad\glad.c" />
-    <ClCompile Include="engine\debug\LogManager.cpp" />
+    <ClCompile Include="engine\logging\LogManager.cpp" />
     <ClCompile Include="engine\filesystem\ResourceManager.cpp" />
     <ClCompile Include="engine\entity\Transform.cpp" />
     <ClCompile Include="game\PlayerController.cpp" />
@@ -55,7 +55,7 @@
     <ClInclude Include="engine\rendering\RenderManager.h" />
     <ClInclude Include="engine\rendering\Shader.h" />
     <ClInclude Include="engine\filesystem\ResourceManager.h" />
-    <ClInclude Include="engine\debug\LogManager.h" />
+    <ClInclude Include="engine\logging\LogManager.h" />
     <ClInclude Include="engine\entity\SceneManager.h" />
     <ClInclude Include="engine\entity\SceneView.h" />
     <ClInclude Include="include\stb\stb_image.h" />

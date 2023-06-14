@@ -1,6 +1,6 @@
 #include "SceneManager.h"
 
-#include <debug/LogManager.h>
+#include <logging/LogManager.h>
 #include <entity/ScriptHook.h>
 #include <entity/SceneView.h>
 

@@ -1,6 +1,6 @@
 #include "WindowManager.h"
 
-#include <debug/LogManager.h>
+#include <logging/LogManager.h>
 #include <Root.h>
 
 namespace palmx
