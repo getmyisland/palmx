@@ -21,45 +21,45 @@
   <ItemGroup>
     <ClCompile Include="demo\Main.cpp" />
     <ClCompile Include="demo\PlayerController.cpp" />
-    <ClCompile Include="engine\entity\Camera.cpp" />
-    <ClCompile Include="engine\entity\Renderer.cpp" />
-    <ClCompile Include="engine\input\Input.cpp" />
-    <ClCompile Include="engine\entity\Entity.cpp" />
-    <ClCompile Include="engine\entity\Scene.cpp" />
-    <ClCompile Include="engine\input\InputManager.cpp" />
-    <ClCompile Include="engine\Root.cpp" />
-    <ClCompile Include="engine\gui\WindowManager.cpp" />
-    <ClCompile Include="engine\rendering\Mesh.cpp" />
-    <ClCompile Include="engine\rendering\Model.cpp" />
-    <ClCompile Include="engine\rendering\RenderManager.cpp" />
-    <ClCompile Include="engine\rendering\Shader.cpp" />
-    <ClCompile Include="engine\entity\SceneManager.cpp" />
-    <ClCompile Include="engine\logging\LogManager.cpp" />
-    <ClCompile Include="engine\filesystem\ResourceManager.cpp" />
-    <ClCompile Include="engine\entity\Transform.cpp" />
+    <ClCompile Include="src\entity\Camera.cpp" />
+    <ClCompile Include="src\entity\Renderer.cpp" />
+    <ClCompile Include="src\input\Input.cpp" />
+    <ClCompile Include="src\entity\Entity.cpp" />
+    <ClCompile Include="src\entity\Scene.cpp" />
+    <ClCompile Include="src\input\InputManager.cpp" />
+    <ClCompile Include="src\Root.cpp" />
+    <ClCompile Include="src\gui\WindowManager.cpp" />
+    <ClCompile Include="src\rendering\Mesh.cpp" />
+    <ClCompile Include="src\rendering\Model.cpp" />
+    <ClCompile Include="src\rendering\RenderManager.cpp" />
+    <ClCompile Include="src\rendering\Shader.cpp" />
+    <ClCompile Include="src\entity\SceneManager.cpp" />
+    <ClCompile Include="src\logging\LogManager.cpp" />
+    <ClCompile Include="src\filesystem\ResourceManager.cpp" />
+    <ClCompile Include="src\entity\Transform.cpp" />
     <ClCompile Include="external\glad\glad.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\entity\Renderer.h" />
-    <ClInclude Include="engine\entity\ScriptBehavior.h" />
-    <ClInclude Include="engine\entity\ScriptHook.h" />
-    <ClInclude Include="engine\input\Input.h" />
-    <ClInclude Include="engine\entity\Camera.h" />
-    <ClInclude Include="engine\entity\Entity.h" />
-    <ClInclude Include="engine\entity\Scene.h" />
-    <ClInclude Include="engine\input\InputManager.h" />
-    <ClInclude Include="engine\Root.h" />
-    <ClInclude Include="engine\Singleton.h" />
-    <ClInclude Include="engine\rendering\Mesh.h" />
-    <ClInclude Include="engine\rendering\Model.h" />
-    <ClInclude Include="engine\rendering\RenderManager.h" />
-    <ClInclude Include="engine\rendering\Shader.h" />
-    <ClInclude Include="engine\filesystem\ResourceManager.h" />
-    <ClInclude Include="engine\logging\LogManager.h" />
-    <ClInclude Include="engine\entity\SceneManager.h" />
-    <ClInclude Include="engine\entity\SceneView.h" />
+    <ClInclude Include="src\entity\Renderer.h" />
+    <ClInclude Include="src\entity\ScriptBehavior.h" />
+    <ClInclude Include="src\entity\ScriptHook.h" />
+    <ClInclude Include="src\input\Input.h" />
+    <ClInclude Include="src\entity\Camera.h" />
+    <ClInclude Include="src\entity\Entity.h" />
+    <ClInclude Include="src\entity\Scene.h" />
+    <ClInclude Include="src\input\InputManager.h" />
+    <ClInclude Include="src\Root.h" />
+    <ClInclude Include="src\Singleton.h" />
+    <ClInclude Include="src\rendering\Mesh.h" />
+    <ClInclude Include="src\rendering\Model.h" />
+    <ClInclude Include="src\rendering\RenderManager.h" />
+    <ClInclude Include="src\rendering\Shader.h" />
+    <ClInclude Include="src\filesystem\ResourceManager.h" />
+    <ClInclude Include="src\logging\LogManager.h" />
+    <ClInclude Include="src\entity\SceneManager.h" />
+    <ClInclude Include="src\entity\SceneView.h" />
     <ClInclude Include="include\stb\stb_image.h" />
-    <ClInclude Include="engine\entity\Transform.h" />
+    <ClInclude Include="src\entity\Transform.h" />
     <ClInclude Include="game\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>
@@ -173,7 +173,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ShowIncludes>false</ShowIncludes>
-      <AdditionalIncludeDirectories>$(ProjectDir)/external;$(ProjectDir)/engine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/external;$(ProjectDir)/src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

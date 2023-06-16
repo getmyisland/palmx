@@ -18,52 +18,52 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine\logging\LogManager.cpp">
+    <ClCompile Include="src\logging\LogManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\filesystem\ResourceManager.cpp">
+    <ClCompile Include="src\filesystem\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\input\InputManager.cpp">
+    <ClCompile Include="src\input\InputManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\Root.cpp">
+    <ClCompile Include="src\Root.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\rendering\RenderManager.cpp">
+    <ClCompile Include="src\rendering\RenderManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\rendering\Shader.cpp">
+    <ClCompile Include="src\rendering\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\rendering\Mesh.cpp">
+    <ClCompile Include="src\rendering\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\rendering\Model.cpp">
+    <ClCompile Include="src\rendering\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entity\SceneManager.cpp">
+    <ClCompile Include="src\entity\SceneManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entity\Scene.cpp">
+    <ClCompile Include="src\entity\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\gui\WindowManager.cpp">
+    <ClCompile Include="src\gui\WindowManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entity\Transform.cpp">
+    <ClCompile Include="src\entity\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\input\Input.cpp">
+    <ClCompile Include="src\input\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entity\Camera.cpp">
+    <ClCompile Include="src\entity\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entity\Renderer.cpp">
+    <ClCompile Include="src\entity\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="engine\entity\Entity.cpp">
+    <ClCompile Include="src\entity\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="demo\Main.cpp">
@@ -77,67 +77,67 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="engine\logging\LogManager.h">
+    <ClInclude Include="src\logging\LogManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\filesystem\ResourceManager.h">
+    <ClInclude Include="src\filesystem\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\rendering\RenderManager.h">
+    <ClInclude Include="src\rendering\RenderManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\Root.h">
+    <ClInclude Include="src\Root.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\input\InputManager.h">
+    <ClInclude Include="src\input\InputManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\rendering\Mesh.h">
+    <ClInclude Include="src\rendering\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\rendering\Model.h">
+    <ClInclude Include="src\rendering\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\stb\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\SceneManager.h">
+    <ClInclude Include="src\entity\SceneManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\Singleton.h">
+    <ClInclude Include="src\Singleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\Scene.h">
+    <ClInclude Include="src\entity\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\Camera.h">
+    <ClInclude Include="src\entity\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\ScriptBehavior.h">
+    <ClInclude Include="src\entity\ScriptBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\input\Input.h">
+    <ClInclude Include="src\input\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\SceneView.h">
+    <ClInclude Include="src\entity\SceneView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\Entity.h">
+    <ClInclude Include="src\entity\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\Renderer.h">
+    <ClInclude Include="src\entity\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\ScriptHook.h">
+    <ClInclude Include="src\entity\ScriptHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="engine\entity\Transform.h">
+    <ClInclude Include="src\entity\Transform.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="engine\rendering\Shader.h">
+    <ClInclude Include="src\rendering\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
