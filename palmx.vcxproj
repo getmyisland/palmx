@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="demo\Main.cpp" />
+    <ClCompile Include="demo\PlayerController.cpp" />
     <ClCompile Include="engine\entity\Camera.cpp" />
     <ClCompile Include="engine\entity\Renderer.cpp" />
     <ClCompile Include="engine\input\Input.cpp" />
@@ -27,17 +29,15 @@
     <ClCompile Include="engine\input\InputManager.cpp" />
     <ClCompile Include="engine\Root.cpp" />
     <ClCompile Include="engine\gui\WindowManager.cpp" />
-    <ClCompile Include="game\Main.cpp" />
     <ClCompile Include="engine\rendering\Mesh.cpp" />
     <ClCompile Include="engine\rendering\Model.cpp" />
     <ClCompile Include="engine\rendering\RenderManager.cpp" />
     <ClCompile Include="engine\rendering\Shader.cpp" />
     <ClCompile Include="engine\entity\SceneManager.cpp" />
-    <ClCompile Include="include\glad\glad.c" />
     <ClCompile Include="engine\logging\LogManager.cpp" />
     <ClCompile Include="engine\filesystem\ResourceManager.cpp" />
     <ClCompile Include="engine\entity\Transform.cpp" />
-    <ClCompile Include="game\PlayerController.cpp" />
+    <ClCompile Include="external\glad\glad.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine\entity\Renderer.h" />
@@ -173,13 +173,13 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <ShowIncludes>false</ShowIncludes>
-      <AdditionalIncludeDirectories>$(ProjectDir)/include;$(ProjectDir)/engine</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)/external;$(ProjectDir)/engine</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>assimp-vc143-mtd.lib;glfw3.lib;d3d11.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)/lib/</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp/assimp-vc143-mtd.lib;GLFW/glfw3.lib;d3d11.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)/external/</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
