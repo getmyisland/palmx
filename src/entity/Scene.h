@@ -3,7 +3,9 @@
 
 #include <entity/Camera.h>
 #include <entity/Entity.h>
+#include <entity/Transform.h>
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -16,8 +18,8 @@ namespace palmx
 		~Scene();
 
 	public:
-		MainCamera* GetMainCamera();
-		void SetMainCamera(MainCamera* mainCamera);
+		std::shared_ptr<MainCamera> GetMainCamera() const;
+		void SetMainCamera(const MainCamera& mainCamera);
 
 		std::vector<Entity> GetEntitiesInScene() const;
 		EntityID NewEntity();
@@ -87,7 +89,7 @@ namespace palmx
 		void OnUnload();
 
 	private:
-		MainCamera* _mainCamera = nullptr;
+		std::shared_ptr<MainCamera> _mainCamera;
 
 		std::vector<Entity> _entities;
 		std::vector<EntityIndex> _freeEntities;

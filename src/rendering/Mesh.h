@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -23,19 +24,20 @@ namespace palmx
 
 	struct Texture
 	{
-		unsigned int mID = 0;
+		std::string mName;
+		unsigned int mID;
 	};
 
 	class Mesh
 	{
 	public:
-		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const Texture& albedoTexture, const Texture& normalTexture);
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const std::shared_ptr<Texture> albedoTexture, const std::shared_ptr<Texture> normalTexture);
 		~Mesh();
 
 		const std::vector<Vertex> GetVertices() const;
 		const std::vector<unsigned int> GetIndices() const;
-		const Texture& GetAlbedoTexture() const;
-		const Texture& GetNormalTexture() const;
+		const std::shared_ptr<Texture> GetAlbedoTexture() const;
+		const std::shared_ptr<Texture> GetNormalTexture() const;
 
 		const unsigned int GetVAO() const;
 
@@ -44,8 +46,8 @@ namespace palmx
 
 		std::vector<Vertex>       _vertices;
 		std::vector<unsigned int> _indices;
-		const Texture _albedoTexture;
-		const Texture _normalTexture;
+		std::shared_ptr<Texture> _albedoTexture;
+		std::shared_ptr<Texture> _normalTexture;
 
 		unsigned int _vao = 0;
 		unsigned int _vbo = 0;

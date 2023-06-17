@@ -3,16 +3,10 @@
 #include "Model.h"
 
 #include <logging/LogManager.h>
-
-#ifndef STBI_INCLUDE_STB_IMAGE_H
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
-#endif
+#include <filesystem/ResourceManager.h>
 
 namespace palmx
 {
-	unsigned int TextureFromFile(std::string path, const std::string& directory);
-
 	Model::Model(std::string path)
 	{
 		LoadModel(path);
@@ -98,52 +92,11 @@ namespace palmx
 				indices.push_back(face.mIndices[j]);
 		}
 
-		// Create textures
+		// Create
 		std::string materialName = scene->mMaterials[mesh->mMaterialIndex]->GetName().C_Str();
-		Texture albedoTexture;
-		albedoTexture.mID = TextureFromFile(std::string(materialName + "_texture_albedo.jpg"), _directory);
-		Texture normalTexture;
-		normalTexture.mID = TextureFromFile(std::string(materialName + "_texture_normal.jpg"), _directory);
+		std::shared_ptr<Texture> albedoTexture = ResourceManager::GetSingletonPtr()->LoadTexture(materialName + "_texture_albedo", std::string(_directory + "/" + materialName + "_texture_albedo.jpg").c_str());
+		std::shared_ptr<Texture> normalTexture = ResourceManager::GetSingletonPtr()->LoadTexture(materialName + "_texture_normal", std::string(_directory + "/" + materialName + "_texture_normal.jpg").c_str());
 
 		return Mesh(vertices, indices, albedoTexture, normalTexture);
-	}
-
-	unsigned int TextureFromFile(std::string path, const std::string& directory)
-	{
-		std::string filename = std::string(path);
-		filename = directory + '/' + filename;
-		unsigned int textureID;
-		glGenTextures(1, &textureID);
-
-		int width, height, nrComponents;
-		unsigned char* data = stbi_load(filename.c_str(), &width, &height, &nrComponents, 0);
-		if (data)
-		{
-			GLenum format = GL_RGB;
-			if (nrComponents == 1)
-				format = GL_RED;
-			else if (nrComponents == 3)
-				format = GL_RGB;
-			else if (nrComponents == 4)
-				format = GL_RGBA;
-
-			glBindTexture(GL_TEXTURE_2D, textureID);
-			glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
-			glGenerateMipmap(GL_TEXTURE_2D);
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-			stbi_image_free(data);
-		}
-		else
-		{
-			DEBUG_LOG_ERROR("Texture failed to load at path: " + std::string(filename));
-			stbi_image_free(data);
-		}
-
-		return textureID;
 	}
 }

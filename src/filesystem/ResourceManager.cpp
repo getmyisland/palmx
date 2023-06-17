@@ -1,6 +1,15 @@
+#include <glad/glad.h>
+
 #include "ResourceManager.h"
 
 #include <logging/LogManager.h>
+#include <rendering/Mesh.h>
+#include <rendering/Shader.h>
+
+#ifndef STBI_INCLUDE_STB_IMAGE_H
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb/stb_image.h>
+#endif
 
 #include <fstream>
 #include <sstream>
@@ -49,28 +58,127 @@ namespace palmx
 		}
 	}
 
-	std::string ResourceManager::GetFileContentAsString(std::string& filePath)
+	std::shared_ptr<Shader> ResourceManager::LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource)
 	{
-		std::ifstream file;
+		// first check if shader has been loader already, if so; return earlier loaded texture
+		auto it = mShaders.find(name);
+		if (it != mShaders.end())
+		{
+			return it->second;
+		}
 
-		// Ensure ifstream objects can throw exceptions
-		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		std::shared_ptr<Shader> shader(new Shader);
+		// Retrieve the vertex/fragment source code from filePath
+		std::string vertexCode;
+		std::string fragmentCode;
+		std::ifstream vShaderFile;
+		std::ifstream fShaderFile;
+		// Ensures ifstream objects can throw exceptions:
+		vShaderFile.exceptions(std::ifstream::badbit);
+		fShaderFile.exceptions(std::ifstream::badbit);
 		try
 		{
 			// Open files
-			file.open(filePath);
-			std::stringstream fileStream;
+			vShaderFile.open(vertexShaderSource);
+			fShaderFile.open(fragmentShaderSource);
+			std::stringstream vShaderStream, fShaderStream;
 			// Read file's buffer contents into streams
-			fileStream << file.rdbuf();
-			// Close file handlers
-			file.close();
+			vShaderStream << vShaderFile.rdbuf();
+			fShaderStream << fShaderFile.rdbuf();
+			// close file handlers
+			vShaderFile.close();
+			fShaderFile.close();
 			// Convert stream into string
-			return fileStream.str();
+			vertexCode = vShaderStream.str();
+			fragmentCode = fShaderStream.str();
 		}
 		catch (std::ifstream::failure e)
 		{
-			DEBUG_LOG_ERROR("FILE_NOT_SUCCESFULLY_READ::PATH::" + filePath);
-			return std::string("");
+			DEBUG_LOG_ERROR("Shader file not successfully read");
+		}
+		const GLchar* vShaderCode = vertexCode.c_str();
+		const GLchar* fShaderCode = fragmentCode.c_str();
+
+		// 2. Now create and store shader object from source code
+		shader->Compile(vShaderCode, fShaderCode, std::string(vertexShaderSource).substr(0, std::string(vertexShaderSource).find_last_of('/')));
+		shader->mName = name;
+		mShaders[name] = shader;
+		return shader;
+	}
+
+	std::shared_ptr<Shader> ResourceManager::GetShader(std::string name)
+	{
+		auto it = mShaders.find(name);
+		if (it != mShaders.end())
+		{
+			return it->second;
+		}
+		else
+		{
+			return std::shared_ptr<Shader>();
 		}
 	}
+
+	std::shared_ptr<Texture> ResourceManager::LoadTexture(std::string name, const char* textureSource)
+	{
+		// first check if texture has been loader already, if so; return earlier loaded texture
+		auto it = mTextures.find(name);
+		if (it != mTextures.end())
+		{
+			return it->second;
+		}
+
+		std::shared_ptr<Texture> texture(new Texture);
+		unsigned int textureID;
+		glGenTextures(1, &textureID);
+
+		int width, height, nrComponents;
+		unsigned char* data = stbi_load(textureSource, &width, &height, &nrComponents, 0);
+		if (data)
+		{
+			GLenum format = GL_RGB;
+			if (nrComponents == 1)
+				format = GL_RED;
+			else if (nrComponents == 3)
+				format = GL_RGB;
+			else if (nrComponents == 4)
+				format = GL_RGBA;
+
+			glBindTexture(GL_TEXTURE_2D, textureID);
+			glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
+			glGenerateMipmap(GL_TEXTURE_2D);
+
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			
+			texture->mID = textureID;
+
+			stbi_image_free(data);
+		}
+		else
+		{
+			DEBUG_LOG_ERROR("Texture failed to load at path: " + std::string(textureSource));
+			stbi_image_free(data);
+		}
+
+		// Store and return
+		mTextures[name] = texture;
+		return texture;
+	}
+
+	std::shared_ptr<Texture> ResourceManager::GetTexture(std::string name)
+	{
+		auto it = mTextures.find(name);
+		if (it != mTextures.end())
+		{
+			return it->second;
+		}
+		else
+		{
+			return std::shared_ptr<Texture>();
+		}
+	}
+
 }

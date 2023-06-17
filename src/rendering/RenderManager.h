@@ -6,8 +6,12 @@
 
 #include <GLFW/glfw3.h>
 
+#include <memory>
+
 namespace palmx
 {
+	class Shader;
+
 	class RenderManager : public Singleton<RenderManager>
 	{
 	public:
@@ -21,6 +25,9 @@ namespace palmx
 		static RenderManager* GetSingletonPtr(void);
 
 		void Render(GLFWwindow* window, Scene* scene);
+
+	private:
+		std::shared_ptr<Shader> _shader;
 	};
 }
 

@@ -31,8 +31,6 @@ namespace palmx
 		static Root& GetSingleton(void);
 		static Root* GetSingletonPtr(void);
 
-		std::unique_ptr<Config> mpConfig;
-
 		std::unique_ptr<LogManager> mpLogManager;
 		std::unique_ptr<ResourceManager> mpResourceManager;
 		std::unique_ptr<SceneManager> mpSceneManager;
@@ -46,9 +44,7 @@ namespace palmx
 	private:
 		Root();
 
-		void StartModules();
 		void GameLoop();
-		void ShutdownModules();
 	};
 }
 

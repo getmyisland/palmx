@@ -1,16 +1,13 @@
 #ifndef PALMX_CAMERA_H_
 #define PALMX_CAMERA_H_
 
-#include <entity/Transform.h>
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-#include <vector>
 
 namespace palmx
 {
 	class Camera;
+	class Transform;
 
 	struct MainCamera
 	{

@@ -1,15 +1,17 @@
 #ifndef PALMX_RESOURCE_MANAGER_H_
 #define PALMX_RESOURCE_MANAGER_H_
 
-#define DEFAULT_SHADER_VERTEX palmx::ResourceManager::GetProjectRootDirectory() + "/resources/shaders/shader.vert"
-#define DEFAULT_SHADER_FRAGMENT palmx::ResourceManager::GetProjectRootDirectory() + "/resources/shaders/shader.frag"
-
 #include <Singleton.h>
 
+#include <memory>
 #include <string>
+#include <unordered_map>
 
 namespace palmx
 {
+	class Shader;
+	struct Texture;
+
 	class ResourceManager : public Singleton<ResourceManager>
 	{
 	public:
@@ -22,8 +24,16 @@ namespace palmx
 		static ResourceManager& GetSingleton(void);
 		static ResourceManager* GetSingletonPtr(void);
 
-		static std::string GetProjectRootDirectory();
-		static std::string GetFileContentAsString(std::string& filePath);
+		std::string GetProjectRootDirectory();
+
+		std::shared_ptr<Shader> LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource);
+		std::shared_ptr<Shader> GetShader(std::string name);
+		std::shared_ptr<Texture> LoadTexture(std::string name, const char* textureSource);
+		std::shared_ptr<Texture> GetTexture(std::string name);
+
+	private:
+		std::unordered_map<std::string, std::shared_ptr<Shader>> mShaders;
+		std::unordered_map<std::string, std::shared_ptr<Texture>> mTextures;
 	};
 }
 

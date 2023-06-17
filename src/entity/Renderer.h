@@ -1,27 +1,23 @@
 #ifndef PALMX_RENDERER_H_
 #define PALMX_RENDERER_H_
 
-#include <entity/Camera.h>
-#include <entity/Transform.h>
-#include <rendering/Model.h>
-#include <rendering/Shader.h>
+#include <memory>
 
 namespace palmx
 {
+	class Model;
+	class Shader;
+	class Transform;
+
 	class Renderer
 	{
 	public:
 		Renderer();
 		~Renderer();
 
-		void Render(const MainCamera& mainCamera, const Transform& transform);
+		void Render(const std::shared_ptr<Shader> shader, const Transform& transform);
 
-		void SetModel(Model& model);
-		void SetShader(Shader& shader);
-
-	private:
-		Model* _model{ nullptr };
-		Shader* _shader{ nullptr };
+		std::shared_ptr<Model> mModel{ nullptr };
 	};
 }
 

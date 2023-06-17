@@ -1,5 +1,6 @@
 #include "Camera.h"
 
+#include <entity/Transform.h>
 #include <logging/LogManager.h>
 
 namespace palmx

@@ -28,20 +28,16 @@ int main()
 	// Create a test entity
 	EntityID testEntity = scene.NewEntity();
 	scene.AddComponent<Transform>(testEntity);
-	std::string rootDir(ResourceManager::GetProjectRootDirectory());
-	Shader shader(rootDir + "/resources/shaders/shader.vert", rootDir + "/resources/shaders/shader.frag");
+	std::string rootDir(ResourceManager::GetSingletonPtr()->GetProjectRootDirectory());
 	Model testModel(rootDir + "/resources/models/scp173/cb_scp173.fbx");
 	Renderer* testRenderer = scene.AddComponent<Renderer>(testEntity);
-	testRenderer->SetModel(testModel);
-	testRenderer->SetShader(shader);
+	testRenderer->mModel = std::make_shared<Model>(testModel);
 
 	// Create the player
 	EntityID player = scene.NewEntity();
 	Transform* transform = scene.AddComponent<Transform>(player);
-
 	// Running custom scripts requires a hook
 	scene.AddComponent<ScriptHook>(player);
-
 	// Add a custom script to the hook
 	PlayerController controller;
 	scene.GetComponent<ScriptHook>(player)->AddScriptBehavior(controller);
@@ -49,7 +45,7 @@ int main()
 	// Rendering requires a main camera
 	Camera* camera = scene.AddComponent<Camera>(player);
 	MainCamera mainCamera(*camera, *transform);
-	scene.SetMainCamera(&mainCamera);
+	scene.SetMainCamera(mainCamera);
 
 	// After all required objects have been created run the engine
 	root.Run(scene);

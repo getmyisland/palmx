@@ -5,16 +5,17 @@
 namespace palmx
 {
 	Scene::Scene() {}
+	
 	Scene::~Scene() {}
 
-	MainCamera* Scene::GetMainCamera()
+	std::shared_ptr<MainCamera> Scene::GetMainCamera() const
 	{
 		return _mainCamera;
 	}
 
-	void Scene::SetMainCamera(MainCamera* mainCamera)
+	void Scene::SetMainCamera(const MainCamera& mainCamera)
 	{
-		_mainCamera = mainCamera;
+		_mainCamera = std::make_shared<MainCamera>(mainCamera);
 	}
 
 	std::vector<Entity> Scene::GetEntitiesInScene() const

@@ -5,64 +5,69 @@
 #include <logging/LogManager.h>
 #include <filesystem/ResourceManager.h>
 
+#include <fstream>
+#include <iostream>
+#include <sstream>
+
 namespace palmx
 {
-	Shader::Shader(std::string vertexShaderFilePath, std::string fragmentShaderFilePath)
-	{
-		// Vertex Shader File Content
-		std::string vertexFileContent = ResourceManager::GetFileContentAsString(vertexShaderFilePath);
-		const char* vertexShaderCode = vertexFileContent.c_str();
+	Shader::Shader() {}
+	Shader::~Shader() {}
 
-		// Fragment Shader File Content
-		std::string fragmentFileContent = ResourceManager::GetFileContentAsString(fragmentShaderFilePath);
-		const char* fragmentShaderCode = fragmentFileContent.c_str();
+    void Shader::Compile(const GLchar* vertexSource, const GLchar* fragmentSource, std::string directory)
+    {
+        // first pre-process shaders with preprocessor (includes, pragma defines etc.)
+        std::string vsCodeProcessed = PreProcess(std::string(vertexSource), directory);
+        std::string fsCodeProcessed = PreProcess(std::string(fragmentSource), directory);
+        const GLchar* vsCode = vsCodeProcessed.c_str();
+        const GLchar* fsCode = fsCodeProcessed.c_str();
 
-		// Compile shaders
-		unsigned int vertex, fragment;
-		int success;
-		char infoLog[512];
+        // then process pre-processed shader source
+        GLuint sVertex, sFragment;
+        // Vertex Shader
+        sVertex = glCreateShader(GL_VERTEX_SHADER);
+        glShaderSource(sVertex, 1, &vsCode, NULL);
+        glCompileShader(sVertex);
+        CheckCompileErrors(sVertex, Vertex);
+        // Fragment Shader
+        sFragment = glCreateShader(GL_FRAGMENT_SHADER);
+        glShaderSource(sFragment, 1, &fsCode, NULL);
+        glCompileShader(sFragment);
+        CheckCompileErrors(sFragment, Fragment);
+        // Shader Program
+        mID = glCreateProgram();
+        glAttachShader(mID, sVertex);
+        glAttachShader(mID, sFragment);
+        glLinkProgram(mID);
+        CheckCompileErrors(mID, Program);
+        // Delete the shaders as they're linked into our program now and no longer necessery
+        glDeleteShader(sVertex);
+        glDeleteShader(sFragment);
+    }
 
-		// Vertex Shader
-		vertex = glCreateShader(GL_VERTEX_SHADER);
-		glShaderSource(vertex, 1, &vertexShaderCode, NULL);
-		glCompileShader(vertex);
-
-		glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-			DEBUG_LOG_ERROR("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" + std::string(infoLog));
-		};
-
-		// Fragment Shader
-		fragment = glCreateShader(GL_FRAGMENT_SHADER);
-		glShaderSource(fragment, 1, &fragmentShaderCode, NULL);
-		glCompileShader(fragment);
-
-		glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
-		if (!success)
-		{
-			glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-			DEBUG_LOG_ERROR("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" + std::string(infoLog));
-		};
-
-		// Shader Program
-		mID = glCreateProgram();
-		glAttachShader(mID, vertex);
-		glAttachShader(mID, fragment);
-		glLinkProgram(mID);
-
-		glGetProgramiv(mID, GL_LINK_STATUS, &success);
-		if (!success)
-		{
-			glGetProgramInfoLog(mID, 512, NULL, infoLog);
-			DEBUG_LOG_ERROR("ERROR::SHADER::PROGRAM::LINKING_FAILED\n" + std::string(infoLog));
-		}
-
-		// Delete the shaders as they're linked into our program now and no longer necessary
-		glDeleteShader(vertex);
-		glDeleteShader(fragment);
-	}
+    std::string Shader::PreProcess(std::string shaderCode, std::string directory)
+    {
+        std::stringstream input(shaderCode);
+        std::stringstream output;
+        std::string line;
+        while (std::getline(input, line))
+        {
+            if (line.substr(0, 15) == "#pragma include")
+            {
+                std::string filepath = line.substr(16);
+                if (filepath != "")
+                    filepath = directory + "/" + filepath;
+                std::ifstream file(filepath);
+                while (std::getline(file, line))
+                    output << line << std::endl;
+            }
+            else
+            {
+                output << line << std::endl;
+            }
+        }
+        return output.str();
+    }
 
 	void Shader::Use() const
 	{
@@ -85,4 +90,28 @@ namespace palmx
 	{
 		glUniformMatrix4fv(glGetUniformLocation(mID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 	}
+
+    void Shader::CheckCompileErrors(GLuint object, ShaderType type)
+    {
+        GLint success;
+        char infoLog[1024];
+        if (type != ShaderType::Program)
+        {
+            glGetShaderiv(object, GL_COMPILE_STATUS, &success);
+            if (!success)
+            {
+                glGetShaderInfoLog(object, 1024, NULL, infoLog);
+                DEBUG_LOG_ERROR("Shader compilation failed for type " + std::to_string(type) + "\n" + std::string(infoLog));
+            }
+        }
+        else
+        {
+            glGetProgramiv(object, GL_LINK_STATUS, &success);
+            if (!success)
+            {
+                glGetProgramInfoLog(object, 1024, NULL, infoLog);
+                DEBUG_LOG_ERROR("Shader program linking failed\n" + std::string(infoLog));
+            }
+        }
+    }
 }

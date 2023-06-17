@@ -16,38 +16,33 @@ namespace palmx
 
 	Root::Root(Config& config)
 	{
-		mpConfig = std::make_unique<Config>(config);
-
 		mpLogManager = std::make_unique<LogManager>();
-		mpResourceManager = std::make_unique<ResourceManager>();
-		mpInputManager = std::make_unique<InputManager>();
-		mpRenderManager = std::make_unique<RenderManager>();
-		mpSceneManager = std::make_unique<SceneManager>();
-		mpWindowManager = std::make_unique<WindowManager>();
+		mpLogManager->StartUp();
 
-		StartModules();
+		mpResourceManager = std::make_unique<ResourceManager>();
+		mpResourceManager->StartUp();
+
+		mpWindowManager = std::make_unique<WindowManager>();
+		mpWindowManager->StartUp(config.mWidth, config.mHeight);
+
+		mpInputManager = std::make_unique<InputManager>();
+		mpInputManager->StartUp(mpWindowManager->GetMainWindow());
+
+		mpRenderManager = std::make_unique<RenderManager>();
+		mpRenderManager->StartUp();
+
+		mpSceneManager = std::make_unique<SceneManager>();
+		mpSceneManager->StartUp();
 	}
 
-	palmx::Root::~Root() 
+	palmx::Root::~Root()
 	{
 		mpSceneManager.release();
 		mpRenderManager.release();
 		mpInputManager.release();
+		mpWindowManager.release();
 		mpResourceManager.release();
 		mpLogManager.release();
-		mpWindowManager.release();
-
-		mpConfig.release();
-	}
-
-	void Root::StartModules()
-	{
-		mpWindowManager->StartUp(mpConfig->mWidth, mpConfig->mHeight);
-		mpLogManager->StartUp();
-		mpResourceManager->StartUp();
-		mpInputManager->StartUp(mpWindowManager->GetMainWindow());
-		mpRenderManager->StartUp();
-		mpSceneManager->StartUp();
 	}
 
 	void Root::Run(Scene& entryScene)
@@ -55,7 +50,13 @@ namespace palmx
 		mpSceneManager->SetActiveScene(entryScene);
 
 		GameLoop();
-		ShutdownModules();
+
+		mpSceneManager->ShutDown();
+		mpRenderManager->ShutDown();
+		mpInputManager->ShutDown();
+		mpWindowManager->ShutDown();
+		mpResourceManager->ShutDown();
+		mpLogManager->ShutDown();
 	}
 
 	void Root::GameLoop()
@@ -74,16 +75,6 @@ namespace palmx
 
 			mpRenderManager->Render(mpWindowManager->GetMainWindow(), mpSceneManager->GetActiveScene());
 		}
-	}
-
-	void Root::ShutdownModules()
-	{
-		mpSceneManager->ShutDown();
-		mpRenderManager->ShutDown();
-		mpInputManager->ShutDown();
-		mpResourceManager->ShutDown();
-		mpLogManager->ShutDown();
-		mpWindowManager->ShutDown();
 	}
 
 	void Root::Kill()
