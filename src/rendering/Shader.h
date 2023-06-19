@@ -1,8 +1,8 @@
 #ifndef PALMX_SHADER_H_
 #define PALMX_SHADER_H_
 
-#define DEFAULT_SHADER_VERTEX std::string(palmx::ResourceManager::GetSingletonPtr()->GetProjectRootDirectory() + "/resources/shaders/shader.vert").c_str()
-#define DEFAULT_SHADER_FRAGMENT std::string(palmx::ResourceManager::GetSingletonPtr()->GetProjectRootDirectory() + "/resources/shaders/shader.frag").c_str()
+#define DEFAULT_SHADER_VERTEX std::string(palmx::ResourceManager::GetSingletonPtr()->GetProjectRootDirectory() + "/data/shaders/shader.vert").c_str()
+#define DEFAULT_SHADER_FRAGMENT std::string(palmx::ResourceManager::GetSingletonPtr()->GetProjectRootDirectory() + "/data/shaders/shader.frag").c_str()
 
 #include <filesystem/ResourceManager.h>
 

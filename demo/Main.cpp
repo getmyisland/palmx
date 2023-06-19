@@ -29,7 +29,7 @@ int main()
 	EntityID testEntity = scene.NewEntity();
 	scene.AddComponent<Transform>(testEntity);
 	std::string rootDir(ResourceManager::GetSingletonPtr()->GetProjectRootDirectory());
-	Model testModel(rootDir + "/resources/models/scp173/cb_scp173.fbx");
+	Model testModel(rootDir + "/data/models/scp173/cb_scp173.fbx");
 	Renderer* testRenderer = scene.AddComponent<Renderer>(testEntity);
 	testRenderer->mModel = std::make_shared<Model>(testModel);
 
