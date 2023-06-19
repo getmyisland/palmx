@@ -55,4 +55,16 @@ void PlayerController::Update(EntityID entityId, float deltaTime)
 	{
 		transform->SetRotation(glm::vec3(-89.0f, transform->GetRotation().y, transform->GetRotation().z));
 	}
+
+	Camera* camera = scene->GetComponent<Camera>(entityId);
+	if (camera != nullptr)
+	{
+		glm::vec2 mouseWheelInput = Input::GetMouseWheelOffset();
+
+		camera->mZoom -= mouseWheelInput.y;
+		if (camera->mZoom < 0.1f)
+		{
+			camera->mZoom = 0.1f;
+		}
+	}
 }

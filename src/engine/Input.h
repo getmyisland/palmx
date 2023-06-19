@@ -47,6 +47,8 @@ namespace palmx
 		static void ResetMouseOffset();
 
 		static void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+		static glm::vec2 GetMouseWheelOffset();
+		static void ResetMouseWheelOffset();
 
 	private:
 		Input();
@@ -66,6 +68,7 @@ namespace palmx
 		static inline glm::vec2 _lastMousePos = glm::vec2();
 		static inline glm::vec2 _mouseOffset = glm::vec2();
 
+		static inline bool _mouseWheelCallbackThisFrame = false;
 		static inline glm::vec2 _mouseWheelOffset = glm::vec2();
 	};
 }

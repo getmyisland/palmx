@@ -30,5 +30,6 @@ namespace palmx
 
 		Input::SetKeyStates(window);
 		Input::ResetMouseOffset();
+		Input::ResetMouseWheelOffset();
 	}
 }

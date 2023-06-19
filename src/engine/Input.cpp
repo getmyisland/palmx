@@ -111,12 +111,29 @@ namespace palmx
 		{
 			_mouseOffset = glm::vec2();
 		}
-
-		// TODO the same for mouse wheel
 	}
 
 	void Input::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
 	{
 		_mouseWheelOffset = glm::vec2(static_cast<float>(xOffset), static_cast<float>(yOffset));
+
+		_mouseWheelCallbackThisFrame = true;
+	}
+
+	glm::vec2 Input::GetMouseWheelOffset()
+	{
+		return _mouseWheelOffset;
+	}
+
+	void Input::ResetMouseWheelOffset()
+	{
+		if (_mouseWheelCallbackThisFrame)
+		{
+			_mouseWheelCallbackThisFrame = false;
+		}
+		else
+		{
+			_mouseWheelOffset = glm::vec2();
+		}
 	}
 }
