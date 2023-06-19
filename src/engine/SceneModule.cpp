@@ -10,14 +10,14 @@ namespace palmx
 	SceneModule::SceneModule() { }
 	SceneModule::~SceneModule() { }
 
-	void SceneModule::StartUp()
+	void SceneModule::Start()
 	{
-		LOG_INFO("Scene Manager initialized");
+		LOG_INFO("Scene Module started");
 	}
 
-	void SceneModule::ShutDown()
+	void SceneModule::Stop()
 	{
-
+		LOG_INFO("Scene Module stopped");
 	}
 
 	void SceneModule::Update(float deltaTime)

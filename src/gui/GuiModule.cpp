@@ -9,7 +9,7 @@ namespace palmx
 	GuiModule::GuiModule() { }	
 	GuiModule::~GuiModule() { }
 
-	void GuiModule::StartUp(unsigned int width, unsigned int height)
+	void GuiModule::Start(unsigned int width, unsigned int height)
 	{
 		// Initialize and configure glfw
 		glfwInit();
@@ -34,12 +34,14 @@ namespace palmx
 
 		glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-		LOG_INFO("Window Manager initialized");
+		LOG_INFO("GUI Module started");
 	}
 
-	void GuiModule::ShutDown()
+	void GuiModule::Stop()
 	{
 		glfwTerminate();
+
+		LOG_INFO("GUI Module stopped");
 	}
 
 	GLFWwindow* GuiModule::GetMainWindow() const

@@ -15,7 +15,7 @@ namespace palmx
 	RenderModule::RenderModule() {};
 	RenderModule::~RenderModule() {};
 
-	void RenderModule::StartUp()
+	void RenderModule::Start()
 	{
 		// Load all OpenGL function pointers
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -26,12 +26,12 @@ namespace palmx
 
 		_shader = ResourceManager::LoadShader("default", DEFAULT_SHADER_VERTEX, DEFAULT_SHADER_FRAGMENT);
 
-		LOG_INFO("Render Manager initialized");
+		LOG_INFO("Render Module started");
 	}
 
-	void RenderModule::ShutDown()
+	void RenderModule::Stop()
 	{
-
+		LOG_INFO("Render Module stopped");
 	}
 
 	void RenderModule::Render(GLFWwindow* window, Scene* scene)

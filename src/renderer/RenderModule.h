@@ -17,8 +17,8 @@ namespace palmx
 		RenderModule();
 		~RenderModule();
 
-		void StartUp();
-		void ShutDown();
+		void Start();
+		void Stop();
 
 		void Render(GLFWwindow* window, Scene* scene);
 

@@ -8,17 +8,17 @@ namespace palmx
 	InputModule::InputModule() {};
 	InputModule::~InputModule() {};
 
-	void InputModule::StartUp(GLFWwindow* mainWindow)
+	void InputModule::Start(GLFWwindow* mainWindow)
 	{
 		glfwSetCursorPosCallback(mainWindow, Input::MouseCallback);
 		glfwSetScrollCallback(mainWindow, Input::ScrollCallback);
 
-		LOG_INFO("Input Manager initialized");
+		LOG_INFO("Input Module started");
 	}
 
-	void InputModule::ShutDown()
+	void InputModule::Stop()
 	{
-
+		LOG_INFO("Input Module stopped");
 	}
 
 	void InputModule::CollectInput(GLFWwindow* window)

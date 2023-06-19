@@ -23,16 +23,16 @@ namespace palmx
 	Engine::Engine(Config& config)
 	{
 		mWindowModule = std::make_unique<GuiModule>();
-		mWindowModule->StartUp(config.mWidth, config.mHeight);
+		mWindowModule->Start(config.mWidth, config.mHeight);
 
 		mInputModule = std::make_unique<InputModule>();
-		mInputModule->StartUp(mWindowModule->GetMainWindow());
+		mInputModule->Start(mWindowModule->GetMainWindow());
 
 		mRenderModule = std::make_unique<RenderModule>();
-		mRenderModule->StartUp();
+		mRenderModule->Start();
 
 		mSceneModule = std::make_unique<SceneModule>();
-		mSceneModule->StartUp();
+		mSceneModule->Start();
 	}
 
 	palmx::Engine::~Engine()
@@ -49,10 +49,10 @@ namespace palmx
 
 		GameLoop();
 
-		mSceneModule->ShutDown();
-		mRenderModule->ShutDown();
-		mInputModule->ShutDown();
-		mWindowModule->ShutDown();
+		mSceneModule->Stop();
+		mRenderModule->Stop();
+		mInputModule->Stop();
+		mWindowModule->Stop();
 	}
 
 	void Engine::GameLoop()

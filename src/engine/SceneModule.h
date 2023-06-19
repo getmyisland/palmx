@@ -13,8 +13,8 @@ namespace palmx
 		SceneModule();
 		~SceneModule();
 
-		void StartUp();
-		void ShutDown();
+		void Start();
+		void Stop();
 
 		void Update(float deltaTime);
 

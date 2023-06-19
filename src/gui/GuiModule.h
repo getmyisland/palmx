@@ -11,8 +11,8 @@ namespace palmx
 		GuiModule();
 		~GuiModule();
 
-		void StartUp(unsigned int width, unsigned int height);
-		void ShutDown();
+		void Start(unsigned int width, unsigned int height);
+		void Stop();
 
 		GLFWwindow* GetMainWindow() const;
 		void ResizeMainWindow(unsigned int width, unsigned int height);

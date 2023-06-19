@@ -3,6 +3,7 @@
 
 namespace palmx
 {
+	// Special singleton that needs to be initialized before it can be used
 	template <typename T> class Singleton
 	{
 	public:
