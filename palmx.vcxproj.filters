@@ -18,58 +18,58 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\logging\LogManager.cpp">
+    <ClCompile Include="src\engine\Logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\filesystem\ResourceManager.cpp">
+    <ClCompile Include="src\engine\ResourceManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\input\InputManager.cpp">
+    <ClCompile Include="src\engine\InputModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Root.cpp">
+    <ClCompile Include="src\engine\Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\RenderManager.cpp">
+    <ClCompile Include="src\renderer\RenderModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\Shader.cpp">
+    <ClCompile Include="src\renderer\Shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\Mesh.cpp">
+    <ClCompile Include="src\renderer\Mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\rendering\Model.cpp">
+    <ClCompile Include="src\renderer\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entity\SceneManager.cpp">
+    <ClCompile Include="src\engine\SceneModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entity\Scene.cpp">
+    <ClCompile Include="src\engine\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gui\WindowManager.cpp">
+    <ClCompile Include="src\gui\GuiModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entity\Transform.cpp">
+    <ClCompile Include="src\renderer\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\input\Input.cpp">
+    <ClCompile Include="src\engine\Input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entity\Camera.cpp">
+    <ClCompile Include="src\renderer\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entity\Renderer.cpp">
+    <ClCompile Include="src\renderer\Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\entity\Entity.cpp">
+    <ClCompile Include="src\engine\Entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="demo\Main.cpp">
+    <ClCompile Include="src\demo\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="demo\PlayerController.cpp">
+    <ClCompile Include="src\demo\PlayerController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="external\glad\glad.c">
@@ -77,67 +77,67 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\logging\LogManager.h">
+    <ClInclude Include="src\engine\Logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\filesystem\ResourceManager.h">
+    <ClInclude Include="src\engine\ResourceManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendering\RenderManager.h">
+    <ClInclude Include="src\renderer\RenderModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Root.h">
+    <ClInclude Include="src\engine\Engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\input\InputManager.h">
+    <ClInclude Include="src\engine\InputModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendering\Mesh.h">
+    <ClInclude Include="src\renderer\Mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendering\Model.h">
+    <ClInclude Include="src\renderer\Model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\stb\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\SceneManager.h">
+    <ClInclude Include="src\engine\SceneModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Singleton.h">
+    <ClInclude Include="src\engine\Singleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\Scene.h">
+    <ClInclude Include="src\engine\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\Camera.h">
+    <ClInclude Include="src\renderer\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\ScriptBehavior.h">
+    <ClInclude Include="src\engine\ScriptBehavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\input\Input.h">
+    <ClInclude Include="src\engine\Input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\SceneView.h">
+    <ClInclude Include="src\engine\SceneView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\Entity.h">
+    <ClInclude Include="src\engine\Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\Renderer.h">
+    <ClInclude Include="src\renderer\Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\ScriptHook.h">
+    <ClInclude Include="src\engine\ScriptHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity\Transform.h">
+    <ClInclude Include="src\renderer\Transform.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\rendering\Shader.h">
+    <ClInclude Include="src\renderer\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
