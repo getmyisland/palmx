@@ -28,8 +28,8 @@ namespace palmx
 		template<typename T>
 		T* AddComponent(EntityID id)
 		{
-			// ensures you're not accessing an entity that has been deleted
-			if (_entities[GetEntityIndex(id)].mID != id)
+			// Ensure the has not been deleted
+			if (_entities[GetEntityIndex(id)].mId != id)
 			{
 				return nullptr;
 			}
@@ -46,18 +46,18 @@ namespace palmx
 			}
 
 			// Looks up the component in the pool, and initializes it with placement new
-			T* pComponent = new (_componentPools[componentId]->Get(GetEntityIndex(id))) T();
+			T* component = new (_componentPools[componentId]->Get(GetEntityIndex(id))) T();
 
 			// Set the bit for this component to true and return the created component
 			_entities[GetEntityIndex(id)].mComponentMask.set(componentId);
-			return pComponent;
+			return component;
 		}
 
 		template<typename T>
 		T* RemoveComponent(EntityID id)
 		{
-			// ensures you're not accessing an entity that has been deleted
-			if (_entities[GetEntityIndex(id)].mID != id)
+			// Ensure the has not been deleted
+			if (_entities[GetEntityIndex(id)].mId != id)
 			{
 				return;
 			}
@@ -69,8 +69,8 @@ namespace palmx
 		template<typename T>
 		T* GetComponent(EntityID id)
 		{
-			// ensures you're not accessing an entity that has been deleted
-			if (_entities[GetEntityIndex(id)].mID != id)
+			// Ensure the has not been deleted
+			if (_entities[GetEntityIndex(id)].mId != id)
 			{
 				return nullptr;
 			}
@@ -81,8 +81,8 @@ namespace palmx
 				return nullptr;
 			}
 
-			T* pComponent = static_cast<T*>(_componentPools[componentId]->Get(GetEntityIndex(id)));
-			return pComponent;
+			T* component = static_cast<T*>(_componentPools[componentId]->Get(GetEntityIndex(id)));
+			return component;
 		}
 
 		void OnLoad();

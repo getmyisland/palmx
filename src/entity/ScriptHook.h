@@ -15,18 +15,18 @@ namespace palmx
 
         std::vector<ScriptBehavior*> GetScriptBehavior()
         {
-            return _scriptBehavior;
+            return _scriptBehaviors;
         }
 
         void AddScriptBehavior(ScriptBehavior& scriptBehavior)
         {
-            _scriptBehavior.push_back(&scriptBehavior);
+            _scriptBehaviors.push_back(&scriptBehavior);
         }
 
         void RemoveScriptBehavior() {}
 
     private:
-        std::vector<ScriptBehavior*> _scriptBehavior;
+        std::vector<ScriptBehavior*> _scriptBehaviors;
     };
 }
 

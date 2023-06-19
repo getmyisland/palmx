@@ -16,47 +16,47 @@ namespace palmx
 
 	Root::Root(Config& config)
 	{
-		mpLogManager = std::make_unique<LogManager>();
-		mpLogManager->StartUp();
+		mLogManager = std::make_unique<LogManager>();
+		mLogManager->StartUp();
 
-		mpResourceManager = std::make_unique<ResourceManager>();
-		mpResourceManager->StartUp();
+		mResourceManager = std::make_unique<ResourceManager>();
+		mResourceManager->StartUp();
 
-		mpWindowManager = std::make_unique<WindowManager>();
-		mpWindowManager->StartUp(config.mWidth, config.mHeight);
+		mWindowManager = std::make_unique<WindowManager>();
+		mWindowManager->StartUp(config.mWidth, config.mHeight);
 
-		mpInputManager = std::make_unique<InputManager>();
-		mpInputManager->StartUp(mpWindowManager->GetMainWindow());
+		mInputManager = std::make_unique<InputManager>();
+		mInputManager->StartUp(mWindowManager->GetMainWindow());
 
-		mpRenderManager = std::make_unique<RenderManager>();
-		mpRenderManager->StartUp();
+		mRenderManager = std::make_unique<RenderManager>();
+		mRenderManager->StartUp();
 
-		mpSceneManager = std::make_unique<SceneManager>();
-		mpSceneManager->StartUp();
+		mSceneManager = std::make_unique<SceneManager>();
+		mSceneManager->StartUp();
 	}
 
 	palmx::Root::~Root()
 	{
-		mpSceneManager.release();
-		mpRenderManager.release();
-		mpInputManager.release();
-		mpWindowManager.release();
-		mpResourceManager.release();
-		mpLogManager.release();
+		mSceneManager.release();
+		mRenderManager.release();
+		mInputManager.release();
+		mWindowManager.release();
+		mResourceManager.release();
+		mLogManager.release();
 	}
 
 	void Root::Run(Scene& entryScene)
 	{
-		mpSceneManager->SetActiveScene(entryScene);
+		mSceneManager->SetActiveScene(entryScene);
 
 		GameLoop();
 
-		mpSceneManager->ShutDown();
-		mpRenderManager->ShutDown();
-		mpInputManager->ShutDown();
-		mpWindowManager->ShutDown();
-		mpResourceManager->ShutDown();
-		mpLogManager->ShutDown();
+		mSceneManager->ShutDown();
+		mRenderManager->ShutDown();
+		mInputManager->ShutDown();
+		mWindowManager->ShutDown();
+		mResourceManager->ShutDown();
+		mLogManager->ShutDown();
 	}
 
 	void Root::GameLoop()
@@ -64,21 +64,21 @@ namespace palmx
 		float deltaTime = 0.0f;	// time between current frame and last frame
 		float lastFrame = 0.0f;
 
-		while (!glfwWindowShouldClose(mpWindowManager->GetMainWindow()))
+		while (!glfwWindowShouldClose(mWindowManager->GetMainWindow()))
 		{
 			float currentFrame = static_cast<float>(glfwGetTime());
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
-			mpInputManager->CollectInput(mpWindowManager->GetMainWindow());
-			mpSceneManager->Update(deltaTime);
+			mInputManager->CollectInput(mWindowManager->GetMainWindow());
+			mSceneManager->Update(deltaTime);
 
-			mpRenderManager->Render(mpWindowManager->GetMainWindow(), mpSceneManager->GetActiveScene());
+			mRenderManager->Render(mWindowManager->GetMainWindow(), mSceneManager->GetActiveScene());
 		}
 	}
 
 	void Root::Kill()
 	{
-		glfwSetWindowShouldClose(mpWindowManager->GetMainWindow(), true);
+		glfwSetWindowShouldClose(mWindowManager->GetMainWindow(), true);
 	}
 }

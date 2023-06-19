@@ -1,8 +1,6 @@
 #ifndef PALMX_ENTITY_H_
 #define PALMX_ENTITY_H_
 
-#define INVALID_ENTITY palmx::CreateEntityId(EntityIndex(-1), 0)
-
 #include <bitset>
 
 namespace palmx
@@ -15,9 +13,9 @@ namespace palmx
 		return sComponentId;
 	}
 
-	typedef unsigned int EntityIndex;
-	typedef unsigned int EntityVersion;
-	typedef unsigned long long EntityID;
+	using EntityIndex = unsigned int;
+	using EntityVersion = unsigned int;
+	using EntityID = unsigned long long;
 
 	inline EntityID CreateEntityId(EntityIndex index, EntityVersion version)
 	{
@@ -26,17 +24,17 @@ namespace palmx
 	}
 	inline EntityIndex GetEntityIndex(EntityID id)
 	{
-		// Shift down 32 so we lose the version and get our index
+		// Shift down 32 bit to lose the version and get the index
 		return id >> 32;
 	}
 	inline EntityVersion GetEntityVersion(EntityID id)
 	{
-		// Cast to a 32 bit int to get our version number (loosing the top 32 bits)
+		// Cast to a 32 bit int to get the version number (losing the top 32 bits)
 		return (EntityVersion)id;
 	}
 	inline bool IsEntityValid(EntityID id)
 	{
-		// Check if the index is our invalid index
+		// Check if the index is invalid
 		return (id >> 32) != EntityIndex(-1);
 	}
 
@@ -46,7 +44,7 @@ namespace palmx
 
 	struct Entity
 	{
-		EntityID mID;
+		EntityID mId;
 		ComponentMask mComponentMask;
 	};
 
@@ -54,26 +52,26 @@ namespace palmx
 	{
 		ComponentPool(size_t elementSize)
 		{
-			// We'll allocate enough memory to hold MAX_ENTITIES, each with element size
+			// Allocate enough memory to hold the max number of components, each with element size
 			_elementSize = elementSize;
-			_pData = new char[_elementSize * MAX_ENTITIES];
+			_data = new char[_elementSize * MAX_COMPONENTS];
 		}
 
 		~ComponentPool()
 		{
-			delete[] _pData;
+			delete[] _data;
 		}
 
 		inline void* Get(size_t index)
 		{
-			// looking up the component at the desired index
-			return _pData + index * _elementSize;
+			// Looking up the component at the desired index
+			return _data + index * _elementSize;
 		}
 
 	private:
 		ComponentPool() {}
 
-		char* _pData{ nullptr };
+		char* _data{ nullptr };
 		size_t _elementSize{ 0 };
 	};
 }

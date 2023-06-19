@@ -30,15 +30,15 @@ namespace palmx
 
 			glActiveTexture(GL_TEXTURE0 + 0);
 			// Set the sampler to the correct texture unit
-			glUniform1i(glGetUniformLocation(shader->mID, "texture_albedo"), 0);
+			glUniform1i(glGetUniformLocation(shader->mId, "texture_albedo"), 0);
 			// Bind the texture
-			glBindTexture(GL_TEXTURE_2D, mesh.GetAlbedoTexture()->mID);
+			glBindTexture(GL_TEXTURE_2D, mesh.GetAlbedoTexture()->mId);
 
 			glActiveTexture(GL_TEXTURE0 + 1);
 			// Set the sampler to the correct texture unit
-			glUniform1i(glGetUniformLocation(shader->mID, "texture_normal"), 1);
+			glUniform1i(glGetUniformLocation(shader->mId, "texture_normal"), 1);
 			// Bind the texture
-			glBindTexture(GL_TEXTURE_2D, mesh.GetNormalTexture()->mID);
+			glBindTexture(GL_TEXTURE_2D, mesh.GetNormalTexture()->mId);
 
 			// Draw mesh
 			glBindVertexArray(mesh.GetVAO());

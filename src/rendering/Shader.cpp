@@ -35,11 +35,11 @@ namespace palmx
         glCompileShader(sFragment);
         CheckCompileErrors(sFragment, Fragment);
         // Shader Program
-        mID = glCreateProgram();
-        glAttachShader(mID, sVertex);
-        glAttachShader(mID, sFragment);
-        glLinkProgram(mID);
-        CheckCompileErrors(mID, Program);
+        mId = glCreateProgram();
+        glAttachShader(mId, sVertex);
+        glAttachShader(mId, sFragment);
+        glLinkProgram(mId);
+        CheckCompileErrors(mId, Program);
         // Delete the shaders as they're linked into our program now and no longer necessery
         glDeleteShader(sVertex);
         glDeleteShader(sFragment);
@@ -71,24 +71,24 @@ namespace palmx
 
 	void Shader::Use() const
 	{
-		glUseProgram(mID);
+		glUseProgram(mId);
 	}
 
 	void Shader::SetBool(const std::string& name, bool value) const
 	{
-		glUniform1i(glGetUniformLocation(mID, name.c_str()), (int)value);
+		glUniform1i(glGetUniformLocation(mId, name.c_str()), (int)value);
 	}
 	void Shader::SetInt(const std::string& name, int value) const
 	{
-		glUniform1i(glGetUniformLocation(mID, name.c_str()), value);
+		glUniform1i(glGetUniformLocation(mId, name.c_str()), value);
 	}
 	void Shader::SetFloat(const std::string& name, float value) const
 	{
-		glUniform1f(glGetUniformLocation(mID, name.c_str()), value);
+		glUniform1f(glGetUniformLocation(mId, name.c_str()), value);
 	}
 	void Shader::SetMat4(const std::string& name, glm::mat4 value) const
 	{
-		glUniformMatrix4fv(glGetUniformLocation(mID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+		glUniformMatrix4fv(glGetUniformLocation(mId, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 	}
 
     void Shader::CheckCompileErrors(GLuint object, ShaderType type)

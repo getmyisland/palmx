@@ -32,8 +32,8 @@ namespace palmx
 		std::shared_ptr<Texture> GetTexture(std::string name);
 
 	private:
-		std::unordered_map<std::string, std::shared_ptr<Shader>> mShaders;
-		std::unordered_map<std::string, std::shared_ptr<Texture>> mTextures;
+		std::unordered_map<std::string, std::shared_ptr<Shader>> _cachedShaders;
+		std::unordered_map<std::string, std::shared_ptr<Texture>> _cachedTextures;
 	};
 }
 

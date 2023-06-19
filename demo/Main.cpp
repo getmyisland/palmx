@@ -18,7 +18,7 @@ using namespace palmx;
 
 int main()
 {
-	// First initialize the engine before creating any objects
+	// Initialize the engine before creating any objects
 	Config config(800, 600);
 	Root root(config);
 
@@ -33,9 +33,10 @@ int main()
 	Renderer* testRenderer = scene.AddComponent<Renderer>(testEntity);
 	testRenderer->mModel = std::make_shared<Model>(testModel);
 
-	// Create the player
+	// Create the player entity
 	EntityID player = scene.NewEntity();
 	Transform* transform = scene.AddComponent<Transform>(player);
+
 	// Running custom scripts requires a hook
 	scene.AddComponent<ScriptHook>(player);
 	// Add a custom script to the hook

@@ -51,7 +51,7 @@ namespace palmx
 	private:
 		Input();
 
-		static void SetKeyState(GLFWwindow* window, KeyCode keyCode, Key& key);
+		static void SetKeyState(GLFWwindow* window, Key& key);
 		static inline std::unordered_map<KeyCode, Key> _keys = std::unordered_map<KeyCode, Key>(
 			{
 				{KeyW, Key(GLFW_KEY_W)},

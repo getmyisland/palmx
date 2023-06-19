@@ -61,8 +61,8 @@ namespace palmx
 	std::shared_ptr<Shader> ResourceManager::LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource)
 	{
 		// first check if shader has been loader already, if so; return earlier loaded texture
-		auto it = mShaders.find(name);
-		if (it != mShaders.end())
+		auto it = _cachedShaders.find(name);
+		if (it != _cachedShaders.end())
 		{
 			return it->second;
 		}
@@ -102,14 +102,14 @@ namespace palmx
 		// 2. Now create and store shader object from source code
 		shader->Compile(vShaderCode, fShaderCode, std::string(vertexShaderSource).substr(0, std::string(vertexShaderSource).find_last_of('/')));
 		shader->mName = name;
-		mShaders[name] = shader;
+		_cachedShaders[name] = shader;
 		return shader;
 	}
 
 	std::shared_ptr<Shader> ResourceManager::GetShader(std::string name)
 	{
-		auto it = mShaders.find(name);
-		if (it != mShaders.end())
+		auto it = _cachedShaders.find(name);
+		if (it != _cachedShaders.end())
 		{
 			return it->second;
 		}
@@ -122,8 +122,8 @@ namespace palmx
 	std::shared_ptr<Texture> ResourceManager::LoadTexture(std::string name, const char* textureSource)
 	{
 		// first check if texture has been loader already, if so; return earlier loaded texture
-		auto it = mTextures.find(name);
-		if (it != mTextures.end())
+		auto it = _cachedTextures.find(name);
+		if (it != _cachedTextures.end())
 		{
 			return it->second;
 		}
@@ -153,7 +153,7 @@ namespace palmx
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			
-			texture->mID = textureID;
+			texture->mId = textureID;
 
 			stbi_image_free(data);
 		}
@@ -164,14 +164,14 @@ namespace palmx
 		}
 
 		// Store and return
-		mTextures[name] = texture;
+		_cachedTextures[name] = texture;
 		return texture;
 	}
 
 	std::shared_ptr<Texture> ResourceManager::GetTexture(std::string name)
 	{
-		auto it = mTextures.find(name);
-		if (it != mTextures.end())
+		auto it = _cachedTextures.find(name);
+		if (it != _cachedTextures.end())
 		{
 			return it->second;
 		}

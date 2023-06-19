@@ -31,12 +31,12 @@ namespace palmx
 		static Root& GetSingleton(void);
 		static Root* GetSingletonPtr(void);
 
-		std::unique_ptr<LogManager> mpLogManager;
-		std::unique_ptr<ResourceManager> mpResourceManager;
-		std::unique_ptr<SceneManager> mpSceneManager;
-		std::unique_ptr<InputManager> mpInputManager;
-		std::unique_ptr<RenderManager> mpRenderManager;
-		std::unique_ptr<WindowManager> mpWindowManager;
+		std::unique_ptr<LogManager> mLogManager;
+		std::unique_ptr<ResourceManager> mResourceManager;
+		std::unique_ptr<SceneManager> mSceneManager;
+		std::unique_ptr<InputManager> mInputManager;
+		std::unique_ptr<RenderManager> mRenderManager;
+		std::unique_ptr<WindowManager> mWindowManager;
 
 		void Run(Scene& entryScene);
 		void Kill();

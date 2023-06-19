@@ -21,7 +21,7 @@ namespace palmx
 		~Shader();
 
 		std::string mName;
-		unsigned int mID = 0;
+		unsigned int mId = 0;
 
 		void Compile(const GLchar* vertexSource, const GLchar* fragmentSource, std::string directory);
 		// Pre-processes the source code for custom #pragma directives

@@ -25,7 +25,7 @@ namespace palmx
 	struct Texture
 	{
 		std::string mName;
-		unsigned int mID;
+		unsigned int mId;
 	};
 
 	class Mesh

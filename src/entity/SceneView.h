@@ -33,7 +33,7 @@ namespace palmx
 
 			EntityID operator*() const
 			{
-				return mScene->GetEntitiesInScene()[mIndex].mID;
+				return mScene->GetEntitiesInScene()[mIndex].mId;
 			}
 
 			bool operator==(const Iterator& other) const
@@ -50,7 +50,7 @@ namespace palmx
 			{
 				return
 					// It's a valid entity ID
-					IsEntityValid(mScene->GetEntitiesInScene()[mIndex].mID) &&
+					IsEntityValid(mScene->GetEntitiesInScene()[mIndex].mId) &&
 					// It has the correct component mask
 					(mAll || mComponentMask == (mComponentMask & mScene->GetEntitiesInScene()[mIndex].mComponentMask));
 			}
@@ -75,7 +75,7 @@ namespace palmx
 			int firstIndex = 0;
 			while (firstIndex < mScene->GetEntitiesInScene().size() &&
 				(mComponentMask != (mComponentMask & mScene->GetEntitiesInScene()[firstIndex].mComponentMask)
-					|| !IsEntityValid(mScene->GetEntitiesInScene()[firstIndex].mID)))
+					|| !IsEntityValid(mScene->GetEntitiesInScene()[firstIndex].mId)))
 			{
 				firstIndex++;
 			}

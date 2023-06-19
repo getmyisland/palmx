@@ -46,11 +46,11 @@ namespace palmx
 	{
 		for (auto& [key, value] : _keys)
 		{
-			SetKeyState(window, key, value);
+			SetKeyState(window, value);
 		}
 	}
 
-	void Input::SetKeyState(GLFWwindow* window, KeyCode keyCode, Key& key)
+	void Input::SetKeyState(GLFWwindow* window, Key& key)
 	{
 		key.mLastKeyState = key.mKeyState;
 
@@ -108,10 +108,13 @@ namespace palmx
 		if (_mouseCallbackThisFrame)
 		{
 			_mouseCallbackThisFrame = false;
-			return;
+		}
+		else
+		{
+			_mouseOffset = glm::vec2();
 		}
 
-		_mouseOffset = glm::vec2();
+		// TODO the same for mouse wheel
 	}
 
 	void Input::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
