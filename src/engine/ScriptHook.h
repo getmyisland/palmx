@@ -8,12 +8,9 @@
 
 namespace palmx
 {
-	class ScriptHook
+	struct ScriptHook
 	{
 	public:
-		ScriptHook() {}
-		~ScriptHook() {}
-
 		std::vector<ScriptBehavior*> GetScriptBehavior()
 		{
 			return _scriptBehaviors;
