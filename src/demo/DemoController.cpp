@@ -1,16 +1,16 @@
-#include "PlayerController.h"
+#include "DemoController.h"
 
 #include "../engine/Input.h"
 #include "../engine/Scene.h"
 #include "../engine/Engine.h"
-#include "../renderer/Transform.h"
+#include "../engine/Transform.h"
 
 #include <glm/ext.hpp>
 #include <glm/gtx/string_cast.hpp>
 
 using namespace palmx;
 
-void PlayerController::Update(EntityID entityId, float deltaTime)
+void DemoController::Update(EntityID entityId, float deltaTime)
 {
 	Scene* scene = Engine::GetSingletonPtr()->mSceneModule->GetActiveScene();
 	Transform* transform = scene->GetComponent<Transform>(entityId);

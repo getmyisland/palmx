@@ -17,7 +17,7 @@ namespace palmx
 
 		void Render(const std::shared_ptr<Shader> shader, const Transform& transform);
 
-		std::shared_ptr<Model> mModel{ nullptr };
+		std::unique_ptr<Model> mModel{ nullptr };
 	};
 }
 

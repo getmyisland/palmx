@@ -1,14 +1,14 @@
-#include "PlayerController.h"
+#include "DemoController.h"
 
 #include "../engine/Engine.h"
 #include "../engine/Entity.h"
 #include "../engine/Scene.h"
 #include "../engine/ScriptHook.h"
+#include "../engine/Transform.h"
 #include "../renderer/Camera.h"
 #include "../renderer/Model.h"
 #include "../renderer/Renderer.h"
 #include "../renderer/Shader.h"
-#include "../renderer/Transform.h"
 
 #include <glm/vec3.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -30,17 +30,17 @@ int main()
 	std::string rootDir(ResourceManager::GetProjectRootDirectory());
 	Model testModel(rootDir + "/data/models/scp173/cb_scp173.fbx");
 	Renderer* testRenderer = scene.AddComponent<Renderer>(testEntity);
-	testRenderer->mModel = std::make_shared<Model>(testModel);
+	testRenderer->mModel = std::make_unique<Model>(testModel);
 
 	// Create the player entity
 	EntityID player = scene.NewEntity();
 	Transform* transform = scene.AddComponent<Transform>(player);
 
 	// Running custom scripts requires a hook
-	scene.AddComponent<ScriptHook>(player);
+	ScriptHook* hook = scene.AddComponent<ScriptHook>(player);
 	// Add a custom script to the hook
-	PlayerController controller;
-	scene.GetComponent<ScriptHook>(player)->AddScriptBehavior(controller);
+	DemoController controller;
+	hook->AddScriptBehavior(controller);
 
 	// Rendering requires a main camera
 	Camera* camera = scene.AddComponent<Camera>(player);

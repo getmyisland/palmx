@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\demo\Main.cpp" />
-    <ClCompile Include="src\demo\PlayerController.cpp" />
+    <ClCompile Include="src\demo\DemoController.cpp" />
     <ClCompile Include="src\renderer\Camera.cpp" />
     <ClCompile Include="src\renderer\Renderer.cpp" />
     <ClCompile Include="src\engine\Input.cpp" />
@@ -36,7 +36,7 @@
     <ClCompile Include="src\engine\SceneModule.cpp" />
     <ClCompile Include="src\engine\Logger.cpp" />
     <ClCompile Include="src\engine\ResourceManager.cpp" />
-    <ClCompile Include="src\renderer\Transform.cpp" />
+    <ClCompile Include="src\engine\Transform.cpp" />
     <ClCompile Include="external\glad\glad.c" />
   </ItemGroup>
   <ItemGroup>
@@ -59,7 +59,7 @@
     <ClInclude Include="src\engine\SceneModule.h" />
     <ClInclude Include="src\engine\SceneView.h" />
     <ClInclude Include="include\stb\stb_image.h" />
-    <ClInclude Include="src\renderer\Transform.h" />
+    <ClInclude Include="src\engine\Transform.h" />
     <ClInclude Include="game\PlayerController.h" />
   </ItemGroup>
   <ItemGroup>

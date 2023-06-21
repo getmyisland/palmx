@@ -51,7 +51,7 @@
     <ClCompile Include="src\gui\GuiModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\Transform.cpp">
+    <ClCompile Include="src\engine\Transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\engine\Input.cpp">
@@ -69,7 +69,7 @@
     <ClCompile Include="src\demo\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\demo\PlayerController.cpp">
+    <ClCompile Include="src\demo\DemoController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="external\glad\glad.c">
@@ -134,7 +134,7 @@
     <ClInclude Include="src\engine\ScriptHook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\Transform.h">
+    <ClInclude Include="src\engine\Transform.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="src\renderer\Shader.h">

@@ -4,7 +4,7 @@
 #include "../engine/Entity.h"
 #include "../engine/ScriptBehavior.h"
 
-class PlayerController : public palmx::ScriptBehavior
+class DemoController : public palmx::ScriptBehavior
 {
 public:
 	void Update(palmx::EntityID entityId, float deltaTime) override;

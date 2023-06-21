@@ -2,8 +2,8 @@
 #define PALMX_SCENE_H_
 
 #include "Entity.h"
+#include "Transform.h"
 #include "../renderer/Camera.h"
-#include "../renderer/Transform.h"
 
 #include <memory>
 #include <string>
