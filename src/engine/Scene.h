@@ -11,12 +11,23 @@
 
 namespace palmx
 {
-	class Scene
+	struct MainCamera
 	{
 	public:
-		Scene();
-		~Scene();
+		MainCamera(const Camera* const camera, const Transform* const transform) : mCamera(camera), mTransform(transform) {}
+		~MainCamera() {}
 
+		glm::mat4 GetViewMatrix() const;
+
+		const Camera* const mCamera{ nullptr };
+		const Transform* const mTransform{ nullptr };
+
+	private:
+		MainCamera() {}
+	};
+
+	class Scene
+	{
 	public:
 		std::shared_ptr<MainCamera> GetMainCamera() const;
 		void SetMainCamera(const MainCamera& mainCamera);

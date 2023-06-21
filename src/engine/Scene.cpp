@@ -4,9 +4,10 @@
 
 namespace palmx
 {
-	Scene::Scene() {}
-	
-	Scene::~Scene() {}
+	glm::mat4 MainCamera::GetViewMatrix() const
+	{
+		return glm::lookAt(mTransform->GetPosition(), mTransform->GetPosition() + mTransform->GetForward(), mTransform->GetUp());
+	}
 
 	std::shared_ptr<MainCamera> Scene::GetMainCamera() const
 	{

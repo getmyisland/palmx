@@ -3,8 +3,8 @@
 #include "RenderModule.h"
 
 #include "Renderer.h"
+#include "Model.h"
 #include "Shader.h"
-#include "../engine/Transform.h"
 #include "../engine/Entity.h"
 #include "../engine/Logger.h"
 #include "../engine/SceneView.h"
@@ -48,12 +48,48 @@ namespace palmx
 			glm::mat4 projection = glm::perspective(glm::radians(scene->GetMainCamera()->mCamera->mZoom), static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 100.0f);
 			_shader->SetMat4("projection", projection);
 
-			glm::mat4 view = scene->GetMainCamera()->mCamera->GetViewMatrix(*scene->GetMainCamera()->mTransform);
+			glm::mat4 view = scene->GetMainCamera()->GetViewMatrix();
 			_shader->SetMat4("view", view);
 
-			for (EntityID ent : SceneView<Transform, Renderer>(*scene))
+			for (EntityID entity : SceneView<Transform, Renderer>(*scene))
 			{
-				scene->GetComponent<Renderer>(ent)->Render(_shader, *scene->GetComponent<Transform>(ent));
+				Renderer* entityRenderer = scene->GetComponent<Renderer>(entity);
+				Transform* entityTransform = scene->GetComponent<Transform>(entity);
+
+				if (entityRenderer->mModel == nullptr)
+				{
+					// Make sure there is a model specified otherwise go to the next entity
+					continue;
+				}
+
+				for (auto& mesh : entityRenderer->mModel->GetMeshes())
+				{
+					// Render the mesh
+					glm::mat4 model = glm::mat4(1.0f);
+					model = glm::translate(model, entityTransform->GetPosition());
+					model = glm::scale(model, entityTransform->GetScale());
+					_shader->SetMat4("model", model);
+
+					glActiveTexture(GL_TEXTURE0 + 0);
+					// Set the sampler to the correct texture unit
+					glUniform1i(glGetUniformLocation(_shader->mId, "texture_albedo"), 0);
+					// Bind the texture
+					glBindTexture(GL_TEXTURE_2D, mesh.GetAlbedoTexture()->mId);
+
+					glActiveTexture(GL_TEXTURE0 + 1);
+					// Set the sampler to the correct texture unit
+					glUniform1i(glGetUniformLocation(_shader->mId, "texture_normal"), 1);
+					// Bind the texture
+					glBindTexture(GL_TEXTURE_2D, mesh.GetNormalTexture()->mId);
+
+					// Draw mesh
+					glBindVertexArray(mesh.GetVAO());
+					glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(mesh.GetIndices().size()), GL_UNSIGNED_INT, 0);
+					glBindVertexArray(0);
+
+					// Set everything back to default
+					glActiveTexture(GL_TEXTURE0);
+				}
 			}
 		}
 

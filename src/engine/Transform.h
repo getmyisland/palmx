@@ -5,7 +5,7 @@
 
 namespace palmx
 {
-	class Transform
+	struct Transform
 	{
 	public:
 		Transform();

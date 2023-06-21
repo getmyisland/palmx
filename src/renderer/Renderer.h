@@ -6,17 +6,9 @@
 namespace palmx
 {
 	class Model;
-	class Shader;
-	class Transform;
 
-	class Renderer
+	struct Renderer
 	{
-	public:
-		Renderer();
-		~Renderer();
-
-		void Render(const std::shared_ptr<Shader> shader, const Transform& transform);
-
 		std::unique_ptr<Model> mModel{ nullptr };
 	};
 }

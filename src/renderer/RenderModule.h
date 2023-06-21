@@ -23,7 +23,7 @@ namespace palmx
 		void Render(GLFWwindow* window, Scene* scene);
 
 	private:
-		std::shared_ptr<Shader> _shader;
+		std::shared_ptr<Shader> _shader{ nullptr };
 	};
 }
 

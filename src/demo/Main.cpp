@@ -44,7 +44,7 @@ int main()
 
 	// Rendering requires a main camera
 	Camera* camera = scene.AddComponent<Camera>(player);
-	MainCamera mainCamera(*camera, *transform);
+	MainCamera mainCamera(camera, transform);
 	scene.SetMainCamera(mainCamera);
 
 	// After all required objects have been created run the engine

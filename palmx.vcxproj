@@ -21,8 +21,6 @@
   <ItemGroup>
     <ClCompile Include="src\demo\Main.cpp" />
     <ClCompile Include="src\demo\DemoController.cpp" />
-    <ClCompile Include="src\renderer\Camera.cpp" />
-    <ClCompile Include="src\renderer\Renderer.cpp" />
     <ClCompile Include="src\engine\Input.cpp" />
     <ClCompile Include="src\engine\Entity.cpp" />
     <ClCompile Include="src\engine\Scene.cpp" />
