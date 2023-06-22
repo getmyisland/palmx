@@ -2,10 +2,10 @@
 #define PALMX_ENGINE_H_
 
 #include "Singleton.h"
-#include "InputModule.h"
-#include "SceneModule.h"
-#include "../gui/GuiModule.h"
-#include "../renderer/RenderModule.h"
+#include "SceneManager.h"
+#include "InputSystem.h"
+#include "../gui/GuiSystem.h"
+#include "../renderer/RenderSystem.h"
 
 #include <GLFW/glfw3.h>
 
@@ -30,10 +30,10 @@ namespace palmx
 		static Engine& GetSingleton(void);
 		static Engine* GetSingletonPtr(void);
 
-		std::unique_ptr<GuiModule> mWindowModule;
-		std::unique_ptr<InputModule> mInputModule;
-		std::unique_ptr<RenderModule> mRenderModule;
-		std::unique_ptr<SceneModule> mSceneModule;
+		std::unique_ptr<GuiSystem> mGuiSystem;
+		std::unique_ptr<InputSystem> mInputSystem;
+		std::unique_ptr<RenderSystem> mRenderSystem;
+		std::unique_ptr<SceneManager> mSceneManager;
 
 		void Run(Scene& entryScene);
 		void Kill();

@@ -1,15 +1,15 @@
-#ifndef PALMX_INPUT_MODULE_H_
-#define PALMX_INPUT_MODULE_H_
+#ifndef PALMX_INPUT_SYSTEM_H_
+#define PALMX_INPUT_SYSTEM_H_
 
 #include <GLFW/glfw3.h>
 
 namespace palmx
 {
-	class InputModule
+	class InputSystem
 	{
 	public:
-		InputModule();
-		~InputModule();
+		InputSystem();
+		~InputSystem();
 		
 		void Start(GLFWwindow* mainWindow);
 		void Stop();

@@ -12,7 +12,7 @@ using namespace palmx;
 
 void DemoController::Update(EntityID entityId, float deltaTime)
 {
-	Scene* scene = Engine::GetSingletonPtr()->mSceneModule->GetActiveScene();
+	Scene* scene = Engine::GetSingletonPtr()->mSceneManager->GetActiveScene();
 	Transform* transform = scene->GetComponent<Transform>(entityId);
 	float velocity = _movementSpeed * deltaTime;
 

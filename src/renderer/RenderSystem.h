@@ -1,5 +1,5 @@
-#ifndef PALMX_RENDER_MODULE_H_
-#define PALMX_RENDER_MODULE_H_
+#ifndef PALMX_RENDER_SYSTEM_H_
+#define PALMX_RENDER_SYSTEM_H_
 
 #include "../engine/Scene.h"
 
@@ -11,11 +11,11 @@ namespace palmx
 {
 	class Shader;
 
-	class RenderModule
+	class RenderSystem
 	{
 	public:
-		RenderModule();
-		~RenderModule();
+		RenderSystem();
+		~RenderSystem();
 
 		void Start();
 		void Stop();

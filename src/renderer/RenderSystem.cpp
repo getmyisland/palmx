@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 
-#include "RenderModule.h"
+#include "RenderSystem.h"
 
 #include "Renderer.h"
 #include "Model.h"
@@ -12,10 +12,10 @@
 
 namespace palmx
 {
-	RenderModule::RenderModule() {};
-	RenderModule::~RenderModule() {};
+	RenderSystem::RenderSystem() {};
+	RenderSystem::~RenderSystem() {};
 
-	void RenderModule::Start()
+	void RenderSystem::Start()
 	{
 		// Load all OpenGL function pointers
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -29,12 +29,12 @@ namespace palmx
 		LOG_INFO("Render Module started");
 	}
 
-	void RenderModule::Stop()
+	void RenderSystem::Stop()
 	{
 		LOG_INFO("Render Module stopped");
 	}
 
-	void RenderModule::Render(GLFWwindow* window, Scene* scene)
+	void RenderSystem::Render(GLFWwindow* window, Scene* scene)
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);

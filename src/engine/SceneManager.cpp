@@ -1,4 +1,4 @@
-#include "SceneModule.h"
+#include "SceneManager.h"
 
 #include "Entity.h"
 #include "Logger.h"
@@ -7,20 +7,10 @@
 
 namespace palmx
 {
-	SceneModule::SceneModule() { }
-	SceneModule::~SceneModule() { }
+	SceneManager::SceneManager() { }
+	SceneManager::~SceneManager() { }
 
-	void SceneModule::Start()
-	{
-		LOG_INFO("Scene Module started");
-	}
-
-	void SceneModule::Stop()
-	{
-		LOG_INFO("Scene Module stopped");
-	}
-
-	void SceneModule::Update(float deltaTime)
+	void SceneManager::Update(float deltaTime)
 	{
 		for (EntityID ent : SceneView<ScriptHook>(*GetActiveScene()))
 		{
@@ -31,12 +21,12 @@ namespace palmx
 		}
 	}
 
-	Scene* SceneModule::GetActiveScene() const
+	Scene* SceneManager::GetActiveScene() const
 	{
 		return _activeScene.get();
 	}
 
-	void SceneModule::SetActiveScene(Scene& scene)
+	void SceneManager::SetActiveScene(Scene& scene)
 	{
 		if (_activeScene != nullptr)
 		{

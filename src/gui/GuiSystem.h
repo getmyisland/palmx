@@ -1,15 +1,15 @@
-#ifndef PALMX_GUI_MODULE_H_
-#define PALMX_GUI_MODULE_H_
+#ifndef PALMX_GUI_SYSTEM_H_
+#define PALMX_GUI_SYSTEM_H_
 
 #include <GLFW/glfw3.h>
 
 namespace palmx
 {
-	class GuiModule
+	class GuiSystem
 	{
 	public:
-		GuiModule();
-		~GuiModule();
+		GuiSystem();
+		~GuiSystem();
 
 		void Start(unsigned int width, unsigned int height);
 		void Stop();

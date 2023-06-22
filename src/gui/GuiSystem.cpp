@@ -1,4 +1,4 @@
-#include "GuiModule.h"
+#include "GuiSystem.h"
 
 #include "../engine/Logger.h"
 
@@ -6,10 +6,10 @@ namespace palmx
 {
 	void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 
-	GuiModule::GuiModule() { }	
-	GuiModule::~GuiModule() { }
+	GuiSystem::GuiSystem() { }	
+	GuiSystem::~GuiSystem() { }
 
-	void GuiModule::Start(unsigned int width, unsigned int height)
+	void GuiSystem::Start(unsigned int width, unsigned int height)
 	{
 		// Initialize and configure glfw
 		glfwInit();
@@ -37,19 +37,19 @@ namespace palmx
 		LOG_INFO("GUI Module started");
 	}
 
-	void GuiModule::Stop()
+	void GuiSystem::Stop()
 	{
 		glfwTerminate();
 
 		LOG_INFO("GUI Module stopped");
 	}
 
-	GLFWwindow* GuiModule::GetMainWindow() const
+	GLFWwindow* GuiSystem::GetMainWindow() const
 	{
 		return _mainWindow;
 	}
 
-	void GuiModule::ResizeMainWindow(unsigned int width, unsigned int height)
+	void GuiSystem::ResizeMainWindow(unsigned int width, unsigned int height)
 	{
 		FramebufferSizeCallback(_mainWindow, width, height);
 	}

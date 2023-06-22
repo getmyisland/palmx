@@ -1,14 +1,14 @@
-#include "InputModule.h"
+#include "InputSystem.h"
 
 #include "../engine/Logger.h"
 #include "Input.h"
 
 namespace palmx
 {
-	InputModule::InputModule() {};
-	InputModule::~InputModule() {};
+	InputSystem::InputSystem() {};
+	InputSystem::~InputSystem() {};
 
-	void InputModule::Start(GLFWwindow* mainWindow)
+	void InputSystem::Start(GLFWwindow* mainWindow)
 	{
 		glfwSetCursorPosCallback(mainWindow, Input::MouseCallback);
 		glfwSetScrollCallback(mainWindow, Input::ScrollCallback);
@@ -16,12 +16,12 @@ namespace palmx
 		LOG_INFO("Input Module started");
 	}
 
-	void InputModule::Stop()
+	void InputSystem::Stop()
 	{
 		LOG_INFO("Input Module stopped");
 	}
 
-	void InputModule::CollectInput(GLFWwindow* window)
+	void InputSystem::CollectInput(GLFWwindow* window)
 	{
 		if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		{

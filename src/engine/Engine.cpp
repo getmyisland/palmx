@@ -1,9 +1,5 @@
 #include "Engine.h"
 
-#include "InputModule.h"
-#include "SceneModule.h"
-#include "../gui/GuiModule.h"
-#include "../renderer/RenderModule.h"
 #include "ResourceManager.h"
 
 namespace palmx
@@ -22,37 +18,35 @@ namespace palmx
 
 	Engine::Engine(Config& config)
 	{
-		mWindowModule = std::make_unique<GuiModule>();
-		mWindowModule->Start(config.mWidth, config.mHeight);
+		mGuiSystem = std::make_unique<GuiSystem>();
+		mGuiSystem->Start(config.mWidth, config.mHeight);
 
-		mInputModule = std::make_unique<InputModule>();
-		mInputModule->Start(mWindowModule->GetMainWindow());
+		mInputSystem = std::make_unique<InputSystem>();
+		mInputSystem->Start(mGuiSystem->GetMainWindow());
 
-		mRenderModule = std::make_unique<RenderModule>();
-		mRenderModule->Start();
+		mRenderSystem = std::make_unique<RenderSystem>();
+		mRenderSystem->Start();
 
-		mSceneModule = std::make_unique<SceneModule>();
-		mSceneModule->Start();
+		mSceneManager = std::make_unique<SceneManager>();
 	}
 
 	palmx::Engine::~Engine()
 	{
-		mSceneModule.release();
-		mRenderModule.release();
-		mInputModule.release();
-		mWindowModule.release();
+		mSceneManager.release();
+		mRenderSystem.release();
+		mInputSystem.release();
+		mGuiSystem.release();
 	}
 
 	void Engine::Run(Scene& entryScene)
 	{
-		mSceneModule->SetActiveScene(entryScene);
+		mSceneManager->SetActiveScene(entryScene);
 
 		GameLoop();
 
-		mSceneModule->Stop();
-		mRenderModule->Stop();
-		mInputModule->Stop();
-		mWindowModule->Stop();
+		mRenderSystem->Stop();
+		mInputSystem->Stop();
+		mGuiSystem->Stop();
 	}
 
 	void Engine::GameLoop()
@@ -60,21 +54,25 @@ namespace palmx
 		float deltaTime = 0.0f;	// time between current frame and last frame
 		float lastFrame = 0.0f;
 
-		while (!glfwWindowShouldClose(mWindowModule->GetMainWindow()))
+		while (!glfwWindowShouldClose(mGuiSystem->GetMainWindow()))
 		{
 			float currentFrame = static_cast<float>(glfwGetTime());
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
 
-			mInputModule->CollectInput(mWindowModule->GetMainWindow());
-			mSceneModule->Update(deltaTime);
+			// First collect the input
+			mInputSystem->CollectInput(mGuiSystem->GetMainWindow());
 
-			mRenderModule->Render(mWindowModule->GetMainWindow(), mSceneModule->GetActiveScene());
+			// Then update all entities in the scene
+			mSceneManager->Update(deltaTime);
+
+			// Now render the scene
+			mRenderSystem->Render(mGuiSystem->GetMainWindow(), mSceneManager->GetActiveScene());
 		}
 	}
 
 	void Engine::Kill()
 	{
-		glfwSetWindowShouldClose(mWindowModule->GetMainWindow(), true);
+		glfwSetWindowShouldClose(mGuiSystem->GetMainWindow(), true);
 	}
 }

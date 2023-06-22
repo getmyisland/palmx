@@ -1,5 +1,5 @@
-#ifndef PALMX_SCENE_MODULE_H_
-#define PALMX_SCENE_MODULE_H_
+#ifndef PALMX_SCENE_MANAGER_H_
+#define PALMX_SCENE_MANAGER_H_
 
 #include "Scene.h"
 
@@ -7,14 +7,11 @@
 
 namespace palmx
 {
-	class SceneModule
+	class SceneManager
 	{
 	public:
-		SceneModule();
-		~SceneModule();
-
-		void Start();
-		void Stop();
+		SceneManager();
+		~SceneManager();
 
 		void Update(float deltaTime);
 
