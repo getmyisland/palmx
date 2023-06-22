@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\physics\PhysicsSystem.cpp" />
     <ClCompile Include="src\demo\Main.cpp" />
     <ClCompile Include="src\demo\DemoController.cpp" />
     <ClCompile Include="src\engine\Input.cpp" />
@@ -38,7 +39,10 @@
     <ClCompile Include="external\glad\glad.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\physics\Collider.h" />
+    <ClInclude Include="src\physics\PhysicsSystem.h" />
     <ClInclude Include="src\engine\SceneManager.h" />
+    <ClInclude Include="src\physics\Rigidbody.h" />
     <ClInclude Include="src\renderer\Renderer.h" />
     <ClInclude Include="src\engine\ScriptBehavior.h" />
     <ClInclude Include="src\engine\ScriptHook.h" />
