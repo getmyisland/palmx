@@ -26,6 +26,9 @@ namespace palmx::render
 
 		_shader = ResourceLoader::LoadShader("default", DEFAULT_SHADER_VERTEX, DEFAULT_SHADER_FRAGMENT);
 
+		glEnable(GL_CULL_FACE);
+		glEnable(GL_DEPTH_TEST);
+
 		LOG_INFO("Render System started");
 	}
 
@@ -37,7 +40,7 @@ namespace palmx::render
 	void RenderSystem::Render(GLFWwindow* window, Scene* scene)
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		if (_shader != nullptr && scene->GetMainCamera() != nullptr)
 		{
@@ -65,10 +68,10 @@ namespace palmx::render
 				for (auto& mesh : entityRenderer->mModel->GetMeshes())
 				{
 					// Render the mesh
-					glm::mat4 model = glm::mat4(1.0f);
-					model = glm::translate(model, entityTransform->GetPosition());
-					model = glm::scale(model, entityTransform->GetScale());
-					_shader->SetMat4("model", model);
+					glm::mat4 meshMat4 = glm::mat4(1.0f);
+					meshMat4 = glm::translate(meshMat4, entityTransform->GetPosition());
+					meshMat4 = glm::scale(meshMat4, entityTransform->GetScale());
+					_shader->SetMat4("mesh", meshMat4);
 
 					glActiveTexture(GL_TEXTURE0 + 0);
 					// Set the sampler to the correct texture unit
