@@ -6,6 +6,7 @@
 #include "InputSystem.h"
 #include "../gui/GuiSystem.h"
 #include "../renderer/RenderSystem.h"
+#include "../physics/PhysicsSystem.h"
 
 #include <GLFW/glfw3.h>
 
@@ -32,6 +33,7 @@ namespace palmx
 
 		std::unique_ptr<GuiSystem> mGuiSystem;
 		std::unique_ptr<InputSystem> mInputSystem;
+		std::unique_ptr<PhysicsSystem> mPhysicsSystem;
 		std::unique_ptr<RenderSystem> mRenderSystem;
 		std::unique_ptr<SceneManager> mSceneManager;
 

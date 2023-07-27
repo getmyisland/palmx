@@ -1,4 +1,5 @@
 #include "DemoController.h"
+#include "scp_173.h"
 
 #include "../engine/Engine.h"
 #include "../engine/Entity.h"
@@ -9,6 +10,7 @@
 #include "../renderer/Model.h"
 #include "../renderer/Renderer.h"
 #include "../renderer/Shader.h"
+#include "../physics/Rigidbody.h"
 
 #include <glm/vec3.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -31,6 +33,11 @@ int main()
 	Model testModel(rootDir + "/data/models/scp173/cb_scp173.fbx");
 	Renderer* testRenderer = scene.AddComponent<Renderer>(testEntity);
 	testRenderer->mModel = std::make_unique<Model>(testModel);
+	Rigidbody* rigidBody = scene.AddComponent<Rigidbody>(testEntity);
+	rigidBody->mIsDynamic = true;
+	ScriptHook* testHook = scene.AddComponent<ScriptHook>(testEntity);
+	SCP_173 scp173;
+	testHook->AddScriptBehavior(scp173);
 
 	// Create the player entity
 	EntityID player = scene.NewEntity();

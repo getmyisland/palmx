@@ -9,6 +9,9 @@ namespace palmx
 	{
 	public:
 		void Step(float deltaTime, Scene* scene);
+
+	private:
+		void ResolveCollisions(float deltaTime, Scene* scene);
 	};
 }
 

@@ -33,6 +33,7 @@ namespace palmx
 	palmx::Engine::~Engine()
 	{
 		mSceneManager.release();
+		mPhysicsSystem.release();
 		mRenderSystem.release();
 		mInputSystem.release();
 		mGuiSystem.release();
@@ -54,11 +55,21 @@ namespace palmx
 		float deltaTime = 0.0f;	// time between current frame and last frame
 		float lastFrame = 0.0f;
 
+		const float PHYSICS_TIMESTEP = 0.5;
+		float fixedDeltaTime = 0.0f;
+
 		while (!glfwWindowShouldClose(mGuiSystem->GetMainWindow()))
 		{
 			float currentFrame = static_cast<float>(glfwGetTime());
 			deltaTime = currentFrame - lastFrame;
 			lastFrame = currentFrame;
+
+			fixedDeltaTime += deltaTime;
+			if (fixedDeltaTime >= PHYSICS_TIMESTEP)
+			{
+				fixedDeltaTime = 0;
+				mPhysicsSystem->Step(deltaTime, mSceneManager->GetActiveScene());
+			}
 
 			// First collect the input
 			mInputSystem->CollectInput(mGuiSystem->GetMainWindow());

@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\demo\scp_173.cpp" />
+    <ClCompile Include="src\physics\algo.cpp" />
     <ClCompile Include="src\physics\PhysicsSystem.cpp" />
     <ClCompile Include="src\demo\Main.cpp" />
     <ClCompile Include="src\demo\DemoController.cpp" />
@@ -39,6 +41,8 @@
     <ClCompile Include="external\glad\glad.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\demo\scp_173.h" />
+    <ClInclude Include="src\physics\algo.h" />
     <ClInclude Include="src\physics\Collider.h" />
     <ClInclude Include="src\physics\PhysicsSystem.h" />
     <ClInclude Include="src\engine\SceneManager.h" />
