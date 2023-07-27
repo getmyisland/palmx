@@ -2,7 +2,7 @@
 
 #include "mesh.h"
 
-namespace palmx
+namespace palmx::render
 {
 	Mesh::Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const std::shared_ptr<Texture> albedoTexture, const std::shared_ptr<Texture> normalTexture)
 		: _albedoTexture(albedoTexture), _normalTexture(normalTexture)

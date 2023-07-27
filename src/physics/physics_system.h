@@ -5,14 +5,18 @@ namespace palmx
 {
 	class Scene;
 
-	class PhysicsSystem
+	namespace physics
 	{
-	public:
-		void Step(float deltaTime, Scene* scene);
 
-	private:
-		void ResolveCollisions(float deltaTime, Scene* scene);
-	};
+		class PhysicsSystem
+		{
+		public:
+			void Step(float deltaTime, Scene* scene);
+
+		private:
+			void ResolveCollisions(float deltaTime, Scene* scene);
+		};
+	}
 }
 
 #endif

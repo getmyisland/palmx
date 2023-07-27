@@ -1,10 +1,10 @@
-#ifndef PALMX_CAMERA_H
-#define PALMX_CAMERA_H
+#ifndef PALMX_RENDER_CAMERA_H
+#define PALMX_RENDER_CAMERA_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-namespace palmx
+namespace palmx::render
 {
 	struct Camera
 	{

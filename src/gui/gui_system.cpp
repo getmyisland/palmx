@@ -2,7 +2,7 @@
 
 #include "../engine/logger.h"
 
-namespace palmx
+namespace palmx::gui
 {
 	void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 
@@ -34,14 +34,14 @@ namespace palmx
 
 		glfwSetInputMode(_mainWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-		LOG_INFO("Gui System started...");
+		LOG_INFO("Gui System started");
 	}
 
 	void GuiSystem::Stop()
 	{
 		glfwTerminate();
 
-		LOG_INFO("Gui System stopped...");
+		LOG_INFO("Gui System stopped");
 	}
 
 	GLFWwindow* GuiSystem::GetMainWindow() const

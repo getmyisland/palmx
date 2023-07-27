@@ -12,7 +12,7 @@
 
 #include <string>
 
-namespace palmx
+namespace palmx::render
 {
 	class Shader
 	{

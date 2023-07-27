@@ -14,12 +14,12 @@ namespace palmx
 	struct MainCamera
 	{
 	public:
-		MainCamera(const Camera* const camera, const Transform* const transform) : mCamera(camera), mTransform(transform) {}
+		MainCamera(const render::Camera* const camera, const Transform* const transform) : mCamera(camera), mTransform(transform) {}
 		~MainCamera() {}
 
 		glm::mat4 GetViewMatrix() const;
 
-		const Camera* const mCamera{ nullptr };
+		const render::Camera* const mCamera{ nullptr };
 		const Transform* const mTransform{ nullptr };
 
 	private:

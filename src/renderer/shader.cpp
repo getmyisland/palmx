@@ -8,7 +8,7 @@
 #include <iostream>
 #include <sstream>
 
-namespace palmx
+namespace palmx::render
 {
 	Shader::Shader() {}
 	Shader::~Shader() {}

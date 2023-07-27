@@ -3,17 +3,21 @@
 
 namespace palmx
 {
-	struct Collider;
-	struct CollisionPoints;
-	struct SphereCollider;
-	struct PlaneCollider;
 	struct Transform;
 
-	namespace physics::algo
+	namespace physics
 	{
-		CollisionPoints FindSphereSphereCollisionPoints(const SphereCollider* a, const Transform* ta, const SphereCollider* b, const Transform* tb);
-		CollisionPoints FindSpherePlaneCollisionPoints(const SphereCollider* a, const Transform* ta, const PlaneCollider* b, const Transform* tb);
-		CollisionPoints FindPlaneSphereCollisionPoints(const PlaneCollider* a, const Transform* ta, const SphereCollider* b, const Transform* tb);
+		struct Collider;
+		struct CollisionPoints;
+		struct SphereCollider;
+		struct PlaneCollider;
+
+		namespace algo
+		{
+			CollisionPoints FindSphereSphereCollisionPoints(const SphereCollider* a, const Transform* ta, const SphereCollider* b, const Transform* tb);
+			CollisionPoints FindSpherePlaneCollisionPoints(const SphereCollider* a, const Transform* ta, const PlaneCollider* b, const Transform* tb);
+			CollisionPoints FindPlaneSphereCollisionPoints(const PlaneCollider* a, const Transform* ta, const SphereCollider* b, const Transform* tb);
+		}
 	}
 }
 

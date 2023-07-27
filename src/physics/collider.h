@@ -1,5 +1,5 @@
-#ifndef PALMX_COLLIDER_H
-#define PALMX_COLLIDER_H
+#ifndef PALMX_PHYSICS_COLLIDER_H
+#define PALMX_PHYSICS_COLLIDER_H
 
 #include "algo.h"
 #include "../engine/entity.h"
@@ -9,17 +9,17 @@
 
 #include <vector>
 
-namespace palmx
+namespace palmx::physics
 {
     struct SphereCollider;
     struct PlaneCollider;
 
 	struct CollisionPoints
 	{
-		glm::vec3 mA; // Furthest point of A into B
-		glm::vec3 mB; // Furthest point of B into A
-		glm::vec3 mNormal; // B - A normalized
-		float mDepth; // Length of B - A
+		glm::vec3 mA = glm::vec3(); // Furthest point of A into B
+		glm::vec3 mB = glm::vec3(); // Furthest point of B into A
+		glm::vec3 mNormal = glm::vec3(); // B - A normalized
+		float mDepth = 0; // Length of B - A
 		bool mHasCollision = false;
 	};
 

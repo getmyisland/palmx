@@ -20,8 +20,8 @@
 
 namespace palmx
 {
-	std::unordered_map<std::string, std::shared_ptr<Shader>> palmx::ResourceLoader::_cachedShaders;
-	std::unordered_map<std::string, std::shared_ptr<Texture>> palmx::ResourceLoader::_cachedTextures;
+	std::unordered_map<std::string, std::shared_ptr<render::Shader>> palmx::ResourceLoader::_cachedShaders;
+	std::unordered_map<std::string, std::shared_ptr<render::Texture>> palmx::ResourceLoader::_cachedTextures;
 
 	ResourceLoader::ResourceLoader() {}
 	ResourceLoader::~ResourceLoader() {}
@@ -41,7 +41,7 @@ namespace palmx
 		}
 	}
 
-	std::shared_ptr<Shader> ResourceLoader::LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource)
+	std::shared_ptr<render::Shader> ResourceLoader::LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource)
 	{
 		// Check if shader has been loader already, if so; return earlier loaded shader
 		auto it = _cachedShaders.find(name);
@@ -50,7 +50,7 @@ namespace palmx
 			return it->second;
 		}
 
-		std::shared_ptr<Shader> shader(new Shader);
+		std::shared_ptr<render::Shader> shader(new render::Shader);
 		// Retrieve the vertex/fragment source code from filePath
 		std::string vertexCode;
 		std::string fragmentCode;
@@ -89,7 +89,7 @@ namespace palmx
 		return shader;
 	}
 
-	std::shared_ptr<Shader> ResourceLoader::GetShader(std::string name)
+	std::shared_ptr<render::Shader> ResourceLoader::GetShader(std::string name)
 	{
 		auto it = _cachedShaders.find(name);
 		if (it != _cachedShaders.end())
@@ -98,11 +98,11 @@ namespace palmx
 		}
 		else
 		{
-			return std::shared_ptr<Shader>();
+			return std::shared_ptr<render::Shader>();
 		}
 	}
 
-	std::shared_ptr<Texture> ResourceLoader::LoadTexture(std::string name, const char* textureSource)
+	std::shared_ptr<render::Texture> ResourceLoader::LoadTexture(std::string name, const char* textureSource)
 	{
 		// Check if texture has been loader already, if so; return earlier loaded texture
 		auto it = _cachedTextures.find(name);
@@ -111,7 +111,7 @@ namespace palmx
 			return it->second;
 		}
 
-		std::shared_ptr<Texture> texture(new Texture);
+		std::shared_ptr<render::Texture> texture(new render::Texture);
 		unsigned int textureID;
 		glGenTextures(1, &textureID);
 
@@ -151,7 +151,7 @@ namespace palmx
 		return texture;
 	}
 
-	std::shared_ptr<Texture> ResourceLoader::GetTexture(std::string name)
+	std::shared_ptr<render::Texture> ResourceLoader::GetTexture(std::string name)
 	{
 		auto it = _cachedTextures.find(name);
 		if (it != _cachedTextures.end())
@@ -160,7 +160,7 @@ namespace palmx
 		}
 		else
 		{
-			return std::shared_ptr<Texture>();
+			return std::shared_ptr<render::Texture>();
 		}
 	}
 

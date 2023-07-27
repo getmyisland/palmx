@@ -7,8 +7,11 @@
 
 namespace palmx
 {
-	class Shader;
-	struct Texture;
+	namespace render
+	{
+		class Shader;
+		struct Texture;
+	}
 
 	class ResourceLoader
 	{
@@ -18,14 +21,14 @@ namespace palmx
 
 		static std::string GetProjectRootDirectory();
 
-		static std::shared_ptr<Shader> LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource);
-		static std::shared_ptr<Shader> GetShader(std::string name);
-		static std::shared_ptr<Texture> LoadTexture(std::string name, const char* textureSource);
-		static std::shared_ptr<Texture> GetTexture(std::string name);
+		static std::shared_ptr<render::Shader> LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource);
+		static std::shared_ptr<render::Shader> GetShader(std::string name);
+		static std::shared_ptr<render::Texture> LoadTexture(std::string name, const char* textureSource);
+		static std::shared_ptr<render::Texture> GetTexture(std::string name);
 
 	private:
-		static std::unordered_map<std::string, std::shared_ptr<Shader>> _cachedShaders;
-		static std::unordered_map<std::string, std::shared_ptr<Texture>> _cachedTextures;
+		static std::unordered_map<std::string, std::shared_ptr<render::Shader>> _cachedShaders;
+		static std::unordered_map<std::string, std::shared_ptr<render::Texture>> _cachedTextures;
 	};
 }
 

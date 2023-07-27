@@ -31,10 +31,10 @@ namespace palmx
 		static Engine& GetSingleton(void);
 		static Engine* GetSingletonPtr(void);
 
-		std::unique_ptr<GuiSystem> mGuiSystem;
+		std::unique_ptr<gui::GuiSystem> mGuiSystem;
 		std::unique_ptr<InputSystem> mInputSystem;
-		std::unique_ptr<PhysicsSystem> mPhysicsSystem;
-		std::unique_ptr<RenderSystem> mRenderSystem;
+		std::unique_ptr<physics::PhysicsSystem> mPhysicsSystem;
+		std::unique_ptr<render::RenderSystem> mRenderSystem;
 		std::unique_ptr<SceneManager> mSceneManager;
 
 		void Run(Scene& entryScene);

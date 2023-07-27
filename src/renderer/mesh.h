@@ -1,5 +1,5 @@
-#ifndef PALMX_MESH_H
-#define PALMX_MESH_H
+#ifndef PALMX_RENDER_MESH_H
+#define PALMX_RENDER_MESH_H
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -10,7 +10,7 @@
 
 #define MAX_BONE_INFLUENCE 4
 
-namespace palmx
+namespace palmx::render
 {
 	struct Vertex {
 		glm::vec3 mPosition;

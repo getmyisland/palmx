@@ -8,7 +8,7 @@
 
 #include <glm/vec3.hpp>
 
-namespace palmx
+namespace palmx::physics
 {
 	const glm::vec3 gravity{ glm::vec3(0, -9.81, 0) };
 

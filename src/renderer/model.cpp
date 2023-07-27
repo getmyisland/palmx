@@ -5,7 +5,7 @@
 #include "../engine/logger.h"
 #include "../engine/resource_loader.h"
 
-namespace palmx
+namespace palmx::render
 {
 	Model::Model(std::string path)
 	{
@@ -50,7 +50,7 @@ namespace palmx
 		}
 	}
 
-	Mesh palmx::Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
+	Mesh palmx::render::Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	{
 		std::vector<Vertex> vertices;
 		std::vector<unsigned int> indices;

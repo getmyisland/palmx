@@ -3,7 +3,7 @@
 
 #include <GLFW/glfw3.h>
 
-namespace palmx
+namespace palmx::gui
 {
 	class GuiSystem
 	{

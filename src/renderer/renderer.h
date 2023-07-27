@@ -3,7 +3,7 @@
 
 #include <memory>
 
-namespace palmx
+namespace palmx::render
 {
 	class Model;
 

@@ -1,9 +1,9 @@
-#ifndef PALMX_RIGIDBODY_H
-#define PALMX_RIGIDBODY_H
+#ifndef PALMX_PHYSICS_RIGIDBODY_H
+#define PALMX_PHYSICS_RIGIDBODY_H
 
 #include <glm/vec3.hpp>
 
-namespace palmx
+namespace palmx::physics
 {
 	class Rigidbody
 	{

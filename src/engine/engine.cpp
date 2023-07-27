@@ -16,13 +16,13 @@ namespace palmx
 
 	Engine::Engine(Config& config)
 	{
-		mGuiSystem = std::make_unique<GuiSystem>();
+		mGuiSystem = std::make_unique<gui::GuiSystem>();
 		mGuiSystem->Start(config.mWidth, config.mHeight);
 
 		mInputSystem = std::make_unique<InputSystem>();
 		mInputSystem->Start(mGuiSystem->GetMainWindow());
 
-		mRenderSystem = std::make_unique<RenderSystem>();
+		mRenderSystem = std::make_unique<render::RenderSystem>();
 		mRenderSystem->Start();
 
 		mSceneManager = std::make_unique<SceneManager>();

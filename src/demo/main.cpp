@@ -31,10 +31,10 @@ int main()
 	EntityID testEntity = scene.NewEntity();
 	scene.AddComponent<Transform>(testEntity);
 	std::string rootDir(ResourceLoader::GetProjectRootDirectory());
-	Model testModel(rootDir + "/data/models/scp173/cb_scp173.fbx");
-	Renderer* testRenderer = scene.AddComponent<Renderer>(testEntity);
-	testRenderer->mModel = std::make_unique<Model>(testModel);
-	Rigidbody* rigidBody = scene.AddComponent<Rigidbody>(testEntity);
+	render::Model testModel(rootDir + "/data/models/scp173/cb_scp173.fbx");
+	render::Renderer* testRenderer = scene.AddComponent<render::Renderer>(testEntity);
+	testRenderer->mModel = std::make_unique<render::Model>(testModel);
+	physics::Rigidbody* rigidBody = scene.AddComponent<physics::Rigidbody>(testEntity);
 	rigidBody->mIsDynamic = true;
 	ScriptHook* testHook = scene.AddComponent<ScriptHook>(testEntity);
 	DemoEnemy scp173;
@@ -51,7 +51,7 @@ int main()
 	hook->AddScriptBehavior(controller);
 
 	// Rendering requires a main camera
-	Camera* camera = scene.AddComponent<Camera>(player);
+	render::Camera* camera = scene.AddComponent<render::Camera>(player);
 	MainCamera mainCamera(camera, transform);
 	scene.SetMainCamera(mainCamera);
 

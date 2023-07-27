@@ -10,7 +10,7 @@
 #include "../engine/scene_view.h"
 #include "../engine/resource_loader.h"
 
-namespace palmx
+namespace palmx::render
 {
 	RenderSystem::RenderSystem() {};
 	RenderSystem::~RenderSystem() {};
@@ -26,12 +26,12 @@ namespace palmx
 
 		_shader = ResourceLoader::LoadShader("default", DEFAULT_SHADER_VERTEX, DEFAULT_SHADER_FRAGMENT);
 
-		LOG_INFO("Render Module started");
+		LOG_INFO("Render System started");
 	}
 
 	void RenderSystem::Stop()
 	{
-		LOG_INFO("Render Module stopped");
+		LOG_INFO("Render System stopped");
 	}
 
 	void RenderSystem::Render(GLFWwindow* window, Scene* scene)

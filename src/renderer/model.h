@@ -1,5 +1,5 @@
-#ifndef PALMX_MODEL_H
-#define PALMX_MODEL_H
+#ifndef PALMX_RENDER_MODEL_H
+#define PALMX_RENDER_MODEL_H
 
 #include "mesh.h"
 
@@ -9,7 +9,7 @@
 
 #include <memory>
 
-namespace palmx
+namespace palmx::render
 {
 	class Model
 	{
