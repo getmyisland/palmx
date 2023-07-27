@@ -16,25 +16,25 @@ void DemoController::Update(EntityID entityId, float deltaTime)
 	Transform* transform = scene->GetComponent<Transform>(entityId);
 	float velocity = _movementSpeed * deltaTime;
 
-	if (Input::GetKey(KeyW))
+	if (Input::GetKey(GLFW_KEY_W))
 	{
 		glm::vec3 up = transform->GetPosition() + (transform->GetForward() * velocity);
 		transform->SetPosition(up);
 	}
 
-	if (Input::GetKey(KeyS))
+	if (Input::GetKey(GLFW_KEY_S))
 	{
 		glm::vec3 down = transform->GetPosition() - (transform->GetForward() * velocity);
 		transform->SetPosition(down);
 	}
 
-	if (Input::GetKey(KeyA))
+	if (Input::GetKey(GLFW_KEY_A))
 	{
 		glm::vec3 left = transform->GetPosition() - (transform->GetRight() * velocity);
 		transform->SetPosition(left);
 	}
 
-	if (Input::GetKey(KeyD))
+	if (Input::GetKey(GLFW_KEY_D))
 	{
 		glm::vec3 right = transform->GetPosition() + (transform->GetRight() * velocity);
 		transform->SetPosition(right);

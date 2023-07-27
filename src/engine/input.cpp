@@ -4,9 +4,14 @@ namespace palmx
 {
 	Input::Input() {}
 
-	bool Input::GetKeyDown(KeyCode keyCode)
+	bool Input::GetKeyDown(int glfwKeyCode)
 	{
-		auto iter = _keys.find(keyCode);
+		if (!_keys.contains(glfwKeyCode)) 
+		{
+			_keys.insert(std::pair(glfwKeyCode, Key()));
+		}
+
+		auto iter = _keys.find(glfwKeyCode);
 		if (iter != _keys.end())
 		{
 			const Key& key = iter->second;
@@ -16,9 +21,14 @@ namespace palmx
 		return false;
 	}
 
-	bool Input::GetKey(KeyCode keyCode)
+	bool Input::GetKey(int glfwKeyCode)
 	{
-		auto iter = _keys.find(keyCode);
+		if (!_keys.contains(glfwKeyCode))
+		{
+			_keys.insert(std::pair(glfwKeyCode, Key()));
+		}
+
+		auto iter = _keys.find(glfwKeyCode);
 		if (iter != _keys.end())
 		{
 			const Key& key = iter->second;
@@ -28,9 +38,14 @@ namespace palmx
 		return false;
 	}
 
-	bool Input::GetKeyUp(KeyCode keyCode)
+	bool Input::GetKeyUp(int glfwKeyCode)
 	{
-		auto iter = _keys.find(keyCode);
+		if (!_keys.contains(glfwKeyCode))
+		{
+			_keys.insert(std::pair(glfwKeyCode, Key()));
+		}
+
+		auto iter = _keys.find(glfwKeyCode);
 		if (iter != _keys.end())
 		{
 			const Key& key = iter->second;
@@ -44,15 +59,15 @@ namespace palmx
 	{
 		for (auto& [key, value] : _keys)
 		{
-			SetKeyState(window, value);
+			SetKeyState(window, key, value);
 		}
 	}
 
-	void Input::SetKeyState(GLFWwindow* window, Key& key)
+	void Input::SetKeyState(GLFWwindow* window, int glfwKeyCode, Key& key)
 	{
 		key.mLastKeyState = key.mKeyState;
 
-		if (glfwGetKey(window, key.mGlfwKeyCode) == GLFW_PRESS)
+		if (glfwGetKey(window, glfwKeyCode) == GLFW_PRESS)
 		{
 			if (key.mLastKeyState == KeyDefault)
 			{

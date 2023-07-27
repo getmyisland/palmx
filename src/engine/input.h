@@ -16,19 +16,8 @@ namespace palmx
 		KeyUp
 	};
 
-	enum KeyCode
-	{
-		KeyW,
-		KeyS,
-		KeyA,
-		KeyD
-	};
-
 	struct Key
 	{
-		Key(const unsigned int glfwKeyCode) : mGlfwKeyCode(glfwKeyCode) {}
-
-		const unsigned int mGlfwKeyCode;
 		KeyState mKeyState{ KeyDefault };
 		KeyState mLastKeyState{ KeyDefault };
 	};
@@ -36,9 +25,9 @@ namespace palmx
 	class Input
 	{
 	public:
-		static bool GetKeyDown(KeyCode keyCode);
-		static bool GetKey(KeyCode keyCode);
-		static bool GetKeyUp(KeyCode keyCode);
+		static bool GetKeyDown(int glfwKeyCode);
+		static bool GetKey(int glfwKeyCode);
+		static bool GetKeyUp(int glfwKeyCode);
 
 		static void SetKeyStates(GLFWwindow* window);
 		
@@ -53,15 +42,8 @@ namespace palmx
 	private:
 		Input();
 
-		static void SetKeyState(GLFWwindow* window, Key& key);
-		static inline std::unordered_map<KeyCode, Key> _keys = std::unordered_map<KeyCode, Key>(
-			{
-				{KeyW, Key(GLFW_KEY_W)},
-				{KeyS, Key(GLFW_KEY_S)},
-				{KeyA, Key(GLFW_KEY_A)},
-				{KeyD, Key(GLFW_KEY_D)}
-			}
-		);
+		static void SetKeyState(GLFWwindow* window, int glfwKeyCode, Key& key);
+		static inline std::unordered_map<int, Key> _keys = std::unordered_map<int, Key>();
 
 		static inline bool _firstMouseInput = true;
 		static inline bool _mouseCallbackThisFrame = false;
