@@ -1,7 +1,7 @@
 #include "algo.h"
 
-#include "Collider.h"
-#include "../engine/Transform.h"
+#include "collider.h"
+#include "../engine/transform.h"
 
 #include <glm/vec3.hpp>
 #include <glm/geometric.hpp>

@@ -18,144 +18,144 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\engine\Logger.cpp">
+    <ClCompile Include="src\engine\logger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\ResourceManager.cpp">
+    <ClCompile Include="src\engine\resource_loader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\InputSystem.cpp">
+    <ClCompile Include="src\engine\input_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Engine.cpp">
+    <ClCompile Include="src\engine\engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\RenderSystem.cpp">
+    <ClCompile Include="src\renderer\render_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\Shader.cpp">
+    <ClCompile Include="src\renderer\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\Mesh.cpp">
+    <ClCompile Include="src\renderer\mesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer\Model.cpp">
+    <ClCompile Include="src\renderer\model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Scene.cpp">
+    <ClCompile Include="src\engine\scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gui\GuiSystem.cpp">
+    <ClCompile Include="src\gui\gui_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Transform.cpp">
+    <ClCompile Include="src\engine\transform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Input.cpp">
+    <ClCompile Include="src\engine\input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\Entity.cpp">
+    <ClCompile Include="src\engine\entity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\demo\Main.cpp">
+    <ClCompile Include="src\demo\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\demo\DemoController.cpp">
+    <ClCompile Include="src\demo\demo_controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="external\glad\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\engine\SceneManager.cpp">
+    <ClCompile Include="src\engine\scene_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\physics\PhysicsSystem.cpp">
+    <ClCompile Include="src\physics\physics_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\physics\algo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\demo\scp_173.cpp">
+    <ClCompile Include="src\demo\demo_enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\engine\Logger.h">
+    <ClInclude Include="src\engine\logger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\ResourceManager.h">
+    <ClInclude Include="src\engine\resource_loader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\RenderSystem.h">
+    <ClInclude Include="src\renderer\render_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\Engine.h">
+    <ClInclude Include="src\engine\engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\InputSystem.h">
+    <ClInclude Include="src\engine\input_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\Mesh.h">
+    <ClInclude Include="src\renderer\mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\Model.h">
+    <ClInclude Include="src\renderer\model.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\stb\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\Singleton.h">
+    <ClInclude Include="src\engine\singleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\Scene.h">
+    <ClInclude Include="src\engine\scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\Camera.h">
+    <ClInclude Include="src\renderer\camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\ScriptBehavior.h">
+    <ClInclude Include="src\engine\script_behavior.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\Input.h">
+    <ClInclude Include="src\engine\input.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\SceneView.h">
+    <ClInclude Include="src\engine\scene_view.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\Entity.h">
+    <ClInclude Include="src\engine\entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\Renderer.h">
+    <ClInclude Include="src\renderer\renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\ScriptHook.h">
+    <ClInclude Include="src\engine\script_hook.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\Transform.h">
+    <ClInclude Include="src\engine\transform.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\renderer\Shader.h">
+    <ClInclude Include="src\renderer\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\engine\SceneManager.h">
+    <ClInclude Include="src\engine\scene_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\physics\Rigidbody.h">
+    <ClInclude Include="src\physics\rigidbody.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\physics\PhysicsSystem.h">
+    <ClInclude Include="src\physics\physics_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\physics\Collider.h">
+    <ClInclude Include="src\physics\collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\physics\algo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\demo\scp_173.h">
+    <ClInclude Include="src\demo\demo_enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
