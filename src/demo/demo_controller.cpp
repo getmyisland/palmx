@@ -5,6 +5,7 @@
 #include "../engine/engine.h"
 #include "../engine/transform.h"
 #include "../engine/scene_manager.h"
+#include "../engine/logger.h"
 
 #include <glm/ext.hpp>
 #include <glm/gtx/string_cast.hpp>
@@ -68,4 +69,6 @@ void DemoController::Update(EntityID entityId, float deltaTime)
 			camera->mZoom = 0.1f;
 		}
 	}
+
+	LOG_INFO("Position: " + glm::to_string(transform->GetRotation()));
 }

@@ -14,6 +14,6 @@ void DemoEnemy::Update(palmx::EntityID entityId, float deltaTime)
 	palmx::Transform* transform = scene->GetComponent<palmx::Transform>(entityId);
 	if (transform != nullptr)
 	{
-		LOG_INFO("Position: " + glm::to_string(transform->GetPosition()));
+		//LOG_INFO("Position: " + glm::to_string(transform->GetPosition()));
 	}
 }

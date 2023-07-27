@@ -24,10 +24,56 @@ namespace palmx::render
 			return;
 		}
 
-		_shader = ResourceLoader::LoadShader("default", DEFAULT_SHADER_VERTEX, DEFAULT_SHADER_FRAGMENT);
+		_shader = ResourceLoader::LoadShader("default_shader", DEFAULT_VERTEX_SHADER_PATH, DEFAULT_FRAGMENT_SHADER_PATH);
+		_screenShader = ResourceLoader::LoadShader("default_screen_shader", VERTEX_SCREEN_SHADER_PATH, FRAGMENT_SCREEN_SHADER_PATH);
 
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
+
+		// Create a virtual render texture and framebuffer the scene can render to before being displayed
+		glGenFramebuffers(1, &_psxFrameBuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, _psxFrameBuffer);
+
+		glGenTextures(1, &_renderTexture);
+		glBindTexture(GL_TEXTURE_2D, _renderTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _virtualScreenWidth, _virtualScreenHeigth, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+		_screenShader->Use();
+		_screenShader->SetInt("renderTexture", _renderTexture);
+
+		GLuint depthRenderBuffer;
+		glGenRenderbuffers(1, &depthRenderBuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, _virtualScreenWidth, _virtualScreenHeigth);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, _renderTexture, 0);
+
+		GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+		glDrawBuffers(1, drawBuffers);
+
+		// Create a quad on which the render texture will be displayed upon
+		glGenVertexArrays(1, &_quadVertexArray);
+		glBindVertexArray(_quadVertexArray);
+
+		const GLfloat quadVertexBufferData[] = {
+			-1.0f, -1.0f, 0.0f,
+			1.0f, -1.0f, 0.0f,
+			-1.0f, 1.0f, 0.0f,
+			-1.0f, 1.0f, 0.0f,
+			1.0f, 1.0f, 0.0f,
+			1.0f, -1.0f, 0.0f,
+		};
+
+		GLuint quadVertexBuffer;
+		glGenBuffers(1, &quadVertexBuffer);
+		glBindBuffer(GL_ARRAY_BUFFER, quadVertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertexBufferData), quadVertexBufferData, GL_STATIC_DRAW);
 
 		LOG_INFO("Render System started");
 	}
@@ -41,6 +87,11 @@ namespace palmx::render
 	{
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// Always render the scene at a lower resolution to emulate the ps1 screen
+		// Everything below will now be rendered to the render texture instead of the screen directly
+		glBindFramebuffer(GL_FRAMEBUFFER, _psxFrameBuffer);
+		glViewport(0, 0, _virtualScreenWidth, _virtualScreenHeigth);
 
 		if (_shader != nullptr && scene->GetMainCamera() != nullptr)
 		{
@@ -95,6 +146,21 @@ namespace palmx::render
 				}
 			}
 		}
+
+		int width, height;
+		glfwGetWindowSize(window, &width, &height);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glViewport(0, 0, width, height);
+
+		_screenShader->Use();
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, _renderTexture);
+		// Problem might be because I'm binding the textures wrong?
+
+		glBindVertexArray(_quadVertexArray);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glBindVertexArray(0);
 
 		// Check and calls events
 		// Swap buffers

@@ -23,7 +23,14 @@ namespace palmx::render
 		void Render(GLFWwindow* window, Scene* scene);
 
 	private:
+		unsigned int _psxFrameBuffer = 0;
+		unsigned int _renderTexture = 0;
+		unsigned int _quadVertexArray = 0;
+		const unsigned int _virtualScreenWidth{ 320 };
+		const unsigned int _virtualScreenHeigth{ 224 };
+
 		std::shared_ptr<Shader> _shader{ nullptr };
+		std::shared_ptr<Shader> _screenShader{ nullptr };
 	};
 }
 

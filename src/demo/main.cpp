@@ -21,7 +21,7 @@ using namespace palmx;
 int main()
 {
 	// Initialize the engine before creating any objects
-	Config config(800, 600);
+	Config config(1280, 720);
 	Engine engine(config);
 
 	// Create the scene object which acts as an entity container
