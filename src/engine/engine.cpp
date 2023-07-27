@@ -1,5 +1,11 @@
 #include "Engine.h"
 
+#include "scene_manager.h"
+#include "input_system.h"
+#include "../gui/gui_system.h"
+#include "../renderer/render_system.h"
+#include "../physics/physics_system.h"
+
 namespace palmx
 {
 	template<> Engine* Singleton<Engine>::msSingleton = 0;

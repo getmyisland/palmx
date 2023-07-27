@@ -4,6 +4,7 @@
 #include "../engine/scene.h"
 #include "../engine/engine.h"
 #include "../engine/transform.h"
+#include "../engine/scene_manager.h"
 
 #include <glm/ext.hpp>
 #include <glm/gtx/string_cast.hpp>

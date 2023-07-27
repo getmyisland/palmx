@@ -2,11 +2,6 @@
 #define PALMX_ENGINE_H
 
 #include "singleton.h"
-#include "scene_manager.h"
-#include "input_system.h"
-#include "../gui/gui_system.h"
-#include "../renderer/render_system.h"
-#include "../physics/physics_system.h"
 
 #include <GLFW/glfw3.h>
 
@@ -14,7 +9,24 @@
 
 namespace palmx
 {
+	namespace gui
+	{
+		class GuiSystem;
+	}
+
+	namespace render
+	{
+		class RenderSystem;
+	}
+
+	namespace physics
+	{
+		class PhysicsSystem;
+	}
+
 	class Scene;
+	class SceneManager;
+	class InputSystem;
 
 	struct Config
 	{
