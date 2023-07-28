@@ -1,14 +1,6 @@
 #ifndef PALMX_SHADER_H
 #define PALMX_SHADER_H
 
-#define DEFAULT_VERTEX_SHADER_PATH std::string(palmx::ResourceLoader::GetProjectRootDirectory() + "/data/shaders/shader.vert").c_str()
-#define DEFAULT_FRAGMENT_SHADER_PATH std::string(palmx::ResourceLoader::GetProjectRootDirectory() + "/data/shaders/shader.frag").c_str()
-
-#define VERTEX_SCREEN_SHADER_PATH std::string(palmx::ResourceLoader::GetProjectRootDirectory() + "/data/shaders/screen_shader.vert").c_str()
-#define FRAGMENT_SCREEN_SHADER_PATH std::string(palmx::ResourceLoader::GetProjectRootDirectory() + "/data/shaders/screen_shader.frag").c_str()
-
-#include "../engine/resource_loader.h"
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>

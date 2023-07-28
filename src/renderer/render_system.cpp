@@ -24,56 +24,68 @@ namespace palmx::render
 			return;
 		}
 
-		_shader = ResourceLoader::LoadShader("default_shader", DEFAULT_VERTEX_SHADER_PATH, DEFAULT_FRAGMENT_SHADER_PATH);
-		_screenShader = ResourceLoader::LoadShader("default_screen_shader", VERTEX_SCREEN_SHADER_PATH, FRAGMENT_SCREEN_SHADER_PATH);
-
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_DEPTH_TEST);
 
-		// Create a virtual render texture and framebuffer the scene can render to before being displayed
-		glGenFramebuffers(1, &_psxFrameBuffer);
-		glBindFramebuffer(GL_FRAMEBUFFER, _psxFrameBuffer);
+		// Create a render texture and framebuffer the scene can render to before being displayed
+		glGenFramebuffers(1, &_renderTextureFramebuffer);
+		glBindFramebuffer(GL_FRAMEBUFFER, _renderTextureFramebuffer);
 
 		glGenTextures(1, &_renderTexture);
 		glBindTexture(GL_TEXTURE_2D, _renderTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _virtualScreenWidth, _virtualScreenHeigth, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, _renderTextureWidth, _renderTextureHeigth, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-		_screenShader->Use();
-		_screenShader->SetInt("renderTexture", _renderTexture);
-
-		GLuint depthRenderBuffer;
-		glGenRenderbuffers(1, &depthRenderBuffer);
-		glBindRenderbuffer(GL_RENDERBUFFER, depthRenderBuffer);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, _virtualScreenWidth, _virtualScreenHeigth);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBuffer);
+		GLuint renderTextureRenderbuffer;
+		glGenRenderbuffers(1, &renderTextureRenderbuffer);
+		glBindRenderbuffer(GL_RENDERBUFFER, renderTextureRenderbuffer);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, _renderTextureWidth, _renderTextureHeigth);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, renderTextureRenderbuffer);
 
 		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, _renderTexture, 0);
 
 		GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
 		glDrawBuffers(1, drawBuffers);
 
-		// Create a quad on which the render texture will be displayed upon
-		glGenVertexArrays(1, &_quadVertexArray);
-		glBindVertexArray(_quadVertexArray);
-
-		const GLfloat quadVertexBufferData[] = {
-			-1.0f, -1.0f, 0.0f,
-			1.0f, -1.0f, 0.0f,
-			-1.0f, 1.0f, 0.0f,
-			-1.0f, 1.0f, 0.0f,
-			1.0f, 1.0f, 0.0f,
-			1.0f, -1.0f, 0.0f,
+		GLfloat quadVertices[] = {
+	-1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // Bottom-left vertex
+	1.0f, -1.0f, 0.0f, 1.0f, 0.0f,  // Bottom-right vertex
+	1.0f, 1.0f, 0.0f, 1.0f, 1.0f,   // Top-right vertex
+	-1.0f, 1.0f, 0.0f, 0.0f, 1.0f    // Top-left vertex
 		};
 
-		GLuint quadVertexBuffer;
-		glGenBuffers(1, &quadVertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, quadVertexBuffer);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertexBufferData), quadVertexBufferData, GL_STATIC_DRAW);
+		glGenVertexArrays(1, &_fullscreenQuadVertexArray);
+		glGenBuffers(1, &_fullscreenQuadVertexBuffer);
+
+		glBindVertexArray(_fullscreenQuadVertexArray);
+		glBindBuffer(GL_ARRAY_BUFFER, _fullscreenQuadVertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)0);
+		glEnableVertexAttribArray(0);
+
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(GLfloat), (void*)(3 * sizeof(GLfloat)));
+		glEnableVertexAttribArray(1);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+
+		_defaultShader = ResourceLoader::LoadShader(
+			"default_shader", 
+			std::string(palmx::ResourceLoader::GetProjectRootDirectory() + "/data/shaders/default_shader.vert").c_str(),
+			std::string(palmx::ResourceLoader::GetProjectRootDirectory() + "/data/shaders/default_shader.frag").c_str()
+		);
+		
+		
+		_fullscreenQuadShader = ResourceLoader::LoadShader(
+			"fullscreen_quad_shader", 
+			std::string(palmx::ResourceLoader::GetProjectRootDirectory() + "/data/shaders/fullscreen_quad_shader.vert").c_str(), 
+			std::string(palmx::ResourceLoader::GetProjectRootDirectory() + "/data/shaders/fullscreen_quad_shader.frag").c_str()
+		);
 
 		LOG_INFO("Render System started");
 	}
@@ -90,20 +102,21 @@ namespace palmx::render
 
 		// Always render the scene at a lower resolution to emulate the ps1 screen
 		// Everything below will now be rendered to the render texture instead of the screen directly
-		glBindFramebuffer(GL_FRAMEBUFFER, _psxFrameBuffer);
-		glViewport(0, 0, _virtualScreenWidth, _virtualScreenHeigth);
+		glBindFramebuffer(GL_FRAMEBUFFER, _renderTextureFramebuffer);
+		glViewport(0, 0, _renderTextureWidth, _renderTextureHeigth);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		if (_shader != nullptr && scene->GetMainCamera() != nullptr)
+		if (_defaultShader != nullptr && scene->GetMainCamera() != nullptr)
 		{
-			_shader.get()->Use();
+			_defaultShader.get()->Use();
 
 			int windowWidth, windowHeight;
 			glfwGetFramebufferSize(window, &windowWidth, &windowHeight);
 			glm::mat4 projection = glm::perspective(glm::radians(scene->GetMainCamera()->mCamera->mZoom), static_cast<float>(windowWidth) / static_cast<float>(windowHeight), 0.1f, 100.0f);
-			_shader->SetMat4("projection", projection);
+			_defaultShader->SetMat4("projection", projection);
 
 			glm::mat4 view = scene->GetMainCamera()->GetViewMatrix();
-			_shader->SetMat4("view", view);
+			_defaultShader->SetMat4("view", view);
 
 			for (EntityID entity : SceneView<Transform, Renderer>(*scene))
 			{
@@ -122,17 +135,17 @@ namespace palmx::render
 					glm::mat4 meshMat4 = glm::mat4(1.0f);
 					meshMat4 = glm::translate(meshMat4, entityTransform->GetPosition());
 					meshMat4 = glm::scale(meshMat4, entityTransform->GetScale());
-					_shader->SetMat4("mesh", meshMat4);
+					_defaultShader->SetMat4("mesh", meshMat4);
 
 					glActiveTexture(GL_TEXTURE0 + 0);
 					// Set the sampler to the correct texture unit
-					glUniform1i(glGetUniformLocation(_shader->mId, "texture_albedo"), 0);
+					glUniform1i(glGetUniformLocation(_defaultShader->mId, "texture_albedo"), 0);
 					// Bind the texture
 					glBindTexture(GL_TEXTURE_2D, mesh.GetAlbedoTexture()->mId);
 
 					glActiveTexture(GL_TEXTURE0 + 1);
 					// Set the sampler to the correct texture unit
-					glUniform1i(glGetUniformLocation(_shader->mId, "texture_normal"), 1);
+					glUniform1i(glGetUniformLocation(_defaultShader->mId, "texture_normal"), 1);
 					// Bind the texture
 					glBindTexture(GL_TEXTURE_2D, mesh.GetNormalTexture()->mId);
 
@@ -152,15 +165,15 @@ namespace palmx::render
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		glViewport(0, 0, width, height);
 
-		_screenShader->Use();
+		_fullscreenQuadShader->Use();
 
-		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, _renderTexture);
-		// Problem might be because I'm binding the textures wrong?
+		glBindVertexArray(_fullscreenQuadVertexArray);
 
-		glBindVertexArray(_quadVertexArray);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+
 		glBindVertexArray(0);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		// Check and calls events
 		// Swap buffers

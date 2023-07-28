@@ -69,6 +69,4 @@ void DemoController::Update(EntityID entityId, float deltaTime)
 			camera->mZoom = 0.1f;
 		}
 	}
-
-	LOG_INFO("Position: " + glm::to_string(transform->GetRotation()));
 }
