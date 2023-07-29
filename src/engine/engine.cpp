@@ -59,7 +59,7 @@ namespace palmx
 		float delta_time = 0.0f;	// time between current frame and last frame
 		float last_frame = 0.0f;
 
-		const float physics_timestep = 0.5f;
+		const float physics_timestep = 0.02f;
 		float fixed_delta_time = 0.0f;
 
 		while (!glfwWindowShouldClose(gui_system->GetMainWindow()))
