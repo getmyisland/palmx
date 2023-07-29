@@ -4,52 +4,52 @@ namespace palmx
 {
 	Input::Input() {}
 
-	bool Input::GetKeyDown(int glfwKeyCode)
+	bool Input::GetKeyDown(int glfw_key_code)
 	{
-		if (!_keys.contains(glfwKeyCode)) 
+		if (!keys_.contains(glfw_key_code)) 
 		{
-			_keys.insert(std::pair(glfwKeyCode, Key()));
+			keys_.insert(std::pair(glfw_key_code, Key()));
 		}
 
-		auto iter = _keys.find(glfwKeyCode);
-		if (iter != _keys.end())
+		auto iter = keys_.find(glfw_key_code);
+		if (iter != keys_.end())
 		{
 			const Key& key = iter->second;
-			return key.mKeyState == KeyState::KeyDown;
+			return key.key_state == KeyState::KEY_DOWN;
 		}
 
 		return false;
 	}
 
-	bool Input::GetKey(int glfwKeyCode)
+	bool Input::GetKey(int glfw_key_code)
 	{
-		if (!_keys.contains(glfwKeyCode))
+		if (!keys_.contains(glfw_key_code))
 		{
-			_keys.insert(std::pair(glfwKeyCode, Key()));
+			keys_.insert(std::pair(glfw_key_code, Key()));
 		}
 
-		auto iter = _keys.find(glfwKeyCode);
-		if (iter != _keys.end())
+		auto iter = keys_.find(glfw_key_code);
+		if (iter != keys_.end())
 		{
 			const Key& key = iter->second;
-			return key.mKeyState == KeyState::KeyPress;
+			return key.key_state == KeyState::KEY_PRESS;
 		}
 
 		return false;
 	}
 
-	bool Input::GetKeyUp(int glfwKeyCode)
+	bool Input::GetKeyUp(int glfw_key_code)
 	{
-		if (!_keys.contains(glfwKeyCode))
+		if (!keys_.contains(glfw_key_code))
 		{
-			_keys.insert(std::pair(glfwKeyCode, Key()));
+			keys_.insert(std::pair(glfw_key_code, Key()));
 		}
 
-		auto iter = _keys.find(glfwKeyCode);
-		if (iter != _keys.end())
+		auto iter = keys_.find(glfw_key_code);
+		if (iter != keys_.end())
 		{
 			const Key& key = iter->second;
-			return key.mKeyState == KeyState::KeyUp;
+			return key.key_state == KeyState::KEY_UP;
 		}
 
 		return false;
@@ -57,98 +57,98 @@ namespace palmx
 
 	void Input::SetKeyStates(GLFWwindow* window)
 	{
-		for (auto& [key, value] : _keys)
+		for (auto& [key, value] : keys_)
 		{
 			SetKeyState(window, key, value);
 		}
 	}
 
-	void Input::SetKeyState(GLFWwindow* window, int glfwKeyCode, Key& key)
+	void Input::SetKeyState(GLFWwindow* window, int glfw_key_code, Key& key)
 	{
-		key.mLastKeyState = key.mKeyState;
+		key.last_key_state = key.key_state;
 
-		if (glfwGetKey(window, glfwKeyCode) == GLFW_PRESS)
+		if (glfwGetKey(window, glfw_key_code) == GLFW_PRESS)
 		{
-			if (key.mLastKeyState == KeyDefault)
+			if (key.last_key_state == KEY_DEFAULT)
 			{
-				key.mKeyState = KeyDown;
+				key.key_state = KEY_DOWN;
 			}
 			else
 			{
-				key.mKeyState = KeyPress;
+				key.key_state = KEY_PRESS;
 			}
 		}
 		else
 		{
-			if (key.mLastKeyState == KeyPress)
+			if (key.last_key_state == KEY_PRESS)
 			{
-				key.mKeyState = KeyUp;
+				key.key_state = KEY_UP;
 			}
 			else
 			{
-				key.mKeyState = KeyDefault;
+				key.key_state = KEY_DEFAULT;
 			}
 		}
 	}
 
-	void Input::MouseCallback(GLFWwindow* window, double yPosIn, double xPosIn)
+	void Input::MouseCallback(GLFWwindow* window, double y_pos_in, double x_pos_in)
 	{
-		float xPos = static_cast<float>(-xPosIn);
-		float yPos = static_cast<float>(-yPosIn);
+		float x_pos = static_cast<float>(-x_pos_in);
+		float y_pos = static_cast<float>(-y_pos_in);
 
-		if (_firstMouseInput)
+		if (is_first_mouse_input_)
 		{
-			_lastMousePos = glm::vec2(xPos, yPos);
-			_firstMouseInput = false;
+			last_mouse_pos_ = glm::vec2(x_pos, y_pos);
+			is_first_mouse_input_ = false;
 		}
 
-		float xOffset = xPos - _lastMousePos.x;
-		float yOffset = _lastMousePos.y - yPos; // Reversed since y-Coordinates go from bottom to top
+		float x_offset = x_pos - last_mouse_pos_.x;
+		float y_offset = last_mouse_pos_.y - y_pos; // Reversed since y-Coordinates go from bottom to top
 
-		_lastMousePos = glm::vec2(xPos, yPos);
-		_mouseOffset = glm::vec2(xOffset, yOffset);
+		last_mouse_pos_ = glm::vec2(x_pos, y_pos);
+		mouse_offset_ = glm::vec2(x_offset, y_offset);
 
-		_mouseCallbackThisFrame = true;
+		mouse_callback_this_frame_ = true;
 	}
 
 	glm::vec2 Input::GetMouseOffset()
 	{
-		return _mouseOffset;
+		return mouse_offset_;
 	}
 
 	void Input::ResetMouseOffset()
 	{
-		if (_mouseCallbackThisFrame)
+		if (mouse_callback_this_frame_)
 		{
-			_mouseCallbackThisFrame = false;
+			mouse_callback_this_frame_ = false;
 		}
 		else
 		{
-			_mouseOffset = glm::vec2();
+			mouse_offset_ = glm::vec2();
 		}
 	}
 
-	void Input::ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
+	void Input::ScrollCallback(GLFWwindow* window, double x_offset, double y_offset)
 	{
-		_mouseWheelOffset = glm::vec2(static_cast<float>(xOffset), static_cast<float>(yOffset));
+		mouse_wheel_offset_ = glm::vec2(static_cast<float>(x_offset), static_cast<float>(y_offset));
 
-		_mouseWheelCallbackThisFrame = true;
+		mouse_wheel_callback_this_frame_ = true;
 	}
 
 	glm::vec2 Input::GetMouseWheelOffset()
 	{
-		return _mouseWheelOffset;
+		return mouse_wheel_offset_;
 	}
 
 	void Input::ResetMouseWheelOffset()
 	{
-		if (_mouseWheelCallbackThisFrame)
+		if (mouse_wheel_callback_this_frame_)
 		{
-			_mouseWheelCallbackThisFrame = false;
+			mouse_wheel_callback_this_frame_ = false;
 		}
 		else
 		{
-			_mouseWheelOffset = glm::vec2();
+			mouse_wheel_offset_ = glm::vec2();
 		}
 	}
 }

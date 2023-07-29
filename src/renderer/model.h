@@ -22,8 +22,8 @@ namespace palmx::render
 	private:
 		Model();
 
-		std::vector<Mesh> _meshes;
-		std::string _directory;
+		std::vector<Mesh> meshes_;
+		std::string directory_;
 
 		void LoadModel(std::string path);
 		void ProcessNode(aiNode* node, const aiScene* scene);

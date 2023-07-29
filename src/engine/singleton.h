@@ -17,30 +17,30 @@ namespace palmx
 #endif
 			Singleton(void)
 		{
-			msSingleton = static_cast<T*>(this);
+			singleton_ = static_cast<T*>(this);
 		}
 		~Singleton(void)
 		{
-			msSingleton = 0;
+			singleton_ = 0;
 		}
 
 		// Get the singleton instance
 		static T& GetSingleton(void)
 		{
-			return (*msSingleton);
+			return (*singleton_);
 		}
 
 		// Get a pointer to the singleton instance
 		static T* GetSingletonPtr(void)
 		{
-			return msSingleton;
+			return singleton_;
 		}
 
 		Singleton(const Singleton<T>&) = delete;
 		Singleton& operator=(const Singleton<T>&) = delete;
 
 	protected:
-		static T* msSingleton;
+		static T* singleton_;
 	};
 }
 

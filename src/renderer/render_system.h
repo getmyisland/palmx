@@ -23,16 +23,16 @@ namespace palmx::render
 		void Render(GLFWwindow* window, Scene* scene);
 
 	private:
-		GLuint _renderTextureFramebuffer{ 0 };
-		GLuint _renderTexture{ 0 };
-		const unsigned int _renderTextureWidth{ 320 };
-		const unsigned int _renderTextureHeigth{ 224 };
+		GLuint render_texture_{ 0 };
+		GLuint render_texture_framebuffer_{ 0 };
+		const unsigned int render_texture_width_{ 256 };
+		const unsigned int render_texture_heigth_{ 224 };
 
-		GLuint _fullscreenQuadVertexBuffer{ 0 };
-		GLuint _fullscreenQuadVertexArray{ 0 };
-		std::shared_ptr<Shader> _fullscreenQuadShader{ nullptr };
+		GLuint fullscreen_quad_vertex_buffer_{ 0 };
+		GLuint fullscreen_quad_vertex_array_{ 0 };
+		std::shared_ptr<Shader> fullscreen_quad_shader_{ nullptr };
 
-		std::shared_ptr<Shader> _defaultShader{ nullptr };
+		std::shared_ptr<Shader> default_shader_{ nullptr };
 	};
 }
 

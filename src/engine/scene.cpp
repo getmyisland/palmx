@@ -6,44 +6,54 @@ namespace palmx
 {
 	glm::mat4 MainCamera::GetViewMatrix() const
 	{
-		return glm::lookAt(mTransform->GetPosition(), mTransform->GetPosition() + mTransform->GetForward(), mTransform->GetUp());
+		return glm::lookAt(transform_->GetPosition(), transform_->GetPosition() + transform_->GetForward(), transform_->GetUp());
+	}
+
+	const render::Camera* MainCamera::GetCamera() const
+	{
+		return camera_;
+	}
+
+	const Transform* MainCamera::GetTransform() const
+	{
+		return transform_;
 	}
 
 	std::shared_ptr<MainCamera> Scene::GetMainCamera() const
 	{
-		return _mainCamera;
+		return main_camera_;
 	}
 
-	void Scene::SetMainCamera(const MainCamera& mainCamera)
+	void Scene::SetMainCamera(const MainCamera& main_camera)
 	{
-		_mainCamera = std::make_shared<MainCamera>(mainCamera);
+		main_camera_ = std::make_shared<MainCamera>(main_camera);
 	}
 
 	std::vector<Entity> Scene::GetEntitiesInScene() const
 	{
-		return _entities;
+		return entities_;
 	}
 
 	EntityID Scene::NewEntity()
 	{
-		if (!_freeEntities.empty())
+		if (!free_entities_.empty())
 		{
-			EntityIndex newIndex = _freeEntities.back();
-			_freeEntities.pop_back();
-			EntityID newId = CreateEntityId(newIndex, GetEntityVersion(_entities[newIndex].mId));
-			_entities[newIndex].mId = newId;
-			return _entities[newIndex].mId;
+			EntityIndex new_index = free_entities_.back();
+			free_entities_.pop_back();
+			EntityID new_id = CreateEntityId(new_index, GetEntityVersion(entities_[new_index].id));
+			entities_[new_index].id = new_id;
+			return entities_[new_index].id;
 		}
-		_entities.push_back({ CreateEntityId(EntityIndex(_entities.size()), 0), ComponentMask() });
-		return _entities.back().mId;
+		entities_.push_back({ CreateEntityId(EntityIndex(entities_.size()), 0), ComponentMask() });
+		return entities_.back().id;
 	}
 
 	void Scene::DestroyEntity(EntityID id)
 	{
-		EntityID newId = CreateEntityId(EntityIndex(-1), GetEntityVersion(id) + 1);
-		_entities[GetEntityIndex(id)].mId = newId;
-		_entities[GetEntityIndex(id)].mComponentMask.reset();
-		_freeEntities.push_back(GetEntityIndex(id));
+		EntityID new_id = CreateEntityId(EntityIndex(-1), GetEntityVersion(id) + 1);
+		entities_[GetEntityIndex(id)].id = new_id;
+		entities_[GetEntityIndex(id)].component_mask.reset();
+		free_entities_.push_back(GetEntityIndex(id));
 	}
 
 	void Scene::OnLoad()

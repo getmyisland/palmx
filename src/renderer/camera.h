@@ -8,7 +8,7 @@ namespace palmx::render
 {
 	struct Camera
 	{
-		float mZoom{ 45 };
+		float zoom{ 45 };
 	};
 }
 

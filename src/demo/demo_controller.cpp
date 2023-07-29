@@ -12,11 +12,11 @@
 
 using namespace palmx;
 
-void DemoController::Update(EntityID entityId, float deltaTime)
+void DemoController::Update(EntityID entity_id, float delta_time)
 {
-	Scene* scene = Engine::GetSingletonPtr()->mSceneManager->GetActiveScene();
-	Transform* transform = scene->GetComponent<Transform>(entityId);
-	float velocity = _movementSpeed * deltaTime;
+	Scene* scene = Engine::GetSingletonPtr()->scene_manager->GetActiveScene();
+	Transform* transform = scene->GetComponent<Transform>(entity_id);
+	float velocity = movement_speed_ * delta_time;
 
 	if (Input::GetKey(GLFW_KEY_W))
 	{
@@ -42,11 +42,11 @@ void DemoController::Update(EntityID entityId, float deltaTime)
 		transform->SetPosition(right);
 	}
 
-	glm::vec2 mouseInput = Input::GetMouseOffset();
-	mouseInput.x *= _mouseSensitivity;
-	mouseInput.y *= _mouseSensitivity;
+	glm::vec2 mouse_input = Input::GetMouseOffset();
+	mouse_input.x *= mouse_sensitivity_;
+	mouse_input.y *= mouse_sensitivity_;
 
-	transform->SetRotation(transform->GetRotation() + glm::vec3(mouseInput.x, mouseInput.y, 0));
+	transform->SetRotation(transform->GetRotation() + glm::vec3(mouse_input.x, mouse_input.y, 0));
 
 	// Make sure that when x-Rotation is out of bounds, the screen doesn't get flipped
 	if (transform->GetRotation().x > 89.0f)
@@ -58,15 +58,15 @@ void DemoController::Update(EntityID entityId, float deltaTime)
 		transform->SetRotation(glm::vec3(-89.0f, transform->GetRotation().y, transform->GetRotation().z));
 	}
 
-	render::Camera* camera = scene->GetComponent<render::Camera>(entityId);
+	render::Camera* camera = scene->GetComponent<render::Camera>(entity_id);
 	if (camera != nullptr)
 	{
-		glm::vec2 mouseWheelInput = Input::GetMouseWheelOffset();
+		glm::vec2 mouse_wheel_input = Input::GetMouseWheelOffset();
 
-		camera->mZoom -= mouseWheelInput.y;
-		if (camera->mZoom < 0.1f)
+		camera->zoom -= mouse_wheel_input.y;
+		if (camera->zoom < 0.1f)
 		{
-			camera->mZoom = 0.1f;
+			camera->zoom = 0.1f;
 		}
 	}
 }

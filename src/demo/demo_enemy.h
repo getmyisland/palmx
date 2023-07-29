@@ -6,7 +6,7 @@
 class DemoEnemy : public palmx::ScriptBehavior
 {
 public:
-	virtual void Update(palmx::EntityID entityId, float deltaTime) override;
+	virtual void Update(palmx::EntityID entity_id, float delta_time) override;
 };
 
 #endif

@@ -7,14 +7,13 @@ namespace palmx
 
 	namespace physics
 	{
-
 		class PhysicsSystem
 		{
 		public:
-			void Step(float deltaTime, Scene* scene);
+			void Step(float delta_time, Scene* scene);
 
 		private:
-			void ResolveCollisions(float deltaTime, Scene* scene);
+			void ResolveCollisions(float delta_time, Scene* scene);
 		};
 	}
 }

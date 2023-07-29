@@ -16,7 +16,7 @@ namespace palmx::render
 
 	const std::vector<Mesh> Model::GetMeshes() const
 	{
-		return _meshes;
+		return meshes_;
 	}
 
 	void Model::LoadModel(std::string path)
@@ -30,7 +30,7 @@ namespace palmx::render
 			LOG_ERROR(std::string("ASSIMP::") + error);
 			return;
 		}
-		_directory = path.substr(0, path.find_last_of('/'));
+		directory_ = path.substr(0, path.find_last_of('/'));
 
 		ProcessNode(scene->mRootNode, scene);
 	}
@@ -41,7 +41,7 @@ namespace palmx::render
 		for (unsigned int i = 0; i < node->mNumMeshes; i++)
 		{
 			aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-			_meshes.push_back(ProcessMesh(mesh, scene));
+			meshes_.push_back(ProcessMesh(mesh, scene));
 		}
 		// Then do the same for each of its children
 		for (unsigned int i = 0; i < node->mNumChildren; i++)
@@ -64,22 +64,22 @@ namespace palmx::render
 			vector.x = mesh->mVertices[i].x;
 			vector.y = mesh->mVertices[i].y;
 			vector.z = mesh->mVertices[i].z;
-			vertex.mPosition = vector;
+			vertex.position = vector;
 
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
-			vertex.mNormal = vector;
+			vertex.normal = vector;
 
 			if (mesh->mTextureCoords[0]) // Does the mesh contain texture coordinates?
 			{
 				glm::vec2 vec;
 				vec.x = mesh->mTextureCoords[0][i].x;
 				vec.y = mesh->mTextureCoords[0][i].y;
-				vertex.mTexCoords = vec;
+				vertex.tex_coords = vec;
 			}
 			else
-				vertex.mTexCoords = glm::vec2(0.0f, 0.0f);
+				vertex.tex_coords = glm::vec2(0.0f, 0.0f);
 
 			vertices.push_back(vertex);
 		}
@@ -93,10 +93,10 @@ namespace palmx::render
 		}
 
 		// Create
-		std::string materialName = scene->mMaterials[mesh->mMaterialIndex]->GetName().C_Str();
-		std::shared_ptr<Texture> albedoTexture = ResourceLoader::LoadTexture(materialName + "_texture_albedo", std::string(_directory + "/" + materialName + "_texture_albedo.jpg").c_str());
-		std::shared_ptr<Texture> normalTexture = ResourceLoader::LoadTexture(materialName + "_texture_normal", std::string(_directory + "/" + materialName + "_texture_normal.jpg").c_str());
+		std::string material_name = scene->mMaterials[mesh->mMaterialIndex]->GetName().C_Str();
+		std::shared_ptr<Texture> albedo_texture = ResourceLoader::LoadTexture(material_name + "_texture_albedo", std::string(directory_ + "/" + material_name + "_texture_albedo.jpg").c_str());
+		std::shared_ptr<Texture> normal_texture = ResourceLoader::LoadTexture(material_name + "_texture_normal", std::string(directory_ + "/" + material_name + "_texture_normal.jpg").c_str());
 
-		return Mesh(vertices, indices, albedoTexture, normalTexture);
+		return Mesh(vertices, indices, albedo_texture, normal_texture);
 	}
 }

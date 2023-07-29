@@ -11,7 +11,7 @@ namespace palmx
 		InputSystem();
 		~InputSystem();
 		
-		void Start(GLFWwindow* mainWindow);
+		void Start(GLFWwindow* main_window);
 		void Stop();
 
 		void CollectInput(GLFWwindow* window);

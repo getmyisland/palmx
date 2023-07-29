@@ -10,48 +10,48 @@ namespace palmx
 {
 	enum KeyState
 	{
-		KeyDefault,
-		KeyDown,
-		KeyPress,
-		KeyUp
+		KEY_DEFAULT,
+		KEY_DOWN,
+		KEY_PRESS,
+		KEY_UP
 	};
 
 	struct Key
 	{
-		KeyState mKeyState{ KeyDefault };
-		KeyState mLastKeyState{ KeyDefault };
+		KeyState key_state{ KEY_DEFAULT };
+		KeyState last_key_state{ KEY_DEFAULT };
 	};
 
 	class Input
 	{
 	public:
-		static bool GetKeyDown(int glfwKeyCode);
-		static bool GetKey(int glfwKeyCode);
-		static bool GetKeyUp(int glfwKeyCode);
+		static bool GetKeyDown(int glfw_key_code);
+		static bool GetKey(int glfw_key_code);
+		static bool GetKeyUp(int glfw_key_code);
 
 		static void SetKeyStates(GLFWwindow* window);
 		
-		static void MouseCallback(GLFWwindow* window, double xPosIn, double yPosIn);
+		static void MouseCallback(GLFWwindow* window, double x_pos_in, double y_pos_in);
 		static glm::vec2 GetMouseOffset();
 		static void ResetMouseOffset();
 
-		static void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+		static void ScrollCallback(GLFWwindow* window, double x_offset, double y_offset);
 		static glm::vec2 GetMouseWheelOffset();
 		static void ResetMouseWheelOffset();
 
 	private:
 		Input();
 
-		static void SetKeyState(GLFWwindow* window, int glfwKeyCode, Key& key);
-		static inline std::unordered_map<int, Key> _keys = std::unordered_map<int, Key>();
+		static void SetKeyState(GLFWwindow* window, int glfw_key_code, Key& key);
+		static inline std::unordered_map<int, Key> keys_ = std::unordered_map<int, Key>();
 
-		static inline bool _firstMouseInput = true;
-		static inline bool _mouseCallbackThisFrame = false;
-		static inline glm::vec2 _lastMousePos = glm::vec2();
-		static inline glm::vec2 _mouseOffset = glm::vec2();
+		static inline bool is_first_mouse_input_ = true;
+		static inline bool mouse_callback_this_frame_ = false;
+		static inline glm::vec2 last_mouse_pos_ = glm::vec2();
+		static inline glm::vec2 mouse_offset_ = glm::vec2();
 
-		static inline bool _mouseWheelCallbackThisFrame = false;
-		static inline glm::vec2 _mouseWheelOffset = glm::vec2();
+		static inline bool mouse_wheel_callback_this_frame_ = false;
+		static inline glm::vec2 mouse_wheel_offset_ = glm::vec2();
 	};
 }
 

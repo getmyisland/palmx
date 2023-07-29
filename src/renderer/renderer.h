@@ -9,7 +9,7 @@ namespace palmx::render
 
 	struct Renderer
 	{
-		std::unique_ptr<Model> mModel{ nullptr };
+		std::unique_ptr<Model> model{ nullptr };
 	};
 }
 

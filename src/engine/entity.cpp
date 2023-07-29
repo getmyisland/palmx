@@ -2,5 +2,5 @@
 
 namespace palmx
 {
-	int sComponentCounter = 0;
+	int component_counter = 0;
 }

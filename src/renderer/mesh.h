@@ -13,25 +13,25 @@
 namespace palmx::render
 {
 	struct Vertex {
-		glm::vec3 mPosition;
-		glm::vec3 mNormal;
-		glm::vec2 mTexCoords;
-		glm::vec3 mTangent;
-		glm::vec3 mBitangent;
-		int mBoneIDs[MAX_BONE_INFLUENCE];
-		float mWeights[MAX_BONE_INFLUENCE];
+		glm::vec3 position;
+		glm::vec3 normal;
+		glm::vec2 tex_coords;
+		glm::vec3 tangent;
+		glm::vec3 bitangent;
+		int bone_ids[MAX_BONE_INFLUENCE];
+		float weights[MAX_BONE_INFLUENCE];
 	};
 
 	struct Texture
 	{
-		std::string mName;
-		unsigned int mId;
+		std::string name;
+		unsigned int id;
 	};
 
 	class Mesh
 	{
 	public:
-		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const std::shared_ptr<Texture> albedoTexture, const std::shared_ptr<Texture> normalTexture);
+		Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, const std::shared_ptr<Texture> albedo_texture, const std::shared_ptr<Texture> normal_texture);
 		~Mesh();
 
 		const std::vector<Vertex> GetVertices() const;
@@ -44,14 +44,14 @@ namespace palmx::render
 	private:
 		Mesh();
 
-		std::vector<Vertex>       _vertices;
-		std::vector<unsigned int> _indices;
-		std::shared_ptr<Texture> _albedoTexture;
-		std::shared_ptr<Texture> _normalTexture;
+		std::vector<Vertex>       vertices_;
+		std::vector<unsigned int> indices_;
+		std::shared_ptr<Texture> albedo_texture_;
+		std::shared_ptr<Texture> normal_texture_;
 
-		unsigned int _vao = 0;
-		unsigned int _vbo = 0;
-		unsigned int _ebo = 0;
+		unsigned int vao_ = 0;
+		unsigned int vbo_ = 0;
+		unsigned int ebo_ = 0;
 
 		void SetupMesh();
 	};

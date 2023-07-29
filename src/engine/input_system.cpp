@@ -8,10 +8,10 @@ namespace palmx
 	InputSystem::InputSystem() {};
 	InputSystem::~InputSystem() {};
 
-	void InputSystem::Start(GLFWwindow* mainWindow)
+	void InputSystem::Start(GLFWwindow* main_window)
 	{
-		glfwSetCursorPosCallback(mainWindow, Input::MouseCallback);
-		glfwSetScrollCallback(mainWindow, Input::ScrollCallback);
+		glfwSetCursorPosCallback(main_window, Input::MouseCallback);
+		glfwSetScrollCallback(main_window, Input::ScrollCallback);
 
 		LOG_INFO("Input System started");
 	}

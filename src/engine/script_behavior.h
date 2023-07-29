@@ -9,7 +9,7 @@ namespace palmx
 	{
 	public:
 		// Gets called each frame
-		virtual void Update(EntityID entityID, float deltaTime) = 0;
+		virtual void Update(EntityID entity_id, float delta_time) = 0;
 	};
 }
 

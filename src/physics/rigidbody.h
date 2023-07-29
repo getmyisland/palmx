@@ -5,13 +5,12 @@
 
 namespace palmx::physics
 {
-	class Rigidbody
+	struct Rigidbody
 	{
-	public:
-		glm::vec3 mVelocity = glm::vec3();
-		glm::vec3 mForce = glm::vec3();
-		float mMass = 10;
-		bool mIsDynamic = true;
+		glm::vec3 velocity = glm::vec3();
+		glm::vec3 force = glm::vec3();
+		float mass = 10;
+		bool is_dynamic = true;
 	};
 }
 

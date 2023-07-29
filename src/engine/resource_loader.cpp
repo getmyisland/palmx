@@ -20,8 +20,8 @@
 
 namespace palmx
 {
-	std::unordered_map<std::string, std::shared_ptr<render::Shader>> palmx::ResourceLoader::_cachedShaders;
-	std::unordered_map<std::string, std::shared_ptr<render::Texture>> palmx::ResourceLoader::_cachedTextures;
+	std::unordered_map<std::string, std::shared_ptr<render::Shader>> palmx::ResourceLoader::cached_shaders_;
+	std::unordered_map<std::string, std::shared_ptr<render::Texture>> palmx::ResourceLoader::cached_textures_;
 
 	ResourceLoader::ResourceLoader() {}
 	ResourceLoader::~ResourceLoader() {}
@@ -41,58 +41,57 @@ namespace palmx
 		}
 	}
 
-	std::shared_ptr<render::Shader> ResourceLoader::LoadShader(std::string name, const char* vertexShaderSource, const char* fragmentShaderSource)
+	std::shared_ptr<render::Shader> ResourceLoader::LoadShader(std::string name, const char* vertex_shader_source, const char* fragment_shader_source)
 	{
 		// Check if shader has been loader already, if so; return earlier loaded shader
-		auto it = _cachedShaders.find(name);
-		if (it != _cachedShaders.end())
+		auto it = cached_shaders_.find(name);
+		if (it != cached_shaders_.end())
 		{
 			return it->second;
 		}
 
-		std::shared_ptr<render::Shader> shader(new render::Shader);
 		// Retrieve the vertex/fragment source code from filePath
-		std::string vertexCode;
-		std::string fragmentCode;
-		std::ifstream vShaderFile;
-		std::ifstream fShaderFile;
+		std::string vertex_shader_code;
+		std::string fragment_shader_code;
+		std::ifstream vertex_shader_file;
+		std::ifstream fragment_shader_file;
 		// Ensures ifstream objects can throw exceptions:
-		vShaderFile.exceptions(std::ifstream::badbit);
-		fShaderFile.exceptions(std::ifstream::badbit);
+		vertex_shader_file.exceptions(std::ifstream::badbit);
+		fragment_shader_file.exceptions(std::ifstream::badbit);
 		try
 		{
 			// Open files
-			vShaderFile.open(vertexShaderSource);
-			fShaderFile.open(fragmentShaderSource);
-			std::stringstream vShaderStream, fShaderStream;
+			vertex_shader_file.open(vertex_shader_source);
+			fragment_shader_file.open(fragment_shader_source);
+			std::stringstream vertex_shader_stream, fragment_shader_stream;
 			// Read file's buffer contents into streams
-			vShaderStream << vShaderFile.rdbuf();
-			fShaderStream << fShaderFile.rdbuf();
+			vertex_shader_stream << vertex_shader_file.rdbuf();
+			fragment_shader_stream << fragment_shader_file.rdbuf();
 			// close file handlers
-			vShaderFile.close();
-			fShaderFile.close();
+			vertex_shader_file.close();
+			fragment_shader_file.close();
 			// Convert stream into string
-			vertexCode = vShaderStream.str();
-			fragmentCode = fShaderStream.str();
+			vertex_shader_code = vertex_shader_stream.str();
+			fragment_shader_code = fragment_shader_stream.str();
 		}
 		catch (std::ifstream::failure e)
 		{
 			LOG_ERROR("Shader file not successfully read");
 		}
-		const GLchar* vShaderCode = vertexCode.c_str();
-		const GLchar* fShaderCode = fragmentCode.c_str();
+		const GLchar* vertex_shader_code_c = vertex_shader_code.c_str();
+		const GLchar* fragment_shader_code_c = fragment_shader_code.c_str();
 
 		// Now create and store shader object from source code
-		shader->Compile(vShaderCode, fShaderCode, std::string(vertexShaderSource).substr(0, std::string(vertexShaderSource).find_last_of('/')));
-		shader->mName = name;
-		_cachedShaders[name] = shader;
+		std::shared_ptr<render::Shader> shader(new render::Shader(name));
+		shader->Compile(vertex_shader_code_c, fragment_shader_code_c, std::string(vertex_shader_source).substr(0, std::string(vertex_shader_source).find_last_of('/')));
+		cached_shaders_[name] = shader;
 		return shader;
 	}
 
 	std::shared_ptr<render::Shader> ResourceLoader::GetShader(std::string name)
 	{
-		auto it = _cachedShaders.find(name);
-		if (it != _cachedShaders.end())
+		auto it = cached_shaders_.find(name);
+		if (it != cached_shaders_.end())
 		{
 			return it->second;
 		}
@@ -102,32 +101,32 @@ namespace palmx
 		}
 	}
 
-	std::shared_ptr<render::Texture> ResourceLoader::LoadTexture(std::string name, const char* textureSource)
+	std::shared_ptr<render::Texture> ResourceLoader::LoadTexture(std::string name, const char* texture_source)
 	{
 		// Check if texture has been loader already, if so; return earlier loaded texture
-		auto it = _cachedTextures.find(name);
-		if (it != _cachedTextures.end())
+		auto it = cached_textures_.find(name);
+		if (it != cached_textures_.end())
 		{
 			return it->second;
 		}
 
 		std::shared_ptr<render::Texture> texture(new render::Texture);
-		unsigned int textureID;
-		glGenTextures(1, &textureID);
+		unsigned int texture_id;
+		glGenTextures(1, &texture_id);
 
-		int width, height, nrComponents;
-		unsigned char* data = stbi_load(textureSource, &width, &height, &nrComponents, 0);
+		int width, height, num_components;
+		unsigned char* data = stbi_load(texture_source, &width, &height, &num_components, 0);
 		if (data)
 		{
 			GLenum format = GL_RGB;
-			if (nrComponents == 1)
+			if (num_components == 1)
 				format = GL_RED;
-			else if (nrComponents == 3)
+			else if (num_components == 3)
 				format = GL_RGB;
-			else if (nrComponents == 4)
+			else if (num_components == 4)
 				format = GL_RGBA;
 
-			glBindTexture(GL_TEXTURE_2D, textureID);
+			glBindTexture(GL_TEXTURE_2D, texture_id);
 			glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -136,25 +135,25 @@ namespace palmx
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			
-			texture->mId = textureID;
+			texture->id = texture_id;
 
 			stbi_image_free(data);
 		}
 		else
 		{
-			LOG_ERROR("Texture failed to load at path: " + std::string(textureSource));
+			LOG_ERROR("Texture failed to load at path: " + std::string(texture_source));
 			stbi_image_free(data);
 		}
 
 		// Store and return
-		_cachedTextures[name] = texture;
+		cached_textures_[name] = texture;
 		return texture;
 	}
 
 	std::shared_ptr<render::Texture> ResourceLoader::GetTexture(std::string name)
 	{
-		auto it = _cachedTextures.find(name);
-		if (it != _cachedTextures.end())
+		auto it = cached_textures_.find(name);
+		if (it != cached_textures_.end())
 		{
 			return it->second;
 		}

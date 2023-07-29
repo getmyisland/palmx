@@ -10,30 +10,30 @@ namespace palmx
 	SceneManager::SceneManager() { }
 	SceneManager::~SceneManager() { }
 
-	void SceneManager::Update(float deltaTime)
+	void SceneManager::Update(float delta_time)
 	{
 		for (EntityID ent : SceneView<ScriptHook>(*GetActiveScene()))
 		{
-			for (auto& scriptBehavior : GetActiveScene()->GetComponent<ScriptHook>(ent)->GetScriptBehavior())
+			for (auto& script_behavior : GetActiveScene()->GetComponent<ScriptHook>(ent)->GetScriptBehavior())
 			{
-				scriptBehavior->Update(ent, deltaTime);
+				script_behavior->Update(ent, delta_time);
 			}
 		}
 	}
 
 	Scene* SceneManager::GetActiveScene() const
 	{
-		return _activeScene.get();
+		return active_scene_.get();
 	}
 
 	void SceneManager::SetActiveScene(Scene& scene)
 	{
-		if (_activeScene != nullptr)
+		if (active_scene_ != nullptr)
 		{
-			_activeScene->OnUnload();
+			active_scene_->OnUnload();
 		}
 
-		_activeScene.reset(&scene);
-		_activeScene->OnLoad();
+		active_scene_.reset(&scene);
+		active_scene_->OnLoad();
 	}
 }

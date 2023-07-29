@@ -12,15 +12,12 @@ namespace palmx::render
 	class Shader
 	{
 	public:
-		Shader();
+		Shader(const std::string name) : name_(name) {}
 		~Shader();
 
-		std::string mName;
-		unsigned int mId = 0;
-
-		void Compile(const char* vertexSource, const char* fragmentSource, std::string directory);
+		void Compile(const char* vertex_source, const char* fragment_source, std::string directory);
 		// Pre-processes the source code for custom #pragma directives
-		std::string PreProcess(std::string shaderCode, std::string directory);
+		std::string PreProcess(std::string shader_code, std::string directory);
 
 		void Use() const;
 
@@ -32,10 +29,15 @@ namespace palmx::render
 	private:
 		enum ShaderType
 		{
-			Vertex,
-			Fragment,
-			Program
+			VERTEX,
+			FRAGMENT,
+			PROGRAM
 		};
+
+		Shader();
+
+		const std::string name_{ "shader" };
+		unsigned int id_{ 0 };
 
 		void CheckCompileErrors(GLuint object, ShaderType type);
 	};

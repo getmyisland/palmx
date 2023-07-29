@@ -7,11 +7,11 @@
 class DemoController : public palmx::ScriptBehavior
 {
 public:
-	void Update(palmx::EntityID entityId, float deltaTime) override;
+	void Update(palmx::EntityID entity_id, float delta_time) override;
 
 private:
-	float _movementSpeed = 3.5f;
-	float _mouseSensitivity = 0.1f;
+	float movement_speed_ = 3.5f;
+	float mouse_sensitivity_ = 0.1f;
 };
 
 #endif

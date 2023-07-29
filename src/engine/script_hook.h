@@ -13,29 +13,29 @@ namespace palmx
 	public:
 		std::vector<ScriptBehavior*> GetScriptBehavior()
 		{
-			return _scriptBehaviors;
+			return script_behaviors_;
 		}
 
-		void AddScriptBehavior(ScriptBehavior& scriptBehavior)
+		void AddScriptBehavior(ScriptBehavior& script_behavior)
 		{
-			_scriptBehaviors.push_back(&scriptBehavior);
+			script_behaviors_.push_back(&script_behavior);
 		}
 
-		void RemoveScriptBehavior(ScriptBehavior& scriptBehavior)
+		void RemoveScriptBehavior(ScriptBehavior& script_behavior)
 		{
 			// Find the iterator pointing to the element in the vector
-			auto it = std::find_if(_scriptBehaviors.begin(), _scriptBehaviors.end(),
-				[&scriptBehavior](ScriptBehavior* element) { return element == &scriptBehavior; });
+			auto it = std::find_if(script_behaviors_.begin(), script_behaviors_.end(),
+				[&script_behavior](ScriptBehavior* element) { return element == &script_behavior; });
 
 			// If the element is found, remove it from the vector
-			if (it != _scriptBehaviors.end())
+			if (it != script_behaviors_.end())
 			{
-				_scriptBehaviors.erase(it);
+				script_behaviors_.erase(it);
 			}
 		}
 
 	private:
-		std::vector<ScriptBehavior*> _scriptBehaviors;
+		std::vector<ScriptBehavior*> script_behaviors_;
 	};
 }
 

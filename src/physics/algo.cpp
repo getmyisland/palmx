@@ -10,20 +10,20 @@ namespace palmx::physics::algo
 {
 	CollisionPoints FindSphereSphereCollisionPoints(const SphereCollider* a, const Transform* ta, const SphereCollider* b, const Transform* tb)
 	{
-		glm::vec3 centerA = ta->GetPosition() + a->mCenter;
-		glm::vec3 centerB = tb->GetPosition() + b->mCenter;
+		glm::vec3 center_a = ta->GetPosition() + a->center;
+		glm::vec3 center_b = tb->GetPosition() + b->center;
 
-		glm::vec3 distanceVec = centerB - centerA;
-		float distance = glm::length(distanceVec);
+		glm::vec3 distance_vec = center_b - center_a;
+		float distance = glm::length(distance_vec);
 
-		float sumRadius = a->mRadius + b->mRadius;
+		float sum_radius = a->radius + b->radius;
 
-		if (distance <= sumRadius)
+		if (distance <= sum_radius)
 		{
-			glm::vec3 collisionNormal = glm::normalize(distanceVec);
-			float collisionDepth = sumRadius - distance;
+			glm::vec3 collision_normal = glm::normalize(distance_vec);
+			float collision_depth = sum_radius - distance;
 
-			return { centerA - collisionNormal * a->mRadius, centerB - collisionNormal * b->mRadius, collisionNormal, collisionDepth, true };
+			return { center_a - collision_normal * a->radius, center_b - collision_normal * b->radius, collision_normal, collision_depth, true };
 		}
 
 		return {};
@@ -31,16 +31,16 @@ namespace palmx::physics::algo
 
 	CollisionPoints FindSpherePlaneCollisionPoints(const SphereCollider* a, const Transform* ta, const PlaneCollider* b, const Transform* tb)
 	{
-		glm::vec3 centerA = ta->GetPosition() + a->mCenter;
+		glm::vec3 center_a = ta->GetPosition() + a->center;
 
-		float distance = glm::dot(centerA, b->mPlane) - b->mDistance;
+		float distance = glm::dot(center_a, b->plane) - b->distance;
 
-		if (distance <= a->mRadius)
+		if (distance <= a->radius)
 		{
-			glm::vec3 collisionNormal = glm::normalize(b->mPlane);
-			float collisionDepth = a->mRadius - distance;
+			glm::vec3 collision_normal = glm::normalize(b->plane);
+			float collision_depth = a->radius - distance;
 
-			return { centerA - collisionNormal * a->mRadius, centerA - collisionNormal * (a->mRadius - collisionDepth), collisionNormal, collisionDepth, true };
+			return { center_a - collision_normal * a->radius, center_a - collision_normal * (a->radius - collision_depth), collision_normal, collision_depth, true };
 		}
 
 		return {};
@@ -52,11 +52,11 @@ namespace palmx::physics::algo
 		CollisionPoints points = b->TestCollision(tb, a, ta);
 
 		// Swap the points and normal
-		glm::vec3 tempA = points.mA;
-		points.mA = points.mB;
-		points.mB = tempA;
+		glm::vec3 temp_a = points.a;
+		points.a = points.b;
+		points.b = temp_a;
 
-		points.mNormal = -points.mNormal;
+		points.normal = -points.normal;
 
 		return points;
 	}

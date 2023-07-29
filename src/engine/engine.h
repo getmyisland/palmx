@@ -30,8 +30,8 @@ namespace palmx
 
 	struct Config
 	{
-		unsigned int mWidth{ 800 };
-		unsigned int mHeight{ 600 };
+		unsigned int width{ 800 };
+		unsigned int height{ 600 };
 	};
 
 	class Engine : public Singleton<Engine>
@@ -43,13 +43,13 @@ namespace palmx
 		static Engine& GetSingleton(void);
 		static Engine* GetSingletonPtr(void);
 
-		std::unique_ptr<gui::GuiSystem> mGuiSystem;
-		std::unique_ptr<InputSystem> mInputSystem;
-		std::unique_ptr<physics::PhysicsSystem> mPhysicsSystem;
-		std::unique_ptr<render::RenderSystem> mRenderSystem;
-		std::unique_ptr<SceneManager> mSceneManager;
+		std::unique_ptr<gui::GuiSystem> gui_system;
+		std::unique_ptr<InputSystem> input_system;
+		std::unique_ptr<physics::PhysicsSystem> physics_system;
+		std::unique_ptr<render::RenderSystem> render_system;
+		std::unique_ptr<SceneManager> scene_manager;
 
-		void Run(Scene& entryScene);
+		void Run(Scene& entry_scene);
 		void Kill();
 
 	private:

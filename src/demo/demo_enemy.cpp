@@ -7,11 +7,11 @@
 
 #include <glm/gtx/string_cast.hpp>
 
-void DemoEnemy::Update(palmx::EntityID entityId, float deltaTime)
+void DemoEnemy::Update(palmx::EntityID entity_id, float delta_time)
 {
-	palmx::Scene* scene = palmx::Engine::GetSingletonPtr()->mSceneManager->GetActiveScene();
+	palmx::Scene* scene = palmx::Engine::GetSingletonPtr()->scene_manager->GetActiveScene();
 
-	palmx::Transform* transform = scene->GetComponent<palmx::Transform>(entityId);
+	palmx::Transform* transform = scene->GetComponent<palmx::Transform>(entity_id);
 	if (transform != nullptr)
 	{
 		//LOG_INFO("Position: " + glm::to_string(transform->GetPosition()));

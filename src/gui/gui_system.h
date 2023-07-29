@@ -18,7 +18,7 @@ namespace palmx::gui
 		void ResizeMainWindow(unsigned int width, unsigned int height);
 
 	private:
-		GLFWwindow* _mainWindow = nullptr;
+		GLFWwindow* main_window_ = nullptr;
 	};
 }
 

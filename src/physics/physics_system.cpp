@@ -12,7 +12,7 @@ namespace palmx::physics
 {
 	const glm::vec3 gravity{ glm::vec3(0, -9.81, 0) };
 
-	void PhysicsSystem::Step(float deltaTime, Scene* scene)
+	void PhysicsSystem::Step(float delta_time, Scene* scene)
 	{
 		//ResolveCollisions(deltaTime, scene);
 
@@ -22,38 +22,38 @@ namespace palmx::physics
 			Transform* transform = scene->GetComponent<Transform>(entity);
 
 			// Apply gravity
-			if (rigidbody->mIsDynamic)
+			if (rigidbody->is_dynamic)
 			{
-				rigidbody->mForce += rigidbody->mMass * gravity;
+				rigidbody->force += rigidbody->mass * gravity;
 
-				rigidbody->mVelocity += (rigidbody->mForce / rigidbody->mMass) * deltaTime;
-				transform->SetPosition(transform->GetPosition() + (rigidbody->mVelocity * deltaTime));
+				rigidbody->velocity += (rigidbody->force / rigidbody->mass) * delta_time;
+				transform->SetPosition(transform->GetPosition() + (rigidbody->velocity * delta_time));
 
-				rigidbody->mForce = glm::vec3();
+				rigidbody->force = glm::vec3();
 			}
 		}
 	}
 
-	void PhysicsSystem::ResolveCollisions(float deltaTime, Scene* scene)
+	void PhysicsSystem::ResolveCollisions(float delta_time, Scene* scene)
 	{
-		for (EntityID entityA : SceneView<Transform, Collider>(*scene))
+		for (EntityID entity_a : SceneView<Transform, Collider>(*scene))
 		{
-			Transform* transformA = scene->GetComponent<Transform>(entityA);
-			Collider* colliderA = scene->GetComponent<Collider>(entityA);
+			Transform* transform_a = scene->GetComponent<Transform>(entity_a);
+			Collider* collider_a = scene->GetComponent<Collider>(entity_a);
 
-			for (EntityID entityB : SceneView<Transform, Collider>(*scene))
+			for (EntityID entity_b : SceneView<Transform, Collider>(*scene))
 			{
-				if (entityA == entityB)
+				if (entity_a == entity_b)
 				{
 					break;
 				}
 
-				Transform* transformB = scene->GetComponent<Transform>(entityB);
-				Collider* colliderB = scene->GetComponent<Collider>(entityB);
+				Transform* transform_b = scene->GetComponent<Transform>(entity_b);
+				Collider* collider_b = scene->GetComponent<Collider>(entity_b);
 
-				CollisionPoints points = colliderA->TestCollision(transformA, colliderB, transformB);
+				CollisionPoints points = collider_a->TestCollision(transform_a, collider_b, transform_b);
 
-				if (points.mHasCollision)
+				if (points.has_collided)
 				{
 
 				}

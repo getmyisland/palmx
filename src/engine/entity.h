@@ -5,12 +5,12 @@
 
 namespace palmx
 {
-	extern int sComponentCounter;
+	extern int component_counter;
 	template <class T>
 	int GetComponentId()
 	{
-		static int sComponentId = sComponentCounter++;
-		return sComponentId;
+		static int component_id = component_counter++;
+		return component_id;
 	}
 
 	using EntityIndex = unsigned int;
@@ -38,41 +38,42 @@ namespace palmx
 		return (id >> 32) != EntityIndex(-1);
 	}
 
-	const int MAX_COMPONENTS = 32;
-	const int MAX_ENTITIES = 100;
-	typedef std::bitset<MAX_COMPONENTS> ComponentMask;
+	const int max_components = 32;
+	const int max_entities = 100;
+	typedef std::bitset<max_components> ComponentMask;
 
 	struct Entity
 	{
-		EntityID mId;
-		ComponentMask mComponentMask;
+		EntityID id;
+		ComponentMask component_mask;
 	};
 
-	struct ComponentPool
+	class ComponentPool
 	{
-		ComponentPool(size_t elementSize)
+	public:
+		ComponentPool(size_t element_size)
 		{
 			// Allocate enough memory to hold the max number of components, each with element size
-			_elementSize = elementSize;
-			_data = new char[_elementSize * MAX_COMPONENTS];
+			element_size_ = element_size;
+			data_ = new char[element_size_ * max_components];
 		}
 
 		~ComponentPool()
 		{
-			delete[] _data;
+			delete[] data_;
 		}
 
 		inline void* Get(size_t index)
 		{
 			// Looking up the component at the desired index
-			return _data + index * _elementSize;
+			return data_ + index * element_size_;
 		}
 
 	private:
 		ComponentPool() {}
 
-		char* _data{ nullptr };
-		size_t _elementSize{ 0 };
+		char* data_{ nullptr };
+		size_t element_size_{ 0 };
 	};
 }
 

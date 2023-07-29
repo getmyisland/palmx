@@ -8,86 +8,86 @@
 
 namespace palmx
 {
-	template<> Engine* Singleton<Engine>::msSingleton = 0;
+	template<> Engine* Singleton<Engine>::singleton_ = 0;
 	Engine* Engine::GetSingletonPtr(void)
 	{
-		return msSingleton;
+		return singleton_;
 	}
 	Engine& Engine::GetSingleton(void)
 	{
-		return (*msSingleton);
+		return (*singleton_);
 	}
 
 	Engine::Engine() {}
 
 	Engine::Engine(Config& config)
 	{
-		mGuiSystem = std::make_unique<gui::GuiSystem>();
-		mGuiSystem->Start(config.mWidth, config.mHeight);
+		gui_system = std::make_unique<gui::GuiSystem>();
+		gui_system->Start(config.width, config.height);
 
-		mInputSystem = std::make_unique<InputSystem>();
-		mInputSystem->Start(mGuiSystem->GetMainWindow());
+		input_system = std::make_unique<InputSystem>();
+		input_system->Start(gui_system->GetMainWindow());
 
-		mRenderSystem = std::make_unique<render::RenderSystem>();
-		mRenderSystem->Start();
+		render_system = std::make_unique<render::RenderSystem>();
+		render_system->Start();
 
-		mSceneManager = std::make_unique<SceneManager>();
+		scene_manager = std::make_unique<SceneManager>();
 	}
 
 	palmx::Engine::~Engine()
 	{
-		mSceneManager.release();
-		mPhysicsSystem.release();
-		mRenderSystem.release();
-		mInputSystem.release();
-		mGuiSystem.release();
+		scene_manager.release();
+		physics_system.release();
+		render_system.release();
+		input_system.release();
+		gui_system.release();
 	}
 
-	void Engine::Run(Scene& entryScene)
+	void Engine::Run(Scene& entry_scene)
 	{
-		mSceneManager->SetActiveScene(entryScene);
+		scene_manager->SetActiveScene(entry_scene);
 
 		GameLoop();
 
-		mRenderSystem->Stop();
-		mInputSystem->Stop();
-		mGuiSystem->Stop();
+		render_system->Stop();
+		input_system->Stop();
+		gui_system->Stop();
 	}
 
 	void Engine::GameLoop()
 	{
-		float deltaTime = 0.0f;	// time between current frame and last frame
-		float lastFrame = 0.0f;
+		float delta_time = 0.0f;	// time between current frame and last frame
+		float last_frame = 0.0f;
 
-		const float PHYSICS_TIMESTEP = 0.5;
-		float fixedDeltaTime = 0.0f;
+		const float physics_timestep = 0.5f;
+		float fixed_delta_time = 0.0f;
 
-		while (!glfwWindowShouldClose(mGuiSystem->GetMainWindow()))
+		while (!glfwWindowShouldClose(gui_system->GetMainWindow()))
 		{
-			float currentFrame = static_cast<float>(glfwGetTime());
-			deltaTime = currentFrame - lastFrame;
-			lastFrame = currentFrame;
+			float current_frame = static_cast<float>(glfwGetTime());
+			delta_time = current_frame - last_frame;
+			last_frame = current_frame;
 
-			fixedDeltaTime += deltaTime;
-			if (fixedDeltaTime >= PHYSICS_TIMESTEP)
+			fixed_delta_time += delta_time;
+			if (fixed_delta_time >= physics_timestep)
 			{
-				fixedDeltaTime = 0;
-				mPhysicsSystem->Step(deltaTime, mSceneManager->GetActiveScene());
+				fixed_delta_time = 0;
+				physics_system->Step(delta_time, scene_manager->GetActiveScene());
 			}
 
 			// First collect the input
-			mInputSystem->CollectInput(mGuiSystem->GetMainWindow());
+			input_system->CollectInput(gui_system->GetMainWindow());
 
 			// Then update all entities in the scene
-			mSceneManager->Update(deltaTime);
+			scene_manager->Update(delta_time);
 
 			// Now render the scene
-			mRenderSystem->Render(mGuiSystem->GetMainWindow(), mSceneManager->GetActiveScene());
+			render_system->Render(gui_system->GetMainWindow(), scene_manager->GetActiveScene());
 		}
 	}
 
 	void Engine::Kill()
 	{
-		glfwSetWindowShouldClose(mGuiSystem->GetMainWindow(), true);
+		glfwSetWindowShouldClose(gui_system->GetMainWindow(), true);
 	}
 }

@@ -13,14 +13,14 @@ namespace palmx
 		SceneManager();
 		~SceneManager();
 
-		void Update(float deltaTime);
+		void Update(float delta_time);
 
 	public:
 		Scene* GetActiveScene() const;
 		void SetActiveScene(Scene& scene);
 
 	private:
-		std::unique_ptr<Scene> _activeScene;
+		std::unique_ptr<Scene> active_scene_;
 	};
 }
 
