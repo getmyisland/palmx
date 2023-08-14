@@ -13,12 +13,12 @@ namespace palmx
 		glfwSetCursorPosCallback(main_window, Input::MouseCallback);
 		glfwSetScrollCallback(main_window, Input::ScrollCallback);
 
-		LOG_INFO("Input System started");
+		Logger::Info("Input System started");
 	}
 
 	void InputSystem::Stop()
 	{
-		LOG_INFO("Input System stopped");
+		Logger::Info("Input System stopped");
 	}
 
 	void InputSystem::CollectInput(GLFWwindow* window)

@@ -6,8 +6,8 @@ namespace palmx::gui
 {
 	void FramebufferSizeCallback(GLFWwindow* window, int width, int height);
 
-	GuiSystem::GuiSystem() { }
-	GuiSystem::~GuiSystem() { }
+	GuiSystem::GuiSystem() {}
+	GuiSystem::~GuiSystem() {}
 
 	void GuiSystem::Start(unsigned int width, unsigned int height)
 	{
@@ -25,7 +25,7 @@ namespace palmx::gui
 		main_window_ = glfwCreateWindow(width, height, "palmx", NULL, NULL);
 		if (main_window_ == nullptr)
 		{
-			LOG_ERROR("Failed to create GLFW window.");
+			Logger::Error("Failed to create GLFW window.");
 			glfwTerminate();
 			return;
 		}
@@ -34,14 +34,14 @@ namespace palmx::gui
 
 		glfwSetInputMode(main_window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-		LOG_INFO("Gui System started");
+		Logger::Info("Gui System started");
 	}
 
 	void GuiSystem::Stop()
 	{
 		glfwTerminate();
 
-		LOG_INFO("Gui System stopped");
+		Logger::Info("Gui System stopped");
 	}
 
 	GLFWwindow* GuiSystem::GetMainWindow() const

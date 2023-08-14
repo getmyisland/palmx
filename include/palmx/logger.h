@@ -1,10 +1,6 @@
 #ifndef PALMX_LOGGER_H
 #define PALMX_LOGGER_H
 
-#define LOG_INFO palmx::Logger::Info
-#define LOG_WARNING palmx::Logger::Warning
-#define LOG_ERROR palmx::Logger::Error
-
 #include <source_location>
 #include <string>
 

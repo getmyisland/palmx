@@ -85,7 +85,7 @@ namespace palmx::render
 		// Load all OpenGL function pointers
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 		{
-			LOG_ERROR("Failed to initialize GLAD");
+			Logger::Error("Failed to initialize GLAD");
 			return;
 		}
 
@@ -145,12 +145,12 @@ namespace palmx::render
 		fullscreen_quad_shader_ = std::unique_ptr<Shader>(new Shader("fullscreen_quad_shader_"));
 		fullscreen_quad_shader_->Compile(fullscreen_quad_vertex_shader, fullscreen_quad_fragment_shader, "");
 
-		LOG_INFO("Render System started");
+		Logger::Info("Render System started");
 	}
 
 	void RenderSystem::Stop()
 	{
-		LOG_INFO("Render System stopped");
+		Logger::Info("Render System stopped");
 	}
 
 	void RenderSystem::Render(GLFWwindow* window, Scene* scene)

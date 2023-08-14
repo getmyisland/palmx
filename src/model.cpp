@@ -27,7 +27,7 @@ namespace palmx::render
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 		{
 			auto error = importer.GetErrorString();
-			LOG_ERROR(std::string("ASSIMP::") + error);
+			Logger::Error(std::string("ASSIMP::") + error);
 			return;
 		}
 		directory_ = path.substr(0, path.find_last_of('/'));

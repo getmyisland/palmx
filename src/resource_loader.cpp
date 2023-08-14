@@ -36,7 +36,7 @@ namespace palmx
 		}
 		else
 		{
-			LOG_WARNING("Could not get project root directory");
+			Logger::Warning("Could not get project root directory");
 			return std::string("");
 		}
 	}
@@ -76,7 +76,7 @@ namespace palmx
 		}
 		catch (std::ifstream::failure e)
 		{
-			LOG_ERROR("Shader file not successfully read");
+			Logger::Error("Shader file not successfully read");
 		}
 		const GLchar* vertex_shader_code_c = vertex_shader_code.c_str();
 		const GLchar* fragment_shader_code_c = fragment_shader_code.c_str();
@@ -141,7 +141,7 @@ namespace palmx
 		}
 		else
 		{
-			LOG_ERROR("Texture failed to load at path: " + std::string(texture_source));
+			Logger::Error("Texture failed to load at path: " + std::string(texture_source));
 			stbi_image_free(data);
 		}
 

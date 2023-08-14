@@ -111,7 +111,7 @@ namespace palmx::render
             if (!success)
             {
                 glGetShaderInfoLog(object, 1024, NULL, info_log);
-                LOG_ERROR("Shader compilation failed for type " + std::to_string(type) + "\n" + std::string(info_log));
+                Logger::Error("Shader compilation failed for type " + std::to_string(type) + "\n" + std::string(info_log));
             }
         }
         else
@@ -120,7 +120,7 @@ namespace palmx::render
             if (!success)
             {
                 glGetProgramInfoLog(object, 1024, NULL, info_log);
-                LOG_ERROR("Shader program linking failed\n" + std::string(info_log));
+                Logger::Error("Shader program linking failed\n" + std::string(info_log));
             }
         }
     }
