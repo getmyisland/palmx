@@ -32,7 +32,7 @@ int main()
 	render::Renderer* target_dummy_renderer = scene.AddComponent<render::Renderer>(target_dummy_entity);
 	target_dummy_renderer->model = std::make_unique<render::Model>(target_dummy_model);
 	physics::Rigidbody* target_dummy_rigid_body = scene.AddComponent<physics::Rigidbody>(target_dummy_entity);
-	target_dummy_rigid_body->is_dynamic = true;
+	target_dummy_rigid_body->is_dynamic = false;
 	ScriptHook* target_dummy_hook = scene.AddComponent<ScriptHook>(target_dummy_entity);
 	TargetDummy target_dummy;
 	target_dummy_hook->AddScriptBehavior(target_dummy);

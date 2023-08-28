@@ -12,7 +12,8 @@
 
 namespace palmx::render
 {
-	struct Vertex {
+	struct Vertex
+	{
 		glm::vec3 position;
 		glm::vec3 normal;
 		glm::vec2 tex_coords;
@@ -35,6 +36,7 @@ namespace palmx::render
 		~Mesh();
 
 		const std::vector<Vertex> GetVertices() const;
+		void RoundVertices(float wobble_amount);
 		const std::vector<unsigned int> GetIndices() const;
 		const std::shared_ptr<Texture> GetAlbedoTexture() const;
 		const std::shared_ptr<Texture> GetNormalTexture() const;

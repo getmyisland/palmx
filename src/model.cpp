@@ -14,7 +14,7 @@ namespace palmx::render
 
 	Model::~Model() {}
 
-	const std::vector<Mesh> Model::GetMeshes() const
+	std::vector<Mesh> Model::GetMeshes() const
 	{
 		return meshes_;
 	}

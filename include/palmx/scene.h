@@ -73,10 +73,10 @@ namespace palmx
 			// Ensure the has not been deleted
 			if (entities_[GetEntityIndex(id)].id != id)
 			{
-				return;
+				return nullptr;
 			}
 
-			int component_id = GetId<T>();
+			int component_id = GetComponentId<T>();
 			entities_[GetEntityIndex(id)].component_mask.reset(component_id);
 		}
 

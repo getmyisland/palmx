@@ -192,6 +192,9 @@ namespace palmx::render
 
 				for (auto& mesh : entity_renderer->model->GetMeshes())
 				{
+					// Manipulate the vertices of the mesh before drawing it to achieve a polygon wobble effect
+					mesh.RoundVertices(0.01f);
+
 					// Render the mesh
 					glm::mat4 mesh_mat4 = glm::mat4(1.0f);
 					mesh_mat4 = glm::translate(mesh_mat4, entity_transform->GetPosition());

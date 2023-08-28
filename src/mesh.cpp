@@ -18,6 +18,24 @@ namespace palmx::render
 
 	}
 
+	void Mesh::RoundVertices(float wobble_amount)
+	{
+		for (size_t i = 0; i < vertices_.size(); ++i)
+		{
+			float x_offset = wobble_amount * (rand() % 100 / 100.0f - 0.5f);
+			float y_offset = wobble_amount * (rand() % 100 / 100.0f - 0.5f);
+			float z_offset = wobble_amount * (rand() % 100 / 100.0f - 0.5f);
+
+			vertices_[i].position.x = (roundf(vertices_[i].position.x * 100) / 100) + x_offset;
+			vertices_[i].position.y = (roundf(vertices_[i].position.y * 100) / 100) + y_offset;
+			vertices_[i].position.z = (roundf(vertices_[i].position.z * 100) / 100) + z_offset;
+		}
+
+		glBindVertexArray(vao_);
+		glBindBuffer(GL_ARRAY_BUFFER, vbo_);
+		glBufferData(GL_ARRAY_BUFFER, vertices_.size() * sizeof(Vertex), &vertices_[0], GL_STATIC_DRAW);
+	}
+
 	const std::vector<Vertex> Mesh::GetVertices() const
 	{
 		return vertices_;

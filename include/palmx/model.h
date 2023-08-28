@@ -17,7 +17,7 @@ namespace palmx::render
 		Model(std::string path);
 		~Model();
 
-		const std::vector<Mesh> GetMeshes() const;
+		std::vector<Mesh> GetMeshes() const;
 
 	private:
 		Model();
