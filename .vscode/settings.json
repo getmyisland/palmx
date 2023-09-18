@@ -77,10 +77,11 @@
         "xstring": "cpp",
         "xtr1common": "cpp",
         "xtree": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "deque": "cpp"
     },
     "C_Cpp.vcFormat.space.pointerReferenceAlignment": "left",
-    "C_Cpp.errorSquiggles": "disabled",
+    "C_Cpp.errorSquiggles": "enabled",
     "editor.formatOnSave": true,
     "C_Cpp.formatting": "vcFormat",
     "C_Cpp.vcFormat.newLine.beforeOpenBrace.block": "newLine",
