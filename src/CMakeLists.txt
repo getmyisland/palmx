@@ -14,7 +14,6 @@ set(PALMX_SOURCES
 	render_system.cpp
 	resource_loader.cpp
 	scene.cpp
-	scene_manager.cpp
 	shader.cpp
 	vector.cpp
 	${CMAKE_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glad/glad.c # Add glad.c or else OpenGL won't work
@@ -37,7 +36,7 @@ target_include_directories(palmx
 )
 
 target_link_libraries(palmx 
-	PRIVATE
+	PUBLIC
 		glfw
 		OpenGL::GL
 		glm

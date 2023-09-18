@@ -30,8 +30,8 @@ namespace palmx
 
 	struct Config
 	{
-		unsigned int width{ 800 };
-		unsigned int height{ 600 };
+		unsigned int window_width{ 800 };
+		unsigned int window_height{ 600 };
 	};
 
 	class Engine : public Singleton<Engine>
@@ -47,7 +47,9 @@ namespace palmx
 		std::unique_ptr<InputSystem> input_system;
 		std::unique_ptr<physics::PhysicsSystem> physics_system;
 		std::unique_ptr<render::RenderSystem> render_system;
-		std::unique_ptr<SceneManager> scene_manager;
+
+		Scene* GetActiveScene() const;
+		void SetActiveScene(Scene& scene);
 
 		void Run(Scene& entry_scene);
 		void Kill();
@@ -55,7 +57,9 @@ namespace palmx
 	private:
 		Engine();
 
-		void GameLoop();
+		std::unique_ptr<Scene> active_scene_;
+
+		void Loop();
 	};
 }
 

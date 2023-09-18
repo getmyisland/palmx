@@ -1,6 +1,6 @@
 #include <glad/glad.h>
 
-#include <palmx/render_system.h>
+#include "render_system.h"
 
 #include <palmx/renderer.h>
 #include <palmx/model.h>

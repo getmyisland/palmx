@@ -1,4 +1,4 @@
-#include <palmx/gui_system.h>
+#include "gui_system.h"
 
 #include <palmx/logger.h>
 

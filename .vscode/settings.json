@@ -78,7 +78,17 @@
         "xtr1common": "cpp",
         "xtree": "cpp",
         "xutility": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "bitset": "cpp",
+        "cinttypes": "cpp",
+        "condition_variable": "cpp",
+        "cstdarg": "cpp",
+        "queue": "cpp",
+        "random": "cpp",
+        "set": "cpp",
+        "source_location": "cpp",
+        "stack": "cpp",
+        "variant": "cpp"
     },
     "C_Cpp.vcFormat.space.pointerReferenceAlignment": "left",
     "C_Cpp.errorSquiggles": "enabled",

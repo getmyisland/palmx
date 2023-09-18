@@ -4,14 +4,13 @@
 #include <palmx/scene.h>
 #include <palmx/engine.h>
 #include <palmx/transform.h>
-#include <palmx/scene_manager.h>
 #include <palmx/logger.h>
 
 using namespace palmx;
 
 void FpsController::Update(EntityID entity_id, float delta_time)
 {
-	Scene* scene = Engine::GetSingletonPtr()->scene_manager->GetActiveScene();
+	Scene* scene = Engine::GetSingletonPtr()->GetActiveScene();
 	Transform* transform = scene->GetComponent<Transform>(entity_id);
 
 	float velocity = movement_speed_ * delta_time;

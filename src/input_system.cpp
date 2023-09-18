@@ -1,4 +1,4 @@
-#include <palmx/input_system.h>
+#include "input_system.h"
 
 #include <palmx/input.h>
 #include <palmx/logger.h>
