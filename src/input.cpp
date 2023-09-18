@@ -1,17 +1,18 @@
 #include <palmx/input.h>
+#include <palmx/logger.h>
 
 namespace palmx
 {
 	Input::Input() {}
 
-	bool Input::GetKeyDown(int glfw_key_code)
+	bool Input::GetKeyDown(KeyCode key_code)
 	{
-		if (!keys_.contains(glfw_key_code))
+		if (!keys_.contains(key_code))
 		{
-			keys_.insert(std::pair(glfw_key_code, Key()));
+			keys_.insert(std::pair(key_code, Key()));
 		}
 
-		auto iter = keys_.find(glfw_key_code);
+		auto iter = keys_.find(key_code);
 		if (iter != keys_.end())
 		{
 			const Key& key = iter->second;
@@ -21,14 +22,14 @@ namespace palmx
 		return false;
 	}
 
-	bool Input::GetKey(int glfw_key_code)
+	bool Input::GetKey(KeyCode key_code)
 	{
-		if (!keys_.contains(glfw_key_code))
+		if (!keys_.contains(key_code))
 		{
-			keys_.insert(std::pair(glfw_key_code, Key()));
+			keys_.insert(std::pair(key_code, Key()));
 		}
 
-		auto iter = keys_.find(glfw_key_code);
+		auto iter = keys_.find(key_code);
 		if (iter != keys_.end())
 		{
 			const Key& key = iter->second;
@@ -38,14 +39,14 @@ namespace palmx
 		return false;
 	}
 
-	bool Input::GetKeyUp(int glfw_key_code)
+	bool Input::GetKeyUp(KeyCode key_code)
 	{
-		if (!keys_.contains(glfw_key_code))
+		if (!keys_.contains(key_code))
 		{
-			keys_.insert(std::pair(glfw_key_code, Key()));
+			keys_.insert(std::pair(key_code, Key()));
 		}
 
-		auto iter = keys_.find(glfw_key_code);
+		auto iter = keys_.find(key_code);
 		if (iter != keys_.end())
 		{
 			const Key& key = iter->second;
@@ -63,8 +64,16 @@ namespace palmx
 		}
 	}
 
-	void Input::SetKeyState(GLFWwindow* window, int glfw_key_code, Key& key)
+	void Input::SetKeyState(GLFWwindow* window, KeyCode key_code, Key& key)
 	{
+		if (!glfw_keys_.contains(key_code))
+		{
+			Logger::Warning(key_code + " not registered");
+			return;
+		}
+
+		int glfw_key_code = glfw_keys_[key_code];
+
 		key.last_key_state = key.key_state;
 
 		if (glfwGetKey(window, glfw_key_code) == GLFW_PRESS)

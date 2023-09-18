@@ -37,7 +37,7 @@ target_include_directories(palmx
 )
 
 target_link_libraries(palmx 
-	PUBLIC
+	PRIVATE
 		glfw
 		OpenGL::GL
 		glm

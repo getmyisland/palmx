@@ -7,9 +7,6 @@
 #include <palmx/scene_manager.h>
 #include <palmx/logger.h>
 
-#include <glm/ext.hpp>
-#include <glm/gtx/string_cast.hpp>
-
 using namespace palmx;
 
 void FpsController::Update(EntityID entity_id, float delta_time)
@@ -19,22 +16,22 @@ void FpsController::Update(EntityID entity_id, float delta_time)
 
 	float velocity = movement_speed_ * delta_time;
 
-	if (Input::GetKey(GLFW_KEY_W))
+	if (Input::GetKey(KeyCode::KEY_W))
 	{
 		transform->position += transform->rotation.Forward() * velocity;
 	}
 
-	if (Input::GetKey(GLFW_KEY_S))
+	if (Input::GetKey(KeyCode::KEY_S))
 	{
 		transform->position -= transform->rotation.Forward() * velocity;
 	}
 
-	if (Input::GetKey(GLFW_KEY_A))
+	if (Input::GetKey(KeyCode::KEY_A))
 	{
 		transform->position -= transform->rotation.Right() * velocity;
 	}
 
-	if (Input::GetKey(GLFW_KEY_D))
+	if (Input::GetKey(KeyCode::KEY_D))
 	{
 		transform->position += transform->rotation.Right() * velocity;
 	}
