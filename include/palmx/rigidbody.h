@@ -1,16 +1,16 @@
 #ifndef PALMX_PHYSICS_RIGIDBODY_H
 #define PALMX_PHYSICS_RIGIDBODY_H
 
-#include <glm/vec3.hpp>
+#include <palmx/vector.h>
 
 namespace palmx::physics
 {
 	struct Rigidbody
 	{
-		glm::vec3 velocity = glm::vec3();
-		glm::vec3 force = glm::vec3();
-		float mass = 10;
-		bool is_dynamic = true;
+		Vector3 velocity{ VECTOR_3_ZERO };
+		Vector3 force{ VECTOR_3_ZERO };
+		float mass{ 10 };
+		bool is_dynamic{ true };
 	};
 }
 

@@ -5,5 +5,3 @@ add_executable(fps
 	main.cpp
 	target_dummy.cpp
 )
-
-target_include_directories(fps PRIVATE "${PALMX_SOURCE_DIR}/external")

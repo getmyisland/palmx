@@ -197,8 +197,8 @@ namespace palmx::render
 
 					// Render the mesh
 					glm::mat4 mesh_mat4 = glm::mat4(1.0f);
-					mesh_mat4 = glm::translate(mesh_mat4, entity_transform->GetPosition());
-					mesh_mat4 = glm::scale(mesh_mat4, entity_transform->GetScale());
+					mesh_mat4 = glm::translate(mesh_mat4, static_cast<glm::vec3>(entity_transform->position));
+					mesh_mat4 = glm::scale(mesh_mat4, static_cast<glm::vec3>(entity_transform->scale));
 					default_shader_->SetMat4("mesh", mesh_mat4);
 
 					glActiveTexture(GL_TEXTURE0 + 0);

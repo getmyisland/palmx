@@ -28,7 +28,7 @@ int main()
 	EntityID target_dummy_entity = scene.NewEntity();
 	scene.AddComponent<Transform>(target_dummy_entity);
 	std::string root_dir(ResourceLoader::GetProjectRootDirectory());
-	render::Model target_dummy_model(root_dir + "/models/scp173/cb_scp173.fbx");
+	render::Model target_dummy_model(root_dir + "/data/models/scp173/cb_scp173.fbx");
 	render::Renderer* target_dummy_renderer = scene.AddComponent<render::Renderer>(target_dummy_entity);
 	target_dummy_renderer->model = std::make_unique<render::Model>(target_dummy_model);
 	physics::Rigidbody* target_dummy_rigid_body = scene.AddComponent<physics::Rigidbody>(target_dummy_entity);

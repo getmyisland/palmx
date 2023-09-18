@@ -1,5 +1,7 @@
 #include <palmx/physics_system.h>
 
+#include "solver.h"
+
 #include <palmx/collider.h>
 #include <palmx/rigidbody.h>
 #include <palmx/scene.h>
@@ -27,9 +29,9 @@ namespace palmx::physics
 				rigidbody->force += rigidbody->mass * gravity;
 
 				rigidbody->velocity += (rigidbody->force / rigidbody->mass) * delta_time;
-				transform->SetPosition(transform->GetPosition() + (rigidbody->velocity * delta_time));
+				transform->position += rigidbody->velocity * delta_time;
 
-				rigidbody->force = glm::vec3();
+				rigidbody->force = Vector3();
 			}
 		}
 	}

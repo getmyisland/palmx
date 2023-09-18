@@ -1,91 +1,46 @@
 #ifndef PALMX_PHYSICS_COLLIDER_H
 #define PALMX_PHYSICS_COLLIDER_H
 
-#include <palmx/algo.h>
-#include <palmx/entity.h>
-#include <palmx/transform.h>
+#include <palmx/vector.h>
 
-#include <glm/vec3.hpp>
-
-#include <vector>
-
-namespace palmx::physics
+namespace palmx
 {
-    struct SphereCollider;
-    struct PlaneCollider;
+    struct Transform;
 
-    struct CollisionPoints
+    namespace physics
     {
-        glm::vec3 a = glm::vec3(); // Furthest point of A into B
-        glm::vec3 b = glm::vec3(); // Furthest point of B into A
-        glm::vec3 normal = glm::vec3(); // B - A normalized
-        float depth = 0; // Length of B - A
-        bool has_collided = false;
-    };
+        struct CollisionPoints;
+        struct SphereCollider;
+        struct PlaneCollider;
 
-    struct Collision
-    {
-        EntityID* entity_a;
-        EntityID* entity_b;
-        CollisionPoints points;
-    };
-
-    struct Collider
-    {
-        virtual CollisionPoints TestCollision(const Transform* transform, const Collider* collider, const Transform* collider_transform) const = 0;
-
-        virtual CollisionPoints TestCollision(const Transform* transform, const SphereCollider* sphere, const Transform* sphere_transform) const = 0;
-
-        virtual CollisionPoints TestCollision(const Transform* transform, const PlaneCollider* plane, const Transform* plane_transform) const = 0;
-    };
-
-    struct SphereCollider : Collider
-    {
-        glm::vec3 center;
-        float radius;
-
-        virtual CollisionPoints TestCollision(const Transform* transform, const Collider* collider, const Transform* collider_transform) const override
+        struct Collider
         {
-            return collider->TestCollision(collider_transform, this, transform);
-        }
+            virtual CollisionPoints TestCollision(const Transform* transform, const Collider* collider, const Transform* collider_transform) const = 0;
+            virtual CollisionPoints TestCollision(const Transform* transform, const SphereCollider* sphere, const Transform* sphere_transform) const = 0;
+            virtual CollisionPoints TestCollision(const Transform* transform, const PlaneCollider* plane, const Transform* plane_transform) const = 0;
+        };
 
-        virtual CollisionPoints TestCollision(const Transform* transform, const SphereCollider* sphere, const Transform* sphere_transform) const override
+        struct SphereCollider : Collider
         {
-            return algo::FindSphereSphereCollisionPoints(this, transform, sphere, sphere_transform);
-        }
+            Vector3 center{ VECTOR_3_ZERO };
+            float radius{ 0.5f };
 
-        virtual CollisionPoints TestCollision(const Transform* transform, const PlaneCollider* plane, const Transform* plane_transform) const override
+            virtual CollisionPoints TestCollision(const Transform* transform, const Collider* collider, const Transform* collider_transform) const override;
+            virtual CollisionPoints TestCollision(const Transform* transform, const SphereCollider* sphere, const Transform* sphere_transform) const override;
+            virtual CollisionPoints TestCollision(const Transform* transform, const PlaneCollider* plane, const Transform* plane_transform) const override;
+        };
+
+        // TODO Box Collider instead of Plane Collider
+        struct PlaneCollider : Collider
         {
-            return algo::FindSpherePlaneCollisionPoints(this, transform, plane, plane_transform);
-        }
-    };
+            Vector3 plane;
+            float distance;
 
-    struct PlaneCollider : Collider
-    {
-        glm::vec3 plane;
-        float distance;
-
-        virtual CollisionPoints TestCollision(const Transform* transform, const Collider* collider, const Transform* collider_transform) const override
-        {
-            return collider->TestCollision(collider_transform, this, transform);
-        }
-
-        virtual CollisionPoints TestCollision(const Transform* transform, const SphereCollider* sphere, const Transform* sphere_transform) const override
-        {
-            return algo::FindSpherePlaneCollisionPoints(sphere, sphere_transform, this, transform);
-        }
-
-        virtual CollisionPoints TestCollision(const Transform* transform, const PlaneCollider* plane, const Transform* plane_transform) const override
-        {
-            return CollisionPoints(); // No plane v plane
-        }
-    };
-
-    class Solver
-    {
-    public:
-        virtual void Solve(std::vector<Collision>& collisions, float delta_time) = 0;
-    };
+            virtual CollisionPoints TestCollision(const Transform* transform, const Collider* collider, const Transform* collider_transform) const override;
+            virtual CollisionPoints TestCollision(const Transform* transform, const SphereCollider* sphere, const Transform* sphere_transform) const override;
+            virtual CollisionPoints TestCollision(const Transform* transform, const PlaneCollider* plane, const Transform* plane_transform) const override;
+        };
+    }
 }
 
 #endif

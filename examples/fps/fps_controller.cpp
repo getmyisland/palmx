@@ -16,46 +16,43 @@ void FpsController::Update(EntityID entity_id, float delta_time)
 {
 	Scene* scene = Engine::GetSingletonPtr()->scene_manager->GetActiveScene();
 	Transform* transform = scene->GetComponent<Transform>(entity_id);
+
 	float velocity = movement_speed_ * delta_time;
 
 	if (Input::GetKey(GLFW_KEY_W))
 	{
-		glm::vec3 up = transform->GetPosition() + (transform->GetForward() * velocity);
-		transform->SetPosition(up);
+		transform->position += transform->rotation.Forward() * velocity;
 	}
 
 	if (Input::GetKey(GLFW_KEY_S))
 	{
-		glm::vec3 down = transform->GetPosition() - (transform->GetForward() * velocity);
-		transform->SetPosition(down);
+		transform->position -= transform->rotation.Forward() * velocity;
 	}
 
 	if (Input::GetKey(GLFW_KEY_A))
 	{
-		glm::vec3 left = transform->GetPosition() - (transform->GetRight() * velocity);
-		transform->SetPosition(left);
+		transform->position -= transform->rotation.Right() * velocity;
 	}
 
 	if (Input::GetKey(GLFW_KEY_D))
 	{
-		glm::vec3 right = transform->GetPosition() + (transform->GetRight() * velocity);
-		transform->SetPosition(right);
+		transform->position += transform->rotation.Right() * velocity;
 	}
 
 	glm::vec2 mouse_input = Input::GetMouseOffset();
 	mouse_input.x *= mouse_sensitivity_;
 	mouse_input.y *= mouse_sensitivity_;
 
-	transform->SetRotation(transform->GetRotation() + glm::vec3(mouse_input.x, mouse_input.y, 0));
+	transform->rotation += Vector3(mouse_input.x, mouse_input.y, 0);
 
 	// Make sure that when x-Rotation is out of bounds, the screen doesn't get flipped
-	if (transform->GetRotation().x > 89.0f)
+	if (transform->rotation.X() > 89.0f)
 	{
-		transform->SetRotation(glm::vec3(89.0f, transform->GetRotation().y, transform->GetRotation().z));
+		transform->rotation.X() = 89.0f;
 	}
-	if (transform->GetRotation().x < -89.0f)
+	if (transform->rotation.X() < -89.0f)
 	{
-		transform->SetRotation(glm::vec3(-89.0f, transform->GetRotation().y, transform->GetRotation().z));
+		transform->rotation.X() = -89.0f;
 	}
 
 	render::Camera* camera = scene->GetComponent<render::Camera>(entity_id);

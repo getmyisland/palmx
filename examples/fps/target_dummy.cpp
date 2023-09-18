@@ -20,20 +20,18 @@ void TargetDummy::Update(palmx::EntityID entity_id, float delta_time)
 	{
 		if (going_left)
 		{
-			glm::vec3 left = transform->GetPosition() - (transform->GetForward() * velocity);
-			transform->SetPosition(left);
+			transform->position -= transform->rotation.Forward() * velocity;
 
-			if (transform->GetPosition().x < -5)
+			if (transform->position.X() < -5)
 			{
 				going_left = false;
 			}
 		}
 		else
 		{
-			glm::vec3 right = transform->GetPosition() + (transform->GetForward() * velocity);
-			transform->SetPosition(right);
+			transform->position += transform->rotation.Forward() * velocity;
 
-			if (transform->GetPosition().x > 5)
+			if (transform->position.X() > 5)
 			{
 				going_left = true;
 			}

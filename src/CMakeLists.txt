@@ -16,7 +16,7 @@ set(PALMX_SOURCES
 	scene.cpp
 	scene_manager.cpp
 	shader.cpp
-	transform.cpp
+	vector.cpp
 	${CMAKE_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glad/glad.c # Add glad.c or else OpenGL won't work
 )
 

@@ -6,7 +6,7 @@ namespace palmx
 {
 	glm::mat4 MainCamera::GetViewMatrix() const
 	{
-		return glm::lookAt(transform_->GetPosition(), transform_->GetPosition() + transform_->GetForward(), transform_->GetUp());
+		return glm::lookAt(static_cast<glm::vec3>(transform_->position), static_cast<glm::vec3>(transform_->position + transform_->rotation.Forward()), static_cast<glm::vec3>(transform_->rotation.Up()));
 	}
 
 	const render::Camera* MainCamera::GetCamera() const
