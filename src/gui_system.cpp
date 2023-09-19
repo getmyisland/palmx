@@ -9,9 +9,8 @@ namespace palmx::gui
 	GuiSystem::GuiSystem() {}
 	GuiSystem::~GuiSystem() {}
 
-	void GuiSystem::Start(unsigned int width, unsigned int height)
+	void GuiSystem::Start(const char* name, unsigned int width, unsigned int height)
 	{
-		// Initialize and configure glfw
 		glfwInit();
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -21,8 +20,7 @@ namespace palmx::gui
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-		// Create glfw window
-		main_window_ = glfwCreateWindow(width, height, "palmx", NULL, NULL);
+		main_window_ = glfwCreateWindow(width, height, name, NULL, NULL);
 		if (main_window_ == nullptr)
 		{
 			Logger::Error("Failed to create GLFW window.");

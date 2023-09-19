@@ -11,7 +11,7 @@ namespace palmx::gui
 		GuiSystem();
 		~GuiSystem();
 
-		void Start(unsigned int width, unsigned int height);
+		void Start(const char* name, unsigned int width, unsigned int height);
 		void Stop();
 
 		GLFWwindow* GetMainWindow() const;

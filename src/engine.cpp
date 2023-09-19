@@ -26,7 +26,7 @@ namespace palmx
 	Engine::Engine(Config& config)
 	{
 		gui_system = std::make_unique<gui::GuiSystem>();
-		gui_system->Start(config.window_width, config.window_height);
+		gui_system->Start(config.name, config.window_width, config.window_height);
 
 		input_system = std::make_unique<InputSystem>();
 		input_system->Start(gui_system->GetMainWindow());

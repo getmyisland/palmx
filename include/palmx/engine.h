@@ -30,6 +30,7 @@ namespace palmx
 
 	struct Config
 	{
+		const char* name{ "palmx" };
 		unsigned int window_width{ 800 };
 		unsigned int window_height{ 600 };
 	};

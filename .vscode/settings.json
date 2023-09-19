@@ -88,7 +88,8 @@
         "set": "cpp",
         "source_location": "cpp",
         "stack": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "*.rh": "cpp"
     },
     "C_Cpp.vcFormat.space.pointerReferenceAlignment": "left",
     "C_Cpp.errorSquiggles": "enabled",
