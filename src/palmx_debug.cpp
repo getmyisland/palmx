@@ -1,4 +1,4 @@
-#include <palmx/logger.h>
+#include <palmx_debug.h>
 
 #include <chrono>
 #include <filesystem>
@@ -17,25 +17,22 @@ namespace palmx
         return time_str;
     }
 
-    Logger::Logger() {}
-    Logger::~Logger() {}
-
     std::string GetLocationString(std::source_location const source)
     {
         return "[" + std::filesystem::path(source.file_name()).filename().string() + "] [" + source.function_name() + "] [" + std::to_string(source.line()) + ":" + std::to_string(source.column()) + "]";
     }
 
-    void Logger::Info(std::string const message, std::source_location const source)
+    void LogInfo(std::string const message, std::source_location const source)
     {
         std::cout << GetCurrentTime() << " [INFO] " << GetLocationString(source) << " " << message << "\n";
     }
 
-    void Logger::Warning(std::string const message, std::source_location const source)
+    void LogWarning(std::string const message, std::source_location const source)
     {
         std::cout << GetCurrentTime() << " [WARNING] " << GetLocationString(source) << " " << message << "\n";
     }
 
-    void Logger::Error(std::string const message, std::source_location const source)
+    void LogError(std::string const message, std::source_location const source)
     {
         std::cout << GetCurrentTime() << " [ERROR] " << GetLocationString(source) << " " << message << "\n";
     }

@@ -1,21 +1,12 @@
 set(PALMX_EXTERNAL_DIR "external")
 
 set(PALMX_SOURCES 
-	algo.cpp
-	engine.cpp
-	entity.cpp
-	gui_system.cpp
-	input.cpp
-	input_system.cpp
-	logger.cpp
-	mesh.cpp
-	model.cpp
-	physics_system.cpp
-	render_system.cpp
-	resource_loader.cpp
-	scene.cpp
-	shader.cpp
-	vector.cpp
+	palmx_core.cpp
+	palmx_debug.cpp
+	palmx_filesystem.cpp
+	palmx_graphics.cpp
+	palmx_input.cpp
+	palmx_math.cpp
 	${CMAKE_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glad/glad.c # Add glad.c or else OpenGL won't work
 )
 
@@ -30,7 +21,7 @@ target_include_directories(palmx
     PRIVATE
 		${PALMX_SOURCE_DIR}/include
         ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}
-		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glfw-3.3.8/include # Include GLFW headers
+		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glfw/include # Include GLFW headers
 		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glm # Include glm headers
 		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/assimp/include # Include assimp headers
 )

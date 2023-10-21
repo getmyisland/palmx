@@ -1,3 +1,9 @@
-add_subdirectory(fps)
-# add_subdirectory(horror)
-# add_subdirectory(platformer)
+link_libraries(palmx)
+
+add_executable(getting_started
+	getting_started.cpp
+)
+
+add_executable(fps
+	fps.cpp
+)
