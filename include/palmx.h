@@ -23,6 +23,7 @@ namespace palmx
     //----------------------------------------------------------------------------------
     // Enumerators Definition
     //----------------------------------------------------------------------------------
+
     enum KeyCode
     {
         KEY_ESCAPE,
@@ -35,6 +36,7 @@ namespace palmx
     //----------------------------------------------------------------------------------
     // Structures Definition
     //----------------------------------------------------------------------------------
+
     struct Transform
     {
         glm::vec3 position { glm::vec3(0, 0, 0) };
@@ -66,10 +68,10 @@ namespace palmx
 
     struct Color
     {
-        float r;        // Color red value
-        float g;        // Color green value
-        float b;        // Color blue value
-        float a;        // Color alpha value
+        float r;
+        float g;
+        float b;
+        float a;
     };
 
     struct Texture
@@ -103,9 +105,16 @@ namespace palmx
         bool is_dynamic { true };
     };
 
+    struct Dimension
+    {
+        int width;
+        int heigth;
+    };
+
     //------------------------------------------------------------------------------------
     // Global Variables Definition
     //------------------------------------------------------------------------------------
+
     const Color color_lightgray = { 200.0f / 255.0f, 200.0f / 255.0f, 200.0f / 255.0f, 1.0f };
     const Color color_gray = { 130.0f / 255.0f, 130.0f / 255.0f, 130.0f / 255.0f, 1.0f };
     const Color color_darkgray = { 80.0f / 255.0f, 80.0f / 255.0f, 80.0f / 255.0f, 1.0f };
@@ -136,16 +145,20 @@ namespace palmx
     //----------------------------------------------------------------------------------
     // Core
     //----------------------------------------------------------------------------------
+
     extern void Init(std::string title, int width, int height); // Initialize window and OpenGL context
     extern void Exit(); // Close window and unload OpenGL context
     extern bool IsExitRequested(); // Was glfw requested to close the window
     extern void RequestExit(); // Request to close the window
+
+    extern Dimension GetWindowDimension();
 
     extern float GetDeltaTime();
 
     //----------------------------------------------------------------------------------
     // Input
     //----------------------------------------------------------------------------------
+
     extern void CollectInput();
     extern void SetExitKey(KeyCode key_code); // Default is KEY_ESCAPE
     extern bool IsKeyDown(KeyCode key_code);
@@ -162,26 +175,32 @@ namespace palmx
     //----------------------------------------------------------------------------------
     // Graphics
     //----------------------------------------------------------------------------------
+
     extern void BeginDrawing(Camera& camera); // Setup canvas (framebuffer) to start drawing
     extern void EndDrawing(); // End canvas drawing and swap buffers
-
     extern void SetBackground(Color color);
+
+    extern Shader LoadShader(const std::string& vertex_shader_file_path, const std::string& fragment_shader_file_path);
+    extern Shader LoadShaderFromMemory(const std::string& vertex_shader_source, const std::string& fragment_shader_source);
+    extern int GetShaderUniformLocation(Shader& shader, const std::string& uniform_name);
+
+    extern Texture LoadTexture(const std::string& file_path);
+
+    extern Model LoadModel(std::string file_path);
     extern void DrawModel(Model& model);
 
-    extern Shader LoadShader(std::string file_path);
-    extern Shader LoadShaderFromMemory(std::string vertex_shader_source, std::string fragment_shader_source);
-    extern void SetShaderBool(Shader& shader, std::string attribute_name, bool value);
-    extern void SetShaderInt(Shader& shader, std::string attribute_name, int value);
-    extern void SetShaderFloat(Shader& shader, std::string attribute_name, float value);
-    extern void SetShaderMat4(Shader& shader, std::string attribute_name, glm::mat4 value);
+    //----------------------------------------------------------------------------------
+    // User Interface
+    //----------------------------------------------------------------------------------
 
-    extern Texture LoadTexture(std::string file_path);
-    extern Model LoadModel(std::string file_path);
+    extern void DrawText(const std::string& text, float x, float y, float scale, const Color color);
 
     //----------------------------------------------------------------------------------
     // Filesystem
     //----------------------------------------------------------------------------------
+
     extern std::string GetRootDirectory();
+    extern std::string GetAbsolutePath(const std::string relative_path);
 }
 
 #endif // PALMX_H

@@ -5,6 +5,7 @@
 
 #include "palmx_input.h"
 #include "palmx_graphics.h"
+#include "palmx_ui.h"
 
 namespace palmx
 {
@@ -48,8 +49,9 @@ namespace palmx
         glfwMakeContextCurrent(px_data.window);
         glfwSetFramebufferSizeCallback(px_data.window, FramebufferSizeCallback);
 
-        SetupInput(px_data.window);
+        SetupInput();
         SetupGraphics();
+        SetupUserInterface();
     }
 
     void Exit()
@@ -71,6 +73,21 @@ namespace palmx
     void RequestExit()
     {
         glfwSetWindowShouldClose(px_data.window, true);
+    }
+
+    Dimension GetWindowDimension()
+    {
+        Dimension window_dimension = {};
+
+        if (!px_data.init)
+        {
+            LogError("palmx not initialized");
+            return window_dimension;
+        }
+
+        glfwGetWindowSize(px_data.window, &window_dimension.width, &window_dimension.heigth);
+
+        return window_dimension;
     }
 
     float delta_time = 0.0f;

@@ -12,6 +12,7 @@ namespace palmx
     //----------------------------------------------------------------------------------
     // Enumerators Definition
     //----------------------------------------------------------------------------------
+
     enum KeyState
     {
         KEY_IDLE,
@@ -23,6 +24,7 @@ namespace palmx
     //----------------------------------------------------------------------------------
     // Structures Definition
     //----------------------------------------------------------------------------------
+
     struct Key
     {
         KeyState key_state { KEY_IDLE };
@@ -47,6 +49,7 @@ namespace palmx
     //----------------------------------------------------------------------------------
     // Global Variables Definition
     //----------------------------------------------------------------------------------
+
     Keyboard keyboard;
     Mouse mouse;
 
@@ -92,10 +95,16 @@ namespace palmx
         mouse.mouse_wheel_callback_this_frame = true;
     }
 
-    void SetupInput(GLFWwindow* window)
+    void SetupInput()
     {
-        glfwSetCursorPosCallback(window, MouseCallback);
-        glfwSetScrollCallback(window, ScrollCallback);
+        if (!px_data.init)
+        {
+            LogError("palmx not initialized");
+            return;
+        }
+
+        glfwSetCursorPosCallback(px_data.window, MouseCallback);
+        glfwSetScrollCallback(px_data.window, ScrollCallback);
     }
 
     void ResetMouseOffset()

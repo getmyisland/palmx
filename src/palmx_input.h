@@ -5,7 +5,7 @@
 
 namespace palmx
 {
-    extern void SetupInput(GLFWwindow* window);
+    extern void SetupInput();
 }
 
 #endif // PALMX_INPUT_H

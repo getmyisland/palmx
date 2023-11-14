@@ -17,7 +17,6 @@ void ProcessInput();
 void RenderGame();
 
 Model scp_173;
-
 Camera camera;
 
 const float movement_speed = 3.5f;
@@ -30,8 +29,7 @@ int main()
 	LockCursor();
 	SetBackground(color_skyblue);
 
-	std::string root_dir = GetRootDirectory();
-	scp_173 = LoadModel(root_dir + "/resources/models/scp173/cb_scp173.fbx");
+	scp_173 = LoadModel(GetAbsolutePath("/resources/models/scp173/cb_scp173.fbx"));
 
 	while (!IsExitRequested())
 	{
@@ -97,6 +95,8 @@ void RenderGame()
 	BeginDrawing(camera);
 
 	DrawModel(scp_173);
+
+	DrawText("Ammo: 69", 25.0f, 25.0f, 1.0f, color_white);
 
 	EndDrawing();
 }

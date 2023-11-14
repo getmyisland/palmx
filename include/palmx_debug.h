@@ -19,6 +19,7 @@ namespace palmx
     //----------------------------------------------------------------------------------
     // Log Functions
     //----------------------------------------------------------------------------------
+
     extern void LogInfo(std::string const message, std::source_location const source = std::source_location::current());
     extern void LogWarning(std::string const message, std::source_location const source = std::source_location::current());
     extern void LogError(std::string const message, std::source_location const source = std::source_location::current());

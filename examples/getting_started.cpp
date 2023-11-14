@@ -9,7 +9,6 @@
 ********************************************************************************************/
 
 #include <palmx.h>
-#include <palmx_debug.h>
 
 // To make things easier use the namespace
 using namespace palmx;
@@ -21,36 +20,41 @@ int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screen_width = 1280;
-    const int screen_height = 720;
-
-    Init("getting started in palmx", screen_width, screen_height);
+    Init("getting started in palmx", 1280, 720);
 
     Camera camera; // Create a camera that will render the game
 
-    SetBackground(color_darkgreen); // Set a background color
+    SetBackground(color_darkbrown); // Set a background color
     //--------------------------------------------------------------------------------------
 
     // Main game loop
+    //--------------------------------------------------------------------------------------
     while (!IsExitRequested()) // Detect if exit was requested manually or by pressing the exit key (default = KEY_ESCAPE)
     {
         // Input
         //----------------------------------------------------------------------------------
         CollectInput(); // Note: Input has to be manually collected each frame
+        //----------------------------------------------------------------------------------
 
         // Update
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
 
-        // Draw
+        // Graphics
         //----------------------------------------------------------------------------------
         BeginDrawing(camera);
 
+        // TODO spinning cube
+        // TODO change color over time
 
+        Dimension window_dimension = GetWindowDimension();
+        DrawText("Hello palmx", (window_dimension.width / 2) - (12 * 32), (window_dimension.heigth / 2) - 32, 2.0f, color_white);
 
         EndDrawing();
+        //----------------------------------------------------------------------------------
     }
+    //--------------------------------------------------------------------------------------
 
     // De-Initialization
     //--------------------------------------------------------------------------------------

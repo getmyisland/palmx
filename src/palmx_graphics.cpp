@@ -117,6 +117,12 @@ namespace palmx
 
     void SetupGraphics()
     {
+        if (!px_data.init)
+        {
+            LogError("palmx not initialized");
+            return;
+        }
+
         // Load all OpenGL function pointers
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
@@ -151,10 +157,10 @@ namespace palmx
         glDrawBuffers(1, draw_buffers);
 
         GLfloat quad_vertices[] = {
-    -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // Bottom-left vertex
-    1.0f, -1.0f, 0.0f, 1.0f, 0.0f,  // Bottom-right vertex
-    1.0f, 1.0f, 0.0f, 1.0f, 1.0f,   // Top-right vertex
-    -1.0f, 1.0f, 0.0f, 0.0f, 1.0f    // Top-left vertex
+            -1.0f, -1.0f, 0.0f, 0.0f, 0.0f, // Bottom-left vertex
+            1.0f, -1.0f, 0.0f, 1.0f, 0.0f,  // Bottom-right vertex
+            1.0f, 1.0f, 0.0f, 1.0f, 1.0f,   // Top-right vertex
+            -1.0f, 1.0f, 0.0f, 0.0f, 1.0f    // Top-left vertex
         };
 
         glGenVertexArrays(1, &fullscreen_quad_vertex_array);
@@ -199,10 +205,10 @@ namespace palmx
         int framebuffer_width, framebuffer_height;
         glfwGetFramebufferSize(px_data.window, &framebuffer_width, &framebuffer_height);
         glm::mat4 projection = glm::perspective(glm::radians(camera.zoom), static_cast<float>(framebuffer_width) / static_cast<float>(framebuffer_height), 0.1f, 100.0f);
-        SetShaderMat4(default_shader, "projection", projection);
+        glUniformMatrix4fv(GetShaderUniformLocation(default_shader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
         glm::mat4 view = glm::lookAt(camera.transform.position, camera.transform.position + Vector3Forward(camera.transform.rotation), Vector3Up(camera.transform.rotation));
-        SetShaderMat4(default_shader, "view", view);
+        glUniformMatrix4fv(GetShaderUniformLocation(default_shader, "view"), 1, GL_FALSE, glm::value_ptr(view));
     }
 
     void EndDrawing()
@@ -213,10 +219,9 @@ namespace palmx
             return;
         }
 
-        int window_width, window_height;
-        glfwGetWindowSize(px_data.window, &window_width, &window_height);
+        Dimension window_dimension = GetWindowDimension();
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glViewport(0, 0, window_width, window_height);
+        glViewport(0, 0, window_dimension.width, window_dimension.heigth);
 
         glUseProgram(fullscreen_quad_shader.id);
 
@@ -235,38 +240,6 @@ namespace palmx
     void SetBackground(Color color)
     {
         background_color = color;
-    }
-
-    void DrawModel(Model& model)
-    {
-        for (Mesh& mesh : model.meshes)
-        {
-            // Render the mesh
-            glm::mat4 mesh_mat4 = glm::mat4(1.0f);
-            mesh_mat4 = glm::translate(mesh_mat4, static_cast<glm::vec3>(model.transform.position));
-            mesh_mat4 = glm::scale(mesh_mat4, static_cast<glm::vec3>(model.transform.scale));
-            SetShaderMat4(default_shader, "mesh", mesh_mat4);
-
-            glActiveTexture(GL_TEXTURE0 + 0);
-            // Set the sampler to the correct texture unit
-            SetShaderInt(default_shader, "texture_albedo", 0);
-            // Bind the texture
-            glBindTexture(GL_TEXTURE_2D, mesh.albedo_texture.id);
-
-            glActiveTexture(GL_TEXTURE0 + 1);
-            // Set the sampler to the correct texture unit
-            SetShaderInt(default_shader, "texture_normal", 1);
-            // Bind the texture
-            glBindTexture(GL_TEXTURE_2D, mesh.normal_texture.id);
-
-            // Draw mesh
-            glBindVertexArray(mesh.vao);
-            glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(mesh.indices.size()), GL_UNSIGNED_INT, 0);
-            glBindVertexArray(0);
-
-            // Set everything back to default
-            glActiveTexture(GL_TEXTURE0);
-        }
     }
 
     void CheckShaderCompileErrors(GLuint object, ShaderType type)
@@ -323,7 +296,7 @@ namespace palmx
         return Shader(id);
     }
 
-    Shader LoadShader(std::string vertex_shader_file_path, std::string fragment_shader_file_path)
+    Shader LoadShader(const std::string& vertex_shader_file_path, const std::string& fragment_shader_file_path)
     {
         // Retrieve the vertex/fragment source code from filePath
         std::string vertex_shader_code;
@@ -360,34 +333,23 @@ namespace palmx
         return CompileShader(vertex_shader_code_c, fragment_shader_code_c);
     }
 
-    Shader LoadShaderFromMemory(std::string vertex_shader_source, std::string fragment_shader_source)
+    Shader LoadShaderFromMemory(const std::string& vertex_shader_source, const std::string& fragment_shader_source)
     {
         return CompileShader(vertex_shader_source, fragment_shader_source);
     }
 
-    void SetShaderBool(Shader& shader, std::string attribute_name, bool value)
+    int GetShaderUniformLocation(Shader& shader, const std::string& uniform_name)
     {
-        glUniform1i(glGetUniformLocation(shader.id, attribute_name.c_str()), (int)value);
+        GLint location = glGetUniformLocation(shader.id, uniform_name.c_str());
+        if (location == -1)
+        {
+            LogError("Shader Uniform Location " + uniform_name + " not found");
+        }
+        return location;
     }
 
-    void SetShaderInt(Shader& shader, std::string attribute_name, int value)
+    Texture LoadTexture(const std::string& file_path)
     {
-        glUniform1i(glGetUniformLocation(shader.id, attribute_name.c_str()), value);
-    }
-
-    void SetShaderFloat(Shader& shader, std::string attribute_name, float value)
-    {
-        glUniform1f(glGetUniformLocation(shader.id, attribute_name.c_str()), value);
-    }
-
-    void SetShaderMat4(Shader& shader, std::string attribute_name, glm::mat4 value)
-    {
-        glUniformMatrix4fv(glGetUniformLocation(shader.id, attribute_name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
-    }
-
-    Texture LoadTexture(std::string file_path)
-    {
-        Texture texture;
         unsigned int texture_id;
         glGenTextures(1, &texture_id);
 
@@ -412,8 +374,6 @@ namespace palmx
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-            texture.id = texture_id;
-
             stbi_image_free(data);
         }
         else
@@ -422,7 +382,7 @@ namespace palmx
             stbi_image_free(data);
         }
 
-        return texture;
+        return { texture_id };
     }
 
     Mesh ProcessMesh(aiMesh* ai_mesh, const aiScene* ai_scene, std::string directory)
@@ -564,5 +524,37 @@ namespace palmx
         Model model;
         model.meshes = ProcessNode(ai_scene->mRootNode, ai_scene, std::string(file_path).substr(0, std::string(file_path).find_last_of('/')));
         return model;
+    }
+
+    void DrawModel(Model& model)
+    {
+        for (Mesh& mesh : model.meshes)
+        {
+            // Render the mesh
+            glm::mat4 mesh_mat4 = glm::mat4(1.0f);
+            mesh_mat4 = glm::translate(mesh_mat4, static_cast<glm::vec3>(model.transform.position));
+            mesh_mat4 = glm::scale(mesh_mat4, static_cast<glm::vec3>(model.transform.scale));
+            glUniformMatrix4fv(GetShaderUniformLocation(default_shader, "mesh"), 1, GL_FALSE, glm::value_ptr(mesh_mat4));
+
+            glActiveTexture(GL_TEXTURE0 + 0);
+            // Set the sampler to the correct texture unit
+            glUniform1i(GetShaderUniformLocation(default_shader, "texture_albedo"), 0);
+            // Bind the texture
+            glBindTexture(GL_TEXTURE_2D, mesh.albedo_texture.id);
+
+            glActiveTexture(GL_TEXTURE0 + 1);
+            // Set the sampler to the correct texture unit
+            glUniform1i(GetShaderUniformLocation(default_shader, "texture_normal"), 1);
+            // Bind the texture
+            glBindTexture(GL_TEXTURE_2D, mesh.normal_texture.id);
+
+            // Draw mesh
+            glBindVertexArray(mesh.vao);
+            glDrawElements(GL_TRIANGLES, static_cast<unsigned int>(mesh.indices.size()), GL_UNSIGNED_INT, 0);
+            glBindVertexArray(0);
+
+            // Set everything back to default
+            glActiveTexture(GL_TEXTURE0);
+        }
     }
 }

@@ -28,4 +28,15 @@ namespace palmx
             return "";
         }
     }
+
+    std::string GetAbsolutePath(const std::string relative_path)
+    {
+        std::string root_dir = GetRootDirectory();
+        if (root_dir == "")
+        {
+            return "";
+        }
+
+        return root_dir + relative_path;
+    }
 }
