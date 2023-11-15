@@ -96,9 +96,9 @@ namespace palmx
 
     GLuint render_texture;
     GLuint render_texture_framebuffer;
-    // PS1 display was 256x224px
-    const unsigned int render_texture_width { 256 };
-    const unsigned int render_texture_height { 224 };
+    // PS1 display was 320x240px or 640x480px
+    const unsigned int render_texture_width { 320 };
+    const unsigned int render_texture_height { 240 };
 
     GLuint fullscreen_quad_vertex_buffer;
     GLuint fullscreen_quad_vertex_array;
