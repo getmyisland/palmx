@@ -76,7 +76,7 @@ namespace palmx
         font_shader = LoadShaderFromMemory(text_vertex_shader, text_fragment_shader);
 
         Dimension window_dimension = GetWindowDimension();
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(window_dimension.width), 0.0f, static_cast<float>(window_dimension.heigth));
+        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(window_dimension.width), 0.0f, static_cast<float>(window_dimension.height));
         glUseProgram(font_shader.id);
         glUniformMatrix4fv(glGetUniformLocation(font_shader.id, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 

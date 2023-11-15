@@ -98,7 +98,7 @@ namespace palmx
     GLuint render_texture_framebuffer;
     // PS1 display was 256x224px
     const unsigned int render_texture_width { 256 };
-    const unsigned int render_texture_heigth { 224 };
+    const unsigned int render_texture_height { 224 };
 
     GLuint fullscreen_quad_vertex_buffer;
     GLuint fullscreen_quad_vertex_array;
@@ -138,7 +138,7 @@ namespace palmx
 
         glGenTextures(1, &render_texture);
         glBindTexture(GL_TEXTURE_2D, render_texture);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, render_texture_width, render_texture_heigth, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, render_texture_width, render_texture_height, 0, GL_RGB, GL_UNSIGNED_BYTE, 0);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -148,7 +148,7 @@ namespace palmx
         GLuint render_texture_renderbuffer;
         glGenRenderbuffers(1, &render_texture_renderbuffer);
         glBindRenderbuffer(GL_RENDERBUFFER, render_texture_renderbuffer);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, render_texture_width, render_texture_heigth);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, render_texture_width, render_texture_height);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, render_texture_renderbuffer);
 
         glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, render_texture, 0);
@@ -197,7 +197,7 @@ namespace palmx
         // Always render the scene at a lower resolution to emulate the ps1 screen
         // Everything below will now be rendered to the render texture instead of the screen directly
         glBindFramebuffer(GL_FRAMEBUFFER, render_texture_framebuffer);
-        glViewport(0, 0, render_texture_width, render_texture_heigth);
+        glViewport(0, 0, render_texture_width, render_texture_height);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(default_shader.id);
@@ -221,7 +221,7 @@ namespace palmx
 
         Dimension window_dimension = GetWindowDimension();
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glViewport(0, 0, window_dimension.width, window_dimension.heigth);
+        glViewport(0, 0, window_dimension.width, window_dimension.height);
 
         glUseProgram(fullscreen_quad_shader.id);
 
@@ -343,7 +343,7 @@ namespace palmx
         GLint location = glGetUniformLocation(shader.id, uniform_name.c_str());
         if (location == -1)
         {
-            LogError("Shader Uniform Location " + uniform_name + " not found");
+            //LogError("Shader Uniform Location " + uniform_name + " not found");
         }
         return location;
     }
@@ -431,8 +431,8 @@ namespace palmx
 
         // Load Materials
         std::string material_name = ai_scene->mMaterials[ai_mesh->mMaterialIndex]->GetName().C_Str();
-        Texture albedo_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_albedo.jpg").c_str());
-        Texture normal_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_normal.jpg").c_str());
+        Texture albedo_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_albedo.jpg"));
+        Texture normal_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_normal.jpg"));
 
         unsigned int vao, vbo, ebo;
 

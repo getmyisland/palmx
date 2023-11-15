@@ -108,7 +108,7 @@ namespace palmx
     struct Dimension
     {
         int width;
-        int heigth;
+        int height;
     };
 
     //------------------------------------------------------------------------------------

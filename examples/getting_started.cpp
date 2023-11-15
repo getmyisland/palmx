@@ -49,7 +49,7 @@ int main()
         // TODO change color over time
 
         Dimension window_dimension = GetWindowDimension();
-        DrawText("Hello palmx", (window_dimension.width / 2) - (12 * 32), (window_dimension.heigth / 2) - 32, 2.0f, color_white);
+        DrawText("Hello palmx", (window_dimension.width / 2) - (12 * 32), (window_dimension.height / 2) - 32, 2.0f, color_white);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

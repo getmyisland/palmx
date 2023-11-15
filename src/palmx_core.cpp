@@ -85,7 +85,7 @@ namespace palmx
             return window_dimension;
         }
 
-        glfwGetWindowSize(px_data.window, &window_dimension.width, &window_dimension.heigth);
+        glfwGetWindowSize(px_data.window, &window_dimension.width, &window_dimension.height);
 
         return window_dimension;
     }
