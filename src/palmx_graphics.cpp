@@ -29,73 +29,9 @@
 
 namespace palmx
 {
-    std::string default_vertex_shader_source = R"(
-		#version 330 core
-
-		layout (location = 0) in vec3 aPos;
-		layout (location = 1) in vec3 aNormal;
-		layout (location = 2) in vec2 aTexCoord;
-
-		out vec2 texCoord;
-
-		uniform mat4 mesh;
-		uniform mat4 view;
-		uniform mat4 projection;
-
-		void main()
-		{
-			gl_Position = projection * view * mesh * vec4(aPos, 1.0);
-			texCoord = aTexCoord;
-		}
-	)";
-
-    std::string default_fragment_shader_source = R"(
-		#version 330 core
-
-		in vec3 color;
-		in vec2 texCoord;
-
-		out vec4 FragColor;  
-				
-		uniform sampler2D texture_albedo;
-		uniform sampler2D texture_normal;
-
-		void main()
-		{
-			FragColor = texture(texture_albedo, texCoord);
-		}
-	)";
-
-    std::string fullscreen_quad_vertex_shader = R"(
-		#version 330 core
-
-		layout (location = 0) in vec3 aPos;
-		layout (location = 1) in vec2 aTexCoord;
-
-		out vec2 TexCoord;
-
-		void main() {
-			gl_Position = vec4(aPos, 1.0);
-			TexCoord = aTexCoord;
-		}
-	)";
-
-    std::string fullscreen_quad_fragment_shader = R"(
-		#version 330 core
-
-		in vec2 TexCoord;
-
-		out vec4 FragColor;
-
-		uniform sampler2D renderTexture;
-
-		void main() {
-			FragColor = texture(renderTexture, TexCoord);
-		}
-	)";
-
     GLuint render_texture;
     GLuint render_texture_framebuffer;
+
     // PS1 display was 320x240px or 640x480px
     const unsigned int render_texture_width { 320 };
     const unsigned int render_texture_height { 240 };
@@ -104,7 +40,8 @@ namespace palmx
     GLuint fullscreen_quad_vertex_array;
     Shader fullscreen_quad_shader;
 
-    Shader default_shader;
+    Shader model_shader;
+    Shader primitive_shader;
 
     Color background_color { color_black };
 
@@ -129,8 +66,11 @@ namespace palmx
             return;
         }
 
+        // Enable OpenGL capabilities
         glEnable(GL_CULL_FACE);
         glEnable(GL_DEPTH_TEST);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         // Create a render texture and framebuffer the scene can render to before being displayed
         glGenFramebuffers(1, &render_texture_framebuffer);
@@ -179,8 +119,106 @@ namespace palmx
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
 
-        default_shader = LoadShaderFromMemory(default_vertex_shader_source, default_fragment_shader_source);
+        std::string fullscreen_quad_vertex_shader = R"(
+            #version 330 core
+
+            layout (location = 0) in vec3 aPos;
+            layout (location = 1) in vec2 aTexCoord;
+
+            out vec2 TexCoord;
+
+            void main() {
+                gl_Position = vec4(aPos, 1.0);
+                TexCoord = aTexCoord;
+            }
+        )";
+
+        std::string fullscreen_quad_fragment_shader = R"(
+            #version 330 core
+
+            in vec2 TexCoord;
+
+            out vec4 FragColor;
+
+            uniform sampler2D texture;
+
+            void main() {
+                FragColor = texture(texture, TexCoord);
+            }
+        )";
+
         fullscreen_quad_shader = LoadShaderFromMemory(fullscreen_quad_vertex_shader, fullscreen_quad_fragment_shader);
+
+        std::string model_vertex_shader_source = R"(
+            #version 330 core
+
+            layout (location = 0) in vec3 aPos;
+            layout (location = 1) in vec3 aNormal;
+            layout (location = 2) in vec2 aTexCoord;
+
+            out vec2 TexCoord;
+
+            uniform mat4 model;
+            uniform mat4 view;
+            uniform mat4 projection;
+
+            void main()
+            {
+                gl_Position = projection * view * model * vec4(aPos, 1.0);
+                TexCoord = aTexCoord;
+            }
+        )";
+
+        // TODO Normal texture rendering
+        std::string model_fragment_shader_source = R"(
+            #version 330 core
+
+            in vec2 TexCoord;
+
+            out vec4 FragColor;  
+                    
+            uniform sampler2D texture_albedo;
+            uniform sampler2D texture_normal;
+
+            void main()
+            {
+                FragColor = texture(texture_albedo, TexCoord);
+            }
+        )";
+
+        model_shader = LoadShaderFromMemory(model_vertex_shader_source, model_fragment_shader_source);
+
+        std::string primitive_vertex_shader_source = R"(
+            #version 330 core
+
+            layout (location = 0) in vec3 aPos;
+
+            out vec2 TexCoord;
+
+            uniform mat4 model;
+            uniform mat4 view;
+            uniform mat4 projection;
+
+            void main()
+            {
+                gl_Position = projection * view * model * vec4(aPos, 1.0);
+            }
+        )";
+
+        std::string primitive_fragment_shader_source = R"(
+            #version 330 core
+
+            out vec4 FragColor;  
+                    
+            uniform vec4 color;
+
+            void main()
+            {
+                FragColor = color;
+            }
+        )";
+
+        primitive_shader = LoadShaderFromMemory(primitive_vertex_shader_source, primitive_fragment_shader_source);
     }
 
     void BeginDrawing(Camera& camera)
@@ -194,21 +232,24 @@ namespace palmx
         glClearColor(background_color.r, background_color.g, background_color.b, background_color.a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Always render the scene at a lower resolution to emulate the ps1 screen
+        // Always render the scene at a lower resolution to emulate the PS1 screen
         // Everything below will now be rendered to the render texture instead of the screen directly
         glBindFramebuffer(GL_FRAMEBUFFER, render_texture_framebuffer);
         glViewport(0, 0, render_texture_width, render_texture_height);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        glUseProgram(default_shader.id);
-
         int framebuffer_width, framebuffer_height;
         glfwGetFramebufferSize(px_data.window, &framebuffer_width, &framebuffer_height);
         glm::mat4 projection = glm::perspective(glm::radians(camera.zoom), static_cast<float>(framebuffer_width) / static_cast<float>(framebuffer_height), 0.1f, 100.0f);
-        glUniformMatrix4fv(GetShaderUniformLocation(default_shader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
         glm::mat4 view = glm::lookAt(camera.transform.position, camera.transform.position + Vector3Forward(camera.transform.rotation), Vector3Up(camera.transform.rotation));
-        glUniformMatrix4fv(GetShaderUniformLocation(default_shader, "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+        glUseProgram(model_shader.id);
+        glUniformMatrix4fv(GetShaderUniformLocation(model_shader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(GetShaderUniformLocation(model_shader, "view"), 1, GL_FALSE, glm::value_ptr(view));
+
+        glUseProgram(primitive_shader.id);
+        glUniformMatrix4fv(GetShaderUniformLocation(primitive_shader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+        glUniformMatrix4fv(GetShaderUniformLocation(primitive_shader, "view"), 1, GL_FALSE, glm::value_ptr(view));
     }
 
     void EndDrawing()
@@ -252,6 +293,7 @@ namespace palmx
             if (!success)
             {
                 glGetShaderInfoLog(object, 1024, NULL, info_log);
+                // TODO don't use to_string here
                 LogError("Shader compilation failed for type " + std::to_string(type) + "\n" + std::string(info_log));
             }
         }
@@ -387,8 +429,7 @@ namespace palmx
 
     Mesh ProcessMesh(aiMesh* ai_mesh, const aiScene* ai_scene, std::string directory)
     {
-        std::vector<Vertex> vertices;
-        std::vector<unsigned int> indices;
+        Mesh mesh = {};
 
         for (unsigned int i = 0; i < ai_mesh->mNumVertices; i++)
         {
@@ -418,7 +459,7 @@ namespace palmx
                 vertex.tex_coords = glm::vec2(0.0f, 0.0f);
             }
 
-            vertices.push_back(vertex);
+            mesh.vertices.push_back(vertex);
         }
 
         // Process indices
@@ -426,31 +467,29 @@ namespace palmx
         {
             aiFace face = ai_mesh->mFaces[i];
             for (unsigned int j = 0; j < face.mNumIndices; j++)
-                indices.push_back(face.mIndices[j]);
+                mesh.indices.push_back(face.mIndices[j]);
         }
 
         // Load Materials
         std::string material_name = ai_scene->mMaterials[ai_mesh->mMaterialIndex]->GetName().C_Str();
-        Texture albedo_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_albedo.jpg"));
-        Texture normal_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_normal.jpg"));
-
-        unsigned int vao, vbo, ebo;
+        mesh.albedo_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_albedo.jpg"));
+        mesh.normal_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_normal.jpg"));
 
         // Create buffers/arrays
-        glGenVertexArrays(1, &vao);
-        glGenBuffers(1, &vbo);
-        glGenBuffers(1, &ebo);
+        glGenVertexArrays(1, &mesh.vao);
+        glGenBuffers(1, &mesh.vbo);
+        glGenBuffers(1, &mesh.ebo);
 
-        glBindVertexArray(vao);
+        glBindVertexArray(mesh.vao);
         // Load data into vertex buffers
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, mesh.vbo);
         // A great thing about structs is that their memory layout is sequential for all its items.
         // The effect is that we can simply pass a pointer to the struct and it translates perfectly to a glm::vec3/2 array which
         // Again translates to 3/2 floats which translates to a byte array.
-        glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vertex), &mesh.vertices[0], GL_STATIC_DRAW);
 
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh.ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), &mesh.indices[0], GL_STATIC_DRAW);
 
         // Set the vertex attribute pointers
         // Vertex Positions
@@ -475,15 +514,6 @@ namespace palmx
         glEnableVertexAttribArray(6);
         glVertexAttribPointer(6, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, weights));
         glBindVertexArray(0);
-
-        Mesh mesh;
-        mesh.vertices = vertices;
-        mesh.indices = indices;
-        mesh.albedo_texture = albedo_texture;
-        mesh.normal_texture = normal_texture;
-        mesh.vao = vao;
-        mesh.vbo = vbo;
-        mesh.ebo = ebo;
 
         return mesh;
     }
@@ -528,23 +558,25 @@ namespace palmx
 
     void DrawModel(Model& model)
     {
+        glUseProgram(model_shader.id);
+
         for (Mesh& mesh : model.meshes)
         {
             // Render the mesh
-            glm::mat4 mesh_mat4 = glm::mat4(1.0f);
-            mesh_mat4 = glm::translate(mesh_mat4, static_cast<glm::vec3>(model.transform.position));
-            mesh_mat4 = glm::scale(mesh_mat4, static_cast<glm::vec3>(model.transform.scale));
-            glUniformMatrix4fv(GetShaderUniformLocation(default_shader, "mesh"), 1, GL_FALSE, glm::value_ptr(mesh_mat4));
+            glm::mat4 model_mat4 = glm::mat4(1.0f);
+            model_mat4 = glm::translate(model_mat4, static_cast<glm::vec3>(model.transform.position));
+            model_mat4 = glm::scale(model_mat4, static_cast<glm::vec3>(model.transform.scale));
+            glUniformMatrix4fv(GetShaderUniformLocation(model_shader, "model"), 1, GL_FALSE, glm::value_ptr(model_mat4));
 
             glActiveTexture(GL_TEXTURE0 + 0);
             // Set the sampler to the correct texture unit
-            glUniform1i(GetShaderUniformLocation(default_shader, "texture_albedo"), 0);
+            glUniform1i(GetShaderUniformLocation(model_shader, "texture_albedo"), 0);
             // Bind the texture
             glBindTexture(GL_TEXTURE_2D, mesh.albedo_texture.id);
 
             glActiveTexture(GL_TEXTURE0 + 1);
             // Set the sampler to the correct texture unit
-            glUniform1i(GetShaderUniformLocation(default_shader, "texture_normal"), 1);
+            glUniform1i(GetShaderUniformLocation(model_shader, "texture_normal"), 1);
             // Bind the texture
             glBindTexture(GL_TEXTURE_2D, mesh.normal_texture.id);
 
@@ -556,5 +588,104 @@ namespace palmx
             // Set everything back to default
             glActiveTexture(GL_TEXTURE0);
         }
+    }
+
+    Primitive CreateCube()
+    {
+        Primitive cube = {};
+
+        GLfloat vertices[] = {
+            -0.5f, -0.5f, -0.5f,
+            0.5f, -0.5f, -0.5f,
+            0.5f,  0.5f, -0.5f,
+            0.5f,  0.5f, -0.5f,
+            -0.5f,  0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+
+            -0.5f, -0.5f,  0.5f,
+            0.5f, -0.5f,  0.5f,
+            0.5f,  0.5f,  0.5f,
+            0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+            -0.5f, -0.5f,  0.5f,
+
+            -0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+            -0.5f, -0.5f, -0.5f,
+            -0.5f, -0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+
+            0.5f,  0.5f,  0.5f,
+            0.5f,  0.5f, -0.5f,
+            0.5f, -0.5f, -0.5f,
+            0.5f, -0.5f, -0.5f,
+            0.5f, -0.5f,  0.5f,
+            0.5f,  0.5f,  0.5f,
+
+            -0.5f, -0.5f, -0.5f,
+            0.5f, -0.5f, -0.5f,
+            0.5f, -0.5f,  0.5f,
+            0.5f, -0.5f,  0.5f,
+            -0.5f, -0.5f,  0.5f,
+            -0.5f, -0.5f, -0.5f,
+
+            -0.5f,  0.5f, -0.5f,
+            0.5f,  0.5f, -0.5f,
+            0.5f,  0.5f,  0.5f,
+            0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f,  0.5f,
+            -0.5f,  0.5f, -0.5f
+        };
+
+        glGenVertexArrays(1, &cube.vao);
+        glBindVertexArray(cube.vao);
+
+        glGenBuffers(1, &cube.vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, cube.vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(0);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
+
+        return cube;
+    }
+
+    void DrawPrimitive(Primitive& primitive)
+    {
+        // FIXME only works when face culling is disabled or else some faces will be invisble
+        // Remove this once you found a workaround
+        glDisable(GL_CULL_FACE);
+
+        glUseProgram(primitive_shader.id);
+        glUniform4f(GetShaderUniformLocation(primitive_shader, "color"), primitive.color.r, primitive.color.g, primitive.color.b, primitive.color.a);
+
+        glm::mat4 model_mat4 = glm::mat4(1.0f);
+        model_mat4 = glm::translate(model_mat4, static_cast<glm::vec3>(primitive.transform.position));
+
+        // Translate to the pivot point (center)
+        //glm::vec3 pivot = 0.5f * primitive.transform.scale;
+        //model_mat4 = glm::translate(model_mat4, pivot);
+
+        // Rotate around all three axes using Euler Angles
+        model_mat4 = glm::rotate(model_mat4, glm::radians(primitive.transform.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+        model_mat4 = glm::rotate(model_mat4, glm::radians(primitive.transform.rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+        model_mat4 = glm::rotate(model_mat4, glm::radians(primitive.transform.rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+
+        // Translate back to the original position
+        //model_mat4 = glm::translate(model_mat4, -pivot);
+
+        model_mat4 = glm::scale(model_mat4, static_cast<glm::vec3>(primitive.transform.scale));
+        glUniformMatrix4fv(GetShaderUniformLocation(primitive_shader, "model"), 1, GL_FALSE, glm::value_ptr(model_mat4));
+
+        glBindVertexArray(primitive.vao);
+        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glBindVertexArray(0);
+
+        // Enable it again
+        glEnable(GL_CULL_FACE);
     }
 }

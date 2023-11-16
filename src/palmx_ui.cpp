@@ -39,9 +39,6 @@ namespace palmx
             return;
         }
 
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
         std::string text_vertex_shader = R"(
             #version 330 core
             

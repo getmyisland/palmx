@@ -97,6 +97,16 @@ namespace palmx
         std::vector<Mesh> meshes;
     };
 
+    struct Primitive
+    {
+        Transform transform;
+        Color color { 1.0f, 1.0f, 1.0f, 1.0f };
+
+        unsigned int vao;
+        unsigned int vbo;
+        unsigned int ebo;
+    };
+
     struct Rigidbody
     {
         glm::vec3 velocity;
@@ -136,7 +146,6 @@ namespace palmx
     const Color color_beige = { 211.0f / 255.0f, 176.0f / 255.0f, 131.0f / 255.0f, 1.0f };
     const Color color_brown = { 127.0f / 255.0f, 106.0f / 255.0f, 79.0f / 255.0f, 1.0f };
     const Color color_darkbrown = { 76.0f / 255.0f, 63.0f / 255.0f, 47.0f / 255.0f, 1.0f };
-
     const Color color_white = { 1.0f, 1.0f, 1.0f, 1.0f };
     const Color color_black = { 0.0f, 0.0f, 0.0f, 1.0f };
     const Color color_blank = { 0.0f, 0.0f, 0.0f, 0.0f };
@@ -153,6 +162,7 @@ namespace palmx
 
     extern Dimension GetWindowDimension();
 
+    extern float GetTime();
     extern float GetDeltaTime();
 
     //----------------------------------------------------------------------------------
@@ -188,6 +198,9 @@ namespace palmx
 
     extern Model LoadModel(std::string file_path);
     extern void DrawModel(Model& model);
+
+    extern Primitive CreateCube();
+    extern void DrawPrimitive(Primitive& primitive);
 
     //----------------------------------------------------------------------------------
     // User Interface

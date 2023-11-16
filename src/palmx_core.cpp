@@ -90,6 +90,11 @@ namespace palmx
         return window_dimension;
     }
 
+    float GetTime()
+    {
+        return static_cast<float>(glfwGetTime());
+    }
+
     float delta_time = 0.0f;
     float last_frame = 0.0f;
     float GetDeltaTime()
