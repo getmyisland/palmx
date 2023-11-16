@@ -25,7 +25,7 @@ target_include_directories(palmx
 		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glfw/include # Include GLFW headers
 		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glm # Include glm headers
 		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/assimp/include # Include assimp headers
-		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/assimp/include # Include freetype headers
+		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/freetype/include # Include freetype headers
 )
 
 target_link_libraries(palmx 
