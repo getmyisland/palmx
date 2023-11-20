@@ -656,30 +656,29 @@ namespace palmx
 
     void DrawPrimitive(Primitive& primitive)
     {
-        // FIXME only works when face culling is disabled or else some faces will be invisble
-        // Remove this once you found a workaround
+        // Only works when face culling is disabled or else some faces will be invisble
         glDisable(GL_CULL_FACE);
 
         glUseProgram(primitive_shader.id);
         glUniform4f(GetShaderUniformLocation(primitive_shader, "color"), primitive.color.r, primitive.color.g, primitive.color.b, primitive.color.a);
 
-        glm::mat4 model_mat4 = glm::mat4(1.0f);
-        model_mat4 = glm::translate(model_mat4, static_cast<glm::vec3>(primitive.transform.position));
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, primitive.transform.position);
 
         // Translate to the pivot point (center)
         //glm::vec3 pivot = 0.5f * primitive.transform.scale;
-        //model_mat4 = glm::translate(model_mat4, pivot);
+        //model = glm::translate(model, pivot);
 
         // Rotate around all three axes using Euler Angles
-        model_mat4 = glm::rotate(model_mat4, glm::radians(primitive.transform.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-        model_mat4 = glm::rotate(model_mat4, glm::radians(primitive.transform.rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-        model_mat4 = glm::rotate(model_mat4, glm::radians(primitive.transform.rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::rotate(model, glm::radians(primitive.transform.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(primitive.transform.rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(primitive.transform.rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
 
         // Translate back to the original position
-        //model_mat4 = glm::translate(model_mat4, -pivot);
+        //model = glm::translate(model, -pivot);
 
-        model_mat4 = glm::scale(model_mat4, static_cast<glm::vec3>(primitive.transform.scale));
-        glUniformMatrix4fv(GetShaderUniformLocation(primitive_shader, "model"), 1, GL_FALSE, glm::value_ptr(model_mat4));
+        model = glm::scale(model, static_cast<glm::vec3>(primitive.transform.scale));
+        glUniformMatrix4fv(GetShaderUniformLocation(primitive_shader, "model"), 1, GL_FALSE, glm::value_ptr(model));
 
         glBindVertexArray(primitive.vao);
         glDrawArrays(GL_TRIANGLES, 0, 36);

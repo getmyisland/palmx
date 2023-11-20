@@ -206,7 +206,8 @@ namespace palmx
     // User Interface
     //----------------------------------------------------------------------------------
 
-    extern void DrawText(const std::string& text, float x, float y, float scale, const Color color);
+    extern void DrawText(const std::string& text, glm::vec2 position, float scale, const Color& color = color_white);
+    extern void DrawSprite(const Texture& texture, glm::vec2 position, glm::vec2 size, const Color& color = color_white);
 
     //----------------------------------------------------------------------------------
     // Filesystem

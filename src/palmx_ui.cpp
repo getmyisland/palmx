@@ -8,6 +8,7 @@
 #include <palmx_debug.h>
 
 #include <glm/glm.hpp>
+#include <glm/trigonometric.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -21,7 +22,7 @@ namespace palmx
     /// All state information relevant to a character as loaded using FreeType
     struct Character
     {
-        unsigned int texture_id; // ID handle of the glyph texture
+        Texture texture; // The glyph texture
         glm::ivec2   size; // Size of glyph
         glm::ivec2   bearing; // Offset from baseline to left/top of glyph
         unsigned int advance; // Horizontal offset to advance to next glyph
@@ -29,7 +30,10 @@ namespace palmx
 
     Shader font_shader;
     std::map<GLchar, Character> characters;
-    unsigned int vao, vbo;
+    GLuint text_vao, text_vbo;
+
+    Shader sprite_shader;
+    GLuint sprite_vao, sprite_vbo, sprite_ebo;
 
     void SetupUserInterface()
     {
@@ -58,20 +62,20 @@ namespace palmx
             #version 330 core
 
             in vec2 TexCoords;
-            out vec4 color;
+            out vec4 FragColor;
 
             uniform sampler2D text;
-            uniform vec3 textColor;
+            uniform vec4 textColor;
 
             void main()
             {    
-                vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
-                color = vec4(textColor, 1.0) * sampled;
+                FragColor = textColor * vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
             }
         )";
 
         font_shader = LoadShaderFromMemory(text_vertex_shader, text_fragment_shader);
 
+        // FIXME what if window dimensions change?
         Dimension window_dimension = GetWindowDimension();
         glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(window_dimension.width), 0.0f, static_cast<float>(window_dimension.height));
         glUseProgram(font_shader.id);
@@ -84,6 +88,7 @@ namespace palmx
             return;
         }
 
+        // TODO let user choose font
         std::string font_name = GetAbsolutePath("/resources/VCR_OSD_MONO.ttf");
         if (font_name.empty())
         {
@@ -115,9 +120,9 @@ namespace palmx
                 }
 
                 // Generate texture
-                unsigned int texture;
-                glGenTextures(1, &texture);
-                glBindTexture(GL_TEXTURE_2D, texture);
+                unsigned int texture_id;
+                glGenTextures(1, &texture_id);
+                glBindTexture(GL_TEXTURE_2D, texture_id);
                 glTexImage2D(
                     GL_TEXTURE_2D,
                     0,
@@ -137,7 +142,7 @@ namespace palmx
 
                 // Store character for later use
                 Character character = {
-                    texture,
+                    {texture_id},
                     glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
                     glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
                     static_cast<unsigned int>(face->glyph->advance.x)
@@ -151,24 +156,95 @@ namespace palmx
         FT_Done_Face(face);
         FT_Done_FreeType(ft);
 
-        glGenVertexArrays(1, &vao);
-        glGenBuffers(1, &vbo);
-        glBindVertexArray(vao);
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glGenVertexArrays(1, &text_vao);
+        glGenBuffers(1, &text_vbo);
+
+        glBindVertexArray(text_vao);
+
+        glBindBuffer(GL_ARRAY_BUFFER, text_vbo);
         glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
+
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindVertexArray(0);
+
+        std::string sprite_vertex_shader = R"(
+            #version 330 core
+            
+            layout (location = 0) in vec3 aPos;
+
+            out vec2 TexCoord;
+
+            uniform mat4 model;
+            uniform mat4 projection;
+
+            void main()
+            {
+                gl_Position = projection * model * vec4(aPos, 1.0);
+                TexCoord = (aPos.xy + vec2(1.0, 1.0)) / 2.0;
+            }
+        )";
+
+        std::string sprite_fragment_shader = R"(
+            #version 330 core
+
+            in vec2 TexCoord;
+            out vec4 FragColor;
+
+            uniform vec4 spriteColor;
+            uniform sampler2D spriteTexture;
+
+            void main() {
+                FragColor = spriteColor * texture(spriteTexture, TexCoord);
+            }
+        )";
+
+        sprite_shader = LoadShaderFromMemory(sprite_vertex_shader, sprite_fragment_shader);
+
+        // Reuse projection matrix from above
+        glUseProgram(sprite_shader.id);
+        glUniformMatrix4fv(glGetUniformLocation(sprite_shader.id, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+        float sprite_vertices[] = {
+            // positions
+            1.0f,  1.0f, 0.0f,   // top right
+            1.0f, -1.0f, 0.0f,   // bottom right
+            -1.0f, -1.0f, 0.0f,   // bottom left
+            -1.0f,  1.0f, 0.0f    // top left
+        };
+
+        unsigned int sprite_indices[] = {
+            0, 1, 3,   // first triangle
+            1, 2, 3    // second triangle
+        };
+
+        glGenVertexArrays(1, &sprite_vao);
+        glGenBuffers(1, &sprite_vbo);
+        glGenBuffers(1, &sprite_ebo);
+
+        glBindVertexArray(sprite_vao);
+
+        glBindBuffer(GL_ARRAY_BUFFER, sprite_vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(sprite_vertices), sprite_vertices, GL_STATIC_DRAW);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sprite_ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(sprite_indices), sprite_indices, GL_STATIC_DRAW);
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+        glEnableVertexAttribArray(0);
+
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindVertexArray(0);
     }
 
-    void DrawText(const std::string& text, float x, float y, float scale, const Color color)
+    void DrawText(const std::string& text, glm::vec2 position, float scale, const Color& color)
     {
         // Activate corresponding render state	
         glUseProgram(font_shader.id);
-        glUniform3f(glGetUniformLocation(font_shader.id, "textColor"), color.r, color.g, color.b);
+        glUniform4f(glGetUniformLocation(font_shader.id, "textColor"), color.r, color.g, color.b, color.a);
         glActiveTexture(GL_TEXTURE0);
-        glBindVertexArray(vao);
+        glBindVertexArray(text_vao);
 
         // Iterate through all characters
         std::string::const_iterator c;
@@ -176,8 +252,8 @@ namespace palmx
         {
             Character ch = characters[*c];
 
-            float xpos = x + ch.bearing.x * scale;
-            float ypos = y - (ch.size.y - ch.bearing.y) * scale;
+            float xpos = position.x + ch.bearing.x * scale;
+            float ypos = position.y - (ch.size.y - ch.bearing.y) * scale;
 
             float w = ch.size.x * scale;
             float h = ch.size.y * scale;
@@ -194,10 +270,10 @@ namespace palmx
             };
 
             // Render glyph texture over quad
-            glBindTexture(GL_TEXTURE_2D, ch.texture_id);
+            glBindTexture(GL_TEXTURE_2D, ch.texture.id);
 
             // Update content of VBO memory
-            glBindBuffer(GL_ARRAY_BUFFER, vbo);
+            glBindBuffer(GL_ARRAY_BUFFER, text_vbo);
             glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
 
             glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -205,10 +281,40 @@ namespace palmx
             glDrawArrays(GL_TRIANGLES, 0, 6);
 
             // Advance cursors for next glyph (note that advance is number of 1/64 pixels)
-            x += (ch.advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+            position.x += (ch.advance >> 6) * scale; // Bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
         }
 
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
+    }
+
+    void DrawSprite(const Texture& texture, glm::vec2 position, glm::vec2 size, const Color& color)
+    {
+        // Only works when face culling is disabled or else the sprite will be invisible
+        glDisable(GL_CULL_FACE);
+
+        glUseProgram(sprite_shader.id);
+
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(position, 0.0f));
+        //model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
+        //model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f)); // then rotate
+        //model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
+        model = glm::scale(model, glm::vec3(size, 1.0f));
+
+        glUniformMatrix4fv(GetShaderUniformLocation(sprite_shader, "model"), 1, GL_FALSE, glm::value_ptr(model));
+        glUniform4f(GetShaderUniformLocation(sprite_shader, "spriteColor"), color.r, color.g, color.b, color.a);
+
+        glActiveTexture(GL_TEXTURE0);
+        glUniform1i(GetShaderUniformLocation(sprite_shader, "spriteTexture"), 0);
+        glBindTexture(GL_TEXTURE_2D, texture.id);
+
+        glBindVertexArray(sprite_vao);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sprite_ebo);
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glBindVertexArray(0);
+
+        // Enable face culling again
+        glEnable(GL_CULL_FACE);
     }
 }

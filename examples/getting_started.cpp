@@ -119,7 +119,7 @@ int main()
         DrawPrimitive(cube);
 
         Dimension window_dimension = GetWindowDimension();
-        DrawText("Hello palmx", 25.0f, window_dimension.height - 75.0f, 1.5f, color_white); // Draw a text in the upper left corner
+        DrawText("Hello palmx!", glm::vec2((window_dimension.width / 2) - (24 * 12), (window_dimension.height / 2) - 16), 1.5f); // Draw a text in the upper left corner
 
         EndDrawing(); // Render the render texture onto the screen and swap the buffers
         //----------------------------------------------------------------------------------
