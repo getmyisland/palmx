@@ -571,7 +571,7 @@ namespace palmx
         return meshes;
     }
 
-    Model LoadModel(std::string file_path)
+    Model LoadModel(const std::string& file_path)
     {
         Assimp::Importer importer;
         const aiScene* ai_scene = importer.ReadFile(file_path, aiProcess_Triangulate | aiProcess_FlipUVs);

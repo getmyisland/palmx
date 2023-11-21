@@ -29,6 +29,7 @@
 #include <glad/glad.h> // Needs to be included first
 
 #include "palmx_engine.h"
+#include "palmx_default_font.h"
 
 #include <palmx.h>
 #include <palmx_debug.h>
@@ -41,21 +42,16 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+#include <fstream>
+#include <sstream>
+#include <iostream>
 #include <map>
 
 namespace palmx
 {
-    /// All state information relevant to a character as loaded using FreeType
-    struct Character
-    {
-        Texture texture; // The glyph texture
-        glm::ivec2   size; // Size of glyph
-        glm::ivec2   bearing; // Offset from baseline to left/top of glyph
-        unsigned int advance; // Horizontal offset to advance to next glyph
-    };
-
+    Font font;
     Shader font_shader;
-    std::map<GLchar, Character> characters;
+
     GLuint text_vao, text_vbo;
 
     Shader sprite_shader;
@@ -107,80 +103,8 @@ namespace palmx
         glUseProgram(font_shader.id);
         glUniformMatrix4fv(glGetUniformLocation(font_shader.id, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-        FT_Library ft;
-        if (FT_Init_FreeType(&ft))
-        {
-            LogError("Could not init FreeType Library");
-            return;
-        }
-
-        // TODO let user choose font
-        std::string font_name = GetAbsolutePath("/resources/VCR_OSD_MONO.ttf");
-        if (font_name.empty())
-        {
-            LogError("Failed to load default font path");
-            return;
-        }
-
-        FT_Face face;
-        if (FT_New_Face(ft, font_name.c_str(), 0, &face))
-        {
-            LogError("Failed to load default font");
-            return;
-        }
-        else
-        {
-            FT_Set_Pixel_Sizes(face, 0, 48);
-
-            // Disable byte-alignment restriction
-            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-
-            // Load first 128 characters of ASCII set
-            for (unsigned char c = 0; c < 128; c++)
-            {
-                // Load character glyph 
-                if (FT_Load_Char(face, c, FT_LOAD_RENDER))
-                {
-                    LogError("Failed to load glyph");
-                    continue;
-                }
-
-                // Generate texture
-                unsigned int texture_id;
-                glGenTextures(1, &texture_id);
-                glBindTexture(GL_TEXTURE_2D, texture_id);
-                glTexImage2D(
-                    GL_TEXTURE_2D,
-                    0,
-                    GL_RED,
-                    face->glyph->bitmap.width,
-                    face->glyph->bitmap.rows,
-                    0,
-                    GL_RED,
-                    GL_UNSIGNED_BYTE,
-                    face->glyph->bitmap.buffer
-                );
-
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-                // Store character for later use
-                Character character = {
-                    {texture_id},
-                    glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
-                    glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
-                    static_cast<unsigned int>(face->glyph->advance.x)
-                };
-                characters.insert(std::pair<char, Character>(c, character));
-            }
-
-            glBindTexture(GL_TEXTURE_2D, 0);
-        }
-        // Destroy FreeType once finished
-        FT_Done_Face(face);
-        FT_Done_FreeType(ft);
+        // Load default font
+        font = LoadDefaultFont();
 
         glGenVertexArrays(1, &text_vao);
         glGenBuffers(1, &text_vbo);
@@ -264,6 +188,130 @@ namespace palmx
         glBindVertexArray(0);
     }
 
+    Font LoadFontFromMemory(const unsigned char* font_data, unsigned int font_size)
+    {
+        std::map<char, Character> characters;
+
+        if (font_data == nullptr || font_size == 0)
+        {
+            LogError("Failed to load font from memory: Invalid data");
+            return { characters };
+        }
+
+        FT_Library ft;
+        if (FT_Init_FreeType(&ft))
+        {
+            LogError("Could not init FreeType Library");
+            return { characters };
+        }
+
+        FT_Face face;
+        if (FT_New_Memory_Face(ft, font_data, font_size, 0, &face))
+        {
+            LogError("Failed to load font from memory");
+            FT_Done_FreeType(ft);
+            return { characters };
+        }
+        else
+        {
+            FT_Set_Pixel_Sizes(face, 0, 48);
+
+            // Disable byte-alignment restriction
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+            // Load first 128 characters of ASCII set
+            for (unsigned char c = 0; c < 128; c++)
+            {
+                // Load character glyph
+                if (FT_Load_Char(face, c, FT_LOAD_RENDER))
+                {
+                    LogError("Failed to load glyph");
+                    continue;
+                }
+
+                // Generate texture
+                unsigned int texture_id;
+                glGenTextures(1, &texture_id);
+                glBindTexture(GL_TEXTURE_2D, texture_id);
+                glTexImage2D(
+                    GL_TEXTURE_2D,
+                    0,
+                    GL_RED,
+                    face->glyph->bitmap.width,
+                    face->glyph->bitmap.rows,
+                    0,
+                    GL_RED,
+                    GL_UNSIGNED_BYTE,
+                    face->glyph->bitmap.buffer
+                );
+
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+                // Store character for later use
+                Character character = {
+                    {texture_id},
+                    glm::ivec2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+                    glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+                    static_cast<unsigned int>(face->glyph->advance.x)
+                };
+
+                characters.insert(std::pair<char, Character>(c, character));
+            }
+
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
+
+        // Destroy FreeType once finished
+        FT_Done_Face(face);
+        FT_Done_FreeType(ft);
+
+        return { characters };
+    }
+
+    Font LoadDefaultFont()
+    {
+        return LoadFontFromMemory(default_font_ttf, default_font_ttf_len);
+    }
+
+    Font LoadFont(const std::string& file_path)
+    {
+        std::vector<unsigned char> font_data;
+
+        if (!file_path.empty())
+        {
+            // Read font file into memory
+            std::ifstream file(file_path, std::ios::binary);
+            if (file)
+            {
+                file.seekg(0, std::ios::end);
+                font_data.resize(file.tellg());
+                file.seekg(0, std::ios::beg);
+                file.read(reinterpret_cast<char*>(font_data.data()), font_data.size());
+                file.close();
+            }
+            else
+            {
+                LogError("Failed to load font file: " + file_path);
+                return Font();
+            }
+        }
+        else
+        {
+            LogError("Failed to load font: Empty file path");
+            return Font();
+        }
+
+        return LoadFontFromMemory(font_data.data(), font_data.size());
+    }
+
+    void SetFont(const Font& new_font)
+    {
+        font = new_font;
+    }
+
     void DrawText(const std::string& text, glm::vec2 position, float scale, const Color& color)
     {
         // Activate corresponding render state	
@@ -276,7 +324,7 @@ namespace palmx
         std::string::const_iterator c;
         for (c = text.begin(); c != text.end(); c++)
         {
-            Character ch = characters[*c];
+            Character ch = font.characters[*c];
 
             float xpos = position.x + ch.bearing.x * scale;
             float ypos = position.y - (ch.size.y - ch.bearing.y) * scale;

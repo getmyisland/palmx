@@ -35,6 +35,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 namespace palmx
 {
@@ -95,6 +96,19 @@ namespace palmx
     struct Texture
     {
         unsigned int id;
+    };
+
+    struct Character
+    {
+        Texture texture; // The glyph texture
+        glm::ivec2   size; // Size of glyph
+        glm::ivec2   bearing; // Offset from baseline to left/top of glyph
+        unsigned int advance; // Horizontal offset to advance to next glyph
+    };
+
+    struct Font
+    {
+        std::map<char, Character> characters;
     };
 
     struct Mesh
@@ -214,7 +228,7 @@ namespace palmx
 
     extern Texture LoadTexture(const std::string& file_path);
 
-    extern Model LoadModel(std::string file_path);
+    extern Model LoadModel(const std::string& file_path);
     extern void DrawModel(Model& model);
 
     extern Primitive CreateCube();
@@ -223,6 +237,10 @@ namespace palmx
     //----------------------------------------------------------------------------------
     // User Interface
     //----------------------------------------------------------------------------------
+
+    extern Font LoadDefaultFont();
+    extern Font LoadFont(const std::string& file_path);
+    extern void SetFont(const Font& new_font);
 
     extern void DrawText(const std::string& text, glm::vec2 position, float scale, const Color& color = color_white);
     extern void DrawSprite(const Texture& texture, glm::vec2 position, glm::vec2 size, const Color& color = color_white);
