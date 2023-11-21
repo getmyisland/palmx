@@ -1,7 +1,34 @@
+/**********************************************************************************************
+*
+*   palmx - graphic context management
+*
+*	MIT License
+*
+*   Copyright (c) 2023 Maximilian Fischer (getmyisland)
+*
+*   Permission is hereby granted, free of charge, to any person obtaining a copy
+*   of this software and associated documentation files (the "Software"), to deal
+*   in the Software without restriction, including without limitation the rights
+*   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+*   copies of the Software, and to permit persons to whom the Software is
+*   furnished to do so, subject to the following conditions:
+*
+*   The above copyright notice and this permission notice shall be included in all
+*   copies or substantial portions of the Software.
+*
+*   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+*   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+*   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+*   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+*   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+*   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+*   SOFTWARE.
+*
+**********************************************************************************************/
+
 #include <glad/glad.h> // Needs to be included first
 
-#include "palmx_graphics.h"
-#include "palmx_core.h"
+#include "palmx_engine.h"
 
 #include <palmx.h>
 #include <palmx_debug.h>
@@ -52,7 +79,7 @@ namespace palmx
         PROGRAM
     };
 
-    void SetupGraphics()
+    void InitGraphics()
     {
         if (!px_data.init)
         {
@@ -229,10 +256,13 @@ namespace palmx
             return;
         }
 
+        // Poll all events
+        glfwPollEvents();
+
         glClearColor(background_color.r, background_color.g, background_color.b, background_color.a);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Always render the scene at a lower resolution to emulate the PS1 screen
+        // Render the scene at a lower resolution to emulate the PS1 screen
         // Everything below will now be rendered to the render texture instead of the screen directly
         glBindFramebuffer(GL_FRAMEBUFFER, render_texture_framebuffer);
         glViewport(0, 0, render_texture_width, render_texture_height);
@@ -260,6 +290,7 @@ namespace palmx
             return;
         }
 
+        // Reset the viewport to the size of the window
         Dimension window_dimension = GetWindowDimension();
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glViewport(0, 0, window_dimension.width, window_dimension.height);
@@ -269,13 +300,14 @@ namespace palmx
         glBindTexture(GL_TEXTURE_2D, render_texture);
         glBindVertexArray(fullscreen_quad_vertex_array);
 
+        // Draw the render texture onto the entire screen
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
 
+        // Swap the buffers
         glfwSwapBuffers(px_data.window);
-        glfwPollEvents();
     }
 
     void SetBackground(Color color)
@@ -654,6 +686,8 @@ namespace palmx
         return cube;
     }
 
+    // TODO add more primitives
+    // TODO support primitives with indices
     void DrawPrimitive(Primitive& primitive)
     {
         // Only works when face culling is disabled or else some faces will be invisble
