@@ -50,18 +50,26 @@ namespace palmx
         return "[" + std::filesystem::path(source.file_name()).filename().string() + "] [" + source.function_name() + "] [" + std::to_string(source.line()) + ":" + std::to_string(source.column()) + "]";
     }
 
-    void LogInfo(std::string const message, std::source_location const source)
+    std::string GetSeverityString(const Severity severity)
     {
-        std::cout << GetCurrentTime() << " [INFO] " << GetLocationString(source) << " " << message << "\n";
+        switch (severity)
+        {
+        default:
+        case Severity::DEBUG:
+            return "DEBUG";
+        case Severity::INFO:
+            return "INFO";
+        case Severity::WARNING:
+            return "WARNING";
+        case Severity::ERROR:
+            return "ERROR";
+        case Severity::FATAL:
+            return "FATAL";
+        }
     }
 
-    void LogWarning(std::string const message, std::source_location const source)
+    void Log(const Severity severity, const std::string& message, std::source_location const source)
     {
-        std::cout << GetCurrentTime() << " [WARNING] " << GetLocationString(source) << " " << message << "\n";
-    }
-
-    void LogError(std::string const message, std::source_location const source)
-    {
-        std::cout << GetCurrentTime() << " [ERROR] " << GetLocationString(source) << " " << message << "\n";
+        std::cout << GetCurrentTime() << GetSeverityString(severity) << GetLocationString(source) << " " << message << std::endl;
     }
 }

@@ -72,7 +72,7 @@ namespace palmx
 
     Color background_color { color_black };
 
-    enum ShaderType
+    enum class ShaderType
     {
         VERTEX,
         FRAGMENT,
@@ -83,7 +83,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            LogError("palmx not initialized");
+            Log(Severity::FATAL, "palmx not initialized");
             return;
         }
 
@@ -252,7 +252,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            LogError("palmx not initialized");
+            Log(Severity::FATAL, "palmx not initialized");
             return;
         }
 
@@ -286,7 +286,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            LogError("palmx not initialized");
+            Log(Severity::FATAL, "palmx not initialized");
             return;
         }
 
@@ -325,8 +325,8 @@ namespace palmx
             if (!success)
             {
                 glGetShaderInfoLog(object, 1024, NULL, info_log);
-                // TODO don't use to_string here
-                LogError("Shader compilation failed for type " + std::to_string(type) + "\n" + std::string(info_log));
+                std::string shader_type = type == ShaderType::VERTEX ? "Vertex Shader" : type == ShaderType::FRAGMENT ? "Fragment Shader" : "UNKNOWN";
+                Log(Severity::ERROR, "Shader compilation failed for " + shader_type + "\n" + std::string(info_log));
             }
         }
         else
@@ -335,7 +335,7 @@ namespace palmx
             if (!success)
             {
                 glGetProgramInfoLog(object, 1024, NULL, info_log);
-                LogError("Shader program linking failed\n" + std::string(info_log));
+                Log(Severity::ERROR, "Shader program linking failed\n" + std::string(info_log));
             }
         }
     }
@@ -351,18 +351,18 @@ namespace palmx
         vertex_shader = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(vertex_shader, 1, &vertex_shader_code, NULL);
         glCompileShader(vertex_shader);
-        CheckShaderCompileErrors(vertex_shader, VERTEX);
+        CheckShaderCompileErrors(vertex_shader, ShaderType::VERTEX);
         // Fragment Shader
         fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
         glShaderSource(fragment_shader, 1, &fragment_shader_code, NULL);
         glCompileShader(fragment_shader);
-        CheckShaderCompileErrors(fragment_shader, FRAGMENT);
+        CheckShaderCompileErrors(fragment_shader, ShaderType::FRAGMENT);
         // Shader Program
         unsigned int id = glCreateProgram();
         glAttachShader(id, vertex_shader);
         glAttachShader(id, fragment_shader);
         glLinkProgram(id);
-        CheckShaderCompileErrors(id, PROGRAM);
+        CheckShaderCompileErrors(id, ShaderType::PROGRAM);
         // Delete the shaders as they're linked into our program now and no longer necessary
         glDeleteShader(vertex_shader);
         glDeleteShader(fragment_shader);
@@ -398,7 +398,7 @@ namespace palmx
         }
         catch (std::ifstream::failure e)
         {
-            LogError("Shader file not successfully read at paths: " + std::string(vertex_shader_file_path) + " and " + std::string(fragment_shader_file_path));
+            Log(Severity::ERROR, "Shader file not successfully read at paths: " + std::string(vertex_shader_file_path) + " and " + std::string(fragment_shader_file_path));
         }
 
         const GLchar* vertex_shader_code_c = vertex_shader_code.c_str();
@@ -452,7 +452,7 @@ namespace palmx
         }
         else
         {
-            LogError("Failed to load texture at path: " + std::string(file_path));
+            Log(Severity::ERROR, "Failed to load texture at path: " + std::string(file_path));
             stbi_image_free(data);
         }
 
@@ -579,7 +579,7 @@ namespace palmx
         if (!ai_scene || ai_scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !ai_scene->mRootNode)
         {
             auto error = importer.GetErrorString();
-            LogError(std::string("ASSIMP::") + error);
+            Log(Severity::ERROR, std::string("ASSIMP::") + error);
             return Model();
         }
 

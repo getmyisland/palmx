@@ -46,7 +46,7 @@ namespace palmx
     {
         if (px_data.init)
         {
-            LogError("palmx cannot be initialized twice");
+            Log(Severity::FATAL, "palmx cannot be initialized twice");
             return;
         }
 
@@ -66,7 +66,7 @@ namespace palmx
         if (px_data.window == nullptr)
         {
             glfwTerminate();
-            LogError("Could not create glfw window");
+            Log(Severity::FATAL, "Could not create glfw window");
             return;
         }
 
@@ -88,7 +88,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            LogError("palmx not initialized");
+            Log(Severity::FATAL, "palmx not initialized");
             return false;
         }
 
@@ -99,7 +99,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            LogError("palmx not initialized");
+            Log(Severity::FATAL, "palmx not initialized");
             return;
         }
 
@@ -112,7 +112,7 @@ namespace palmx
 
         if (!px_data.init)
         {
-            LogError("palmx not initialized");
+            Log(Severity::FATAL, "palmx not initialized");
             return window_dimension;
         }
 
