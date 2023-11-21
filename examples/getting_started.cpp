@@ -2,9 +2,27 @@
 *
 *   palmx example - getting started
 *
+*	MIT License
+*
 *   Copyright (c) 2023 Maximilian Fischer (getmyisland)
 *
-*   Licensed under the MIT License. See LICENSE.md for full details.
+*   Permission is hereby granted, free of charge, to any person obtaining a copy
+*   of this software and associated documentation files (the "Software"), to deal
+*   in the Software without restriction, including without limitation the rights
+*   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+*   copies of the Software, and to permit persons to whom the Software is
+*   furnished to do so, subject to the following conditions:
+*
+*   The above copyright notice and this permission notice shall be included in all
+*   copies or substantial portions of the Software.
+*
+*   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+*   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+*   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+*   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+*   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+*   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+*   SOFTWARE.
 *
 ********************************************************************************************/
 
@@ -25,21 +43,20 @@ int main()
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    Init("getting started in palmx", 1280, 720);
+    Init("getting started in palmx", 1280, 720); // Create window and initialize OpenGL
 
     const float movement_speed = 3.5f;
     const float mouse_sensitivity = 0.1f;
 
-    // Lock the cursor so that you can look around better
-    LockCursor();
-
     Camera camera; // Create a camera that will render the game
 
-    Primitive cube = CreateCube();
+    Primitive cube = CreateCube(); // Create an example cube
     cube.transform.position = glm::vec3(5, 0, 0);
     cube.color = color_red;
 
-    SetBackground(color_black); // Set a background color
+    LockCursor(); // Lock the cursor so that you can look around better
+
+    SetBackground(color_black);
     //--------------------------------------------------------------------------------------
 
     // Main game loop
@@ -114,14 +131,18 @@ int main()
 
         // Graphics
         //----------------------------------------------------------------------------------
-        BeginDrawing(camera); // Initialize the rendering by setting up the render texture
+        BeginDrawing(camera); // Begin drawing by setting up the render texture
 
-        DrawPrimitive(cube);
+        DrawPrimitive(cube); // Draw the spinning cube
 
         Dimension window_dimension = GetWindowDimension();
-        DrawText("Hello palmx!", glm::vec2((window_dimension.width / 2) - (24 * 12), (window_dimension.height / 2) - 16), 1.5f); // Draw a text in the upper left corner
+        // Calculate how the text needs to be positioned to be in the center of the screen
+        // 48 = width/height of character
+        // 12 = total characters in "Hello palmx!"
+        glm::vec2 text_position = glm::vec2((window_dimension.width / 2) - ((48 * 12) / 2), (window_dimension.height / 2) - (48 / 2));
+        DrawText("Hello palmx!", text_position, 1.5f);
 
-        EndDrawing(); // Render the render texture onto the screen and swap the buffers
+        EndDrawing(); // End drawing by rendering the render texture onto the screen and swapping the buffers
         //----------------------------------------------------------------------------------
     }
     //--------------------------------------------------------------------------------------
