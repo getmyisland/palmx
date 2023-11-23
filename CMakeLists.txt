@@ -1,7 +1,6 @@
-cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 project(palmx)
-set (CMAKE_CXX_STANDARD 20)
 
 option(PALMX_BUILD_EXAMPLES "Build example projects." ON)
 

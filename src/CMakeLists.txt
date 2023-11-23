@@ -1,17 +1,8 @@
 set(PALMX_EXTERNAL_DIR "external")
 
-set(PALMX_SOURCES 
-	palmx_core.cpp
-	palmx_debug.cpp
-	palmx_filesystem.cpp
-	palmx_graphics.cpp
-	palmx_ui.cpp
-	palmx_input.cpp
-	palmx_math.cpp
-	${CMAKE_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glad/glad.c # Add glad.c or else OpenGL won't work
-)
+add_library(palmx)
 
-add_library(palmx STATIC ${PALMX_SOURCES})
+target_compile_features(palmx PRIVATE cxx_std_20)
 
 find_package(OpenGL REQUIRED)
 
@@ -21,11 +12,22 @@ target_include_directories(palmx
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
     PRIVATE
 		${PALMX_SOURCE_DIR}/include
-        ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}
-		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glfw/include # Include GLFW headers
-		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glm # Include glm headers
-		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/assimp/include # Include assimp headers
-		${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/freetype/include # Include freetype headers
+        ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/
+        ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glfw/include
+        ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glm
+        ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/assimp/include
+        ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/freetype/include
+)
+
+target_sources(palmx PRIVATE
+    palmx_core.cpp
+    palmx_debug.cpp
+    palmx_filesystem.cpp
+    palmx_graphics.cpp
+    palmx_ui.cpp
+    palmx_input.cpp
+    palmx_math.cpp
+    ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glad/glad.c
 )
 
 target_link_libraries(palmx 
