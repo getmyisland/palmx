@@ -70,6 +70,6 @@ namespace palmx
 
     void Log(const Severity severity, const std::string& message, std::source_location const source)
     {
-        std::cout << GetCurrentTime() << GetSeverityString(severity) << GetLocationString(source) << " " << message << std::endl;
+        std::cout << GetCurrentTime() << " " << GetSeverityString(severity) << " " << GetLocationString(source) << " " << message << std::endl;
     }
 }
