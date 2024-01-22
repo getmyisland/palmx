@@ -167,10 +167,10 @@ namespace palmx
 
             out vec4 FragColor;
 
-            uniform sampler2D texture;
+            uniform sampler2D fullscreen_texture;
 
             void main() {
-                FragColor = texture(texture, TexCoord);
+                FragColor = texture(fullscreen_texture, TexCoord);
             }
         )";
 
