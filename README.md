@@ -4,7 +4,10 @@ A simple open source game library written in C++ that emulates some of the limit
 
 ## Features
 
-- ...
+- No external dependencies (all required libraries are [bundled into palmx](https://github.com/getmyisland/palmx/tree/main/external))
+- Cross-Platform compatibility (Windows, Linux, MaxOS)
+- Streamlined font/sprite/model rendering
+- Authentic pixelated resolution (native 320x240 downscaling)
 
 ## Examples
 
@@ -20,27 +23,27 @@ using namespace palmx;
 int main() // Program Entry Point
 {
 	Init("hello world", 800, 600); // Create window and OpenGL context
-	
+
 	Camera camera; // A camera is always required for rendering
-	
+
 	SetBackground(color_skyblue);
-	
+
 	// Main game loop
 	while(!IsExitRequested())
 	{
 		CollectInput(); // Gather input
-		
+
 		// TODO Update variables
 
         BeginDrawing(camera); // Setup render texture
-		
+
 		// TODO Draw Models/Sprites/Text
-		
+
         EndDrawing(); // Swap buffers
 	}
-	
+
 	Exit(); // Close window and OpenGL context
-	
+
 	return 0;
 }
 ```
@@ -51,24 +54,26 @@ A step by step guide on how to integrate palmx into your game project.
 
 ### CMake (recommended)
 
-CMake version 3.15 or higher is required if you decide to use this approach. 
-
-Clone the palmx repository into your dependency folder (e.g. external).
-
 ```
-git clone https://github.com/getmyisland/palmx.git
+# Clone the palmx repository into your dependency folder (e.g. external).
+$ git clone https://github.com/getmyisland/palmx.git
 ```
 
-Add palmx as a subdirectory in your `CMakeLists.txt`.
+Create a `CMakeLists.txt` in the root of your project.
 
 ```
+# CMake version 3.15 or higher is required
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
+
+project(your_project)
+
+# Add palmx as a subdirectory
 add_subdirectory(path/to/palmx)
-```
 
-Link required dependencies in your `CMakeLists.txt`.
-
-```
 find_package(OpenGL REQUIRED)
+
+# Add your source files here
+add_executable(your_project main.cpp)
 
 target_link_libraries(your_project PRIVATE palmx)
 
@@ -81,21 +86,27 @@ target_include_directories(your_project PRIVATE
 )
 ```
 
-That's it. You can now try out the example from above to check whether you have set up your project correctly.
+Create a `main.cpp` file in the root of your project and copy-paste the example window code from above.
 
-### Manual Linking
+Open a command line in the root of your project:
 
-TODO
+```
+# Generate build files and folder
+$ cmake -B build
+
+# Build the game
+$ cmake --build build
+```
 
 ## Built With
 
-* [OpenGL](https://www.opengl.org/) - Graphics Library
-* [CMake](https://cmake.org/) - Build Tool
-* [GLFW](https://www.glfw.org/) - Window Management
-* [GLM](https://github.com/g-truc/glm) - Mathematics Library
-* [assimp](https://github.com/assimp/assimp) - 3D Model Loading
-* [FreeType](https://freetype.org/) - Font Loading
-* [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) - Texture Loading
+- [OpenGL](https://www.opengl.org/) - Graphics Library
+- [CMake](https://cmake.org/) - Build Tool
+- [GLFW](https://www.glfw.org/) - Window Management
+- [GLM](https://github.com/g-truc/glm) - Mathematics Library
+- [assimp](https://github.com/assimp/assimp) - 3D Model Loading
+- [FreeType](https://freetype.org/) - Font Loading
+- [stb_image](https://github.com/nothings/stb/blob/master/stb_image.h) - Texture Loading
 
 ## License
 
@@ -103,5 +114,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* [Joey de Vries](https://learnopengl.com/About)
-* [raysan5](https://github.com/raysan5/raylib)
+- [Joey de Vries](https://learnopengl.com/About)
+- [raysan5](https://github.com/raysan5/raylib)
