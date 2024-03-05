@@ -50,13 +50,17 @@ int main() // Program Entry Point
 
 ## Installation
 
-A step by step guide on how to integrate palmx into your game project.
-
-### CMake (recommended)
+A step by step guide on how to integrate palmx into your game project using [CMake](https://cmake.org/download/).
 
 ```
 # Clone the palmx repository into your dependency folder (e.g. external).
 $ git clone https://github.com/getmyisland/palmx.git
+
+# Navigate into the palmx folder
+$ cd palmx
+
+# Initialize submodules
+$ git submodule update --init --recursive
 ```
 
 Create a `CMakeLists.txt` in the root of your project.
