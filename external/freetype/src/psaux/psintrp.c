@@ -37,7 +37,6 @@
 
 
 #include "psft.h"
-#include <freetype/internal/ftcalc.h>
 #include <freetype/internal/ftdebug.h>
 #include <freetype/internal/services/svcfftl.h>
 
@@ -2276,7 +2275,23 @@
 
                     arg = cf2_stack_popFixed( opStack );
                     if ( arg > 0 )
-                      arg = (CF2_F16Dot16)FT_SqrtFixed( arg );
+                    {
+                      /* use a start value that doesn't make */
+                      /* the algorithm's addition overflow   */
+                      FT_Fixed  root = arg < 10 ? arg : arg >> 1;
+                      FT_Fixed  new_root;
+
+
+                      /* Babylonian method */
+                      for (;;)
+                      {
+                        new_root = ( root + FT_DivFix( arg, root ) + 1 ) >> 1;
+                        if ( new_root == root )
+                          break;
+                        root = new_root;
+                      }
+                      arg = new_root;
+                    }
                     else
                       arg = 0;
 

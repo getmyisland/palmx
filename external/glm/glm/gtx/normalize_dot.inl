@@ -1,16 +1,115 @@
-/// @ref gtx_normalize_dot
+//////////////////////////////////////////////////////////////////////////////////
+// OpenGL Mathematics Copyright (c) 2005 - 2012 G-Truc Creation (www.g-truc.net)
+//////////////////////////////////////////////////////////////////////////////////
+// Created : 2007-09-28
+// Updated : 2008-10-07
+// Licence : This source is under MIT License
+// File    : glm/gtx/normalize_dot.inl
+//////////////////////////////////////////////////////////////////////////////////
 
 namespace glm
 {
-	template<length_t L, typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER T normalizeDot(vec<L, T, Q> const& x, vec<L, T, Q> const& y)
+	template <typename genType> 
+	GLM_FUNC_QUALIFIER genType normalizeDot
+	(
+		genType const & x, 
+		genType const & y
+	)
 	{
-		return glm::dot(x, y) * glm::inversesqrt(glm::dot(x, x) * glm::dot(y, y));
+		return 
+			glm::dot(x, y) * 
+			glm::inversesqrt(glm::dot(x, x) * 
+			glm::dot(y, y));
 	}
 
-	template<length_t L, typename T, qualifier Q>
-	GLM_FUNC_QUALIFIER T fastNormalizeDot(vec<L, T, Q> const& x, vec<L, T, Q> const& y)
+	template <typename valType> 
+	GLM_FUNC_QUALIFIER valType normalizeDot
+	(
+		detail::tvec2<valType> const & x, 
+		detail::tvec2<valType> const & y
+	)
 	{
-		return glm::dot(x, y) * glm::fastInverseSqrt(glm::dot(x, x) * glm::dot(y, y));
+		return 
+			glm::dot(x, y) * 
+			glm::inversesqrt(glm::dot(x, x) * 
+			glm::dot(y, y));
+	}
+
+	template <typename valType> 
+	GLM_FUNC_QUALIFIER valType normalizeDot
+	(
+		detail::tvec3<valType> const & x, 
+		detail::tvec3<valType> const & y
+	)
+	{
+		return 
+			glm::dot(x, y) * 
+			glm::inversesqrt(glm::dot(x, x) * 
+			glm::dot(y, y));
+	}
+
+	template <typename valType> 
+	GLM_FUNC_QUALIFIER valType normalizeDot
+	(
+		detail::tvec4<valType> const & x, 
+		detail::tvec4<valType> const & y
+	)
+	{
+		return 
+			glm::dot(x, y) * 
+			glm::inversesqrt(glm::dot(x, x) * 
+			glm::dot(y, y));
+	}
+
+	template <typename genType> 
+	GLM_FUNC_QUALIFIER genType fastNormalizeDot
+	(
+		genType const & x, 
+		genType const & y
+	)
+	{
+		return 
+			glm::dot(x, y) * 
+			fastInverseSqrt(glm::dot(x, x) * 
+			glm::dot(y, y));
+	}
+
+	template <typename valType> 
+	GLM_FUNC_QUALIFIER valType fastNormalizeDot
+	(
+		detail::tvec2<valType> const & x, 
+		detail::tvec2<valType> const & y
+	)
+	{
+		return 
+			glm::dot(x, y) * 
+			fastInverseSqrt(glm::dot(x, x) * 
+			glm::dot(y, y));
+	}
+
+	template <typename valType> 
+	GLM_FUNC_QUALIFIER valType fastNormalizeDot
+	(
+		detail::tvec3<valType> const & x, 
+		detail::tvec3<valType> const & y
+	)
+	{
+		return 
+			glm::dot(x, y) * 
+			fastInverseSqrt(glm::dot(x, x) * 
+			glm::dot(y, y));
+	}
+
+	template <typename valType> 
+	GLM_FUNC_QUALIFIER valType fastNormalizeDot
+	(
+		detail::tvec4<valType> const & x, 
+		detail::tvec4<valType> const & y
+	)
+	{
+		return 
+			glm::dot(x, y) * 
+			fastInverseSqrt(glm::dot(x, x) * 
+			glm::dot(y, y));
 	}
 }//namespace glm

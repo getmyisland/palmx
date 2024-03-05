@@ -1,0 +1,16 @@
+[submodule "external/assimp"]
+	path = external/assimp
+	url = https://github.com/assimp/assimp.git
+	branch = v5.3.1
+[submodule "external/freetype"]
+	path = external/freetype
+	url = https://github.com/freetype/freetype.git
+	branch = VER-2-13-2
+[submodule "external/glm"]
+	path = external/glm
+	url = https://github.com/icaven/glm.git
+	branch = 0.9.3.2
+[submodule "external/glfw"]
+	path = external/glfw
+	url = https://github.com/glfw/glfw.git
+	branch = 3.4

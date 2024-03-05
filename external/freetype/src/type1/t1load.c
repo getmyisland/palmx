@@ -2284,7 +2284,7 @@
                        T1_FIELD_DICT_PRIVATE )
 #endif
 
-    T1_FIELD_ZERO
+    { 0, T1_FIELD_LOCATION_CID_INFO, T1_FIELD_TYPE_NONE, 0, 0, 0, 0, 0, 0 }
   };
 
 
@@ -2392,13 +2392,18 @@
           T1_Field  keyword = (T1_Field)t1_keywords;
 
 
-          while ( keyword->len )
+          for (;;)
           {
-            FT_Byte*  name = (FT_Byte*)keyword->ident;
+            FT_Byte*  name;
 
 
-            if ( keyword->len == len              &&
-                 ft_memcmp( cur, name, len ) == 0 )
+            name = (FT_Byte*)keyword->ident;
+            if ( !name )
+              break;
+
+            if ( cur[0] == name[0]                      &&
+                 len == ft_strlen( (const char *)name ) &&
+                 ft_memcmp( cur, name, len ) == 0       )
             {
               /* We found it -- run the parsing callback!     */
               /* We record every instance of every field      */
