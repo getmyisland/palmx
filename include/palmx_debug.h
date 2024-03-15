@@ -30,7 +30,7 @@
 #define PALMX_DEBUG_H
 
 #include <source_location>
-#include <string>
+#include <sstream>
 
 namespace palmx
 {
@@ -38,20 +38,26 @@ namespace palmx
     // Enumerators Definition
     //----------------------------------------------------------------------------------
 
-    enum class Severity
+    enum Severity
     {
-        DEBUG,
-        INFO,
-        WARNING,
-        ERROR,
-        FATAL
+        DEBUG = 0,
+        INFO = 1,
+        WARN = 2,
+        ERROR = 3,
+        FATAL = 4
     };
 
     //----------------------------------------------------------------------------------
     // Log Functions
     //----------------------------------------------------------------------------------
 
-    extern void Log(const Severity severity, const std::string& message, std::source_location const source = std::source_location::current());
+    extern void Log(const Severity severity, std::source_location const source, const std::ostringstream& oss);
 }
+
+#define PALMX_TRACE(...) { std::ostringstream oss; oss << __VA_ARGS__; ::palmx::Log((::palmx::Severity)0, std::source_location::current(), oss); }
+#define PALMX_INFO(...) { std::ostringstream oss; oss << __VA_ARGS__; ::palmx::Log((::palmx::Severity)1, std::source_location::current(), oss); }
+#define PALMX_WARN(...) { std::ostringstream oss; oss << __VA_ARGS__; ::palmx::Log((::palmx::Severity)2, std::source_location::current(), oss); }
+#define PALMX_ERROR(...) { std::ostringstream oss; oss << __VA_ARGS__; ::palmx::Log((::palmx::Severity)3, std::source_location::current(), oss); }
+#define PALMX_CRITICAL(...) { std::ostringstream oss; oss << __VA_ARGS__; ::palmx::Log((::palmx::Severity)4, std::source_location::current(), oss); }
 
 #endif // PALMX_DEBUG_H

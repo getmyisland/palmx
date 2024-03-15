@@ -32,11 +32,11 @@
 #include <chrono>
 #include <filesystem>
 #include <iostream>
-#include <source_location>
+#include <string>
 
 namespace palmx
 {
-    std::string GetCurrentTime()
+    static std::string GetCurrentTime()
     {
         auto now = std::chrono::system_clock::now();
         auto time = std::chrono::system_clock::to_time_t(now);
@@ -46,12 +46,12 @@ namespace palmx
         return time_str;
     }
 
-    std::string GetLocationString(std::source_location const source)
+    static std::string GetLocationString(std::source_location const source)
     {
         return "[" + std::filesystem::path(source.file_name()).filename().string() + "] [" + source.function_name() + "] [" + std::to_string(source.line()) + ":" + std::to_string(source.column()) + "]";
     }
 
-    std::string GetSeverityString(const Severity severity)
+    static std::string GetSeverityString(const Severity severity)
     {
         switch (severity)
         {
@@ -60,7 +60,7 @@ namespace palmx
             return "DEBUG";
         case Severity::INFO:
             return "INFO";
-        case Severity::WARNING:
+        case Severity::WARN:
             return "WARNING";
         case Severity::ERROR:
             return "ERROR";
@@ -69,8 +69,12 @@ namespace palmx
         }
     }
 
-    void Log(const Severity severity, const std::string& message, std::source_location const source)
-    {
-        std::cout << GetCurrentTime() << " " << GetSeverityString(severity) << " " << GetLocationString(source) << " " << message << std::endl;
-    }
+	void Log(const Severity severity, std::source_location const source, const std::ostringstream& oss)
+	{
+		std::ostringstream poss;
+		poss << GetCurrentTime() << " " << GetSeverityString(severity) << " " << GetLocationString(source) << " ";
+		poss << oss.str();
+		poss << std::endl;
+		std::cout << poss.str();
+	}
 }

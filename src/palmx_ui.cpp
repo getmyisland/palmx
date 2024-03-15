@@ -59,7 +59,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            Log(Severity::FATAL, "palmx not initialized");
+            PALMX_CRITICAL("palmx not initialized");
             return;
         }
 
@@ -192,21 +192,21 @@ namespace palmx
 
         if (font_data == nullptr || font_size == 0)
         {
-            Log(Severity::ERROR, "Failed to load font from memory: Invalid data");
+            PALMX_ERROR("Failed to load font from memory: Invalid data")
             return { characters };
         }
 
         FT_Library ft;
         if (FT_Init_FreeType(&ft))
         {
-            Log(Severity::ERROR, "Could not init FreeType Library");
+            PALMX_ERROR("Could not init FreeType Library")
             return { characters };
         }
 
         FT_Face face;
         if (FT_New_Memory_Face(ft, font_data, font_size, 0, &face))
         {
-            Log(Severity::ERROR, "Failed to load font from memory");
+            PALMX_ERROR("Failed to load font from memory")
             FT_Done_FreeType(ft);
             return { characters };
         }
@@ -223,7 +223,7 @@ namespace palmx
                 // Load character glyph
                 if (FT_Load_Char(face, c, FT_LOAD_RENDER))
                 {
-                    Log(Severity::ERROR, "Failed to load glyph");
+                    PALMX_ERROR("Failed to load glyph");
                     continue;
                 }
 
@@ -292,13 +292,13 @@ namespace palmx
             }
             else
             {
-                Log(Severity::ERROR, "Failed to load font file: " + file_path);
+                PALMX_ERROR("Failed to load font file at path: " << file_path);
                 return Font();
             }
         }
         else
         {
-            Log(Severity::ERROR, "Failed to load font: Empty file path");
+            PALMX_ERROR("Failed to load font file at path: empty path provided");
             return Font();
         }
 

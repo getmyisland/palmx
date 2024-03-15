@@ -125,7 +125,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            Log(Severity::FATAL, "palmx not initialized");
+            PALMX_CRITICAL("palmx not initialized");
             return;
         }
 
@@ -161,7 +161,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            Log(Severity::FATAL, "palmx not initialized");
+            PALMX_CRITICAL("palmx not initialized");
             return;
         }
 
@@ -206,7 +206,7 @@ namespace palmx
 
         if (IsKeyDown(keyboard.exit_key))
         {
-            Log(Severity::INFO, "Exit key pressed");
+            PALMX_TRACE("Exit key pressed");
             glfwSetWindowShouldClose(px_data.window, true);
         }
     }
@@ -276,7 +276,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            Log(Severity::FATAL, "palmx not initialized");
+            PALMX_CRITICAL("palmx not initialized");
             return;
         }
 
@@ -287,7 +287,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            Log(Severity::FATAL, "palmx not initialized");
+            PALMX_CRITICAL("palmx not initialized");
             return;
         }
 
@@ -298,7 +298,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            Log(Severity::FATAL, "palmx not initialized");
+            PALMX_CRITICAL("palmx not initialized");
             return;
         }
 
@@ -309,7 +309,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            Log(Severity::FATAL, "palmx not initialized");
+            PALMX_CRITICAL("palmx not initialized");
             return;
         }
 

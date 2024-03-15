@@ -80,7 +80,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            Log(Severity::FATAL, "palmx not initialized");
+            PALMX_CRITICAL("palmx not initialized");
             return;
         }
 
@@ -249,7 +249,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            Log(Severity::FATAL, "palmx not initialized");
+            PALMX_CRITICAL("palmx not initialized");
             return;
         }
 
@@ -283,7 +283,7 @@ namespace palmx
     {
         if (!px_data.init)
         {
-            Log(Severity::FATAL, "palmx not initialized");
+            PALMX_CRITICAL("palmx not initialized");
             return;
         }
 
@@ -322,8 +322,7 @@ namespace palmx
             if (!success)
             {
                 glGetShaderInfoLog(object, 1024, NULL, info_log);
-                std::string shader_type = type == ShaderType::VERTEX ? "Vertex Shader" : type == ShaderType::FRAGMENT ? "Fragment Shader" : "UNKNOWN";
-                Log(Severity::ERROR, "Shader compilation failed for " + shader_type + "\n" + std::string(info_log));
+                PALMX_ERROR((type == ShaderType::VERTEX ? "Vertex" : "Fragment") << " shader linking failed:\n" << info_log);
             }
         }
         else
@@ -332,7 +331,7 @@ namespace palmx
             if (!success)
             {
                 glGetProgramInfoLog(object, 1024, NULL, info_log);
-                Log(Severity::ERROR, "Shader program linking failed\n" + std::string(info_log));
+                PALMX_ERROR("Program Linking failed.\n" << info_log);
             }
         }
     }
@@ -395,7 +394,11 @@ namespace palmx
         }
         catch (std::ifstream::failure e)
         {
-            Log(Severity::ERROR, "Shader file not successfully read at paths: " + std::string(vertex_shader_file_path) + " and " + std::string(fragment_shader_file_path));
+			PALMX_ERROR("Shader file not successfully read:\n" << e.what()
+				<< "\nVertex shader path: " << vertex_shader_file_path
+				<< "\nFragment shader path: " << fragment_shader_file_path
+			);
+            return Shader();
         }
 
         const GLchar* vertex_shader_code_c = vertex_shader_code.c_str();
@@ -449,7 +452,7 @@ namespace palmx
         }
         else
         {
-            Log(Severity::ERROR, "Failed to load texture at path: " + std::string(file_path));
+            PALMX_ERROR("Failed to load texture at path: " << file_path);
             stbi_image_free(data);
         }
 
@@ -576,7 +579,7 @@ namespace palmx
         if (!ai_scene || ai_scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !ai_scene->mRootNode)
         {
             auto error = importer.GetErrorString();
-            Log(Severity::ERROR, std::string("ASSIMP::") + error);
+            PALMX_ERROR("Failed to load model with Assimp\n" << error)
             return Model();
         }
 
