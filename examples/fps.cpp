@@ -118,7 +118,7 @@ void RenderGame()
 	DrawModel(scp_173);
 
 	DrawSprite(bullet_sprite, glm::vec2(50.0f, 45.0f), glm::vec2(50.0f, 50.0f));
-	DrawText("Ammo: 69", glm::vec2(100.0f, 25.0f), 1.0f);
+	DrawString("Ammo: 69", glm::vec2(100.0f, 25.0f), 1.0f);
 
 	EndDrawing();
 }

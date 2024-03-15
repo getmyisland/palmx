@@ -310,7 +310,7 @@ namespace palmx
         font = new_font;
     }
 
-    void DrawText(const std::string& text, glm::vec2 position, float scale, const Color& color)
+    void DrawString(const std::string& text, glm::vec2 position, float scale, const Color& color)
     {
         // Activate corresponding render state	
         glUseProgram(font_shader.id);

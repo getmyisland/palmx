@@ -141,7 +141,7 @@ int main()
         // 48 = width/height of character
         // 12 = total characters in "Hello palmx!"
         glm::vec2 text_position = glm::vec2((window_dimension.width / 2) - ((48 * 12) / 2), (window_dimension.height / 2) - (48 / 2));
-        DrawText("Hello palmx!", text_position, 1.5f);
+        DrawString("Hello palmx!", text_position, 1.5f);
 
         EndDrawing(); // End drawing by rendering the render texture onto the screen and swapping the buffers
         //----------------------------------------------------------------------------------
