@@ -26,22 +26,19 @@
 *
 **********************************************************************************************/
 
-#include <glad/glad.h> // Needs to be included first
+#include "pxpch.h"
+#include <glad/glad.h>
 
 #include "palmx_engine.h"
 
 #include <palmx.h>
-#include <palmx_debug.h>
 #include <palmx_math.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#ifndef STBI_INCLUDE_STB_IMAGE_H
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
-#endif
+#include <stb_image.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

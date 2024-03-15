@@ -26,13 +26,11 @@
 *
 **********************************************************************************************/
 
-#include <glad/glad.h> // Needs to be included first
+#include "pxpch.h"
+#include <glad/glad.h>
 
 #include "palmx_engine.h"
 #include "palmx_default_font.h"
-
-#include <palmx.h>
-#include <palmx_debug.h>
 
 #include <glm/glm.hpp>
 #include <glm/trigonometric.hpp>

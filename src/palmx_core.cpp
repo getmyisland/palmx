@@ -26,10 +26,8 @@
 *
 **********************************************************************************************/
 
+#include "pxpch.h"
 #include "palmx_engine.h"
-
-#include <palmx.h>
-#include <palmx_debug.h>
 
 namespace palmx
 {
