@@ -4,7 +4,7 @@ project(palmx)
 set(CMAKE_CXX_STANDARD 20)
 set(PALMX_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-option(PALMX_BUILD_EXAMPLES "Build example projects." ON)
+option(PALMX_BUILD_EXAMPLES "Build palmx example projects." ON)
 
 add_subdirectory(src)
 add_subdirectory(external)

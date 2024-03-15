@@ -66,27 +66,29 @@ $ git submodule update --init --recursive
 Create a `CMakeLists.txt` in the root of your project.
 
 ```
-# CMake version 3.15 or higher is required
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 project(your_project)
 
+# (OPTIONAL) Disable palmx example builds
+set(PALMX_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
 # Add palmx as a subdirectory
-add_subdirectory(path/to/palmx)
+add_subdirectory(palmx)
 
-find_package(OpenGL REQUIRED)
-
-# Add your source files here
+# Add your game's source files
 add_executable(your_project main.cpp)
 
-target_link_libraries(your_project PRIVATE palmx)
+# Link against the palmx library
+target_link_libraries(your_project
+	PRIVATE
+		palmx
+)
 
-target_include_directories(your_project PRIVATE
-	${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/
-    ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glfw/include
-    ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/glm
-    ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/assimp/include
-    ${PALMX_SOURCE_DIR}/${PALMX_EXTERNAL_DIR}/freetype/include
+# Include the header directory
+target_include_directories(your_project
+	PRIVATE
+		${PALMX_SOURCE_DIR}/include
 )
 ```
 
