@@ -394,8 +394,8 @@ namespace palmx
 	// Filesystem
 	//----------------------------------------------------------------------------------
 
-	extern std::string GetRootDirectory();
-	extern std::string GetAbsolutePath(const std::string relative_path);
+	extern std::string GetCurrentDir();
+	extern std::string GetResourceDir();
 }
 
 #endif // PALMX_H

@@ -31,107 +31,101 @@
 
 namespace palmx
 {
-    PxData px_data { NULL };
+	PxData px_data{ NULL };
 
-    void FramebufferSizeCallback(GLFWwindow* window, int width, int height)
-    {
-        // Make sure the viewport matches the new window dimensions; note that width and 
-        // height will be significantly larger than specified on retina displays.
-        glViewport(0, 0, width, height);
-    }
+	static void GLFWErrorCallback(int error, const char* description)
+	{
+		PALMX_ERROR("GLFW Error (" << error << ") " << description);
+	}
 
-    void Init(std::string title, int width, int height)
-    {
-        if (px_data.init)
-        {
-            PALMX_CRITICAL("palmx cannot be initialized twice")
-            return;
-        }
+	static void GLFWFramebufferSizeCallback(GLFWwindow* window, int width, int height)
+	{
+		// Make sure the viewport matches the new window dimensions; note that width and 
+		// height will be significantly larger than specified on retina displays.
+		glViewport(0, 0, width, height);
+	}
 
-        glfwInit();
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	void Init(std::string title, int width, int height)
+	{
+		PALMX_ASSERT(!px_data.init, "palmx cannot be initialized twice");
+
+		int success = glfwInit();
+		PALMX_ASSERT(success, "Could not initialize GLFW");
+		glfwSetErrorCallback(GLFWErrorCallback);
+
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 #ifdef __APPLE__
-        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-        px_data.init = true;
-        px_data.title = title;
-        px_data.window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+		PALMX_INFO("Creating window " << title << " (" << width << ", " << height << ")");
 
-        if (px_data.window == nullptr)
-        {
-            glfwTerminate();
-            PALMX_CRITICAL("Could not create glfw window");
-            return;
-        }
+		px_data.init = true;
+		px_data.title = title;
+		px_data.window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
 
-        glfwMakeContextCurrent(px_data.window);
-        glfwSetFramebufferSizeCallback(px_data.window, FramebufferSizeCallback);
+		if (px_data.window == nullptr)
+		{
+			glfwTerminate();
+			PALMX_CRITICAL("Could not create glfw window");
+			return;
+		}
 
-        InitInput();
-        InitGraphics();
-        InitUserInterface();
-    }
+		glfwMakeContextCurrent(px_data.window);
+		glfwSetFramebufferSizeCallback(px_data.window, GLFWFramebufferSizeCallback);
 
-    void Exit()
-    {
-        // TODO clean up other stuff as well (OpenGL)
-        glfwTerminate();
-    }
+		InitInput();
+		InitGraphics();
+		InitUserInterface();
+	}
 
-    bool IsExitRequested()
-    {
-        if (!px_data.init)
-        {
-            PALMX_CRITICAL("palmx not initialized");
-            return false;
-        }
+	void Exit()
+	{
+		glfwTerminate();
+	}
 
-        return glfwWindowShouldClose(px_data.window);
-    }
+	bool IsExitRequested()
+	{
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
-    void RequestExit()
-    {
-        if (!px_data.init)
-        {
-            PALMX_CRITICAL("palmx not initialized");
-            return;
-        }
+		return glfwWindowShouldClose(px_data.window);
+	}
 
-        glfwSetWindowShouldClose(px_data.window, true);
-    }
+	void RequestExit()
+	{
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
-    Dimension GetWindowDimension()
-    {
-        Dimension window_dimension = {};
+		PALMX_INFO("Exit requested");
+		glfwSetWindowShouldClose(px_data.window, true);
+	}
 
-        if (!px_data.init)
-        {
-            PALMX_CRITICAL("palmx not initialized");
-            return window_dimension;
-        }
+	Dimension GetWindowDimension()
+	{
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
-        glfwGetWindowSize(px_data.window, &window_dimension.width, &window_dimension.height);
+		Dimension window_dimension = {};
 
-        return window_dimension;
-    }
+		glfwGetWindowSize(px_data.window, &window_dimension.width, &window_dimension.height);
 
-    float GetTime()
-    {
-        return static_cast<float>(glfwGetTime());
-    }
+		return window_dimension;
+	}
 
-    float delta_time = 0.0f;
-    float last_frame = 0.0f;
-    float GetDeltaTime()
-    {
-        float current_frame = static_cast<float>(glfwGetTime());
-        delta_time = current_frame - last_frame;
-        last_frame = current_frame;
+	float GetTime()
+	{
+		return static_cast<float>(glfwGetTime());
+	}
 
-        return delta_time;
-    }
+	float delta_time = 0.0f;
+	float last_frame = 0.0f;
+	float GetDeltaTime()
+	{
+		float current_frame = static_cast<float>(glfwGetTime());
+		delta_time = current_frame - last_frame;
+		last_frame = current_frame;
+
+		return delta_time;
+	}
 }

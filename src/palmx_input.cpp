@@ -37,17 +37,17 @@ namespace palmx
 {
 	struct Mouse
 	{
-		bool is_first_mouse_input{ true };
-		bool mouse_callback_this_frame{ false };
-		glm::vec2 last_mouse_pos{ glm::vec2() };
-		glm::vec2 mouse_offset{ glm::vec2() };
-		bool mouse_wheel_callback_this_frame{ false };
-		glm::vec2 mouse_wheel_offset{ glm::vec2() };
+		bool is_first_mouse_input { true };
+		bool mouse_callback_this_frame { false };
+		glm::vec2 last_mouse_pos { glm::vec2() };
+		glm::vec2 mouse_offset { glm::vec2() };
+		bool mouse_wheel_callback_this_frame { false };
+		glm::vec2 mouse_wheel_offset { glm::vec2() };
 	};
 
 	Mouse mouse;
 
-	void MouseCallback(GLFWwindow* window, double y_pos_in, double x_pos_in)
+	void GLFWMouseCallback(GLFWwindow* window, double y_pos_in, double x_pos_in)
 	{
 		float x_pos = static_cast<float>(-x_pos_in);
 		float y_pos = static_cast<float>(-y_pos_in);
@@ -67,7 +67,7 @@ namespace palmx
 		mouse.mouse_callback_this_frame = true;
 	}
 
-	void ScrollCallback(GLFWwindow* window, double x_offset, double y_offset)
+	void GLFWScrollCallback(GLFWwindow* window, double x_offset, double y_offset)
 	{
 		mouse.mouse_wheel_offset = glm::vec2(static_cast<float>(x_offset), static_cast<float>(y_offset));
 
@@ -76,14 +76,10 @@ namespace palmx
 
 	void InitInput()
 	{
-		if (!px_data.init)
-		{
-			PALMX_CRITICAL("palmx not initialized");
-			return;
-		}
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
-		glfwSetCursorPosCallback(px_data.window, MouseCallback);
-		glfwSetScrollCallback(px_data.window, ScrollCallback);
+		glfwSetCursorPosCallback(px_data.window, GLFWMouseCallback);
+		glfwSetScrollCallback(px_data.window, GLFWScrollCallback);
 	}
 
 	void ResetMouseOffset()
@@ -126,11 +122,7 @@ namespace palmx
 
 	bool IsKeyPressed(const input::KeyCode key)
 	{
-		if (!px_data.init)
-		{
-			PALMX_CRITICAL("palmx not initialized");
-			return false;
-		}
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		auto state = glfwGetKey(px_data.window, static_cast<int32_t>(key));
 		return state == GLFW_PRESS;
@@ -138,11 +130,7 @@ namespace palmx
 
 	bool IsMouseButtonPressed(const input::MouseCode button)
 	{
-		if (!px_data.init)
-		{
-			PALMX_CRITICAL("palmx not initialized");
-			return false;
-		}
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		auto state = glfwGetMouseButton(px_data.window, static_cast<int32_t>(button));
 		return state == GLFW_PRESS;
@@ -150,11 +138,7 @@ namespace palmx
 
 	glm::vec2 GetMousePosition()
 	{
-		if (!px_data.init)
-		{
-			PALMX_CRITICAL("palmx not initialized");
-			return glm::vec2();
-		}
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		double xpos, ypos;
 		glfwGetCursorPos(px_data.window, &xpos, &ypos);
@@ -164,66 +148,42 @@ namespace palmx
 
 	float GetMouseX()
 	{
-		if (!px_data.init)
-		{
-			PALMX_CRITICAL("palmx not initialized");
-			return 0;
-		}
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		return GetMousePosition().x;
 	}
 
 	float GetMouseY()
 	{
-		if (!px_data.init)
-		{
-			PALMX_CRITICAL("palmx not initialized");
-			return 0;
-		}
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		return GetMousePosition().y;
 	}
 
 	void ShowCursor()
 	{
-		if (!px_data.init)
-		{
-			PALMX_CRITICAL("palmx not initialized");
-			return;
-		}
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
 
 	void HideCursor()
 	{
-		if (!px_data.init)
-		{
-			PALMX_CRITICAL("palmx not initialized");
-			return;
-		}
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	}
 
 	void UnlockCursor()
 	{
-		if (!px_data.init)
-		{
-			PALMX_CRITICAL("palmx not initialized");
-			return;
-		}
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
 	}
 
 	void LockCursor()
 	{
-		if (!px_data.init)
-		{
-			PALMX_CRITICAL("palmx not initialized");
-			return;
-		}
+		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	}

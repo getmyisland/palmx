@@ -34,16 +34,16 @@
 
 namespace palmx
 {
-    enum Severity
-    {
-        DEBUG = 0,
-        INFO = 1,
-        WARN = 2,
-        ERROR = 3,
-        CRITICAL = 4
-    };
+	enum Severity
+	{
+		DEBUG = 0,
+		INFO = 1,
+		WARN = 2,
+		ERROR = 3,
+		CRITICAL = 4
+	};
 
-    extern void Log(const Severity severity, std::source_location const source, const std::ostringstream& oss);
+	extern void Log(const Severity severity, std::source_location const source, const std::ostringstream& oss);
 }
 
 #define PALMX_TRACE(...) { std::ostringstream oss; oss << __VA_ARGS__; ::palmx::Log((::palmx::Severity)0, std::source_location::current(), oss); }
@@ -51,5 +51,18 @@ namespace palmx
 #define PALMX_WARN(...) { std::ostringstream oss; oss << __VA_ARGS__; ::palmx::Log((::palmx::Severity)2, std::source_location::current(), oss); }
 #define PALMX_ERROR(...) { std::ostringstream oss; oss << __VA_ARGS__; ::palmx::Log((::palmx::Severity)3, std::source_location::current(), oss); }
 #define PALMX_CRITICAL(...) { std::ostringstream oss; oss << __VA_ARGS__; ::palmx::Log((::palmx::Severity)4, std::source_location::current(), oss); }
+
+#ifndef NDEBUG
+#   define PALMX_ASSERT(condition, ...) \
+    do { \
+        if (!(condition)) { \
+            PALMX_ERROR("Assertion failed: " << condition) \
+            PALMX_ERROR(__VA_ARGS__) \
+            std::terminate(); \
+        } \
+    } while (false)
+#else
+#   define PALMX_ASSERT(condition, ...) do { } while (false)
+#endif
 
 #endif // PALMX_DEBUG_H

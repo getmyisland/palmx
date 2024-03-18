@@ -48,8 +48,8 @@ int main()
 	LockCursor();
 	SetBackground(color_skyblue);
 
-	scp_173 = LoadModel(GetAbsolutePath("/resources/fps/models/scp173/cb_scp173.fbx"));
-	bullet_sprite = LoadTexture(GetAbsolutePath("/resources/fps/sprites/bullet.png"));
+	scp_173 = LoadModel(GetResourceDir() + "/fps/models/scp173/cb_scp173.fbx");
+	bullet_sprite = LoadTexture(GetResourceDir() + "/fps/sprites/bullet.png");
 
 	while (!IsExitRequested())
 	{
