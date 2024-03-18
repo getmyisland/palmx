@@ -53,6 +53,12 @@ int main()
 
 	while (!IsExitRequested())
 	{
+		if (IsKeyPressed(input::Escape))
+		{
+			RequestExit();
+			return;
+		}
+
 		ProcessInput();
 
 		RenderGame();
@@ -65,24 +71,22 @@ int main()
 
 void ProcessInput()
 {
-	CollectInput();
-
 	// TODO port Quake movement
 	float velocity = movement_speed * GetDeltaTime();
 
-	if (IsKeyPressed(KeyCode::KEY_W))
+	if (IsKeyPressed(input::W))
 	{
 		camera.transform.position += Vector3Forward(camera.transform.rotation) * velocity;
 	}
-	if (IsKeyPressed(KeyCode::KEY_S))
+	if (IsKeyPressed(input::S))
 	{
 		camera.transform.position -= Vector3Forward(camera.transform.rotation) * velocity;
 	}
-	if (IsKeyPressed(KeyCode::KEY_A))
+	if (IsKeyPressed(input::A))
 	{
 		camera.transform.position -= Vector3Right(camera.transform.rotation) * velocity;
 	}
-	if (IsKeyPressed(KeyCode::KEY_D))
+	if (IsKeyPressed(input::D))
 	{
 		camera.transform.position += Vector3Right(camera.transform.rotation) * velocity;
 	}
