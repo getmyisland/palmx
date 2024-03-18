@@ -34,22 +34,14 @@
 
 namespace palmx
 {
-    //----------------------------------------------------------------------------------
-    // Enumerators Definition
-    //----------------------------------------------------------------------------------
-
     enum Severity
     {
         DEBUG = 0,
         INFO = 1,
         WARN = 2,
         ERROR = 3,
-        FATAL = 4
+        CRITICAL = 4
     };
-
-    //----------------------------------------------------------------------------------
-    // Log Functions
-    //----------------------------------------------------------------------------------
 
     extern void Log(const Severity severity, std::source_location const source, const std::ostringstream& oss);
 }

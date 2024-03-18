@@ -28,33 +28,21 @@
 
 #include "pxpch.h"
 
-#include <fstream>
-#include <sstream>
-#include <iostream>
 #include <string>
-
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32__) || defined(__NT__)
-#include <direct.h>
-#define GET_CURRENT_DIR _getcwd
-#elif __linux__
-#include <unistd.h>
-#define GET_CURRENT_DIR getcwd
-#endif
+#include <filesystem>
 
 namespace palmx
 {
     std::string GetRootDirectory()
     {
-        char buff[FILENAME_MAX]; // Create string buffer to hold path
-        char* content = GET_CURRENT_DIR(buff, FILENAME_MAX);
-        if (content != NULL)
-        {
-            return content;
-        }
-        else
-        {
-            return "";
-        }
+		try
+		{
+			return std::filesystem::current_path().string();
+		}
+		catch (const std::exception& e)
+		{
+			return "";
+		}
     }
 
     std::string GetAbsolutePath(const std::string relative_path)

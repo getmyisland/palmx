@@ -39,10 +39,6 @@
 
 namespace palmx
 {
-	//----------------------------------------------------------------------------------
-	// Enumerators Definition
-	//----------------------------------------------------------------------------------
-
 	namespace input
 	{
 		using KeyCode = uint16_t;
@@ -201,10 +197,6 @@ namespace palmx
 		};
 	}
 
-	//----------------------------------------------------------------------------------
-	// Structures Definition
-	//----------------------------------------------------------------------------------
-
 	struct Transform
 	{
 		glm::vec3 position{ glm::vec3(0, 0, 0) };
@@ -302,10 +294,6 @@ namespace palmx
 		int height;
 	};
 
-	//------------------------------------------------------------------------------------
-	// Global Variables Definition
-	//------------------------------------------------------------------------------------
-
 	const Color color_lightgray = { 200.0f / 255.0f, 200.0f / 255.0f, 200.0f / 255.0f, 1.0f };
 	const Color color_gray = { 130.0f / 255.0f, 130.0f / 255.0f, 130.0f / 255.0f, 1.0f };
 	const Color color_darkgray = { 80.0f / 255.0f, 80.0f / 255.0f, 80.0f / 255.0f, 1.0f };
@@ -336,10 +324,14 @@ namespace palmx
 	// Core
 	//----------------------------------------------------------------------------------
 
-	extern void Init(std::string title, int width, int height); // Initialize window and OpenGL context
-	extern void Exit(); // Close window and unload OpenGL context
-	extern bool IsExitRequested(); // Was glfw requested to close the window
-	extern void RequestExit(); // Request to close the window
+	// Initialize window and OpenGL context.
+	extern void Init(std::string title, int width, int height);
+	// Close window and unload OpenGL context.
+	extern void Exit();
+	// Was glfw requested to close the window?
+	extern bool IsExitRequested();
+	// Request glfw to close the window.
+	extern void RequestExit();
 
 	extern Dimension GetWindowDimension();
 
@@ -368,8 +360,11 @@ namespace palmx
 	// Graphics
 	//----------------------------------------------------------------------------------
 
-	extern void BeginDrawing(Camera& camera); // Setup canvas (framebuffer) to start drawing
-	extern void EndDrawing(); // End canvas drawing and swap buffers
+	// Setup canvas (framebuffer) to start drawing
+	extern void BeginDrawing(Camera& camera);
+	// End canvas drawing and swap buffers
+	extern void EndDrawing();
+
 	extern void SetBackground(Color color);
 
 	extern Shader LoadShader(const std::string& vertex_shader_file_path, const std::string& fragment_shader_file_path);

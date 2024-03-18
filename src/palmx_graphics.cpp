@@ -56,7 +56,7 @@ namespace palmx
     GLuint render_texture;
     GLuint render_texture_framebuffer;
 
-    // PS1 display was 320x240px or 640x480px
+    // PlayStation 1 display was 320x240px or 640x480px
     const unsigned int render_texture_width { 320 };
     const unsigned int render_texture_height { 240 };
 
@@ -253,7 +253,6 @@ namespace palmx
             return;
         }
 
-        // Poll all events
         glfwPollEvents();
 
         glClearColor(background_color.r, background_color.g, background_color.b, background_color.a);
@@ -303,7 +302,6 @@ namespace palmx
         glBindVertexArray(0);
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        // Swap the buffers
         glfwSwapBuffers(px_data.window);
     }
 
@@ -414,12 +412,7 @@ namespace palmx
 
     int GetShaderUniformLocation(Shader& shader, const std::string& uniform_name)
     {
-        GLint location = glGetUniformLocation(shader.id, uniform_name.c_str());
-        if (location == -1)
-        {
-            //LogError("Shader Uniform Location " + uniform_name + " not found");
-        }
-        return location;
+        return glGetUniformLocation(shader.id, uniform_name.c_str());
     }
 
     Texture LoadTexture(const std::string& file_path)

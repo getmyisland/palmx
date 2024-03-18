@@ -39,10 +39,10 @@ namespace palmx
 	{
 		bool is_first_mouse_input{ true };
 		bool mouse_callback_this_frame{ false };
-		glm::vec2 last_mouse_pos;
-		glm::vec2 mouse_offset;
+		glm::vec2 last_mouse_pos{ glm::vec2() };
+		glm::vec2 mouse_offset{ glm::vec2() };
 		bool mouse_wheel_callback_this_frame{ false };
-		glm::vec2 mouse_wheel_offset;
+		glm::vec2 mouse_wheel_offset{ glm::vec2() };
 	};
 
 	Mouse mouse;
@@ -184,47 +184,47 @@ namespace palmx
 		return GetMousePosition().y;
 	}
 
-    void ShowCursor()
-    {
-        if (!px_data.init)
-        {
-            PALMX_CRITICAL("palmx not initialized");
-            return;
-        }
+	void ShowCursor()
+	{
+		if (!px_data.init)
+		{
+			PALMX_CRITICAL("palmx not initialized");
+			return;
+		}
 
-        glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    }
+		glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
 
-    void HideCursor()
-    {
-        if (!px_data.init)
-        {
-            PALMX_CRITICAL("palmx not initialized");
-            return;
-        }
+	void HideCursor()
+	{
+		if (!px_data.init)
+		{
+			PALMX_CRITICAL("palmx not initialized");
+			return;
+		}
 
-        glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-    }
+		glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	}
 
-    void UnlockCursor()
-    {
-        if (!px_data.init)
-        {
-            PALMX_CRITICAL("palmx not initialized");
-            return;
-        }
+	void UnlockCursor()
+	{
+		if (!px_data.init)
+		{
+			PALMX_CRITICAL("palmx not initialized");
+			return;
+		}
 
-        glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-    }
+		glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
 
-    void LockCursor()
-    {
-        if (!px_data.init)
-        {
-            PALMX_CRITICAL("palmx not initialized");
-            return;
-        }
+	void LockCursor()
+	{
+		if (!px_data.init)
+		{
+			PALMX_CRITICAL("palmx not initialized");
+			return;
+		}
 
-        glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    }
+		glfwSetInputMode(px_data.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
 }

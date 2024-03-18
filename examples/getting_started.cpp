@@ -34,16 +34,11 @@
 
 #include <cmath>
 
-// To make things easier use the namespace
+// To simplify things use the palmx namespace
 using namespace palmx;
 
-//------------------------------------------------------------------------------------
-// Program main entry point
-//------------------------------------------------------------------------------------
 int main()
 {
-	// Initialization
-	//--------------------------------------------------------------------------------------
 	Init("getting started in palmx", 1280, 720); // Create window and initialize OpenGL
 
 	const float movement_speed = 3.5f;
@@ -51,29 +46,22 @@ int main()
 
 	Camera camera; // Create a camera that will render the game
 
-	Primitive cube = CreateCube(); // Create an example cube
-	cube.transform.position = glm::vec3(5, 0, 0);
+	Primitive cube = CreateCube();
+	cube.transform.position = glm::vec3(5, 0, 0); // Set the cube's position in front of the initial camera position
 	cube.color = color_red;
 
-	LockCursor(); // Lock the cursor so that you can look around better
-
+	LockCursor();
 	SetBackground(color_black);
-	//--------------------------------------------------------------------------------------
 
-	// Main game loop
-	//--------------------------------------------------------------------------------------
-	while (!IsExitRequested()) // Detect if exit was requested manually or by pressing the exit key (default = KEY_ESCAPE)
+	while (!IsExitRequested()) // Main game loop
 	{
 		if (IsKeyPressed(input::Escape))
 		{
 			RequestExit();
 		}
 
-		// Update
-		//----------------------------------------------------------------------------------
 		float velocity = movement_speed * GetDeltaTime();
 
-		// Process inputs
 		if (IsKeyPressed(input::W))
 		{
 			camera.transform.position += Vector3Forward(camera.transform.rotation) * velocity;
@@ -91,7 +79,6 @@ int main()
 			camera.transform.position += Vector3Right(camera.transform.rotation) * velocity;
 		}
 
-		// Apply mouse input
 		glm::vec2 mouse_input = GetMouseOffset();
 		mouse_input.x *= mouse_sensitivity;
 		mouse_input.y *= mouse_sensitivity;
@@ -115,7 +102,6 @@ int main()
 			camera.zoom = 0.1f;
 		}
 
-		// The speed of color cycling
 		float color_speed = 1.0f;
 
 		// Change the color of the cube using the sine function to smoothly interpolate between colors
@@ -128,10 +114,7 @@ int main()
 		cube.transform.rotation.x = glm::radians(rotation_speed * GetTime());
 		cube.transform.rotation.y = glm::radians(rotation_speed * GetTime() + 2.0f);
 		cube.transform.rotation.z = glm::radians(rotation_speed * GetTime() + 4.0f);
-		//----------------------------------------------------------------------------------
 
-		// Graphics
-		//----------------------------------------------------------------------------------
 		BeginDrawing(camera); // Begin drawing by setting up the render texture
 
 		DrawPrimitive(cube); // Draw the spinning cube
@@ -144,14 +127,9 @@ int main()
 		DrawString("Hello palmx!", text_position, 1.5f);
 
 		EndDrawing(); // End drawing by rendering the render texture onto the screen and swapping the buffers
-		//----------------------------------------------------------------------------------
 	}
-	//--------------------------------------------------------------------------------------
 
-	// De-Initialization
-	//--------------------------------------------------------------------------------------
 	Exit(); // Close window and OpenGL context
-	//--------------------------------------------------------------------------------------
 
 	return 0;
 }

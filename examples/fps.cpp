@@ -59,7 +59,6 @@ int main()
 		}
 
 		ProcessInput();
-
 		RenderGame();
 	}
 
@@ -70,7 +69,6 @@ int main()
 
 void ProcessInput()
 {
-	// TODO port Quake movement
 	float velocity = movement_speed * GetDeltaTime();
 
 	if (IsKeyPressed(input::W))

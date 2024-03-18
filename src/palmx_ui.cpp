@@ -101,7 +101,6 @@ namespace palmx
         glUseProgram(font_shader.id);
         glUniformMatrix4fv(glGetUniformLocation(font_shader.id, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
-        // Load default font
         font = LoadDefaultFont();
 
         glGenVertexArrays(1, &text_vao);

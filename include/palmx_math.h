@@ -33,10 +33,6 @@
 
 namespace palmx
 {
-    //----------------------------------------------------------------------------------
-    // Vector 3 Functions
-    //----------------------------------------------------------------------------------
-
     extern glm::vec3 Vector3Forward(glm::vec3 vec3);
     extern glm::vec3 Vector3Right(glm::vec3 vec3);
     extern glm::vec3 Vector3Up(glm::vec3 vec3);

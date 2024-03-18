@@ -64,8 +64,8 @@ namespace palmx
             return "WARNING";
         case Severity::ERROR:
             return "ERROR";
-        case Severity::FATAL:
-            return "FATAL";
+        case Severity::CRITICAL:
+            return "CRITICAL";
         }
     }
 
