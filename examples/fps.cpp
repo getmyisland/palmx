@@ -56,7 +56,6 @@ int main()
 		if (IsKeyPressed(input::Escape))
 		{
 			RequestExit();
-			return;
 		}
 
 		ProcessInput();
