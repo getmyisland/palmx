@@ -144,28 +144,28 @@ namespace palmx
 		std::string fullscreen_quad_vertex_shader = R"(
             #version 330 core
 
-            layout (location = 0) in vec3 aPos;
-            layout (location = 1) in vec2 aTexCoord;
+            layout (location = 0) in vec3 a_Position;
+            layout (location = 1) in vec2 a_TexCoord;
 
-            out vec2 TexCoord;
+            out vec2 v_TexCoord;
 
             void main() {
-                gl_Position = vec4(aPos, 1.0);
-                TexCoord = aTexCoord;
+                gl_Position = vec4(a_Position, 1.0);
+                v_TexCoord = a_TexCoord;
             }
         )";
 
 		std::string fullscreen_quad_fragment_shader = R"(
             #version 330 core
 
-            in vec2 TexCoord;
+            in vec2 v_TexCoord;
 
-            out vec4 FragColor;
+            out vec4 o_FragColor;
 
-            uniform sampler2D fullscreen_texture;
+            uniform sampler2D u_FullscreenTexture;
 
             void main() {
-                FragColor = texture(fullscreen_texture, TexCoord);
+                o_FragColor = texture(u_FullscreenTexture, v_TexCoord);
             }
         )";
 
@@ -174,20 +174,20 @@ namespace palmx
 		std::string model_vertex_shader_source = R"(
             #version 330 core
 
-            layout (location = 0) in vec3 aPos;
-            layout (location = 1) in vec3 aNormal;
-            layout (location = 2) in vec2 aTexCoord;
+            layout (location = 0) in vec3 a_Position;
+            layout (location = 1) in vec3 a_Normal;
+            layout (location = 2) in vec2 a_TexCoord;
 
-            out vec2 TexCoord;
+            out vec2 v_TexCoord;
 
-            uniform mat4 model;
-            uniform mat4 view;
-            uniform mat4 projection;
+            uniform mat4 u_Model;
+            uniform mat4 u_View;
+            uniform mat4 u_Projection;
 
             void main()
             {
-                gl_Position = projection * view * model * vec4(aPos, 1.0);
-                TexCoord = aTexCoord;
+                gl_Position = u_Projection * u_View * u_Model * vec4(a_Position, 1.0);
+                v_TexCoord = a_TexCoord;
             }
         )";
 
@@ -195,16 +195,16 @@ namespace palmx
 		std::string model_fragment_shader_source = R"(
             #version 330 core
 
-            in vec2 TexCoord;
+            in vec2 v_TexCoord;
 
-            out vec4 FragColor;  
+            out vec4 o_FragColor;  
                     
-            uniform sampler2D texture_albedo;
-            uniform sampler2D texture_normal;
+            uniform sampler2D u_TextureAlbedo;
+            uniform sampler2D u_TextureNormal;
 
             void main()
             {
-                FragColor = texture(texture_albedo, TexCoord);
+                o_FragColor = texture(u_TextureAlbedo, v_TexCoord);
             }
         )";
 
@@ -213,30 +213,28 @@ namespace palmx
 		std::string primitive_vertex_shader_source = R"(
             #version 330 core
 
-            layout (location = 0) in vec3 aPos;
+            layout (location = 0) in vec3 a_Position;
 
-            out vec2 TexCoord;
-
-            uniform mat4 model;
-            uniform mat4 view;
-            uniform mat4 projection;
+            uniform mat4 u_Model;
+            uniform mat4 u_View;
+            uniform mat4 u_Projection;
 
             void main()
             {
-                gl_Position = projection * view * model * vec4(aPos, 1.0);
+                gl_Position = u_Projection * u_View * u_Model * vec4(a_Position, 1.0);
             }
         )";
 
 		std::string primitive_fragment_shader_source = R"(
             #version 330 core
 
-            out vec4 FragColor;  
+            out vec4 o_FragColor;  
                     
-            uniform vec4 color;
+            uniform vec4 u_Color;
 
             void main()
             {
-                FragColor = color;
+                o_FragColor = u_Color;
             }
         )";
 
@@ -264,12 +262,12 @@ namespace palmx
 		glm::mat4 view = glm::lookAt(camera.transform.position, camera.transform.position + Vector3Forward(camera.transform.rotation), Vector3Up(camera.transform.rotation));
 
 		glUseProgram(model_shader.id);
-		glUniformMatrix4fv(GetShaderUniformLocation(model_shader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(GetShaderUniformLocation(model_shader, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(glGetUniformLocation(model_shader.id, "u_Projection"), 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(glGetUniformLocation(model_shader.id, "u_View"), 1, GL_FALSE, glm::value_ptr(view));
 
 		glUseProgram(primitive_shader.id);
-		glUniformMatrix4fv(GetShaderUniformLocation(primitive_shader, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(GetShaderUniformLocation(primitive_shader, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(glGetUniformLocation(primitive_shader.id, "u_Projection"), 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(glGetUniformLocation(primitive_shader.id, "u_View"), 1, GL_FALSE, glm::value_ptr(view));
 	}
 
 	void EndDrawing()
@@ -404,13 +402,6 @@ namespace palmx
 		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		return CompileShader(vertex_shader_source, fragment_shader_source);
-	}
-
-	int GetShaderUniformLocation(Shader& shader, const std::string& uniform_name)
-	{
-		PALMX_ASSERT(px_data.init, "palmx not initialized");
-
-		return glGetUniformLocation(shader.id, uniform_name.c_str());
 	}
 
 	Texture LoadTexture(const std::string& file_path)
@@ -599,17 +590,17 @@ namespace palmx
 			glm::mat4 model_mat4 = glm::mat4(1.0f);
 			model_mat4 = glm::translate(model_mat4, static_cast<glm::vec3>(model.transform.position));
 			model_mat4 = glm::scale(model_mat4, static_cast<glm::vec3>(model.transform.scale));
-			glUniformMatrix4fv(GetShaderUniformLocation(model_shader, "model"), 1, GL_FALSE, glm::value_ptr(model_mat4));
+			glUniformMatrix4fv(glGetUniformLocation(model_shader.id, "u_Model"), 1, GL_FALSE, glm::value_ptr(model_mat4));
 
 			glActiveTexture(GL_TEXTURE0 + 0);
 			// Set the sampler to the correct texture unit
-			glUniform1i(GetShaderUniformLocation(model_shader, "texture_albedo"), 0);
+			glUniform1i(glGetUniformLocation(model_shader.id, "u_TextureAlbedo"), 0);
 			// Bind the texture
 			glBindTexture(GL_TEXTURE_2D, mesh.albedo_texture.id);
 
 			glActiveTexture(GL_TEXTURE0 + 1);
 			// Set the sampler to the correct texture unit
-			glUniform1i(GetShaderUniformLocation(model_shader, "texture_normal"), 1);
+			glUniform1i(glGetUniformLocation(model_shader.id, "u_TextureNormal"), 1);
 			// Bind the texture
 			glBindTexture(GL_TEXTURE_2D, mesh.normal_texture.id);
 
@@ -699,7 +690,7 @@ namespace palmx
 		glDisable(GL_CULL_FACE);
 
 		glUseProgram(primitive_shader.id);
-		glUniform4f(GetShaderUniformLocation(primitive_shader, "color"), primitive.color.r, primitive.color.g, primitive.color.b, primitive.color.a);
+		glUniform4f(glGetUniformLocation(primitive_shader.id, "u_Color"), primitive.color.r, primitive.color.g, primitive.color.b, primitive.color.a);
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::translate(model, primitive.transform.position);
@@ -717,7 +708,7 @@ namespace palmx
 		//model = glm::translate(model, -pivot);
 
 		model = glm::scale(model, static_cast<glm::vec3>(primitive.transform.scale));
-		glUniformMatrix4fv(GetShaderUniformLocation(primitive_shader, "model"), 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(glGetUniformLocation(primitive_shader.id, "u_Model"), 1, GL_FALSE, glm::value_ptr(model));
 
 		glBindVertexArray(primitive.vao);
 		glDrawArrays(GL_TRIANGLES, 0, 36);

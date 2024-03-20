@@ -62,30 +62,32 @@ namespace palmx
 		std::string text_vertex_shader = R"(
             #version 330 core
             
-            layout (location = 0) in vec4 vertex; // <vec2 pos, vec2 tex>
-            out vec2 TexCoords;
+            layout (location = 0) in vec4 a_Vertex; // <vec2 pos, vec2 tex>
+            
+			out vec2 v_TexCoord;
 
-            uniform mat4 projection;
+            uniform mat4 u_Projection;
 
             void main()
             {
-                gl_Position = projection * vec4(vertex.xy, 0.0, 1.0);
-                TexCoords = vertex.zw;
+                gl_Position = u_Projection * vec4(a_Vertex.xy, 0.0, 1.0);
+                v_TexCoord = a_Vertex.zw;
             }
         )";
 
 		std::string text_fragment_shader = R"(
             #version 330 core
 
-            in vec2 TexCoords;
-            out vec4 FragColor;
+            in vec2 v_TexCoord;
 
-            uniform sampler2D text;
-            uniform vec4 textColor;
+            out vec4 o_FragColor;
+
+            uniform sampler2D u_Text;
+            uniform vec4 u_Color;
 
             void main()
             {    
-                FragColor = textColor * vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);
+                o_FragColor = u_Color * vec4(1.0, 1.0, 1.0, texture(u_Text, v_TexCoord).r);
             }
         )";
 
@@ -95,7 +97,7 @@ namespace palmx
 		Dimension window_dimension = GetWindowDimension();
 		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(window_dimension.width), 0.0f, static_cast<float>(window_dimension.height));
 		glUseProgram(font_shader.id);
-		glUniformMatrix4fv(glGetUniformLocation(font_shader.id, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(glGetUniformLocation(font_shader.id, "u_Projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
 		font = LoadDefaultFont();
 
@@ -115,31 +117,32 @@ namespace palmx
 		std::string sprite_vertex_shader = R"(
             #version 330 core
             
-            layout (location = 0) in vec3 aPos;
+            layout (location = 0) in vec3 a_Position;
 
-            out vec2 TexCoord;
+            out vec2 v_TexCoord;
 
-            uniform mat4 model;
-            uniform mat4 projection;
+            uniform mat4 u_Model;
+            uniform mat4 u_Projection;
 
             void main()
             {
-                gl_Position = projection * model * vec4(aPos, 1.0);
-                TexCoord = (aPos.xy + vec2(1.0, 1.0)) / 2.0;
+                gl_Position = u_Projection * u_Model * vec4(a_Position, 1.0);
+                v_TexCoord = (a_Position.xy + vec2(1.0, 1.0)) / 2.0;
             }
         )";
 
 		std::string sprite_fragment_shader = R"(
             #version 330 core
 
-            in vec2 TexCoord;
-            out vec4 FragColor;
+            in vec2 v_TexCoord;
 
-            uniform vec4 spriteColor;
-            uniform sampler2D spriteTexture;
+            out vec4 o_FragColor;
+
+            uniform vec4 u_Color;
+            uniform sampler2D u_Texture;
 
             void main() {
-                FragColor = spriteColor * texture(spriteTexture, TexCoord);
+                o_FragColor = u_Color * texture(u_Texture, v_TexCoord);
             }
         )";
 
@@ -147,7 +150,7 @@ namespace palmx
 
 		// Reuse projection matrix from above
 		glUseProgram(sprite_shader.id);
-		glUniformMatrix4fv(glGetUniformLocation(sprite_shader.id, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(glGetUniformLocation(sprite_shader.id, "u_Projection"), 1, GL_FALSE, glm::value_ptr(projection));
 
 		float sprite_vertices[] = {
 			// positions
@@ -313,7 +316,7 @@ namespace palmx
 
 		// Activate corresponding render state	
 		glUseProgram(font_shader.id);
-		glUniform4f(glGetUniformLocation(font_shader.id, "textColor"), color.r, color.g, color.b, color.a);
+		glUniform4f(glGetUniformLocation(font_shader.id, "u_Color"), color.r, color.g, color.b, color.a);
 		glActiveTexture(GL_TEXTURE0);
 		glBindVertexArray(text_vao);
 
@@ -375,11 +378,11 @@ namespace palmx
 		//model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
 		model = glm::scale(model, glm::vec3(size, 1.0f));
 
-		glUniformMatrix4fv(GetShaderUniformLocation(sprite_shader, "model"), 1, GL_FALSE, glm::value_ptr(model));
-		glUniform4f(GetShaderUniformLocation(sprite_shader, "spriteColor"), color.r, color.g, color.b, color.a);
+		glUniformMatrix4fv(glGetUniformLocation(sprite_shader.id, "u_Model"), 1, GL_FALSE, glm::value_ptr(model));
+		glUniform4f(glGetUniformLocation(sprite_shader.id, "u_Color"), color.r, color.g, color.b, color.a);
 
 		glActiveTexture(GL_TEXTURE0);
-		glUniform1i(GetShaderUniformLocation(sprite_shader, "spriteTexture"), 0);
+		glUniform1i(glGetUniformLocation(sprite_shader.id, "u_Texture"), 0);
 		glBindTexture(GL_TEXTURE_2D, texture.id);
 
 		glBindVertexArray(sprite_vao);

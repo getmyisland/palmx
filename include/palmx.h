@@ -369,7 +369,6 @@ namespace palmx
 
 	extern Shader LoadShader(const std::string& vertex_shader_file_path, const std::string& fragment_shader_file_path);
 	extern Shader LoadShaderFromMemory(const std::string& vertex_shader_source, const std::string& fragment_shader_source);
-	extern int GetShaderUniformLocation(Shader& shader, const std::string& uniform_name);
 
 	extern Texture LoadTexture(const std::string& file_path);
 
