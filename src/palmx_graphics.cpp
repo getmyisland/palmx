@@ -178,7 +178,7 @@ namespace palmx
             layout (location = 1) in vec3 a_Normal;
             layout (location = 2) in vec2 a_TexCoord;
 
-            out vec2 v_TexCoord;
+            noperspective out vec2 v_TexCoord;
 
             uniform mat4 u_Model;
             uniform mat4 u_View;
@@ -211,7 +211,7 @@ namespace palmx
 		std::string model_fragment_shader_source = R"(
             #version 330 core
 
-            in vec2 v_TexCoord;
+            noperspective in vec2 v_TexCoord;
 
             out vec4 o_FragColor;  
                     
