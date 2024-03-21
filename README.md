@@ -5,9 +5,11 @@ A simple open source game library written in C++ that emulates some of the limit
 ## Features
 
 - No external dependencies (all required libraries are [bundled into palmx](https://github.com/getmyisland/palmx/tree/main/external))
-- Cross-Platform compatibility (Windows, Linux, MaxOS)
+- Cross-Platform compatibility (Windows, Linux)
 - Streamlined font/sprite/model rendering
 - Authentic pixelated resolution (native 320x240 downscaling)
+- Polygon jittering
+- Texture warping ([example](https://i.imgur.com/xZZHAJp.mp4))
 
 ## Examples
 
