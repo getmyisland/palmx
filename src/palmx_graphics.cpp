@@ -184,9 +184,25 @@ namespace palmx
             uniform mat4 u_View;
             uniform mat4 u_Projection;
 
+			uniform vec3 u_ModelPosition;
+			const float jitterAmount = 0.01;
+
             void main()
             {
-                gl_Position = u_Projection * u_View * u_Model * vec4(a_Position, 1.0);
+				// Calculate world space position of the vertex
+				vec3 worldPosition = (u_Model * vec4(a_Position, 1.0)).xyz + u_ModelPosition;
+
+				// Apply vertex jitter
+				vec3 jitter = vec3(
+					fract(sin(dot(worldPosition, vec3(12.9898, 78.233, 45.543))) * 43758.5453),
+					fract(cos(dot(worldPosition, vec3(4.898, 7.23, 32.789))) * 23421.631),
+					0.0
+				) * jitterAmount;
+
+				vec3 jitterPosition = a_Position + jitter;
+
+				gl_Position = u_Projection * u_View * u_Model * vec4(jitterPosition, 1.0);
+
                 v_TexCoord = a_TexCoord;
             }
         )";
@@ -591,6 +607,7 @@ namespace palmx
 			model_mat4 = glm::translate(model_mat4, static_cast<glm::vec3>(model.transform.position));
 			model_mat4 = glm::scale(model_mat4, static_cast<glm::vec3>(model.transform.scale));
 			glUniformMatrix4fv(glGetUniformLocation(model_shader.id, "u_Model"), 1, GL_FALSE, glm::value_ptr(model_mat4));
+			glUniform3fv(glGetUniformLocation(model_shader.id, "u_ModelPosition"), 3, glm::value_ptr(model.transform.position));
 
 			glActiveTexture(GL_TEXTURE0 + 0);
 			// Set the sampler to the correct texture unit

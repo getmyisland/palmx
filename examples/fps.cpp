@@ -31,15 +31,19 @@
 
 using namespace palmx;
 
-void ProcessInput();
-void RenderGame();
+static void ProcessInput();
+static void UpdateTargetPosition();
+static void RenderGame();
 
-Model scp_173;
-Texture bullet_sprite;
-Camera camera;
+static Model scp_173;
+static bool move_left = true;
+static const float move_speed = 250.0f;
 
-const float movement_speed = 3.5f;
-const float mouse_sensitivity = 0.1f;
+static Texture bullet_sprite;
+static Camera camera;
+
+static const float movement_speed = 3.5f;
+static const float mouse_sensitivity = 0.1f;
 
 int main()
 {
@@ -59,6 +63,7 @@ int main()
 		}
 
 		ProcessInput();
+		UpdateTargetPosition();
 		RenderGame();
 	}
 
@@ -67,7 +72,7 @@ int main()
 	return 0;
 }
 
-void ProcessInput()
+static void ProcessInput()
 {
 	float velocity = movement_speed * GetDeltaTime();
 
@@ -112,7 +117,27 @@ void ProcessInput()
 	}
 }
 
-void RenderGame()
+static void UpdateTargetPosition()
+{
+	auto& transform = scp_173.transform;
+
+	if (move_left) {
+		scp_173.transform.position.x -= move_speed * GetDeltaTime();
+	}
+	else {
+		scp_173.transform.position.x += move_speed * GetDeltaTime();
+	}
+
+	// Reverse direction when reaching the end
+	if (scp_173.transform.position.x <= -8.0f) {
+		move_left = false;
+	}
+	else if (scp_173.transform.position.x >= 8.0f) {
+		move_left = true;
+	}
+}
+
+static void RenderGame()
 {
 	BeginDrawing(camera);
 
