@@ -207,7 +207,7 @@ namespace palmx
             }
         )";
 
-		// TODO Normal texture rendering
+		// TODO: Normal texture rendering
 		std::string model_fragment_shader_source = R"(
             #version 330 core
 
@@ -602,11 +602,7 @@ namespace palmx
 
 		for (Mesh& mesh : model.meshes)
 		{
-			// Render the mesh
-			glm::mat4 model_mat4 = glm::mat4(1.0f);
-			model_mat4 = glm::translate(model_mat4, static_cast<glm::vec3>(model.transform.position));
-			model_mat4 = glm::scale(model_mat4, static_cast<glm::vec3>(model.transform.scale));
-			glUniformMatrix4fv(glGetUniformLocation(model_shader.id, "u_Model"), 1, GL_FALSE, glm::value_ptr(model_mat4));
+			glUniformMatrix4fv(glGetUniformLocation(model_shader.id, "u_Model"), 1, GL_FALSE, glm::value_ptr(model.transform.GetTransform()));
 			glUniform3fv(glGetUniformLocation(model_shader.id, "u_ModelPosition"), 3, glm::value_ptr(model.transform.position));
 
 			glActiveTexture(GL_TEXTURE0 + 0);
@@ -697,8 +693,8 @@ namespace palmx
 		return cube;
 	}
 
-	// TODO add more primitives
-	// TODO support primitives with indices
+	// TODO: Add more primitives
+	// TODO: Support primitives with indices
 	void DrawPrimitive(Primitive& primitive)
 	{
 		PALMX_ASSERT(px_data.init, "palmx not initialized");
@@ -709,23 +705,7 @@ namespace palmx
 		glUseProgram(primitive_shader.id);
 		glUniform4f(glGetUniformLocation(primitive_shader.id, "u_Color"), primitive.color.r, primitive.color.g, primitive.color.b, primitive.color.a);
 
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, primitive.transform.position);
-
-		// Translate to the pivot point (center)
-		//glm::vec3 pivot = 0.5f * primitive.transform.scale;
-		//model = glm::translate(model, pivot);
-
-		// Rotate around all three axes using Euler Angles
-		model = glm::rotate(model, glm::radians(primitive.transform.rotation.x), glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(primitive.transform.rotation.y), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(primitive.transform.rotation.z), glm::vec3(0.0f, 0.0f, 1.0f));
-
-		// Translate back to the original position
-		//model = glm::translate(model, -pivot);
-
-		model = glm::scale(model, static_cast<glm::vec3>(primitive.transform.scale));
-		glUniformMatrix4fv(glGetUniformLocation(primitive_shader.id, "u_Model"), 1, GL_FALSE, glm::value_ptr(model));
+		glUniformMatrix4fv(glGetUniformLocation(primitive_shader.id, "u_Model"), 1, GL_FALSE, glm::value_ptr(primitive.transform.GetTransform()));
 
 		glBindVertexArray(primitive.vao);
 		glDrawArrays(GL_TRIANGLES, 0, 36);

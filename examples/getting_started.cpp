@@ -102,7 +102,7 @@ int main()
 			camera.zoom = 0.1f;
 		}
 
-		float color_speed = 1.0f;
+		const float color_speed = 1.0f;
 
 		// Change the color of the cube using the sine function to smoothly interpolate between colors
 		cube.color.r = 0.5f * (1.0f + std::sin(color_speed * GetTime()));
@@ -110,7 +110,7 @@ int main()
 		cube.color.b = 0.5f * (1.0f + std::sin(color_speed * GetTime() + 4.0f));
 
 		// Rotate the cube
-		float rotation_speed = 1000.0f;
+		float rotation_speed = 20.0f;
 		cube.transform.rotation.x = glm::radians(rotation_speed * GetTime());
 		cube.transform.rotation.y = glm::radians(rotation_speed * GetTime() + 2.0f);
 		cube.transform.rotation.z = glm::radians(rotation_speed * GetTime() + 4.0f);

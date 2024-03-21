@@ -32,6 +32,10 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
+
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -202,6 +206,17 @@ namespace palmx
 		glm::vec3 position{ glm::vec3(0, 0, 0) };
 		glm::vec3 rotation{ glm::vec3(0, 0, 0) }; // Pitch, Yaw, Roll
 		glm::vec3 scale{ glm::vec3(1, 1, 1) };
+
+		glm::mat4 GetTransform() const
+		{
+			glm::mat4 rot = glm::rotate(glm::mat4(1.0f), rotation.x, glm::vec3(1.0f, 0.0f, 0.0f))
+				* glm::rotate(glm::mat4(1.0f), rotation.y, glm::vec3(0.0f, 1.0f, 0.0f))
+				* glm::rotate(glm::mat4(1.0f), rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+
+			return glm::translate(glm::mat4(1.0f), position)
+				* rot
+				* glm::scale(glm::mat4(1.0f), scale);
+		}
 	};
 
 	struct Camera
@@ -237,6 +252,13 @@ namespace palmx
 	struct Texture
 	{
 		unsigned int id;
+	};
+
+	struct Sprite
+	{
+		Transform transform;
+		Texture texture;
+		Color color = { 1.0f, 1.0f, 1.0f, 1.0f };
 	};
 
 	struct Character
@@ -387,7 +409,7 @@ namespace palmx
 	extern void SetFont(const Font& new_font);
 
 	extern void DrawString(const std::string& text, glm::vec2 position, float scale, const Color& color = color_white);
-	extern void DrawSprite(const Texture& texture, glm::vec2 position, glm::vec2 size, const Color& color = color_white);
+	extern void DrawSprite(const Sprite& sprite);
 
 	//----------------------------------------------------------------------------------
 	// Filesystem

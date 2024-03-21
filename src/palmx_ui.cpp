@@ -93,7 +93,7 @@ namespace palmx
 
 		font_shader = LoadShaderFromMemory(text_vertex_shader, text_fragment_shader);
 
-		// FIXME what if window dimensions change?
+		// FIXME: What if window dimensions change?
 		Dimension window_dimension = GetWindowDimension();
 		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(window_dimension.width), 0.0f, static_cast<float>(window_dimension.height));
 		glUseProgram(font_shader.id);
@@ -362,7 +362,7 @@ namespace palmx
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
-	void DrawSprite(const Texture& texture, glm::vec2 position, glm::vec2 size, const Color& color)
+	void DrawSprite(const Sprite& sprite)
 	{
 		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
@@ -371,19 +371,12 @@ namespace palmx
 
 		glUseProgram(sprite_shader.id);
 
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, glm::vec3(position, 0.0f));
-		//model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
-		//model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f)); // then rotate
-		//model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
-		model = glm::scale(model, glm::vec3(size, 1.0f));
-
-		glUniformMatrix4fv(glGetUniformLocation(sprite_shader.id, "u_Model"), 1, GL_FALSE, glm::value_ptr(model));
-		glUniform4f(glGetUniformLocation(sprite_shader.id, "u_Color"), color.r, color.g, color.b, color.a);
+		glUniformMatrix4fv(glGetUniformLocation(sprite_shader.id, "u_Model"), 1, GL_FALSE, glm::value_ptr(sprite.transform.GetTransform()));
+		glUniform4f(glGetUniformLocation(sprite_shader.id, "u_Color"), sprite.color.r, sprite.color.g, sprite.color.b, sprite.color.a);
 
 		glActiveTexture(GL_TEXTURE0);
 		glUniform1i(glGetUniformLocation(sprite_shader.id, "u_Texture"), 0);
-		glBindTexture(GL_TEXTURE_2D, texture.id);
+		glBindTexture(GL_TEXTURE_2D, sprite.texture.id);
 
 		glBindVertexArray(sprite_vao);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, sprite_ebo);

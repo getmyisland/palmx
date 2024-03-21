@@ -39,7 +39,7 @@ static Model scp_173;
 static bool move_left = true;
 static const float move_speed = 250.0f;
 
-static Texture bullet_sprite;
+static Sprite bullet_sprite;
 static Camera camera;
 
 static const float movement_speed = 3.5f;
@@ -53,7 +53,10 @@ int main()
 	SetBackground(color_skyblue);
 
 	scp_173 = LoadModel(GetResourceDir() + "/fps/models/scp173/cb_scp173.fbx");
-	bullet_sprite = LoadTexture(GetResourceDir() + "/fps/sprites/bullet.png");
+
+	bullet_sprite.texture = LoadTexture(GetResourceDir() + "/fps/sprites/bullet.png");
+	bullet_sprite.transform.position = glm::vec3(50.0f, 45.0f, 0.0f);
+	bullet_sprite.transform.scale = glm::vec3(50.0f);
 
 	while (!IsExitRequested())
 	{
@@ -143,7 +146,7 @@ static void RenderGame()
 
 	DrawModel(scp_173);
 
-	DrawSprite(bullet_sprite, glm::vec2(50.0f, 45.0f), glm::vec2(50.0f, 50.0f));
+	DrawSprite(bullet_sprite);
 	DrawString("Ammo: 69", glm::vec2(100.0f, 25.0f), 1.0f);
 
 	EndDrawing();
