@@ -1,6 +1,6 @@
 /**********************************************************************************************
 *
-*   palmx - internal engine header containing initialization functions for graphics, user interface and input
+*   palmx - internal core header
 *
 *	MIT License
 *
@@ -26,8 +26,8 @@
 *
 **********************************************************************************************/
 
-#ifndef PALMX_ENGINE_H
-#define PALMX_ENGINE_H
+#ifndef PALMX_CORE_H
+#define PALMX_CORE_H
 
 #include <GLFW/glfw3.h>
 
@@ -35,19 +35,15 @@
 
 namespace palmx
 {
-    struct PxData
-    {
-        bool init { false };
+	struct PxData
+	{
+		bool init{ false };
 
-        std::string title;
-        GLFWwindow* window;
-    };
+		std::string title;
+		GLFWwindow* window;
+	};
 
-    extern PxData px_data;
-
-    extern void InitInput();
-    extern void InitGraphics();
-    extern void InitUserInterface();
+	extern PxData px_data;
 }
 
-#endif // PALMX_ENGINE_H
+#endif // PALMX_CORE_H

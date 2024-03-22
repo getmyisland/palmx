@@ -60,7 +60,7 @@ int main()
 
 	while (!IsExitRequested())
 	{
-		if (IsKeyPressed(input::Escape))
+		if (IsKeyPressed(key::Escape))
 		{
 			RequestExit();
 		}
@@ -79,19 +79,19 @@ static void ProcessInput()
 {
 	float velocity = movement_speed * GetDeltaTime();
 
-	if (IsKeyPressed(input::W))
+	if (IsKeyPressed(key::W))
 	{
 		camera.transform.position += Vector3Forward(camera.transform.rotation) * velocity;
 	}
-	if (IsKeyPressed(input::S))
+	if (IsKeyPressed(key::S))
 	{
 		camera.transform.position -= Vector3Forward(camera.transform.rotation) * velocity;
 	}
-	if (IsKeyPressed(input::A))
+	if (IsKeyPressed(key::A))
 	{
 		camera.transform.position -= Vector3Right(camera.transform.rotation) * velocity;
 	}
-	if (IsKeyPressed(input::D))
+	if (IsKeyPressed(key::D))
 	{
 		camera.transform.position += Vector3Right(camera.transform.rotation) * velocity;
 	}

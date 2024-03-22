@@ -29,7 +29,8 @@
 #include "pxpch.h"
 #include <glad/glad.h>
 
-#include "palmx_engine.h"
+#include "palmx_core.h"
+#include "palmx_ui.h"
 #include "palmx_default_font.h"
 
 #include <glm/glm.hpp>
@@ -55,7 +56,7 @@ namespace palmx
 	Shader sprite_shader;
 	GLuint sprite_vao, sprite_vbo, sprite_ebo;
 
-	void InitUserInterface()
+	void ui::Init()
 	{
 		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
@@ -92,13 +93,6 @@ namespace palmx
         )";
 
 		font_shader = LoadShaderFromMemory(text_vertex_shader, text_fragment_shader);
-
-		// FIXME: What if window dimensions change?
-		Dimension window_dimension = GetWindowDimension();
-		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(window_dimension.width), 0.0f, static_cast<float>(window_dimension.height));
-		glUseProgram(font_shader.id);
-		glUniformMatrix4fv(glGetUniformLocation(font_shader.id, "u_Projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
 		font = LoadDefaultFont();
 
 		glGenVertexArrays(1, &text_vao);
@@ -148,10 +142,6 @@ namespace palmx
 
 		sprite_shader = LoadShaderFromMemory(sprite_vertex_shader, sprite_fragment_shader);
 
-		// Reuse projection matrix from above
-		glUseProgram(sprite_shader.id);
-		glUniformMatrix4fv(glGetUniformLocation(sprite_shader.id, "u_Projection"), 1, GL_FALSE, glm::value_ptr(projection));
-
 		float sprite_vertices[] = {
 			// positions
 			1.0f,  1.0f, 0.0f,   // top right
@@ -182,6 +172,17 @@ namespace palmx
 
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
+	}
+
+	void ui::OnWindowResize(uint32_t width, uint32_t height)
+	{
+		glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), 0.0f, static_cast<float>(height));
+
+		glUseProgram(font_shader.id);
+		glUniformMatrix4fv(glGetUniformLocation(font_shader.id, "u_Projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+		glUseProgram(sprite_shader.id);
+		glUniformMatrix4fv(glGetUniformLocation(sprite_shader.id, "u_Projection"), 1, GL_FALSE, glm::value_ptr(projection));
 	}
 
 	Font LoadFontFromMemory(const unsigned char* font_data, unsigned int font_size)

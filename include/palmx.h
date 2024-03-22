@@ -43,9 +43,9 @@
 
 namespace palmx
 {
-	namespace input
+	using KeyCode = uint16_t;
+	namespace key
 	{
-		using KeyCode = uint16_t;
 		enum : KeyCode
 		{
 			// From glfw3.h
@@ -180,8 +180,11 @@ namespace palmx
 			RightSuper = 347,
 			Menu = 348
 		};
+	}
 
-		using MouseCode = uint16_t;
+	using MouseCode = uint16_t;
+	namespace mouse
+	{
 		enum : MouseCode
 		{
 			// From glfw3.h
@@ -243,10 +246,10 @@ namespace palmx
 
 	struct Color
 	{
-		float r;
-		float g;
-		float b;
-		float a;
+		float r{ 1.0f };
+		float g{ 1.0f };
+		float b{ 1.0f };
+		float a{ 1.0f };
 	};
 
 	struct Texture
@@ -310,12 +313,6 @@ namespace palmx
 		bool is_dynamic{ true };
 	};
 
-	struct Dimension
-	{
-		int width;
-		int height;
-	};
-
 	const Color color_lightgray = { 200.0f / 255.0f, 200.0f / 255.0f, 200.0f / 255.0f, 1.0f };
 	const Color color_gray = { 130.0f / 255.0f, 130.0f / 255.0f, 130.0f / 255.0f, 1.0f };
 	const Color color_darkgray = { 80.0f / 255.0f, 80.0f / 255.0f, 80.0f / 255.0f, 1.0f };
@@ -347,7 +344,7 @@ namespace palmx
 	//----------------------------------------------------------------------------------
 
 	// Initialize window and OpenGL context.
-	extern void Init(std::string title, int width, int height);
+	extern void Init(std::string title, uint32_t width, uint32_t height);
 	// Close window and unload OpenGL context.
 	extern void Exit();
 	// Was glfw requested to close the window?
@@ -355,7 +352,7 @@ namespace palmx
 	// Request glfw to close the window.
 	extern void RequestExit();
 
-	extern Dimension GetWindowDimension();
+	extern glm::vec2 GetWindowSize();
 
 	extern float GetTime();
 	extern float GetDeltaTime();
@@ -364,9 +361,9 @@ namespace palmx
 	// Input
 	//----------------------------------------------------------------------------------
 
-	extern bool IsKeyPressed(input::KeyCode key);
+	extern bool IsKeyPressed(KeyCode key);
 
-	extern bool IsMouseButtonPressed(input::MouseCode button);
+	extern bool IsMouseButtonPressed(MouseCode button);
 	extern glm::vec2 GetMousePosition();
 	extern glm::vec2 GetMouseOffset();
 	extern float GetMouseX();

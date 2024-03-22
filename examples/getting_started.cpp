@@ -55,26 +55,26 @@ int main()
 
 	while (!IsExitRequested()) // Main game loop
 	{
-		if (IsKeyPressed(input::Escape))
+		if (IsKeyPressed(key::Escape))
 		{
 			RequestExit();
 		}
 
 		float velocity = movement_speed * GetDeltaTime();
 
-		if (IsKeyPressed(input::W))
+		if (IsKeyPressed(key::W))
 		{
 			camera.transform.position += Vector3Forward(camera.transform.rotation) * velocity;
 		}
-		if (IsKeyPressed(input::S))
+		if (IsKeyPressed(key::S))
 		{
 			camera.transform.position -= Vector3Forward(camera.transform.rotation) * velocity;
 		}
-		if (IsKeyPressed(input::A))
+		if (IsKeyPressed(key::A))
 		{
 			camera.transform.position -= Vector3Right(camera.transform.rotation) * velocity;
 		}
-		if (IsKeyPressed(input::D))
+		if (IsKeyPressed(key::D))
 		{
 			camera.transform.position += Vector3Right(camera.transform.rotation) * velocity;
 		}
@@ -119,11 +119,11 @@ int main()
 
 		DrawPrimitive(cube); // Draw the spinning cube
 
-		Dimension window_dimension = GetWindowDimension();
+		auto window_size = GetWindowSize();
 		// Calculate how the text needs to be positioned to be in the center of the screen
 		// 48 = width/height of character
 		// 12 = total characters in "Hello palmx!"
-		glm::vec2 text_position = glm::vec2((window_dimension.width / 2) - ((48 * 12) / 2), (window_dimension.height / 2) - (48 / 2));
+		glm::vec2 text_position = glm::vec2((window_size.x / 2) - ((48 * 12) / 2), (window_size.y / 2) - (48 / 2));
 		DrawString("Hello palmx!", text_position, 1.5f);
 
 		EndDrawing(); // End drawing by rendering the render texture onto the screen and swapping the buffers

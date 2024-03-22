@@ -27,7 +27,10 @@
 **********************************************************************************************/
 
 #include "pxpch.h"
-#include "palmx_engine.h"
+#include "palmx_core.h"
+#include "palmx_graphics.h"
+#include "palmx_input.h"
+#include "palmx_ui.h"
 
 namespace palmx
 {
@@ -43,9 +46,11 @@ namespace palmx
 		// Make sure the viewport matches the new window dimensions; note that width and 
 		// height will be significantly larger than specified on retina displays.
 		glViewport(0, 0, width, height);
+
+		ui::OnWindowResize(width, height);
 	}
 
-	void Init(std::string title, int width, int height)
+	void Init(std::string title, uint32_t width, uint32_t height)
 	{
 		PALMX_ASSERT(!px_data.init, "palmx cannot be initialized twice");
 
@@ -77,9 +82,12 @@ namespace palmx
 		glfwMakeContextCurrent(px_data.window);
 		glfwSetFramebufferSizeCallback(px_data.window, GLFWFramebufferSizeCallback);
 
-		InitInput();
-		InitGraphics();
-		InitUserInterface();
+		input::Init();
+		graphics::Init();
+		ui::Init();
+
+		// Manually call resize function as part of the initialization process
+		ui::OnWindowResize(width, height);
 	}
 
 	void Exit()
@@ -102,15 +110,14 @@ namespace palmx
 		glfwSetWindowShouldClose(px_data.window, true);
 	}
 
-	Dimension GetWindowDimension()
+	glm::vec2 GetWindowSize()
 	{
 		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
-		Dimension window_dimension = {};
+		int width, height;
+		glfwGetWindowSize(px_data.window, &width, &height);
 
-		glfwGetWindowSize(px_data.window, &window_dimension.width, &window_dimension.height);
-
-		return window_dimension;
+		return { width, height };
 	}
 
 	float GetTime()

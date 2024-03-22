@@ -27,7 +27,9 @@
 **********************************************************************************************/
 
 #include "pxpch.h"
-#include "palmx_engine.h"
+
+#include "palmx_core.h"
+#include "palmx_input.h"
 
 #include <GLFW/glfw3.h>
 
@@ -35,46 +37,41 @@
 
 namespace palmx
 {
-	struct Mouse
-	{
-		bool is_first_mouse_input { true };
-		bool mouse_callback_this_frame { false };
-		glm::vec2 last_mouse_pos { glm::vec2() };
-		glm::vec2 mouse_offset { glm::vec2() };
-		bool mouse_wheel_callback_this_frame { false };
-		glm::vec2 mouse_wheel_offset { glm::vec2() };
-	};
-
-	Mouse mouse;
+	static bool is_first_mouse_input{ true };
+	static bool mouse_callback_this_frame{ false };
+	static glm::vec2 last_mouse_pos{ glm::vec2() };
+	static glm::vec2 mouse_offset{ glm::vec2() };
+	static bool mouse_wheel_callback_this_frame{ false };
+	static glm::vec2 mouse_wheel_offset{ glm::vec2() };
 
 	void GLFWMouseCallback(GLFWwindow* window, double y_pos_in, double x_pos_in)
 	{
 		float x_pos = static_cast<float>(-x_pos_in);
 		float y_pos = static_cast<float>(-y_pos_in);
 
-		if (mouse.is_first_mouse_input)
+		if (is_first_mouse_input)
 		{
-			mouse.last_mouse_pos = glm::vec2(x_pos, y_pos);
-			mouse.is_first_mouse_input = false;
+			last_mouse_pos = glm::vec2(x_pos, y_pos);
+			is_first_mouse_input = false;
 		}
 
-		float x_offset = x_pos - mouse.last_mouse_pos.x;
-		float y_offset = mouse.last_mouse_pos.y - y_pos; // Reversed since y-Coordinates go from bottom to top
+		float x_offset = x_pos - last_mouse_pos.x;
+		float y_offset = last_mouse_pos.y - y_pos; // Reversed since y-Coordinates go from bottom to top
 
-		mouse.last_mouse_pos = glm::vec2(x_pos, y_pos);
-		mouse.mouse_offset = glm::vec2(x_offset, y_offset);
+		last_mouse_pos = glm::vec2(x_pos, y_pos);
+		mouse_offset = glm::vec2(x_offset, y_offset);
 
-		mouse.mouse_callback_this_frame = true;
+		mouse_callback_this_frame = true;
 	}
 
 	void GLFWScrollCallback(GLFWwindow* window, double x_offset, double y_offset)
 	{
-		mouse.mouse_wheel_offset = glm::vec2(static_cast<float>(x_offset), static_cast<float>(y_offset));
+		mouse_wheel_offset = glm::vec2(static_cast<float>(x_offset), static_cast<float>(y_offset));
 
-		mouse.mouse_wheel_callback_this_frame = true;
+		mouse_wheel_callback_this_frame = true;
 	}
 
-	void InitInput()
+	void input::Init()
 	{
 		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
@@ -84,25 +81,25 @@ namespace palmx
 
 	void ResetMouseOffset()
 	{
-		if (mouse.mouse_callback_this_frame)
+		if (mouse_callback_this_frame)
 		{
-			mouse.mouse_callback_this_frame = false;
+			mouse_callback_this_frame = false;
 		}
 		else
 		{
-			mouse.mouse_offset = glm::vec2();
+			mouse_offset = glm::vec2();
 		}
 	}
 
 	void ResetMouseWheelOffset()
 	{
-		if (mouse.mouse_wheel_callback_this_frame)
+		if (mouse_wheel_callback_this_frame)
 		{
-			mouse.mouse_wheel_callback_this_frame = false;
+			mouse_wheel_callback_this_frame = false;
 		}
 		else
 		{
-			mouse.mouse_wheel_offset = glm::vec2();
+			mouse_wheel_offset = glm::vec2();
 		}
 	}
 
@@ -110,17 +107,17 @@ namespace palmx
 	{
 		ResetMouseOffset();
 
-		return mouse.mouse_offset;
+		return mouse_offset;
 	}
 
 	glm::vec2 GetMouseWheelOffset()
 	{
 		ResetMouseWheelOffset();
 
-		return mouse.mouse_wheel_offset;
+		return mouse_wheel_offset;
 	}
 
-	bool IsKeyPressed(const input::KeyCode key)
+	bool IsKeyPressed(const KeyCode key)
 	{
 		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
@@ -128,7 +125,7 @@ namespace palmx
 		return state == GLFW_PRESS;
 	}
 
-	bool IsMouseButtonPressed(const input::MouseCode button)
+	bool IsMouseButtonPressed(const MouseCode button)
 	{
 		PALMX_ASSERT(px_data.init, "palmx not initialized");
 

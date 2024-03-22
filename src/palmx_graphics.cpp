@@ -29,7 +29,8 @@
 #include "pxpch.h"
 #include <glad/glad.h>
 
-#include "palmx_engine.h"
+#include "palmx_core.h"
+#include "palmx_graphics.h"
 
 #include <palmx.h>
 #include <palmx_math.h>
@@ -76,7 +77,7 @@ namespace palmx
 		PROGRAM
 	};
 
-	void InitGraphics()
+	void graphics::Init()
 	{
 		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
@@ -291,9 +292,9 @@ namespace palmx
 		PALMX_ASSERT(px_data.init, "palmx not initialized");
 
 		// Reset the viewport to the size of the window
-		Dimension window_dimension = GetWindowDimension();
+		auto window_size = GetWindowSize();
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glViewport(0, 0, window_dimension.width, window_dimension.height);
+		glViewport(0, 0, window_size.x, window_size.y);
 
 		glUseProgram(fullscreen_quad_shader.id);
 
