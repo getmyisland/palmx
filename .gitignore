@@ -18,7 +18,8 @@
 *.slo
 *.lo
 *.o
-*.obj
+# Don't ignore .obj files as they can be model files
+#*.obj
 
 # Precompiled Headers
 *.gch

@@ -35,7 +35,7 @@ static void ProcessInput();
 static void UpdateTargetPosition();
 static void RenderGame();
 
-static Model scp_173;
+static Model target_dummy;
 static bool move_left = true;
 static const float move_speed = 250.0f;
 
@@ -52,7 +52,7 @@ int main()
 	LockCursor();
 	SetBackground(color_skyblue);
 
-	scp_173 = LoadModel(GetResourceDir() + "/fps/models/scp173/cb_scp173.fbx");
+	target_dummy = LoadModel(GetResourceDir() + "/fps/models/target_dummy.obj");
 
 	bullet_sprite.texture = LoadTexture(GetResourceDir() + "/fps/sprites/bullet.png");
 	bullet_sprite.transform.position = glm::vec3(50.0f, 45.0f, 0.0f);
@@ -122,20 +122,20 @@ static void ProcessInput()
 
 static void UpdateTargetPosition()
 {
-	auto& transform = scp_173.transform;
+	auto& transform = target_dummy.transform;
 
 	if (move_left) {
-		scp_173.transform.position.x -= move_speed * GetDeltaTime();
+		target_dummy.transform.position.x -= move_speed * GetDeltaTime();
 	}
 	else {
-		scp_173.transform.position.x += move_speed * GetDeltaTime();
+		target_dummy.transform.position.x += move_speed * GetDeltaTime();
 	}
 
 	// Reverse direction when reaching the end
-	if (scp_173.transform.position.x <= -8.0f) {
+	if (target_dummy.transform.position.x <= -8.0f) {
 		move_left = false;
 	}
-	else if (scp_173.transform.position.x >= 8.0f) {
+	else if (target_dummy.transform.position.x >= 8.0f) {
 		move_left = true;
 	}
 }
@@ -144,7 +144,7 @@ static void RenderGame()
 {
 	BeginDrawing(camera);
 
-	DrawModel(scp_173);
+	DrawModel(target_dummy);
 
 	DrawSprite(bullet_sprite);
 	DrawString("Ammo: 69", glm::vec2(100.0f, 25.0f), 1.0f);

@@ -186,7 +186,7 @@ namespace palmx
             uniform mat4 u_Projection;
 
 			uniform vec3 u_ModelPosition;
-			const float jitterAmount = 0.01;
+			const float jitterAmount = 0.005;
 
             void main()
             {
@@ -507,8 +507,8 @@ namespace palmx
 
 		// Load Materials
 		std::string material_name = ai_scene->mMaterials[ai_mesh->mMaterialIndex]->GetName().C_Str();
-		mesh.albedo_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_albedo.jpg"));
-		mesh.normal_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_normal.jpg"));
+		mesh.albedo_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_albedo.png"));
+		mesh.normal_texture = LoadTexture(std::string(directory + "/" + material_name + "_texture_normal.png"));
 
 		// Create buffers/arrays
 		glGenVertexArrays(1, &mesh.vao);
