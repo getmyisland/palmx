@@ -207,14 +207,12 @@ namespace palmx
 	struct Transform
 	{
 		glm::vec3 position{ glm::vec3(0, 0, 0) };
-		glm::vec3 rotation{ glm::vec3(0, 0, 0) }; // Pitch, Yaw, Roll
+		glm::vec3 rotation{ glm::vec3(0, 0, 0) }; // Euler Angles
 		glm::vec3 scale{ glm::vec3(1, 1, 1) };
 
 		glm::mat4 GetTransform() const
 		{
-			glm::mat4 rot = glm::rotate(glm::mat4(1.0f), rotation.x, glm::vec3(1.0f, 0.0f, 0.0f))
-				* glm::rotate(glm::mat4(1.0f), rotation.y, glm::vec3(0.0f, 1.0f, 0.0f))
-				* glm::rotate(glm::mat4(1.0f), rotation.z, glm::vec3(0.0f, 0.0f, 1.0f));
+			glm::mat4 rot = glm::toMat4(glm::quat(glm::radians(rotation)));
 
 			return glm::translate(glm::mat4(1.0f), position)
 				* rot
