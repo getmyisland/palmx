@@ -124,3 +124,9 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 - [Joey de Vries](https://learnopengl.com/About)
 - [raysan5](https://github.com/raysan5/raylib)
+
+## Screenshots
+
+![Getting Started Screenshot](https://github.com/user-attachments/assets/344f1f7a-a140-44c5-8f34-62ca305e73f6)
+
+![FPS Screenshot](https://github.com/user-attachments/assets/9d933108-f5d3-4b5f-bd18-e3396e04de2f)
